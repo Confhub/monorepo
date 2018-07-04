@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "name": "ReactiveConf",
+    "url": "https://reactiveconf.com",
+    "startDate": "2018-10-29",
+    "endDate": "2018-10-31",
+    "city": "Prague",
+    "country": "Czech Republic",
+    "twitter": "@ReactiveConf",
+    "location": {
+      "latitude": 50.0765,
+      "longtitude": 14.4378
+    }
+  },
+  {
+    "id": 2,
+    "name": "Front-Trends",
+    "url": "https://2018.front-trends.com",
+    "startDate": "2018-05-24",
+    "endDate": "2018-05-25",
+    "city": "Warsaw",
+    "country": "Poland",
+    "cfpUrl": "https://2018.front-trends.com/speaking-at-front-trends",
+    "cfpEndDate": "2018-03-31",
+    "twitter": "@fronttrends",
+    "location": {
+      "latitude": 52.2297,
+      "longtitude": 21.0122
+    }
+  },
+  {
+    "id": 3,
+    "name": "React Native EU",
+    "url": "http://react-native.eu",
+    "startDate": "2018-09-05",
+    "endDate": "2018-09-06",
+    "city": "Wroclaw",
+    "country": "Poland",
+    "cfpUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfSQhE64_1MvCUor1fJG3xBVETXuf-nRKGd4g56_hMLXQbXJQ/viewform",
+    "cfpEndDate": "2018-03-31",
+    "twitter": "@react_native_eu",
+    "location": {
+      "latitude": 51.1079,
+      "longtitude": 17.0385
+    }
+  }
+]

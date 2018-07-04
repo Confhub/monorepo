@@ -1,45 +1,55 @@
 import React from 'react';
-import cookie from 'cookie';
-import { ApolloConsumer } from 'react-apollo';
+import dynamic from 'next/dynamic';
+import { Layout } from 'antd';
+import MainContext from '../context/MainContext';
+// import Map from '../components/Map';
+const Map = dynamic(import('../components/Map'), { ssr: false });
+import Sidebar from '../components/Sidebar';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
-import redirect from '../lib/redirect';
-import checkLoggedIn from '../lib/checkLoggedIn';
+const { Header } = Layout;
 
-export default class Index extends React.Component {
-  static async getInitialProps(context, apolloClient) {
-    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
-
-    if (!loggedInUser.user) {
-      // If not signed in, send them somewhere more useful
-      redirect(context, '/signin');
-    }
-
-    return { loggedInUser };
-  }
-
-  signout = apolloClient => () => {
-    document.cookie = cookie.serialize('token', '', {
-      maxAge: -1, // Expire the cookie immediately
-    });
-
-    // Force a reload of all the current queries now that the user is
-    // logged in, so we don't accidentally leave any state around.
-    apolloClient.cache.reset().then(() => {
-      // Redirect to a more useful page when signed out
-      redirect({}, '/signin');
-    });
-  };
-
+export default class Hello extends React.Component {
   render() {
     return (
-      <ApolloConsumer>
-        {client => (
-          <div>
-            Hello {this.props.loggedInUser.user.name}!<br />
-            <button onClick={this.signout(client)}>Sign out</button>
+      <div className="home">
+        <div className="header">
+          <Header />
+        </div>
+        <MainContext.Provider>
+          <div className="map">
+            <Map />
           </div>
-        )}
-      </ApolloConsumer>
+          <div className="sidebar">
+            <Sidebar />
+          </div>
+        </MainContext.Provider>
+        <style jsx>{`
+          .home {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            grid-template-rows: 50px 1fr;
+            grid-template-areas:
+              'header header'
+              'map sidebar';
+          }
+
+          .header {
+            grid-area: header;
+          }
+
+          .map {
+            grid-area: map;
+          }
+
+          .sidebar {
+            grid-area: sidebar;
+            background-color: #fff;
+          }
+        `}</style>
+      </div>
     );
   }
 }
