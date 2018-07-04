@@ -11,6 +11,12 @@
     "location": {
       "latitude": 50.0765,
       "longtitude": 14.4378
+    },
+    "description":
+      "ReactiveConf is a 3 day European-wide web & mobile development festival in the heart of Europe made for functional developers, where World-class JS experts share unique insights.",
+    "categories": ["Web", "Mobile", "React"],
+    "price": {
+      "eur": 599
     }
   },
   {
@@ -27,6 +33,12 @@
     "location": {
       "latitude": 52.2297,
       "longtitude": 21.0122
+    },
+    "description":
+      "Front-Trends 2018 is the 8th annual web development and design conference, dedicated to upcoming front-end technologies, ideas and practices.",
+    "categories": ["Frontend", "React", "Angular"],
+    "price": {
+      "eur": 289
     }
   },
   {
@@ -37,12 +49,19 @@
     "endDate": "2018-09-06",
     "city": "Wroclaw",
     "country": "Poland",
-    "cfpUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfSQhE64_1MvCUor1fJG3xBVETXuf-nRKGd4g56_hMLXQbXJQ/viewform",
+    "cfpUrl":
+      "https://docs.google.com/forms/d/e/1FAIpQLSfSQhE64_1MvCUor1fJG3xBVETXuf-nRKGd4g56_hMLXQbXJQ/viewform",
     "cfpEndDate": "2018-03-31",
     "twitter": "@react_native_eu",
     "location": {
       "latitude": 51.1079,
       "longtitude": 17.0385
+    },
+    "description":
+      "First community conference in Europe, focused exclusively on React Native. Community, core contributors, insights, networking and tons of knowledge - that's all waiting for you in one of the most beautiful cities in Central Europe, Wroclaw.",
+    "categories": ["React", "React Native", "Mobile"],
+    "price": {
+      "eur": 499
     }
   }
 ]

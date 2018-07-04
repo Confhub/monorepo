@@ -2,9 +2,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { Layout } from 'antd';
 import MainContext from '../context/MainContext';
-// import Map from '../components/Map';
-const Map = dynamic(import('../components/Map'), { ssr: false });
-import Sidebar from '../components/Sidebar';
+const Map = dynamic(import('../components/home/Map'), { ssr: false });
+import Sidebar from '../components/home/Sidebar';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const { Header } = Layout;

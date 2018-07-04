@@ -1,6 +1,6 @@
 import React from 'react';
-import mapboxgl from './MapboxConstructor';
-import MainContext from '../context/MainContext';
+import mapboxgl from '../MapboxConstructor';
+import MainContext from '../../context/MainContext';
 import Head from 'next/head';
 
 const { Map, Marker, Popup } = mapboxgl;
