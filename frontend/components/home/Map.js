@@ -14,20 +14,8 @@ class MapContainer extends React.Component {
   };
 
   setLocation = () => {
-    const success = position => {
-      const { longitude, latitude } = position.coords;
-      this.map.setCenter([longitude, latitude]);
-    };
-
-    const error = err => {
-      console.log(err);
-    };
-
-    const options = {
-      maximumAge: 5 * 60 * 1000,
-    };
-
-    navigator.geolocation.getCurrentPosition(success, error, options);
+    this.map.setCenter(this.props.location);
+    this.map.setZoom(5);
   };
 
   setMarkers = () => {
@@ -65,8 +53,8 @@ class MapContainer extends React.Component {
     this.map = new Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v9',
-      center: [14.3857148, 50.0713951],
-      zoom: 4,
+      center: [30, 55],
+      zoom: 3,
     });
 
     // this.setLocation();
@@ -81,6 +69,10 @@ class MapContainer extends React.Component {
     if (prevProps.items !== this.props.items) {
       this.removeMarkers();
       this.setMarkers();
+    }
+
+    if (prevProps.location !== this.props.location) {
+      this.setLocation();
     }
   }
 
@@ -121,8 +113,13 @@ class MapContainer extends React.Component {
 
 export default props => (
   <MainContext.Consumer>
-    {({ hoveredItem, items }) => (
-      <MapContainer {...props} hoveredItem={hoveredItem} items={items} />
+    {({ hoveredItem, items, location }) => (
+      <MapContainer
+        {...props}
+        overedItem={hoveredItem}
+        items={items}
+        location={location}
+      />
     )}
   </MainContext.Consumer>
 );

@@ -3,41 +3,58 @@ import data from '../data/conf';
 
 const { Provider, Consumer } = React.createContext();
 
+// TODO: maybe save lcoation to localstorage
 class MainContextProvider extends React.Component {
-    state = {
-       hoveredItem: null,
-        items: data,
+  state = {
+    hoveredItem: null,
+    items: data,
+    location: null,
+  };
+
+  onEnter = id => {
+    this.setState({
+      hoveredItem: id,
+    });
+  };
+
+  onLeave = id => {
+    this.setState(prevState => ({
+      hoveredItem: id === prevState.id ? null : prevState.id,
+    }));
+  };
+
+  getLocation = () => {
+    const success = position => {
+      const { longitude, latitude } = position.coords;
+      this.setState({ location: [longitude, latitude] });
     };
 
-    onEnter = (id) => {
-        this.setState({
-            hoveredItem: id,
-        })
+    const error = err => {
+      console.log(err);
     };
 
-    onLeave = (id) => {
-        this.setState(prevState => ({
-            hoveredItem: id === prevState.id ? null : prevState.id,
-        }))
+    const options = {
+      maximumAge: 5 * 60 * 1000,
     };
 
-    render() {
-        const { hoveredItem, items } = this.state;
-        const context = {
-            onEnter: this.onEnter,
-            onLeave: this.onLeave,
-            hoveredItem,
-            items,
-        };
-        return (
-            <Provider value={context}>
-                {this.props.children}
-            </Provider>
-        )
-    }
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  };
+
+  render() {
+    const { hoveredItem, items, location } = this.state;
+    const context = {
+      onEnter: this.onEnter,
+      onLeave: this.onLeave,
+      getLocation: this.getLocation,
+      hoveredItem,
+      items,
+      location,
+    };
+    return <Provider value={context}>{this.props.children}</Provider>;
+  }
 }
 
 export default {
-    Provider: MainContextProvider,
-    Consumer,
+  Provider: MainContextProvider,
+  Consumer,
 };

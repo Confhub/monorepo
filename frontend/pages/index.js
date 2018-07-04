@@ -46,6 +46,7 @@ export default class Hello extends React.Component {
           .sidebar {
             grid-area: sidebar;
             background-color: #fff;
+            overflow: scroll;
           }
         `}</style>
       </div>

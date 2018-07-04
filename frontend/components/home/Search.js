@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select, Icon } from 'antd';
+import MainContext from '../../context/MainContext';
 
 const Option = Select.Option;
 
@@ -13,6 +14,9 @@ class Search extends React.Component {
     this.setState({
       location,
     });
+    if (location === 0) {
+      this.props.getLocation();
+    }
   };
 
   handleTagsChange = value => {
@@ -36,12 +40,9 @@ class Search extends React.Component {
                 .indexOf(input.toLowerCase()) >= 0
             }
           >
-            <Option value="jack">
+            <Option value={0}>
               <Icon type="environment-o" /> My Location
             </Option>
-            <Option value="all">Whole world </Option>
-            <Option value="lucy">Europe</Option>
-            <Option value="tom">US</Option>
           </Select>
         </label>
         <label>
@@ -77,4 +78,8 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+export default props => (
+  <MainContext.Consumer>
+    {({ getLocation }) => <Search {...props} getLocation={getLocation} />}
+  </MainContext.Consumer>
+);
