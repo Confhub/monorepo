@@ -1,3 +1,5 @@
+import queryString from 'query-string';
+
 const mL = [
   'January',
   'February',
@@ -38,4 +40,18 @@ export const parseDateRange = (startDate, endDate) => {
   const endDay = end.getDate();
 
   return `${month} ${startDay}-${endDay}, ${year}`;
+};
+
+export const searchCity = query => {
+  const params = queryString.stringify({
+    access_token: process.env.MAPBOX_SECRET,
+    type: 'place',
+    autocomplete: true,
+    language: 'en',
+  });
+  return fetch(
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` + params
+  )
+    .then(res => res.json())
+    .then(res => res.features);
 };

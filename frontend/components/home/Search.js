@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select, Icon } from 'antd';
 import MainContext from '../../context/MainContext';
+import { searchCity } from '../helpers';
 
 const Option = Select.Option;
 
@@ -8,41 +9,67 @@ class Search extends React.Component {
   state = {
     location: '',
     tags: [],
+    locationList: null,
   };
 
-  handleLocationChange = location => {
+  handleLocationChange = async location => {
     this.setState({
       location,
     });
-    if (location === 0) {
+
+    const locationList = await searchCity(location);
+
+    this.setState({ locationList });
+  };
+
+  handleLocationSelect = location => {
+    if (location === 'my') {
       this.props.getLocation();
+      this.setState({
+        location: 'My location',
+      });
+      return;
     }
+
+    const item = this.state.locationList.find(item => item.id === location);
+
+    this.props.setLocation(item.center);
+    this.setState({
+      location: item.place_name_en,
+      locationList: null,
+    });
   };
 
   handleTagsChange = value => {
-    this.setState;
+    // this.setState;
   };
 
   render() {
+    const { locationList, location } = this.state;
+
     return (
       <div className="root">
         <label>
           <h4>Location:</h4>
           <Select
+            mode="combobox"
+            value={location}
+            filterOption={false}
+            defaultActiveFirstOption={false}
             style={{ width: '100%' }}
-            showSearch
             placeholder="Select a location"
-            optionFilterProp="children"
-            onChange={this.handleLocationChange}
-            filterOption={(input, option) =>
-              option.props.children
-                .toLowerCase()
-                .indexOf(input.toLowerCase()) >= 0
-            }
+            onSearch={this.handleLocationChange}
+            onSelect={this.handleLocationSelect}
           >
-            <Option value={0}>
+            <Option value="my">
               <Icon type="environment-o" /> My Location
             </Option>
+            {locationList &&
+              locationList.map(item => (
+                <Option key={item.id} value={item.id}>
+                  {item.place_name_en}
+                </Option>
+              ))}
           </Select>
         </label>
         <label>
@@ -80,6 +107,8 @@ class Search extends React.Component {
 
 export default props => (
   <MainContext.Consumer>
-    {({ getLocation }) => <Search {...props} getLocation={getLocation} />}
+    {({ getLocation, setLocation }) => (
+      <Search {...props} getLocation={getLocation} setLocation={setLocation} />
+    )}
   </MainContext.Consumer>
 );

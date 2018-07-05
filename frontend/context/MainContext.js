@@ -26,7 +26,7 @@ class MainContextProvider extends React.Component {
   getLocation = () => {
     const success = position => {
       const { longitude, latitude } = position.coords;
-      this.setState({ location: [longitude, latitude] });
+      this.setLocation([longitude, latitude]);
     };
 
     const error = err => {
@@ -40,12 +40,17 @@ class MainContextProvider extends React.Component {
     navigator.geolocation.getCurrentPosition(success, error, options);
   };
 
+  setLocation = location => {
+    this.setState({ location });
+  };
+
   render() {
     const { hoveredItem, items, location } = this.state;
     const context = {
       onEnter: this.onEnter,
       onLeave: this.onLeave,
       getLocation: this.getLocation,
+      setLocation: this.setLocation,
       hoveredItem,
       items,
       location,
