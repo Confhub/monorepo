@@ -2,11 +2,11 @@ import React from 'react';
 import Search from './Search';
 import List from './List';
 
-const Sidebar = () => {
+const Sidebar = ({ data }) => {
   return (
     <div className="sidebar">
       <Search />
-      <List />
+      <List items={data} />
     </div>
   );
 };
