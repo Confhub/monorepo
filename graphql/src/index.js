@@ -1,55 +1,42 @@
 // @flow
 
-import { ApolloServer } from 'apollo-server';
-import { Prisma } from 'prisma-binding';
+import { GraphQLServer } from 'graphql-yoga';
 
-import Schema from './Schema';
+import { default as typeDefs } from './typeDefs';
+import { default as resolvers } from './resolvers';
+
+// import Schema from './Schema';
 import { createContext } from './helpers';
 
 const port = parseInt(process.env.PORT, 10) || 4000;
 
-const getPrismaInstance = () => {
-  return new Prisma({
-    typeDefs: 'src/generated/prisma.graphql',
-    endpoint: process.env.PRISMA_ENDPOINT,
-    secret: process.env.PRISMA_SECRET,
-    debug: true,
-  });
-};
+const server = new GraphQLServer({
+  typeDefs,
+  resolvers,
+  // schema: Schema,
+  context: async ({ request, connection }: GraphQLServer) => {
+    if (connection) {
+      const token =
+        connection.context['Authorization'] ||
+        connection.context.authorization ||
+        process.env.DEV_API_TOKEN ||
+        '';
 
-const startServer = async () => {
-  const server = new ApolloServer({
-    schema: Schema,
-    context: async ({ req, connection }: ApolloServer) => {
-      if (connection) {
-        const token =
-          connection.context['Authorization'] ||
-          connection.context.authorization ||
-          process.env.DEV_API_TOKEN ||
-          '';
-
-        return createContext(token);
-      } else {
-        if (!req || !req.headers) {
-          return;
-        }
-        const token =
-          req.headers.authorization || process.env.DEV_API_TOKEN || '';
-
-        return createContext(token);
+      return createContext(token);
+    } else {
+      if (!request || !request.headers) {
+        return;
       }
-    },
-    db: getPrismaInstance(),
-    tracing: true,
-    mocks: true,
-  });
+      const token =
+        request.headers.authorization || process.env.DEV_API_TOKEN || '';
 
-  server.listen(port).then(({ url }) => {
-    // eslint-disable-next-line no-console
-    console.log(`🚀 GraphQL server listening at ${url}`);
-  });
-};
-
-startServer().catch((error: Error) => {
-  console.error(error); // eslint-disable-line no-console
+      return createContext(token);
+    }
+  },
+  mocks: false,
 });
+
+server.start({ port }, ({ port }) =>
+  // eslint-disable-next-line no-console
+  console.log(`🚀 GraphQL server listening at localhost:${port}`),
+);

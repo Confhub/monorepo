@@ -13,5 +13,6 @@ secret: ${env:PRISMA_SECRET}
 # `src/generated/prisma.graphql` (as specfied in `.graphqlconfig.yml`).
 hooks:
   post-deploy:
-  - graphql get-schema --project database
+    - echo "Deployment finished"
+    - graphql get-schema --project prisma
     - graphql codegen

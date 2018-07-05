@@ -1,5 +1,5 @@
 # source: https://confhub-test.herokuapp.com/confhub-graphql/dev
-# timestamp: Wed Jul 04 2018 01:34:18 GMT+0200 (Central European Summer Time)
+# timestamp: Thu Jul 05 2018 15:02:18 GMT+0200 (Central European Summer Time)
 
 type AggregateCallForPapers {
   count: Int!
@@ -30,10 +30,6 @@ type AggregatePrice {
 }
 
 type AggregateSocial {
-  count: Int!
-}
-
-type AggregateSpeaker {
   count: Int!
 }
 
@@ -326,7 +322,6 @@ type Conference implements Node {
   startDate: DateTime!
   endDate: DateTime!
   price(where: PriceWhereInput): Price
-  speakers(where: SpeakerWhereInput, orderBy: SpeakerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Speaker!]
   topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic!]
   place(where: PlaceWhereInput): Place
   callForPapers(where: CallForPapersWhereInput): CallForPapers
@@ -352,7 +347,6 @@ input ConferenceCreateInput {
   endDate: DateTime!
   image: ImageCreateOneInput
   price: PriceCreateOneInput
-  speakers: SpeakerCreateManyInput
   topics: TopicCreateManyInput
   place: PlaceCreateOneInput
   callForPapers: CallForPapersCreateOneInput
@@ -447,7 +441,6 @@ input ConferenceUpdateInput {
   endDate: DateTime
   image: ImageUpdateOneInput
   price: PriceUpdateOneInput
-  speakers: SpeakerUpdateManyInput
   topics: TopicUpdateManyInput
   place: PlaceUpdateOneInput
   callForPapers: CallForPapersUpdateOneInput
@@ -709,9 +702,6 @@ input ConferenceWhereInput {
   endDate_gte: DateTime
   image: ImageWhereInput
   price: PriceWhereInput
-  speakers_every: SpeakerWhereInput
-  speakers_some: SpeakerWhereInput
-  speakers_none: SpeakerWhereInput
   topics_every: TopicWhereInput
   topics_some: TopicWhereInput
   topics_none: TopicWhereInput
@@ -1545,69 +1535,63 @@ type Mutation {
   createUser(data: UserCreateInput!): User!
   createConference(data: ConferenceCreateInput!): Conference!
   createCoordinates(data: CoordinatesCreateInput!): Coordinates!
-  createTopic(data: TopicCreateInput!): Topic!
   createImage(data: ImageCreateInput!): Image!
-  createSpeaker(data: SpeakerCreateInput!): Speaker!
   createPlace(data: PlaceCreateInput!): Place!
   createLocation(data: LocationCreateInput!): Location!
   createCallForPapers(data: CallForPapersCreateInput!): CallForPapers!
   createPrice(data: PriceCreateInput!): Price!
   createSocial(data: SocialCreateInput!): Social!
+  createTopic(data: TopicCreateInput!): Topic!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateConference(data: ConferenceUpdateInput!, where: ConferenceWhereUniqueInput!): Conference
   updateCoordinates(data: CoordinatesUpdateInput!, where: CoordinatesWhereUniqueInput!): Coordinates
-  updateTopic(data: TopicUpdateInput!, where: TopicWhereUniqueInput!): Topic
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
-  updateSpeaker(data: SpeakerUpdateInput!, where: SpeakerWhereUniqueInput!): Speaker
   updatePlace(data: PlaceUpdateInput!, where: PlaceWhereUniqueInput!): Place
   updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
   updateCallForPapers(data: CallForPapersUpdateInput!, where: CallForPapersWhereUniqueInput!): CallForPapers
   updatePrice(data: PriceUpdateInput!, where: PriceWhereUniqueInput!): Price
   updateSocial(data: SocialUpdateInput!, where: SocialWhereUniqueInput!): Social
+  updateTopic(data: TopicUpdateInput!, where: TopicWhereUniqueInput!): Topic
   deleteUser(where: UserWhereUniqueInput!): User
   deleteConference(where: ConferenceWhereUniqueInput!): Conference
   deleteCoordinates(where: CoordinatesWhereUniqueInput!): Coordinates
-  deleteTopic(where: TopicWhereUniqueInput!): Topic
   deleteImage(where: ImageWhereUniqueInput!): Image
-  deleteSpeaker(where: SpeakerWhereUniqueInput!): Speaker
   deletePlace(where: PlaceWhereUniqueInput!): Place
   deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteCallForPapers(where: CallForPapersWhereUniqueInput!): CallForPapers
   deletePrice(where: PriceWhereUniqueInput!): Price
   deleteSocial(where: SocialWhereUniqueInput!): Social
+  deleteTopic(where: TopicWhereUniqueInput!): Topic
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertConference(where: ConferenceWhereUniqueInput!, create: ConferenceCreateInput!, update: ConferenceUpdateInput!): Conference!
   upsertCoordinates(where: CoordinatesWhereUniqueInput!, create: CoordinatesCreateInput!, update: CoordinatesUpdateInput!): Coordinates!
-  upsertTopic(where: TopicWhereUniqueInput!, create: TopicCreateInput!, update: TopicUpdateInput!): Topic!
   upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
-  upsertSpeaker(where: SpeakerWhereUniqueInput!, create: SpeakerCreateInput!, update: SpeakerUpdateInput!): Speaker!
   upsertPlace(where: PlaceWhereUniqueInput!, create: PlaceCreateInput!, update: PlaceUpdateInput!): Place!
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   upsertCallForPapers(where: CallForPapersWhereUniqueInput!, create: CallForPapersCreateInput!, update: CallForPapersUpdateInput!): CallForPapers!
   upsertPrice(where: PriceWhereUniqueInput!, create: PriceCreateInput!, update: PriceUpdateInput!): Price!
   upsertSocial(where: SocialWhereUniqueInput!, create: SocialCreateInput!, update: SocialUpdateInput!): Social!
+  upsertTopic(where: TopicWhereUniqueInput!, create: TopicCreateInput!, update: TopicUpdateInput!): Topic!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyConferences(data: ConferenceUpdateInput!, where: ConferenceWhereInput): BatchPayload!
   updateManyCoordinateses(data: CoordinatesUpdateInput!, where: CoordinatesWhereInput): BatchPayload!
-  updateManyTopics(data: TopicUpdateInput!, where: TopicWhereInput): BatchPayload!
   updateManyImages(data: ImageUpdateInput!, where: ImageWhereInput): BatchPayload!
-  updateManySpeakers(data: SpeakerUpdateInput!, where: SpeakerWhereInput): BatchPayload!
   updateManyPlaces(data: PlaceUpdateInput!, where: PlaceWhereInput): BatchPayload!
   updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
   updateManyCallForPaperses(data: CallForPapersUpdateInput!, where: CallForPapersWhereInput): BatchPayload!
   updateManyPrices(data: PriceUpdateInput!, where: PriceWhereInput): BatchPayload!
   updateManySocials(data: SocialUpdateInput!, where: SocialWhereInput): BatchPayload!
+  updateManyTopics(data: TopicUpdateInput!, where: TopicWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyConferences(where: ConferenceWhereInput): BatchPayload!
   deleteManyCoordinateses(where: CoordinatesWhereInput): BatchPayload!
-  deleteManyTopics(where: TopicWhereInput): BatchPayload!
   deleteManyImages(where: ImageWhereInput): BatchPayload!
-  deleteManySpeakers(where: SpeakerWhereInput): BatchPayload!
   deleteManyPlaces(where: PlaceWhereInput): BatchPayload!
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
   deleteManyCallForPaperses(where: CallForPapersWhereInput): BatchPayload!
   deleteManyPrices(where: PriceWhereInput): BatchPayload!
   deleteManySocials(where: SocialWhereInput): BatchPayload!
+  deleteManyTopics(where: TopicWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -2138,36 +2122,33 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   conferences(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Conference]!
   coordinateses(where: CoordinatesWhereInput, orderBy: CoordinatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Coordinates]!
-  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic]!
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
-  speakers(where: SpeakerWhereInput, orderBy: SpeakerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Speaker]!
   places(where: PlaceWhereInput, orderBy: PlaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Place]!
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   callForPaperses(where: CallForPapersWhereInput, orderBy: CallForPapersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CallForPapers]!
   prices(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Price]!
   socials(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Social]!
+  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic]!
   user(where: UserWhereUniqueInput!): User
   conference(where: ConferenceWhereUniqueInput!): Conference
   coordinates(where: CoordinatesWhereUniqueInput!): Coordinates
-  topic(where: TopicWhereUniqueInput!): Topic
   image(where: ImageWhereUniqueInput!): Image
-  speaker(where: SpeakerWhereUniqueInput!): Speaker
   place(where: PlaceWhereUniqueInput!): Place
   location(where: LocationWhereUniqueInput!): Location
   callForPapers(where: CallForPapersWhereUniqueInput!): CallForPapers
   price(where: PriceWhereUniqueInput!): Price
   social(where: SocialWhereUniqueInput!): Social
+  topic(where: TopicWhereUniqueInput!): Topic
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   conferencesConnection(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferenceConnection!
   coordinatesesConnection(where: CoordinatesWhereInput, orderBy: CoordinatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoordinatesConnection!
-  topicsConnection(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TopicConnection!
   imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
-  speakersConnection(where: SpeakerWhereInput, orderBy: SpeakerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpeakerConnection!
   placesConnection(where: PlaceWhereInput, orderBy: PlaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlaceConnection!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
   callForPapersesConnection(where: CallForPapersWhereInput, orderBy: CallForPapersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CallForPapersConnection!
   pricesConnection(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PriceConnection!
   socialsConnection(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SocialConnection!
+  topicsConnection(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TopicConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -2431,303 +2412,17 @@ input SocialWhereUniqueInput {
   id: ID
 }
 
-type Speaker implements Node {
-  id: ID!
-  name: String
-  email: String!
-  createdAt: DateTime!
-}
-
-"""A connection to a list of items."""
-type SpeakerConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [SpeakerEdge]!
-  aggregate: AggregateSpeaker!
-}
-
-input SpeakerCreateInput {
-  name: String
-  email: String!
-}
-
-input SpeakerCreateManyInput {
-  create: [SpeakerCreateInput!]
-  connect: [SpeakerWhereUniqueInput!]
-}
-
-"""An edge in a connection."""
-type SpeakerEdge {
-  """The item at the end of the edge."""
-  node: Speaker!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum SpeakerOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  email_ASC
-  email_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type SpeakerPreviousValues {
-  id: ID!
-  name: String
-  email: String!
-  createdAt: DateTime!
-}
-
-type SpeakerSubscriptionPayload {
-  mutation: MutationType!
-  node: Speaker
-  updatedFields: [String!]
-  previousValues: SpeakerPreviousValues
-}
-
-input SpeakerSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SpeakerSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SpeakerSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SpeakerSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: SpeakerWhereInput
-}
-
-input SpeakerUpdateDataInput {
-  name: String
-  email: String
-}
-
-input SpeakerUpdateInput {
-  name: String
-  email: String
-}
-
-input SpeakerUpdateManyInput {
-  create: [SpeakerCreateInput!]
-  connect: [SpeakerWhereUniqueInput!]
-  disconnect: [SpeakerWhereUniqueInput!]
-  delete: [SpeakerWhereUniqueInput!]
-  update: [SpeakerUpdateWithWhereUniqueNestedInput!]
-  upsert: [SpeakerUpsertWithWhereUniqueNestedInput!]
-}
-
-input SpeakerUpdateWithWhereUniqueNestedInput {
-  where: SpeakerWhereUniqueInput!
-  data: SpeakerUpdateDataInput!
-}
-
-input SpeakerUpsertWithWhereUniqueNestedInput {
-  where: SpeakerWhereUniqueInput!
-  update: SpeakerUpdateDataInput!
-  create: SpeakerCreateInput!
-}
-
-input SpeakerWhereInput {
-  """Logical AND on all given filters."""
-  AND: [SpeakerWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [SpeakerWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [SpeakerWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  email: String
-
-  """All values that are not equal to given value."""
-  email_not: String
-
-  """All values that are contained in given list."""
-  email_in: [String!]
-
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  _MagicalBackRelation_ConferenceToSpeaker_every: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToSpeaker_some: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToSpeaker_none: ConferenceWhereInput
-}
-
-input SpeakerWhereUniqueInput {
-  id: ID
-}
-
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   conference(where: ConferenceSubscriptionWhereInput): ConferenceSubscriptionPayload
   coordinates(where: CoordinatesSubscriptionWhereInput): CoordinatesSubscriptionPayload
-  topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
-  speaker(where: SpeakerSubscriptionWhereInput): SpeakerSubscriptionPayload
   place(where: PlaceSubscriptionWhereInput): PlaceSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
   callForPapers(where: CallForPapersSubscriptionWhereInput): CallForPapersSubscriptionPayload
   price(where: PriceSubscriptionWhereInput): PriceSubscriptionPayload
   social(where: SocialSubscriptionWhereInput): SocialSubscriptionPayload
+  topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
 }
 
 type Topic implements Node {
@@ -2982,9 +2677,9 @@ input TopicWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  _MagicalBackRelation_UserClasses_every: ConferenceWhereInput
-  _MagicalBackRelation_UserClasses_some: ConferenceWhereInput
-  _MagicalBackRelation_UserClasses_none: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTopic_every: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTopic_some: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTopic_none: ConferenceWhereInput
 }
 
 input TopicWhereUniqueInput {
@@ -2996,6 +2691,7 @@ type User implements Node {
   email: String!
   name: String
   createdAt: DateTime!
+  password: String!
 }
 
 """A connection to a list of items."""
@@ -3011,6 +2707,7 @@ type UserConnection {
 input UserCreateInput {
   email: String!
   name: String
+  password: String!
 }
 
 """An edge in a connection."""
@@ -3031,6 +2728,8 @@ enum UserOrderByInput {
   name_DESC
   createdAt_ASC
   createdAt_DESC
+  password_ASC
+  password_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -3040,6 +2739,7 @@ type UserPreviousValues {
   email: String!
   name: String
   createdAt: DateTime!
+  password: String!
 }
 
 type UserSubscriptionPayload {
@@ -3084,6 +2784,7 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   name: String
+  password: String
 }
 
 input UserWhereInput {
@@ -3237,6 +2938,46 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
 }
 
 input UserWhereUniqueInput {
