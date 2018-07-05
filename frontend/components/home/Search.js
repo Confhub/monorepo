@@ -46,12 +46,14 @@ class Search extends React.Component {
 
   render() {
     const { locationList, location } = this.state;
+    const { locationLoading } = this.props;
 
     return (
       <div className="root">
         <label>
           <h4>Location:</h4>
           <Select
+            disabled={locationLoading}
             mode="combobox"
             value={location}
             filterOption={false}
@@ -107,8 +109,13 @@ class Search extends React.Component {
 
 export default props => (
   <MainContext.Consumer>
-    {({ getLocation, setLocation }) => (
-      <Search {...props} getLocation={getLocation} setLocation={setLocation} />
+    {({ getLocation, setLocation, locationLoading }) => (
+      <Search
+        {...props}
+        getLocation={getLocation}
+        setLocation={setLocation}
+        locationLoading={locationLoading}
+      />
     )}
   </MainContext.Consumer>
 );

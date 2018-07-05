@@ -1,5 +1,6 @@
 import React from 'react';
 import data from '../data/conf';
+import { getLocation } from '../components/helpers';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -9,6 +10,7 @@ class MainContextProvider extends React.Component {
     hoveredItem: null,
     items: data,
     location: null,
+    locationLoading: false,
   };
 
   onEnter = id => {
@@ -23,21 +25,11 @@ class MainContextProvider extends React.Component {
     }));
   };
 
-  getLocation = () => {
-    const success = position => {
-      const { longitude, latitude } = position.coords;
-      this.setLocation([longitude, latitude]);
-    };
-
-    const error = err => {
-      console.log(err);
-    };
-
-    const options = {
-      maximumAge: 5 * 60 * 1000,
-    };
-
-    navigator.geolocation.getCurrentPosition(success, error, options);
+  getLocation = async () => {
+    this.setState({ locationLoading: true });
+    const coordinates = await getLocation();
+    this.setLocation(coordinates);
+    this.setState({ locationLoading: false });
   };
 
   setLocation = location => {
@@ -45,7 +37,7 @@ class MainContextProvider extends React.Component {
   };
 
   render() {
-    const { hoveredItem, items, location } = this.state;
+    const { hoveredItem, items, location, locationLoading } = this.state;
     const context = {
       onEnter: this.onEnter,
       onLeave: this.onLeave,
@@ -54,6 +46,7 @@ class MainContextProvider extends React.Component {
       hoveredItem,
       items,
       location,
+      locationLoading,
     };
     return <Provider value={context}>{this.props.children}</Provider>;
   }

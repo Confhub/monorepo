@@ -55,3 +55,21 @@ export const searchCity = query => {
     .then(res => res.json())
     .then(res => res.features);
 };
+
+export const getLocation = () =>
+  new Promise((resolve, reject) => {
+    const success = position => {
+      const { longitude, latitude } = position.coords;
+      resolve([longitude, latitude]);
+    };
+
+    const error = err => {
+      reject(err);
+    };
+
+    const options = {
+      maximumAge: 5 * 60 * 1000,
+    };
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  });

@@ -13,9 +13,15 @@ class MapContainer extends React.Component {
     markers: null,
   };
 
+  getBounds = () => {
+    const [sw, ne] = this.map.getBounds().toArray();
+    console.log({ sw, ne });
+  };
+
   setLocation = () => {
     this.map.setCenter(this.props.location);
     this.map.setZoom(5);
+    this.getBounds();
   };
 
   setMarkers = () => {
@@ -57,7 +63,8 @@ class MapContainer extends React.Component {
       zoom: 3,
     });
 
-    // this.setLocation();
+    this.getBounds();
+
     this.setMarkers();
   }
 
