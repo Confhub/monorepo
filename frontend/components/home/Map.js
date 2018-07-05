@@ -27,11 +27,8 @@ class MapContainer extends React.Component {
   setMarkers = () => {
     console.log(this.props.items);
     const markers = this.props.items.map(item => {
-      console.log({item});
-      const {
-        name,
-        place,
-      } = item;
+      console.log({ item });
+      const { name, place } = item;
       const { latitude, longitude } = place.location.coordinates;
 
       console.log(latitude, longitude);
@@ -126,11 +123,7 @@ class MapContainer extends React.Component {
 export default props => (
   <MainContext.Consumer>
     {({ hoveredItem, location }) => (
-      <MapContainer
-        {...props}
-        overedItem={hoveredItem}
-        location={location}
-      />
+      <MapContainer {...props} overedItem={hoveredItem} location={location} />
     )}
   </MainContext.Consumer>
 );

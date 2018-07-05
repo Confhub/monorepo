@@ -4,9 +4,9 @@ import dynamic from 'next/dynamic';
 
 const Map = dynamic(import('./Map'), { ssr: false });
 
-const MapFragment = ({ items }) => <Map items={items} />;
+const MapContainer = ({ items }) => <Map items={items} />;
 
-MapFragment.fragments = {
+MapContainer.fragments = {
   items: gql`
     fragment Map on Conference {
       name
@@ -22,4 +22,4 @@ MapFragment.fragments = {
   `,
 };
 
-export default MapFragment;
+export default MapContainer;

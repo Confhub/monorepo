@@ -50,7 +50,7 @@ export const searchCity = query => {
     language: 'en',
   });
   return fetch(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` + params
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` + params,
   )
     .then(res => res.json())
     .then(res => res.features);
