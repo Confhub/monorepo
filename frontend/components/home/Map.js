@@ -25,11 +25,16 @@ class MapContainer extends React.Component {
   };
 
   setMarkers = () => {
+    console.log(this.props.items);
     const markers = this.props.items.map(item => {
+      console.log({item});
       const {
         name,
-        location: { latitude, longtitude },
+        place,
       } = item;
+      const { latitude, longitude } = place.location.coordinates;
+
+      console.log(latitude, longitude);
       const popup = new Popup().setText(name);
 
       popup.on('open', () => {
@@ -37,7 +42,7 @@ class MapContainer extends React.Component {
       });
 
       const marker = new Marker()
-        .setLngLat([longtitude, latitude])
+        .setLngLat([longitude, latitude])
         .setPopup(popup)
         .addTo(this.map);
 
@@ -120,11 +125,10 @@ class MapContainer extends React.Component {
 
 export default props => (
   <MainContext.Consumer>
-    {({ hoveredItem, items, location }) => (
+    {({ hoveredItem, location }) => (
       <MapContainer
         {...props}
         overedItem={hoveredItem}
-        items={items}
         location={location}
       />
     )}
