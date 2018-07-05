@@ -20,7 +20,14 @@ type Conference {
   place: Place,
   callForPapers: CallForPapers
   social: Social
+  publishStatus: PUBLISH_STATUS @default(value: DRAFT)
 }
+
+enum PUBLISH_STATUS {
+  DRAFT
+  PUBLISHED
+}
+
 
 type Place {
   id: ID! @unique

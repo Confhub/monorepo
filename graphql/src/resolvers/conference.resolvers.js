@@ -10,5 +10,6 @@ export default {
   },
   Mutation: {
     createConference: forwardTo('db'),
+    updateConference: forwardTo('db'),
   },
 };

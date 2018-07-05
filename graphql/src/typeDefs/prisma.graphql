@@ -1,5 +1,5 @@
 # source: https://confhub-test.herokuapp.com/confhub-graphql/dev
-# timestamp: Thu Jul 05 2018 15:02:18 GMT+0200 (Central European Summer Time)
+# timestamp: Thu Jul 05 2018 15:39:46 GMT+0200 (Central European Summer Time)
 
 type AggregateCallForPapers {
   count: Int!
@@ -326,6 +326,7 @@ type Conference implements Node {
   place(where: PlaceWhereInput): Place
   callForPapers(where: CallForPapersWhereInput): CallForPapers
   social(where: SocialWhereInput): Social
+  publishStatus: PUBLISH_STATUS
 }
 
 """A connection to a list of items."""
@@ -345,6 +346,7 @@ input ConferenceCreateInput {
   url: String
   startDate: DateTime!
   endDate: DateTime!
+  publishStatus: PUBLISH_STATUS
   image: ImageCreateOneInput
   price: PriceCreateOneInput
   topics: TopicCreateManyInput
@@ -377,6 +379,8 @@ enum ConferenceOrderByInput {
   startDate_DESC
   endDate_ASC
   endDate_DESC
+  publishStatus_ASC
+  publishStatus_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -391,6 +395,7 @@ type ConferencePreviousValues {
   url: String
   startDate: DateTime!
   endDate: DateTime!
+  publishStatus: PUBLISH_STATUS
 }
 
 type ConferenceSubscriptionPayload {
@@ -439,6 +444,7 @@ input ConferenceUpdateInput {
   url: String
   startDate: DateTime
   endDate: DateTime
+  publishStatus: PUBLISH_STATUS
   image: ImageUpdateOneInput
   price: PriceUpdateOneInput
   topics: TopicUpdateManyInput
@@ -700,6 +706,16 @@ input ConferenceWhereInput {
 
   """All values greater than or equal the given value."""
   endDate_gte: DateTime
+  publishStatus: PUBLISH_STATUS
+
+  """All values that are not equal to given value."""
+  publishStatus_not: PUBLISH_STATUS
+
+  """All values that are contained in given list."""
+  publishStatus_in: [PUBLISH_STATUS!]
+
+  """All values that are not contained in given list."""
+  publishStatus_not_in: [PUBLISH_STATUS!]
   image: ImageWhereInput
   price: PriceWhereInput
   topics_every: TopicWhereInput
@@ -2116,6 +2132,11 @@ input PriceWhereInput {
 
 input PriceWhereUniqueInput {
   id: ID
+}
+
+enum PUBLISH_STATUS {
+  DRAFT
+  PUBLISHED
 }
 
 type Query {
