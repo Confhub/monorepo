@@ -1,18 +1,14 @@
 import React from 'react';
-import { Layout } from 'antd';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { Layout } from 'antd';
 
 import MainContext from '../context/MainContext';
 import Sidebar from '../components/home/Sidebar';
-
-import ListComponent from '../components/home/List';
+import List from '../components/home/List';
+import MapContainer from '../components/home/MapContainer';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-
-import MapFragment from '../components/home/MapFragment';
-
-const { Header } = Layout;
 
 const GET_CONFERENCE_LIST = gql`
   query conferences($publishStatus: PUBLISH_STATUS!) {
@@ -21,8 +17,8 @@ const GET_CONFERENCE_LIST = gql`
       ...Map
     }
   }
-  ${ListComponent.fragments.items}
-  ${MapFragment.fragments.items}
+  ${List.fragments.items}
+  ${MapContainer.fragments.items}
 `;
 
 export default class Hello extends React.Component {
@@ -37,46 +33,19 @@ export default class Hello extends React.Component {
           if (error) return `Error! ${error.message}`;
 
           return (
-            <div className="home">
-              <div className="header">
-                <Header />
-              </div>
-              <MainContext.Provider>
-                <div className="map">
-                  <MapFragment items={data.conferences}  />
-                </div>
-                <div className="sidebar">
+            <MainContext.Provider>
+              <Layout.Sider width="60%" style={{ background: '#fff' }}>
+                <MapContainer items={data.conferences} />
+              </Layout.Sider>
+
+              <Layout.Content style={{ padding: '0 20px', marginTop: 20 }}>
+                <div
+                  style={{ background: '#fff', padding: 24, minHeight: 380 }}
+                >
                   <Sidebar data={data.conferences} />
                 </div>
-              </MainContext.Provider>
-
-              <style jsx>{`
-                .home {
-                  width: 100vw;
-                  height: 100vh;
-                  display: grid;
-                  grid-template-columns: 1fr 450px;
-                  grid-template-rows: 50px 1fr;
-                  grid-template-areas:
-                    'header header'
-                    'map sidebar';
-                }
-
-                .header {
-                  grid-area: header;
-                }
-
-                .map {
-                  grid-area: map;
-                }
-
-                .sidebar {
-                  grid-area: sidebar;
-                  background-color: #fff;
-                  overflow: scroll;
-                }
-              `}</style>
-            </div>
+              </Layout.Content>
+            </MainContext.Provider>
           );
         }}
       </Query>

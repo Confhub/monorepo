@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { List, Icon, Tag, Divider, Button } from 'antd';
+import { List as AntList, Icon, Tag, Divider, Button } from 'antd';
 import gql from 'graphql-tag';
 
 import { parseDateRange } from '../helpers';
@@ -27,22 +27,21 @@ const renderDescription = item => {
   );
 };
 
-const ListComponent = ({ items }) => {
-  console.log(items);
+const List = ({ items }) => {
   return (
     <div className="list">
-      {/*<h3>Found: {data.conferences.length} items</h3>*/}
-      <List
+      <h3>Found: {items.length} items</h3>
+      <AntList
         itemLayout="vertical"
         dataSource={items}
         renderItem={item => (
-          <List.Item
+          <AntList.Item
             key={item.id}
             // onMouseEnter={() => onEnter(item.id)}
             // onMouseLeave={() => onLeave(item.id)}
           >
             <div className="list-item-inner">
-              <List.Item.Meta
+              <AntList.Item.Meta
                 title={
                   <Link href="/fake-url">
                     <a>{item.name}</a>
@@ -68,7 +67,7 @@ const ListComponent = ({ items }) => {
                 <Button type="primary">Get tickets</Button>
               </div>
             </div>
-          </List.Item>
+          </AntList.Item>
         )}
       />
 
@@ -104,7 +103,7 @@ const ListComponent = ({ items }) => {
   );
 };
 
-ListComponent.fragments = {
+List.fragments = {
   items: gql`
     fragment List on Conference {
       publishStatus
@@ -136,4 +135,4 @@ ListComponent.fragments = {
   `,
 };
 
-export default ListComponent;
+export default List;

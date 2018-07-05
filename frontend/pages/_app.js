@@ -1,25 +1,21 @@
 import App, { Container } from 'next/app';
-import Head from 'next/head';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
+
+import Layout from '../components/Layout/Layout';
 import withApollo from '../lib/withApollo';
 
 class MyApp extends App {
   render() {
     const { Component, pageProps, apolloClient } = this.props;
     return (
-      <div>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta charSet="utf-8" />
-          <link rel="stylesheet" href="/_next/static/style.css" />
-        </Head>
-        <Container>
-          <ApolloProvider client={apolloClient}>
+      <Container>
+        <ApolloProvider client={apolloClient}>
+          <Layout>
             <Component {...pageProps} />
-          </ApolloProvider>
-        </Container>
-      </div>
+          </Layout>
+        </ApolloProvider>
+      </Container>
     );
   }
 }
