@@ -3,6 +3,7 @@ type User {
   email: String!
   name: String
   createdAt: DateTime!
+  password: String!
 }
 
 type Conference {
@@ -15,18 +16,10 @@ type Conference {
   startDate: DateTime!
   endDate: DateTime!
   price: Price
-  speakers: [Speaker!]!
-  topics: [Topic!]! @relation(name: "UserClasses")
+  topics: [Topic!]!
   place: Place,
   callForPapers: CallForPapers
   social: Social
-}
-
-type Speaker {
-  id: ID! @unique
-  name: String
-  email: String!
-  createdAt: DateTime!
 }
 
 type Place {
