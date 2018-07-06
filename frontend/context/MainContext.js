@@ -1,5 +1,4 @@
 import React from 'react';
-import data from '../data/conf';
 import { getLocation } from '../components/helpers';
 
 const { Provider, Consumer } = React.createContext();
@@ -8,7 +7,6 @@ const { Provider, Consumer } = React.createContext();
 class MainContextProvider extends React.Component {
   state = {
     hoveredItem: null,
-    items: data,
     location: null,
     locationLoading: false,
   };
