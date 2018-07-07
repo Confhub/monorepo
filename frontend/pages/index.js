@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Layout } from 'antd';
 
 import MainContext from '../context/MainContext';
 import Sidebar from '../components/home/Sidebar';
@@ -34,17 +33,33 @@ export default class Hello extends React.Component {
 
           return (
             <MainContext.Provider>
-              <Layout.Sider width="60%" style={{ background: '#fff' }}>
-                <MapContainer items={data.conferences} />
-              </Layout.Sider>
-
-              <Layout.Content style={{ padding: '0 20px', marginTop: 20 }}>
-                <div
-                  style={{ background: '#fff', padding: 24, minHeight: 380 }}
-                >
+              <div className="root">
+                <div className="map">
+                  <MapContainer items={data.conferences} />
+                </div>
+                <div className="sidebar">
                   <Sidebar data={data.conferences} />
                 </div>
-              </Layout.Content>
+                <style jsx>{`
+                  .root {
+                    display: grid;
+                    grid-template-columns: 60% 1fr;
+                    grid-template-rows: 100%;
+                    grid-template-areas: 'map sidebar';
+                    height: 100%;
+                  }
+
+                  .map {
+                    grid-area: map;
+                  }
+
+                  .sidebar {
+                    grid-area: sidebar;
+                    overflow: scroll;
+                    padding: 0 20px;
+                  }
+                `}</style>
+              </div>
             </MainContext.Provider>
           );
         }}
