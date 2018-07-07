@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Layout } from 'antd';
+import { withRouter } from 'next/router';
 
 import Meta from './Meta';
 import Header from './header/Header';
@@ -7,22 +7,58 @@ import Footer from './footer/Footer';
 
 class LayoutComponent extends React.Component {
   render() {
+    const rootClasses = this.props.router.pathname === '/' ? ' home' : '';
     return (
       <Fragment>
         <Meta />
 
-        <Layout className="home">
-          <Header />
+        <div className={'root' + rootClasses}>
+          <Header className="header" />
 
-          <Layout.Content>
-            <Layout>{this.props.children}</Layout>
-          </Layout.Content>
+          <div className="layout">{this.props.children}</div>
 
-          <Footer />
-        </Layout>
+          <Footer className="footer" />
+        </div>
+        <style jsx>{`
+          .root {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas:
+              'header'
+              'content'
+              'footer';
+          }
+
+          .home {
+            width: 100vw;
+            height: 100vh;
+          }
+
+          .home .layout {
+            overflow: hidden;
+          }
+
+          .root :global(.header) {
+            grid-area: header;
+          }
+
+          .layout {
+            grid-area: content;
+          }
+
+          .root :global(.footer) {
+            grid-area: footer;
+            padding: 12px;
+          }
+
+          .root :global(.footer p:last-child) {
+            margin: 0;
+          }
+        `}</style>
       </Fragment>
     );
   }
 }
 
-export default LayoutComponent;
+export default withRouter(LayoutComponent);
