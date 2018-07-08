@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import HomePageContext from './HomePageContext';
 import Search from './Search/Search';
-import ListContainer from './List/ListContainer';
+import ListContainer from '../general/List/ListContainer';
 import MapContainer from './MapDepricated/MapContainer';
 import Map from './Map/Map';
 

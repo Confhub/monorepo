@@ -2,36 +2,14 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { List as AntList, Icon, Tag, Divider, Button } from 'antd';
+import { List as AntList, Tag, Button } from 'antd';
 
-import { parseDateRange } from '../../helpers';
+import ListItemDescription from './ListItemDescription';
 
 import type { ListItem as ListItemType } from './__generated__/ListItem.js';
 
 type Props = {
   item: ListItemType,
-};
-
-const renderDescription = item => {
-  const { place, startDate, endDate, price } = item;
-  const { location } = place;
-  const { country, city } = location;
-
-  return (
-    <>
-      <span>
-        <Icon type="environment-o" /> {city}, {country}
-      </span>
-      <Divider type="vertical" />
-      <span>
-        <Icon type="calendar" /> {parseDateRange(startDate, endDate)}
-      </span>
-      <Divider type="vertical" />
-      <span>
-        <Icon type="shopping-cart" /> {price.amount}€
-      </span>
-    </>
-  );
 };
 
 const ListItem = ({ item }: Props) => {
@@ -49,7 +27,7 @@ const ListItem = ({ item }: Props) => {
                 <a>{item.name}</a>
               </Link>
             }
-            description={renderDescription(item)}
+            description={<ListItemDescription item={item} />}
           />
           <div className="block">
             <img
