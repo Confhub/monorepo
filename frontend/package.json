@@ -10,6 +10,7 @@
     "apollo-link-context": "^1.0.8",
     "cookie": "^0.3.1",
     "graphql": "^0.13.2",
+    "graphql-anywhere": "^4.1.14",
     "graphql-tag": "^2.9.2",
     "isomorphic-unfetch": "^2.0.0",
     "mapbox-gl": "^0.46.0",
