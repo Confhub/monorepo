@@ -98,6 +98,7 @@ class Search extends React.Component {
               placeholder="Choose categories"
               value={tags}
               onChange={setTags}
+              optionFilterProp="children"
             >
               {data &&
                 data.tags &&
