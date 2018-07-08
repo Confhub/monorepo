@@ -1,3 +1,5 @@
+// @flow
+
 import Router from 'next/router';
 
 export default (context, target) => {

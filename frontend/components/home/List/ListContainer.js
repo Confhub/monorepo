@@ -1,42 +1,48 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import gql from 'graphql-tag';
 
 import List from './List';
 
-const ListContainer = ({ items }) => {
-  return <List items={items} />;
+import type { ListItem as ListItemType } from './__generated__/ListItem.js';
+
+type Props = {
+  items: ListItemType[],
 };
 
-ListContainer.fragments = {
-  items: gql`
-    fragment List on Conference {
-      publishStatus
-      id
+export const LIST_ITEM_FRAGMENT = gql`
+  fragment ListItem on Conference {
+    publishStatus
+    id
+    name
+    description
+    startDate
+    endDate
+    place {
       name
-      description
-      startDate
-      endDate
-      place {
-        name
-        location {
-          country
-          city
-          street
-          zip
-        }
-      }
-      image {
-        alt
-        src
-      }
-      topics {
-        id
-      }
-      price {
-        amount
+      location {
+        country
+        city
+        street
+        zip
       }
     }
-  `,
+    image {
+      alt
+      src
+    }
+    topics {
+      id
+    }
+    price {
+      amount
+    }
+  }
+`;
+
+const ListContainer = ({ items }: Props) => {
+  return <List items={items} />;
 };
 
 export default ListContainer;

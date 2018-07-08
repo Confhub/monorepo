@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 
 import HomePageContext from './HomePageContext';
 import Search from './Search/Search';

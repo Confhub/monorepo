@@ -1,9 +1,10 @@
+import * as React from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import cookie from 'cookie';
 import redirect from '../lib/redirect';
 
-const SIGN_IN = gql`
+const SIGN_IN = gqltemp`
   mutation Signin($email: String!, $password: String!) {
     signinUser(email: { email: $email, password: $password }) {
       token

@@ -1,7 +1,23 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import gql from 'graphql-tag';
 import dynamic from 'next/dynamic';
 import { Layout } from 'antd';
+
+export const MAP_FRAGMENT = gql`
+  fragment Map on Conference {
+    name
+    place {
+      location {
+        coordinates {
+          latitude
+          longitude
+        }
+      }
+    }
+  }
+`;
 
 const Map = dynamic(import('./Map'), {
   ssr: false,
@@ -13,21 +29,5 @@ const Map = dynamic(import('./Map'), {
 });
 
 const MapContainer = ({ items }) => <Map items={items} />;
-
-MapContainer.fragments = {
-  items: gql`
-    fragment Map on Conference {
-      name
-      place {
-        location {
-          coordinates {
-            latitude
-            longitude
-          }
-        }
-      }
-    }
-  `,
-};
 
 export default MapContainer;

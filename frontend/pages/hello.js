@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import cookie from 'cookie';
 import { ApolloConsumer } from 'react-apollo';
 

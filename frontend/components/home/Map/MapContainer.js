@@ -1,24 +1,24 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import gql from 'graphql-tag';
 
 import Map from './Map';
 
-const MapContainer = ({ items }) => <Map items={items} />;
-
-MapContainer.fragments = {
-  items: gql`
-    fragment Map on Conference {
-      name
-      place {
-        location {
-          coordinates {
-            latitude
-            longitude
-          }
+export const MAP_FRAGMENT = gqltemp`
+  fragment Map on Conference {
+    name
+    place {
+      location {
+        coordinates {
+          latitude
+          longitude
         }
       }
     }
-  `,
-};
+  }
+`;
+
+const MapContainer = ({ items }) => <Map items={items} />;
 
 export default MapContainer;

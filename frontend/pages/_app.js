@@ -1,5 +1,7 @@
+// @flow
+
+import * as React from 'react';
 import App, { Container } from 'next/app';
-import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 
 import Layout from '../components/layout/Layout';

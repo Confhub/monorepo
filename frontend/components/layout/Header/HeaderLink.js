@@ -3,11 +3,11 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 
-/*type Props = {
+type Props = {
   pathname: string,
   url: string,
   title: string,
-};*/
+};
 
 const HeaderLink = ({ pathname, url, title }: Props) => {
   return (

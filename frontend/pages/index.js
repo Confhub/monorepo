@@ -1,25 +1,27 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import HomePage from '../components/home/HomePage';
-import ListContainer from '../components/home/List/ListContainer';
-import MapContainer from '../components/home/MapDepricated/MapContainer';
+import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
+import { MAP_FRAGMENT } from '../components/home/MapDepricated/MapContainer';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const GET_CONFERENCE_LIST = gql`
   query conferences($publishStatus: PUBLISH_STATUS!) {
     conferences(where: { publishStatus: $publishStatus }) {
-      ...List
+      ...ListItem
       ...Map
     }
   }
-  ${ListContainer.fragments.items}
-  ${MapContainer.fragments.items}
+  ${LIST_ITEM_FRAGMENT}
+  ${MAP_FRAGMENT}
 `;
 
-class HomePageContainer extends React.Component {
+class HomePageContainer extends React.Component<{}> {
   render() {
     return (
       <Query

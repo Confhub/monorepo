@@ -25,15 +25,21 @@
     "styled-jsx-plugin-sass": "^0.2.4"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.5",
     "babel-plugin-import": "^1.8.0",
     "babel-plugin-inline-dotenv": "^1.1.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "flow-bin": "^0.76.0",
     "prettier": "^1.13.7"
   },
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "prettier": "prettier --single-quote --trailing-comma all --write '{pages,components,lib}/**/*.js'"
+    "typecheck": "flow check --color=always --include-warnings",
+    "prettier": "prettier --single-quote --trailing-comma all --write '{pages,components,lib, !__generated__}/**/*.js'",
+    "schema:download": "apollo schema:download --endpoint=http://localhost:4000 schema.json",
+    "schema:generate": "apollo codegen:generate --addTypename --useFlowExactObjects --target=flow --schema=schema.json --queries='{pages,components,lib}/**/*.js'"
   }
 }

@@ -1,20 +1,22 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import AdminPage from '../components/admin/AdminPage';
-import ListComponent from '../components/home/List/ListContainer';
+import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
 
 const GET_CONFERENCE_LIST = gql`
-  query conferences($publishStatus: PUBLISH_STATUS!) {
+  query adminConferences($publishStatus: PUBLISH_STATUS!) {
     conferences(where: { publishStatus: $publishStatus }) {
-      ...List
+      ...ListItem
     }
   }
-  ${ListComponent.fragments.items}
+  ${LIST_ITEM_FRAGMENT}
 `;
 
-class AdminPageContainer extends React.Component {
+class AdminPageContainer extends React.Component<{}> {
   render() {
     return (
       <Query query={GET_CONFERENCE_LIST} variables={{ publishStatus: 'DRAFT' }}>

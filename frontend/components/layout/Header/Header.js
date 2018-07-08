@@ -1,15 +1,15 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import Link from 'next/link';
 import { Layout, Menu, Icon } from 'antd';
 
-/*type Props = {
+type Props = {
   pathname: string,
   isAuth: boolean,
-};*/
+};
 
-const Header = ({ pathname, isAuth, signOut, userData }) => (
+const Header = ({ pathname, isAuth, signOut, userData }: Props) => (
   <Layout.Header>
     <Link href="/">
       <div className="logo" />

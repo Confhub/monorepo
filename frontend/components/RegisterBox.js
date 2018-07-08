@@ -1,9 +1,10 @@
+import * as React from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import cookie from 'cookie';
 import redirect from '../lib/redirect';
 
-const CREATE_USER = gql`
+const CREATE_USER = gqltemp`
   mutation Create($name: String!, $email: String!, $password: String!) {
     createUser(
       name: $name
