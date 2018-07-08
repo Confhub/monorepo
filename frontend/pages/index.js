@@ -30,10 +30,13 @@ class HomePageContainer extends React.Component<{}> {
           {({ tags }) => (
             <Query query={GET_CONFERENCE_LIST} variables={{ tags }}>
               {({ loading, error, data }) => {
-                if (loading) return 'Loading...';
-                if (error) return `Error! ${error.message}`;
-
-                return <HomePage data={data.conferencesFiltered} />;
+                return (
+                  <HomePage
+                    loading={loading}
+                    error={error}
+                    data={data && data.conferencesFiltered}
+                  />
+                );
               }}
             </Query>
           )}
