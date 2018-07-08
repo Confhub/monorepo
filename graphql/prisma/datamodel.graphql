@@ -10,7 +10,7 @@ type Conference {
   id: ID! @unique
   name: String!
   description: String
-  category: String!
+  tag: [Tag!]!
   url: String
   image: Image
   startDate: DateTime!
@@ -80,4 +80,10 @@ type Location {
   street: String!
   zip: Int!
   coordinates: Coordinates
+}
+
+type Tag {
+  id: ID! @unique
+  name: String!
+  slug: String!
 }
