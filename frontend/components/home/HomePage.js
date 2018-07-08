@@ -6,12 +6,13 @@ import HomePageContext from './HomePageContext';
 import Search from './Search/Search';
 import ListContainer from './List/ListContainer';
 import MapContainer from './MapDepricated/MapContainer';
+import Map from './Map/Map';
 
 const HomePage = ({ data }) => (
   <HomePageContext.Provider>
     <div className="root">
-      <div className="map">
-        <MapContainer items={data} />
+      <div id="map-wrap" className="map">
+        <Map items={data} />
       </div>
       <div className="sidebar">
         <Search />

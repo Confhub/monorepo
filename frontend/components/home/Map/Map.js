@@ -1,61 +1,129 @@
-// @flow
+import React from 'react';
+import MapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
+import gql from 'graphql-tag';
+import { filter } from 'graphql-anywhere';
+import MarkerIcon from './Marker';
+import PopupComponent from './Popup';
 
-import React, { Component } from 'react';
-import MapGL from 'react-map-gl';
+export const MAP_FRAGMENT = gql`
+  fragment Map on Conference {
+    name
+    place {
+      location {
+        coordinates {
+          latitude
+          longitude
+        }
+      }
+    }
+  }
+`;
 
-const mapboxApiAccessToken = process.env.MAPBOX_SECRET;
-
-class Map extends Component<{}, {}> {
+class Map extends React.Component {
   state = {
     viewport: {
-      latitude: 37.7751,
-      longitude: -122.4193,
-      zoom: 11,
+      latitude: 50,
+      longitude: 25,
+      zoom: 3,
       bearing: 0,
       pitch: 0,
-      width: 500,
-      height: 500,
+      width: 400,
+      height: 400,
     },
+    popupInfo: null,
   };
 
   componentDidMount() {
-    window.addEventListener('resize', this.resize);
-    this.resize();
+    window.addEventListener('resize', this._resize);
+    this._resize();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+    window.removeEventListener('resize', this._resize);
   }
 
-  onViewportChange = viewport =>
-    this.setState({
-      viewport: { ...this.state.viewport, ...viewport },
-    });
+  _resize = () => {
+    const map = document.getElementById('map-wrap');
+    const { width, height } = map.getBoundingClientRect();
 
-  resize = () => {
-    return this.onViewportChange({
-      width: innerWidth >= 576 ? window.innerWidth - 440 : window.innerWidth,
-      height: this.props.height || window.innerHeight,
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        width,
+        height,
+      },
     });
   };
 
+  _updateViewport = viewport => {
+    this.setState({ viewport });
+  };
+
+  _renderMarker = item => {
+    const { id, name, place } = item;
+    const { latitude, longitude } = place.location.coordinates;
+    return (
+      <Marker key={id} longitude={longitude} latitude={latitude}>
+        <MarkerIcon
+          size={20}
+          onClick={() => this.setState({ popupInfo: item })}
+        />
+      </Marker>
+    );
+  };
+
+  _renderPopup() {
+    const { popupInfo } = this.state;
+
+    if (!popupInfo) {
+      return;
+    }
+    const { latitude, longitude } = popupInfo.place.location.coordinates;
+
+    return (
+      <Popup
+        tipSize={5}
+        anchor="bottom"
+        offsetTop={-25}
+        longitude={longitude}
+        latitude={latitude}
+        onClose={() => this.setState({ popupInfo: null })}
+      >
+        <PopupComponent info={popupInfo} />
+      </Popup>
+    );
+  }
+
   render() {
-    const { viewport, settings } = this.state;
+    const { viewport } = this.state;
+    const { items } = this.props;
 
     return (
       <MapGL
         {...viewport}
-        {...settings}
         mapStyle="mapbox://styles/mapbox/streets-v9"
-        onViewportChange={this.onViewportChange}
-        dragToRotate={false}
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        className="root"
-      />
+        onViewportChange={this._updateViewport}
+        mapboxApiAccessToken={process.env.MAPBOX_SECRET}
+      >
+        {items && items.map(this._renderMarker)}
+
+        {this._renderPopup()}
+
+        <div className="nav">
+          <NavigationControl onViewportChange={this._updateViewport} />
+        </div>
+
+        <style jsx>{`
+          .nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px;
+          }
+        `}</style>
+      </MapGL>
     );
   }
 }
 
 export default Map;
-
-// TODO: play with different map styles, for example: mapStyle="mapbox://styles/mapbox/dark-v9"

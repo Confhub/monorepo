@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 
 import HomePage from '../components/home/HomePage';
 import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
-import { MAP_FRAGMENT } from '../components/home/MapDepricated/MapContainer';
+import { MAP_FRAGMENT } from '../components/home/Map/Map';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
