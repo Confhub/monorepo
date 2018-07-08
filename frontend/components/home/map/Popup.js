@@ -27,17 +27,24 @@ const renderDescription = item => {
 export default class CityInfo extends PureComponent {
   render() {
     const { info } = this.props;
-    const { name } = info;
+    const { name, url } = info;
     return (
       <div>
-        <h4>{name}</h4>
+        <h4>
+          <a href={url} target="_blank">
+            {name}
+          </a>
+        </h4>
         <div className="button-wrap">{renderDescription(info)}</div>
         <div>
-          <Button size="small" style={{ marginRight: 8 }}>
+          {/* <Button size="small" style={{ marginRight: 8 }}>
             More info
           </Button>
           <Button size="small" type="primary">
             Get tickets
+          </Button> */}
+          <Button size="small" type="primary" href={url} target="_blank">
+            More info
           </Button>
         </div>
         <style jsx>{`

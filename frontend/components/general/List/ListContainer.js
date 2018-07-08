@@ -19,6 +19,7 @@ export const LIST_ITEM_FRAGMENT = gql`
     description
     startDate
     endDate
+    url
     place {
       name
       location {

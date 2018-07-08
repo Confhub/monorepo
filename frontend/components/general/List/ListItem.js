@@ -23,9 +23,9 @@ const ListItem = ({ item }: Props) => {
         <div className="list-item-inner">
           <AntList.Item.Meta
             title={
-              <Link href="/fake-url">
-                <a>{item.name}</a>
-              </Link>
+              <a href={item.url} target="_blank">
+                {item.name}
+              </a>
             }
             description={<ListItemDescription item={item} />}
           />
@@ -41,8 +41,11 @@ const ListItem = ({ item }: Props) => {
             {item.tags.map(tag => <Tag key={tag.id}>{tag.name}</Tag>)}
           </div>
           <div className="button-wrap">
-            <Button style={{ marginRight: 8 }}>More info</Button>
-            <Button type="primary">Get tickets</Button>
+            {/* <Button style={{ marginRight: 8 }}>More info</Button>
+            <Button type="primary">Get tickets</Button> */}
+            <Button type="primary" href={item.url} target="_blank">
+              More info
+            </Button>
           </div>
         </div>
       </AntList.Item>
