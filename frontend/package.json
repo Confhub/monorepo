@@ -39,7 +39,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "flow check --color=always --include-warnings",
-    "prettier": "prettier --single-quote --trailing-comma all --write '{pages,components,lib, !__generated__}/**/*.js'",
+    "prettier": "prettier --single-quote --trailing-comma all --write '{pages,components,lib}/**/*.js'",
     "schema:download": "apollo schema:download --endpoint=http://localhost:4000 schema.json",
     "schema:generate": "apollo codegen:generate --addTypename --useFlowExactObjects --target=flow --schema=schema.json --queries='{pages,components,lib}/**/*.js'"
   }
