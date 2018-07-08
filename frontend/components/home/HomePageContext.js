@@ -11,6 +11,7 @@ class HomePageContextProvider extends React.Component {
     hoveredItem: null,
     location: null,
     locationLoading: false,
+    tags: [],
   };
 
   onEnter = id => {
@@ -36,8 +37,12 @@ class HomePageContextProvider extends React.Component {
     this.setState({ location });
   };
 
+  setTags = tags => {
+    this.setState({ tags });
+  };
+
   render() {
-    const { hoveredItem, items, location, locationLoading } = this.state;
+    const { hoveredItem, items, location, locationLoading, tags } = this.state;
     const context = {
       onEnter: this.onEnter,
       onLeave: this.onLeave,
@@ -47,6 +52,8 @@ class HomePageContextProvider extends React.Component {
       items,
       location,
       locationLoading,
+      tags,
+      setTags: this.setTags,
     };
     return <Provider value={context}>{this.props.children}</Provider>;
   }
