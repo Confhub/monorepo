@@ -1,23 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import MapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
-import gql from 'graphql-tag';
 import { filter } from 'graphql-anywhere';
 import MarkerIcon from './Marker';
 import PopupComponent from './Popup';
-
-export const MAP_FRAGMENT = gql`
-  fragment Map on Conference {
-    name
-    place {
-      location {
-        coordinates {
-          latitude
-          longitude
-        }
-      }
-    }
-  }
-`;
 
 class Map extends React.Component {
   state = {
@@ -34,15 +19,15 @@ class Map extends React.Component {
   };
 
   componentDidMount() {
-    window.addEventListener('resize', this._resize);
-    this._resize();
+    window.addEventListener('resize', this.resize);
+    this.resize();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._resize);
+    window.removeEventListener('resize', this.resize);
   }
 
-  _resize = () => {
+  resize = () => {
     const map = document.getElementById('map-wrap');
     const { width, height } = map.getBoundingClientRect();
 
@@ -55,11 +40,11 @@ class Map extends React.Component {
     });
   };
 
-  _updateViewport = viewport => {
+  updateViewport = viewport => {
     this.setState({ viewport });
   };
 
-  _renderMarker = item => {
+  renderMarker = item => {
     const { id, name, place } = item;
     const { latitude, longitude } = place.location.coordinates;
     return (
@@ -72,7 +57,7 @@ class Map extends React.Component {
     );
   };
 
-  _renderPopup() {
+  renderPopup() {
     const { popupInfo } = this.state;
 
     if (!popupInfo) {
@@ -102,12 +87,12 @@ class Map extends React.Component {
       <MapGL
         {...viewport}
         mapStyle="mapbox://styles/mapbox/streets-v9"
-        onViewportChange={this._updateViewport}
+        onViewportChange={this.updateViewport}
         mapboxApiAccessToken={process.env.MAPBOX_SECRET}
       >
-        {items && items.map(this._renderMarker)}
+        {items && items.map(this.renderMarker)}
 
-        {this._renderPopup()}
+        {this.renderPopup()}
 
         <div className="nav">
           <NavigationControl onViewportChange={this._updateViewport} />

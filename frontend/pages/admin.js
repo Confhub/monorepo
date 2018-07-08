@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import AdminPage from '../components/admin/AdminPage';
 import { LIST_ITEM_FRAGMENT } from '../components/general/List/ListContainer';
 
-const GET_CONFERENCE_LIST = gql`
+export const GET_CONFERENCE_LIST = gql`
   query adminConferences($publishStatus: PUBLISH_STATUS!) {
     conferences(where: { publishStatus: $publishStatus }) {
       ...ListItem

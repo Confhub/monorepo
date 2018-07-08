@@ -38,6 +38,11 @@ export const LIST_ITEM_FRAGMENT = gql`
     price {
       amount
     }
+    tags {
+      id
+      name
+      slug
+    }
   }
 `;
 

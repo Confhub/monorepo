@@ -2,16 +2,14 @@
 
 import * as React from 'react';
 
-import HomePageContext from './HomePageContext';
 import Search from './Search/Search';
 import ListContainer from '../general/List/ListContainer';
-import MapContainer from './MapDepricated/MapContainer';
-import Map from './Map/Map';
+import MapContainer from './Map/MapContainer';
 
 const HomePage = ({ data }) => (
   <div className="root">
     <div id="map-wrap" className="map">
-      <Map items={data} />
+      <MapContainer items={data} />
     </div>
     <div className="sidebar">
       <Search />

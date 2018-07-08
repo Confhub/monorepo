@@ -6,13 +6,13 @@ import gql from 'graphql-tag';
 
 import HomePage from '../components/home/HomePage';
 import { LIST_ITEM_FRAGMENT } from '../components/general/List/ListContainer';
-import { MAP_FRAGMENT } from '../components/home/Map/Map';
+import { MAP_FRAGMENT } from '../components/home/Map/MapContainer';
 import HomePageContext from '../components/home/HomePageContext';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const GET_CONFERENCE_LIST = gql`
-  query conferences($tags: [String]) {
+  query conferences($tags: [ID]) {
     conferencesFiltered(tags: $tags) {
       ...ListItem
       ...Map
@@ -32,8 +32,6 @@ class HomePageContainer extends React.Component<{}> {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-
-                console.log(data);
 
                 return <HomePage data={data.conferencesFiltered} />;
               }}

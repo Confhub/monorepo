@@ -2,14 +2,23 @@
 
 import { forwardTo } from 'prisma-binding';
 
+import type { ContextType } from '../helpers';
+
+type conferencesFilteredArgs = {
+  tags: string[],
+};
+
 export default {
   Query: {
     conference: forwardTo('db'),
     conferences: forwardTo('db'),
     conferencesConnection: forwardTo('db'),
-    tags: forwardTo('db'),
-    conferencesFiltered: async (_, args, ctx, info) => {
-      const tags = args.tags;
+    conferencesFiltered: async (
+      _: any,
+      { tags }: conferencesFilteredArgs,
+      ctx: ContextType,
+      info: any,
+    ) => {
       const makeQuery = extra => ({
         where: {
           publishStatus: 'PUBLISHED',
@@ -19,7 +28,7 @@ export default {
 
       if (tags && tags.length) {
         return ctx.db.query.conferences(
-          makeQuery({ tag_some: { name_in: tags } }),
+          makeQuery({ tags_some: { id_in: tags } }),
           info,
         );
       }
@@ -30,8 +39,5 @@ export default {
     createConference: forwardTo('db'),
     updateConference: forwardTo('db'),
     deleteConference: forwardTo('db'),
-    createTag: forwardTo('db'),
-    updateTag: forwardTo('db'),
-    deleteTag: forwardTo('db'),
   },
 };

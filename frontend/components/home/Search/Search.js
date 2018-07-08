@@ -14,6 +14,7 @@ const GET_TAGS_LIST = gql`
     tags {
       id
       name
+      slug
     }
   }
 `;
@@ -101,7 +102,7 @@ class Search extends React.Component {
               {data &&
                 data.tags &&
                 data.tags.map(item => (
-                  <Option key={item.id} value={item.name}>
+                  <Option key={item.id} value={item.id}>
                     {item.name}
                   </Option>
                 ))}

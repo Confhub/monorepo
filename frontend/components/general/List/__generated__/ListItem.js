@@ -38,6 +38,13 @@ export type ListItem_price = {|
   amount: number,
 |};
 
+export type ListItem_tags = {|
+  __typename: "Tag",
+  id: string,
+  name: string,
+  slug: string,
+|};
+
 export type ListItem = {|
   __typename: "Conference",
   publishStatus: ?PUBLISH_STATUS,
@@ -50,6 +57,7 @@ export type ListItem = {|
   image: ?ListItem_image,
   topics: ?Array<ListItem_topics>,
   price: ?ListItem_price,
+  tags: ?Array<ListItem_tags>,
 |};
 
 /* @flow */

@@ -10,7 +10,7 @@ type Conference {
   id: ID! @unique
   name: String!
   description: String
-  tag: [Tag!]!
+  tags: [Tag!]!
   url: String
   image: Image
   startDate: DateTime!

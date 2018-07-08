@@ -1,5 +1,5 @@
 # source: https://confhub-test.herokuapp.com/confhub-graphql/dev
-# timestamp: Sun Jul 08 2018 12:23:52 GMT+0200 (Central European Summer Time)
+# timestamp: Sun Jul 08 2018 16:02:19 GMT+0200 (Central European Summer Time)
 
 type AggregateCallForPapers {
   count: Int!
@@ -320,7 +320,7 @@ type Conference implements Node {
   id: ID!
   name: String!
   description: String
-  tag(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   url: String
   image(where: ImageWhereInput): Image
   startDate: DateTime!
@@ -350,7 +350,7 @@ input ConferenceCreateInput {
   startDate: DateTime!
   endDate: DateTime!
   publishStatus: PUBLISH_STATUS
-  tag: TagCreateManyInput
+  tags: TagCreateManyInput
   image: ImageCreateOneInput
   price: PriceCreateOneInput
   topics: TopicCreateManyInput
@@ -445,7 +445,7 @@ input ConferenceUpdateInput {
   startDate: DateTime
   endDate: DateTime
   publishStatus: PUBLISH_STATUS
-  tag: TagUpdateManyInput
+  tags: TagUpdateManyInput
   image: ImageUpdateOneInput
   price: PriceUpdateOneInput
   topics: TopicUpdateManyInput
@@ -677,9 +677,9 @@ input ConferenceWhereInput {
 
   """All values that are not contained in given list."""
   publishStatus_not_in: [PUBLISH_STATUS!]
-  tag_every: TagWhereInput
-  tag_some: TagWhereInput
-  tag_none: TagWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
   image: ImageWhereInput
   price: PriceWhereInput
   topics_every: TopicWhereInput

@@ -37,11 +37,9 @@ const ListItem = ({ item }: Props) => {
             />
             {item.description}
           </div>
-          {/*<div className="bottom-line">
-                      {item.categories.map((category, i) => (
-                        <Tag key={i}>{category}</Tag>
-                      ))}
-                    </div>*/}
+          <div className="bottom-line">
+            {item.tags.map(tag => <Tag key={tag.id}>{tag.name}</Tag>)}
+          </div>
           <div className="button-wrap">
             <Button style={{ marginRight: 8 }}>More info</Button>
             <Button type="primary">Get tickets</Button>

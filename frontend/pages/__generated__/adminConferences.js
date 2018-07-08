@@ -38,6 +38,13 @@ export type adminConferences_conferences_price = {|
   amount: number,
 |};
 
+export type adminConferences_conferences_tags = {|
+  __typename: "Tag",
+  id: string,
+  name: string,
+  slug: string,
+|};
+
 export type adminConferences_conferences = {|
   __typename: "Conference",
   publishStatus: ?PUBLISH_STATUS,
@@ -50,6 +57,7 @@ export type adminConferences_conferences = {|
   image: ?adminConferences_conferences_image,
   topics: ?Array<adminConferences_conferences_topics>,
   price: ?adminConferences_conferences_price,
+  tags: ?Array<adminConferences_conferences_tags>,
 |};
 
 export type adminConferences = {|
