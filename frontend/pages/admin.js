@@ -1,11 +1,9 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Layout } from 'antd';
+import gql from 'graphql-tag';
 
-import List from '../components/home/List';
-
-import ListComponent from '../components/home/List';
+import AdminPage from '../components/admin/AdminPage';
+import ListComponent from '../components/home/List/ListContainer';
 
 const GET_CONFERENCE_LIST = gql`
   query conferences($publishStatus: PUBLISH_STATUS!) {
@@ -16,7 +14,7 @@ const GET_CONFERENCE_LIST = gql`
   ${ListComponent.fragments.items}
 `;
 
-export default class Hello extends React.Component {
+class AdminPageContainer extends React.Component {
   render() {
     return (
       <Query query={GET_CONFERENCE_LIST} variables={{ publishStatus: 'DRAFT' }}>
@@ -24,15 +22,11 @@ export default class Hello extends React.Component {
           if (loading) return 'Loading...';
           if (error) return `Error! ${error.message}`;
 
-          return (
-            <Layout.Content style={{ padding: '0 20px', marginTop: 20 }}>
-              <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
-                <List items={data.conferences} />
-              </div>
-            </Layout.Content>
-          );
+          return <AdminPage data={data.conferences} />;
         }}
       </Query>
     );
   }
 }
+
+export default AdminPageContainer;

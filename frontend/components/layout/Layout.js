@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { withRouter } from 'next/router';
 
 import Meta from './Meta';
-import Header from './header/Header';
-import Footer from './footer/Footer';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
 
 class LayoutComponent extends React.Component {
   render() {

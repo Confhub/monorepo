@@ -2,7 +2,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/layout/Layout';
 import withApollo from '../lib/withApollo';
 
 class MyApp extends App {

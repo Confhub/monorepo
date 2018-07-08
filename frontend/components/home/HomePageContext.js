@@ -1,10 +1,10 @@
 import React from 'react';
-import { getLocation } from '../components/helpers';
+import { getLocation } from '../helpers';
 
 const { Provider, Consumer } = React.createContext();
 
-// TODO: maybe save lcoation to localstorage
-class MainContextProvider extends React.Component {
+// TODO: maybe save location to localstorage
+class HomePageContextProvider extends React.Component {
   state = {
     hoveredItem: null,
     location: null,
@@ -51,6 +51,6 @@ class MainContextProvider extends React.Component {
 }
 
 export default {
-  Provider: MainContextProvider,
+  Provider: HomePageContextProvider,
   Consumer,
 };

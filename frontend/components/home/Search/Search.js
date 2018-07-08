@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select, Icon } from 'antd';
-import MainContext from '../../context/MainContext';
-import { searchCity } from '../helpers';
+import HomePageContext from '../HomePageContext';
+import { searchCity } from '../../helpers';
 
 const Option = Select.Option;
 
@@ -108,7 +108,7 @@ class Search extends React.Component {
 }
 
 export default props => (
-  <MainContext.Consumer>
+  <HomePageContext.Consumer>
     {({ getLocation, setLocation, locationLoading }) => (
       <Search
         {...props}
@@ -117,5 +117,5 @@ export default props => (
         locationLoading={locationLoading}
       />
     )}
-  </MainContext.Consumer>
+  </HomePageContext.Consumer>
 );

@@ -1,8 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import dynamic from 'next/dynamic';
 
-const Map = dynamic(import('./Map'), { ssr: false });
+import Map from './Map';
 
 const MapContainer = ({ items }) => <Map items={items} />;
 

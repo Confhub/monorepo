@@ -1,9 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { List as AntList, Icon, Tag, Divider, Button } from 'antd';
-import gql from 'graphql-tag';
 
-import { parseDateRange } from '../helpers';
+import { parseDateRange } from '../../helpers';
 
 const renderDescription = item => {
   const { place, startDate, endDate, price } = item;
@@ -101,38 +100,6 @@ const List = ({ items }) => {
       `}</style>
     </div>
   );
-};
-
-List.fragments = {
-  items: gql`
-    fragment List on Conference {
-      publishStatus
-      id
-      name
-      description
-      startDate
-      endDate
-      place {
-        name
-        location {
-          country
-          city
-          street
-          zip
-        }
-      }
-      image {
-        alt
-        src
-      }
-      topics {
-        id
-      }
-      price {
-        amount
-      }
-    }
-  `,
 };
 
 export default List;

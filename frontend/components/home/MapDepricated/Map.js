@@ -1,9 +1,8 @@
 import React from 'react';
-import mapboxgl from '../MapboxConstructor';
-import MainContext from '../../context/MainContext';
-import Head from 'next/head';
+import mapboxgl, { Map, Marker, Popup } from 'mapbox-gl';
+import HomePageContext from '../HomePageContext';
 
-const { Map, Marker, Popup } = mapboxgl;
+mapboxgl.accessToken = process.env.MAPBOX_SECRET;
 
 const DFAULT_MARKER_COLOR = '#3FB1CE';
 const ACTIVE_MARKER_COLOR = 'red';
@@ -106,9 +105,6 @@ class MapContainer extends React.Component {
   render() {
     return (
       <div className="root" id="map">
-        <Head>
-          <title>My page title 2</title>
-        </Head>
         <style jsx>{`
           .root {
             width: 100%;
@@ -121,9 +117,9 @@ class MapContainer extends React.Component {
 }
 
 export default props => (
-  <MainContext.Consumer>
+  <HomePageContext.Consumer>
     {({ hoveredItem, location }) => (
       <MapContainer {...props} overedItem={hoveredItem} location={location} />
     )}
-  </MainContext.Consumer>
+  </HomePageContext.Consumer>
 );
