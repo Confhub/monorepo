@@ -5,8 +5,14 @@ import gql from 'graphql-tag';
 
 import List from './List';
 
-export const LIST_FRAGMENT = gql`
-  fragment List on Conference {
+import type { ListItem as ListItemType } from './__generated__/ListItem.js';
+
+type Props = {
+  items: ListItemType[],
+};
+
+export const LIST_ITEM_FRAGMENT = gql`
+  fragment ListItem on Conference {
     publishStatus
     id
     name
@@ -35,7 +41,7 @@ export const LIST_FRAGMENT = gql`
   }
 `;
 
-const ListContainer = ({ items }) => {
+const ListContainer = ({ items }: Props) => {
   return <List items={items} />;
 };
 

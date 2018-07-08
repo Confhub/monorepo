@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 import Map from './Map';
 
-export const MAP_FRAGMENT = gql`
+export const MAP_FRAGMENT = gqltemp`
   fragment Map on Conference {
     name
     place {
