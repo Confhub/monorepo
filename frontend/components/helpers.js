@@ -32,7 +32,7 @@ const mS = [
 ];
 
 // return date in format May 2-4, 2018
-export const parseDateRange = (startDate, endDate) => {
+export const parseDateRange = (startDate: string, endDate: string) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
 

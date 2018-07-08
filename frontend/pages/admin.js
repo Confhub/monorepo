@@ -5,7 +5,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import AdminPage from '../components/admin/AdminPage';
-import ListComponent from '../components/home/List/ListContainer';
+import { LIST_FRAGMENT } from '../components/home/List/ListContainer';
 
 const GET_CONFERENCE_LIST = gql`
   query conferences($publishStatus: PUBLISH_STATUS!) {
@@ -13,7 +13,7 @@ const GET_CONFERENCE_LIST = gql`
       ...List
     }
   }
-  ${ListComponent.fragments.items}
+  ${LIST_FRAGMENT}
 `;
 
 class AdminPageContainer extends React.Component {

@@ -5,8 +5,8 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import HomePage from '../components/home/HomePage';
-import ListContainer from '../components/home/List/ListContainer';
-import MapContainer from '../components/home/MapDepricated/MapContainer';
+import { LIST_FRAGMENT } from '../components/home/List/ListContainer';
+import { MAP_FRAGMENT } from '../components/home/MapDepricated/MapContainer';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -17,8 +17,8 @@ const GET_CONFERENCE_LIST = gql`
       ...Map
     }
   }
-  ${ListContainer.fragments.items}
-  ${MapContainer.fragments.items}
+  ${LIST_FRAGMENT}
+  ${MAP_FRAGMENT}
 `;
 
 class HomePageContainer extends React.Component {
