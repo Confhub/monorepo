@@ -1,3 +1,5 @@
+// @flow
+
 import queryString from 'query-string';
 
 const mL = [

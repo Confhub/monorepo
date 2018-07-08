@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import Link from 'next/link';
 import { List as AntList, Icon, Tag, Divider, Button } from 'antd';
 

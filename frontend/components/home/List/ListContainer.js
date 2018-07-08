@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import gql from 'graphql-tag';
 
 import List from './List';

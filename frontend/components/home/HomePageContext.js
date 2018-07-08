@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import { getLocation } from '../helpers';
 
 const { Provider, Consumer } = React.createContext();

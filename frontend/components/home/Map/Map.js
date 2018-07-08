@@ -1,9 +1,11 @@
+// @flow
+
 import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
 
 const mapboxApiAccessToken = process.env.MAPBOX_SECRET;
 
-class Map extends Component {
+class Map extends Component<{}, {}> {
   state = {
     viewport: {
       latitude: 37.7751,

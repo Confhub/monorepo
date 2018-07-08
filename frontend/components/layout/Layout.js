@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Fragment } from 'react';
 import { withRouter } from 'next/router';
 

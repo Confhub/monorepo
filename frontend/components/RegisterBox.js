@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Mutation, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import cookie from 'cookie';

@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import mapboxgl, { Map, Marker, Popup } from 'mapbox-gl';
 import HomePageContext from '../HomePageContext';
 
