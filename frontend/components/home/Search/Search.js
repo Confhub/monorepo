@@ -2,15 +2,27 @@
 
 import * as React from 'react';
 import { Select, Icon } from 'antd';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import HomePageContext from '../HomePageContext';
 import { searchCity } from '../../helpers';
 
 const Option = Select.Option;
 
+const GET_TAGS_LIST = gql`
+  query tags {
+    tags {
+      id
+      name
+    }
+  }
+`;
+
 class Search extends React.Component {
   state = {
     location: '',
     tags: [],
+    tagsQuery: '',
     locationList: null,
   };
 
@@ -42,81 +54,89 @@ class Search extends React.Component {
     });
   };
 
-  handleTagsChange = value => {
-    // this.setState;
+  handleTagsChange = tags => {
+    this.setState({ tags });
   };
 
   render() {
-    const { locationList, location } = this.state;
-    const { locationLoading } = this.props;
+    const { locationList, location, tagsQuery } = this.state;
+    const { locationLoading, tags, setTags } = this.props;
 
     return (
-      <div className="root">
-        <label>
-          <h4>Location:</h4>
-          <Select
-            disabled={locationLoading}
-            mode="combobox"
-            value={location}
-            filterOption={false}
-            defaultActiveFirstOption={false}
-            style={{ width: '100%' }}
-            placeholder="Select a location"
-            onSearch={this.handleLocationChange}
-            onSelect={this.handleLocationSelect}
-          >
-            <Option value="my">
-              <Icon type="environment-o" /> My Location
-            </Option>
-            {locationList &&
-              locationList.map(item => (
-                <Option key={item.id} value={item.id}>
-                  {item.place_name_en}
+      <Query query={GET_TAGS_LIST}>
+        {({ loading, error, data }) => (
+          <div className="root">
+            <label>
+              <h4>Location:</h4>
+              <Select
+                disabled={locationLoading}
+                mode="combobox"
+                value={location}
+                filterOption={false}
+                defaultActiveFirstOption={false}
+                style={{ width: '100%' }}
+                placeholder="Select a location"
+                onSearch={this.handleLocationChange}
+                onSelect={this.handleLocationSelect}
+              >
+                <Option value="my">
+                  <Icon type="environment-o" /> My Location
                 </Option>
-              ))}
-          </Select>
-        </label>
-        <label>
-          <h4>Categories:</h4>
-          <Select
-            mode="tags"
-            style={{ width: '100%' }}
-            placeholder="Choose categories"
-            onChange={this.handleTagsChange}
-          >
-            <Option value="javascript">Javascript</Option>
-            <Option value="frontend">Frontend</Option>
-            <Option value="graphql">GraphQL</Option>
-            <Option value="react">React</Option>
-          </Select>
-        </label>
-        <style jsx>{`
-          .root {
-            padding: 1.5em 0.75em;
-            border-bottom: 1px solid #e8e8e8;
-          }
+                {locationList &&
+                  locationList.map(item => (
+                    <Option key={item.id} value={item.id}>
+                      {item.place_name_en}
+                    </Option>
+                  ))}
+              </Select>
+            </label>
+            <h4>Categories:</h4>
+            <Select
+              mode="multiple"
+              style={{ width: '100%' }}
+              placeholder="Choose categories"
+              value={tags}
+              onChange={setTags}
+            >
+              {data &&
+                data.tags &&
+                data.tags.map(item => (
+                  <Option key={item.id} value={item.name}>
+                    {item.name}
+                  </Option>
+                ))}
+            </Select>
+            <style jsx>{`
+              .root {
+                padding: 1.5em 0.75em;
+                border-bottom: 1px solid #e8e8e8;
+              }
 
-          label {
-            display: block;
-          }
+              label {
+                display: block;
+              }
 
-          label:not(:last-child) {
-            margin-bottom: 0.75em;
-          }
-        `}</style>
-      </div>
+              label:not(:last-child) {
+                margin-bottom: 0.75em;
+              }
+            `}</style>
+          </div>
+        )}
+      </Query>
     );
   }
 }
 
 export default props => (
   <HomePageContext.Consumer>
-    {({ getLocation, setLocation, locationLoading }) => (
+    {({ getLocation, setLocation, locationLoading, tags, setTags }) => (
       <Search
         {...props}
         getLocation={getLocation}
         setLocation={setLocation}
         locationLoading={locationLoading}
+        tags={tags}
+        setTags={setTags}
       />
     )}
   </HomePageContext.Consumer>
