@@ -1,3 +1,9 @@
 type Query {
+  publishedConferences: [Conference!]!
+  unpublishedConferences: [Conference!]!
   conferencesFiltered(tags: [ID]): [Conference!]!
+}
+
+type Mutation {
+  publishConference(id: ID!): Conference!
 }

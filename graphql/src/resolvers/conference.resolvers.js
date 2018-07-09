@@ -8,12 +8,16 @@ type conferencesFilteredArgs = {
   tags: string[],
 };
 
+type publishConferenceArgs = {
+  id: string,
+};
+
 export default {
   Query: {
     conference: forwardTo('db'),
     conferences: forwardTo('db'),
     conferencesConnection: forwardTo('db'),
-    conferencesFiltered: async (
+    conferencesFiltered: (
       _: any,
       { tags }: conferencesFilteredArgs,
       ctx: ContextType,
@@ -34,10 +38,52 @@ export default {
       }
       return ctx.db.query.conferences(makeQuery(), info);
     },
+    publishedConferences: (_: any, args: any, ctx: ContextType, info: any) => {
+      const makeQuery = extra => ({
+        where: {
+          publishStatus: 'PUBLISHED',
+          ...extra,
+        },
+      });
+
+      return ctx.db.query.conferences(makeQuery(), info);
+    },
+    unpublishedConferences: (
+      _: any,
+      args: any,
+      ctx: ContextType,
+      info: any,
+    ) => {
+      const makeQuery = extra => ({
+        where: {
+          publishStatus: 'DRAFT',
+          ...extra,
+        },
+      });
+
+      return ctx.db.query.conferences(makeQuery(), info);
+    },
   },
   Mutation: {
     createConference: forwardTo('db'),
-    updateConference: forwardTo('db'),
     deleteConference: forwardTo('db'),
+    publishConference: (
+      _: any,
+      { id }: publishConferenceArgs,
+      ctx: ContextType,
+      info: any,
+    ) => {
+      const makeQuery = extra => ({
+        where: { id },
+        data: { publishStatus: 'PUBLISHED' },
+        ...extra,
+      });
+
+      if (id) {
+        return ctx.db.mutation.updateConference(makeQuery(), info);
+      }
+      throw new Error('Something went wrong');
+    },
+    updateConference: forwardTo('db'),
   },
 };

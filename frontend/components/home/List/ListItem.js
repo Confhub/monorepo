@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import Link from 'next/link';
 import { List as AntList, Tag, Button } from 'antd';
 
 import ListItemDescription from './ListItemDescription';

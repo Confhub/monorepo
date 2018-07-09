@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import Search from './Search/Search';
-import ListContainer from '../general/List/ListContainer';
+import ListContainer from './List/ListContainer';
 import MapContainer from './Map/MapContainer';
 
 const HomePage = ({ data }) => (
