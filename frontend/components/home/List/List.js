@@ -11,15 +11,21 @@ type Props = {
   items: ListItemType[],
 };
 
-const List = ({ items }: Props) => {
+const List = ({ items = [] }: Props) => {
   return (
     <div className="list">
-      <h3>Found: {items.length} items</h3>
-      <AntList
-        itemLayout="vertical"
-        dataSource={items}
-        renderItem={item => <ListItem item={item} />}
-      />
+      {items.length ? (
+        <React.Fragment>
+          <h3>Found: {items.length} items</h3>
+          <AntList
+            itemLayout="vertical"
+            dataSource={items}
+            renderItem={item => <ListItem item={item} />}
+          />
+        </React.Fragment>
+      ) : (
+        <h3>No data available from the server. Please check what's wrong!</h3>
+      )}
     </div>
   );
 };
