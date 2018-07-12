@@ -28,7 +28,7 @@ export default {
 
       if (tags && tags.length) {
         return ctx.db.query.conferences(
-          makeQuery({ tags_some: { id_in: tags } }),
+          makeQuery({ tags_some: { slug_in: tags } }),
           info,
         );
       }
