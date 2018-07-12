@@ -3,12 +3,11 @@ import MapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
 import { filter } from 'graphql-anywhere';
 import MarkerIcon from './Marker';
 import PopupComponent from './Popup';
+import HomePageContext from '../HomePageContext';
 
 class Map extends React.Component {
   state = {
     viewport: {
-      latitude: 50,
-      longitude: 25,
       zoom: 3,
       bearing: 0,
       pitch: 0,
@@ -40,8 +39,9 @@ class Map extends React.Component {
     });
   };
 
-  updateViewport = viewport => {
+  updateViewport = ({ longitude, latitude, ...viewport }) => {
     this.setState({ viewport });
+    this.props.setLocation([longitude, latitude]);
   };
 
   renderMarker = item => {
@@ -81,11 +81,14 @@ class Map extends React.Component {
 
   render() {
     const { viewport } = this.state;
-    const { items } = this.props;
+    const { items, location } = this.props;
+    const [longitude, latitude] = location;
 
     return (
       <MapGL
         {...viewport}
+        longitude={longitude}
+        latitude={latitude}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onViewportChange={this.updateViewport}
         mapboxApiAccessToken={process.env.MAPBOX_SECRET}
@@ -111,4 +114,10 @@ class Map extends React.Component {
   }
 }
 
-export default Map;
+export default props => (
+  <HomePageContext.Consumer>
+    {({ location, setLocation }) => (
+      <Map {...props} location={location} setLocation={setLocation} />
+    )}
+  </HomePageContext.Consumer>
+);

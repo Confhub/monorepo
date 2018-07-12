@@ -55,76 +55,68 @@ class Search extends React.Component {
     });
   };
 
-  handleTagsChange = tags => {
-    this.setState({ tags });
-  };
-
   render() {
     const { locationList, location, tagsQuery } = this.state;
-    const { locationLoading, tags, setTags } = this.props;
+    const { locationLoading, tags, setTags, data } = this.props;
 
     return (
-      <Query query={GET_TAGS_LIST}>
-        {({ loading, error, data }) => (
-          <div className="root">
-            <label>
-              <h4>Location:</h4>
-              <Select
-                disabled={locationLoading}
-                mode="combobox"
-                value={location}
-                filterOption={false}
-                defaultActiveFirstOption={false}
-                style={{ width: '100%' }}
-                placeholder="Select a location"
-                onSearch={this.handleLocationChange}
-                onSelect={this.handleLocationSelect}
-              >
-                <Option value="my">
-                  <Icon type="environment-o" /> My Location
+      <div className="root">
+        <label>
+          <h4>Location:</h4>
+          <Select
+            disabled={locationLoading}
+            mode="combobox"
+            value={location}
+            filterOption={false}
+            defaultActiveFirstOption={false}
+            style={{ width: '100%' }}
+            placeholder="Select a location"
+            onSearch={this.handleLocationChange}
+            onSelect={this.handleLocationSelect}
+          >
+            <Option value="my">
+              <Icon type="environment-o" /> My Location
+            </Option>
+            {locationList &&
+              locationList.map(item => (
+                <Option key={item.id} value={item.id}>
+                  {item.place_name_en}
                 </Option>
-                {locationList &&
-                  locationList.map(item => (
-                    <Option key={item.id} value={item.id}>
-                      {item.place_name_en}
-                    </Option>
-                  ))}
-              </Select>
-            </label>
-            <h4>Categories:</h4>
-            <Select
-              mode="multiple"
-              style={{ width: '100%' }}
-              placeholder="Choose categories"
-              value={tags}
-              onChange={setTags}
-              optionFilterProp="children"
-            >
-              {data &&
-                data.tags &&
-                data.tags.map(item => (
-                  <Option key={item.id} value={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-            </Select>
-            <style jsx>{`
-              .root {
-                padding: 1.5em 0.75em;
-                border-bottom: 1px solid #e8e8e8;
-              }
+              ))}
+          </Select>
+        </label>
+        <h4>Categories:</h4>
+        <Select
+          mode="multiple"
+          style={{ width: '100%' }}
+          placeholder="Choose categories"
+          value={tags}
+          onChange={setTags}
+          optionFilterProp="children"
+        >
+          {data &&
+            data.tags &&
+            data.tags.map(item => (
+              <Option key={item.id} value={item.slug}>
+                {item.name}
+              </Option>
+            ))}
+        </Select>
+        <style jsx>{`
+          .root {
+            padding: 1.5em 0.75em;
+            border-bottom: 1px solid #e8e8e8;
+          }
 
-              label {
-                display: block;
-              }
+          label {
+            display: block;
+          }
 
-              label:not(:last-child) {
-                margin-bottom: 0.75em;
-              }
-            `}</style>
-          </div>
-        )}
-      </Query>
+          label:not(:last-child) {
+            margin-bottom: 0.75em;
+          }
+        `}</style>
+      </div>
     );
   }
 }
@@ -132,14 +124,19 @@ class Search extends React.Component {
 export default props => (
   <HomePageContext.Consumer>
     {({ getLocation, setLocation, locationLoading, tags, setTags }) => (
-      <Search
-        {...props}
-        getLocation={getLocation}
-        setLocation={setLocation}
-        locationLoading={locationLoading}
-        tags={tags}
-        setTags={setTags}
-      />
+      <Query query={GET_TAGS_LIST}>
+        {({ loading, error, data }) => (
+          <Search
+            {...props}
+            getLocation={getLocation}
+            setLocation={setLocation}
+            locationLoading={locationLoading}
+            tags={tags}
+            setTags={setTags}
+            data={data}
+          />
+        )}
+      </Query>
     )}
   </HomePageContext.Consumer>
 );
