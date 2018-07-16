@@ -1,4 +1,5 @@
 {
-  "type": "static",
+  "name": "confhub",
+  "alias": "confhub.win",
   "public": true
 }

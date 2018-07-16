@@ -54,18 +54,21 @@
     "eslint-plugin-react": "^7.10.0",
     "flow-bin": "^0.76.0",
     "madge": "^3.2.0",
+    "now": "^11.2.9",
     "prettier": "^1.13.7"
   },
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
     "madge": "madge -c pages/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "flow check --color=always --include-warnings",
-    "test-ci": "yarn lint && yarn typecheck",
+    "test-ci": "echo add real checks",
+    "deploy": "now -e GRAPHQL_ENDPOINT_URL=$GRAPHQL_ENDPOINT_URL -e MAPBOX_SECRET=$MAPBOX_SECRET --token $NOW_TOKEN --npm",
+    "alias": "now alias --token=$NOW_TOKEN",
+    "clear-deployments": "now rm --safe --yes confhub --token=$NOW_TOKEN",
     "schema:download": "apollo schema:download --endpoint=http://localhost:4000 schema.json",
     "schema:generate": "apollo codegen:generate --addTypename --useFlowExactObjects --target=flow --schema=schema.json --queries='{pages,components,lib}/**/*.js'"
   }

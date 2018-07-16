@@ -139,10 +139,10 @@
     lodash "^4.2.0"
 
 "@babel/helper-module-imports@^7.0.0-beta.34":
-  version "7.0.0-beta.52"
-  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.52.tgz#70840e83ae891f94702c6c613787c48ee3c965bb"
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.54.tgz#c2d8e14ff034225bf431356db77ef467b8d35aac"
   dependencies:
-    "@babel/types" "7.0.0-beta.52"
+    "@babel/types" "7.0.0-beta.54"
     lodash "^4.17.5"
 
 "@babel/helper-module-transforms@7.0.0-beta.42":
@@ -667,9 +667,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@babel/types@7.0.0-beta.52":
-  version "7.0.0-beta.52"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.52.tgz#a3e5620b1534b253a50abcf2222b520e23b16da2"
+"@babel/types@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.54.tgz#025ad68492fed542c13f14c579a44c848e531063"
   dependencies:
     esutils "^2.0.2"
     lodash "^4.17.5"
@@ -5042,6 +5042,10 @@ normalize-url@^1.4.0:
     prepend-http "^1.0.0"
     query-string "^4.1.0"
     sort-keys "^1.0.0"
+
+now@^11.2.9:
+  version "11.2.9"
+  resolved "https://registry.yarnpkg.com/now/-/now-11.2.9.tgz#8122c08e14b0e7d809a8af8bd9b066672620433d"
 
 npm-bundled@^1.0.1:
   version "1.0.3"
