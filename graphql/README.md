@@ -1,1 +1,0 @@
-# ConfHub GraphQL Server

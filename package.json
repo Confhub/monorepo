@@ -39,6 +39,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
     "typecheck": "flow check --color=always --include-warnings",
     "prettier": "prettier --single-quote --trailing-comma all --write '{pages,components,lib}/**/*.js'",
     "schema:download": "apollo schema:download --endpoint=http://localhost:4000 schema.json",
