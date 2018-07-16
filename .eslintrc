@@ -1,0 +1,66 @@
+{
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended",
+    "prettier",
+    "prettier/react",
+    "plugin:flowtype/recommended"
+  ],
+  "parser": "babel-eslint",
+  "plugins": ["import", "prettier", "promise", "flowtype", "react"],
+  "rules": {
+    "react/jsx-uses-vars": 2,
+    "no-use-before-define": 0,
+    "no-shadow": 0,
+    "no-warning-comments": "error",
+    "import/prefer-default-export": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        "bracketSpacing": true,
+        "printWidth": 80,
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "all"
+      }
+    ],
+    "promise/always-return": "error",
+    "promise/no-return-wrap": "error",
+    "promise/param-names": "error",
+    "promise/catch-or-return": "error",
+    "promise/no-native": "off",
+    "promise/no-nesting": "warn",
+    "promise/no-promise-in-callback": "warn",
+    "promise/no-callback-in-promise": "warn",
+    "promise/avoid-new": "off",
+    "promise/prefer-await-to-then": "error",
+    "promise/prefer-await-to-callbacks": "off",
+    "flowtype/require-valid-file-annotation": [
+      "error",
+      "always",
+      {
+        "annotationStyle": "line"
+      }
+    ],
+    "eol-last": "error"
+  },
+  "overrides": [
+    {
+      "files": ["next.config.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off",
+        "flowtype/require-valid-file-annotation": "off"
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  }
+}
