@@ -1,0 +1,5 @@
+projects:
+  prisma:
+    schemaPath: src/typeDefs/prisma.graphql
+    extensions:
+      prisma: prisma/prisma.yml

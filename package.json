@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "portalo-graphql",
+  "description": "Portalo GraphQL Server",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "contributors": [
+    {
+      "name": "Yuri Yakovlev",
+      "email": "yuri.yakovlev@kiwi.com",
+      "url": "https://yakovlevyuri.com"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "graphql": "^0.13.2",
+    "graphql-yoga": "^1.14.12",
+    "jsonwebtoken": "^8.3.0",
+    "merge-graphql-schemas": "^1.5.2",
+    "prisma-binding": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.54",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/node": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
+    "@babel/preset-flow": "^7.0.0-beta.54",
+    "babel-eslint": "^8.2.6",
+    "dotenv-cli": "^1.4.0",
+    "eslint": "^5.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "flow-bin": "^0.76.0",
+    "graphql-cli": "2.16.4",
+    "nodemon": "1.18.2",
+    "prettier": "^1.13.7"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development dotenv -- nodemon -e js,graphql --exec babel-node src/index.js",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "flow check --color=always --include-warnings",
+    "test-ci": "echo add real checks",
+    "deploy": "now --token $NOW_TOKEN --npm",
+    "alias": "now alias --token=$NOW_TOKEN",
+    "clear-deployments": "now rm --safe --yes confhub --token=$NOW_TOKEN"
+  }
+}
