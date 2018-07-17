@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import cookie from 'cookie';
 import redirect from '../lib/redirect';
 
-const SIGN_IN = gqltemp`
+const SIGN_IN = gql`
   mutation Signin($email: String!, $password: String!) {
     signinUser(email: { email: $email, password: $password }) {
       token

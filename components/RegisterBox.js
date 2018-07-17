@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import cookie from 'cookie';
 import redirect from '../lib/redirect';
 
-const CREATE_USER = gqltemp`
+const CREATE_USER = gql`
   mutation Create($name: String!, $email: String!, $password: String!) {
     createUser(
       name: $name
