@@ -29,7 +29,7 @@ const Header = ({ pathname, isAuth, signOut, userData }: Props) => (
     {!isAuth && (
       <Menu theme="dark" mode="horizontal" style={{ lineHeight: '64px' }}>
         <Menu.Item key="signup" style={{ float: 'right' }}>
-          <Link href="/signup" prefetch>
+          <Link href="/create-account" prefetch>
             <a>
               <Icon type="mail" />Sign Up
             </a>

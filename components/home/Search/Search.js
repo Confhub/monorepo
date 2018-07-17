@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { Select, Icon } from 'antd';
+import { Select, Icon, AutoComplete } from 'antd';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import HomePageContext from '../HomePageContext';
@@ -63,9 +63,8 @@ class Search extends React.Component {
       <div className="root">
         <label>
           <h4>Location:</h4>
-          <Select
+          <AutoComplete
             disabled={locationLoading}
-            mode="combobox"
             value={location}
             filterOption={false}
             defaultActiveFirstOption={false}
@@ -83,7 +82,7 @@ class Search extends React.Component {
                   {item.place_name_en}
                 </Option>
               ))}
-          </Select>
+          </AutoComplete>
         </label>
         <h4>Categories:</h4>
         <Select
