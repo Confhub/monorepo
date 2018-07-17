@@ -25,10 +25,6 @@ jobs:
     script:
     - yarn test-ci
 
-  - stage: build
-    script:
-    - yarn build
-
   - stage: deploy
     script: yarn deploy
 

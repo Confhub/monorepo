@@ -2,16 +2,20 @@
   "private": true,
   "name": "portalo-graphql",
   "description": "Portalo GraphQL Server",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "license": "MIT",
   "main": "src/index.js",
   "contributors": [
     {
+      "name": "Ali Zhdanov",
+      "email": "zhdanov.alik@yandex.ru"
+    },
+    {
       "name": "Yuri Yakovlev",
-      "email": "yuri.yakovlev@kiwi.com",
-      "url": "https://yakovlevyuri.com"
+      "email": "hi@mynameisyuri.com",
+      "url": "https://mynameisyuri.com"
     }
   ],
-  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "graphql": "^0.13.2",
@@ -36,6 +40,7 @@
     "flow-bin": "^0.76.0",
     "graphql-cli": "2.16.4",
     "nodemon": "1.18.2",
+    "now": "^11.2.9",
     "prettier": "^1.13.7"
   },
   "scripts": {
@@ -43,8 +48,8 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "flow check --color=always --include-warnings",
     "test-ci": "echo add real checks",
-    "deploy": "now --token $NOW_TOKEN --npm",
+    "deploy": "now -e PRISMA_ENDPOINT=$PRISMA_ENDPOINT -e PRISMA_SECRET=$PRISMA_SECRET -e APP_SECRET=$APP_SECRET --token $NOW_TOKEN --npm",
     "alias": "now alias --token=$NOW_TOKEN",
-    "clear-deployments": "now rm --safe --yes confhub --token=$NOW_TOKEN"
+    "clear-deployments": "now rm --safe --yes confhub-graphql --token=$NOW_TOKEN"
   }
 }
