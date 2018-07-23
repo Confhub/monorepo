@@ -1,6 +1,6 @@
 // @flow
 
-import { Fragment } from 'react';
+import * as React from 'react';
 import Link from 'next/link';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 
 const HeaderLink = ({ pathname, url, title }: Props) => {
   return (
-    <Fragment>
+    <React.Fragment>
       <Link prefetch href={url}>
         <a className={pathname === url ? 'is-active' : ''}>{title}</a>
       </Link>
@@ -21,7 +21,7 @@ const HeaderLink = ({ pathname, url, title }: Props) => {
           color: black;
         }
       `}</style>
-    </Fragment>
+    </React.Fragment>
   );
 };
 

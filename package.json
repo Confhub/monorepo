@@ -19,6 +19,7 @@
     "antd": "^3.7.1",
     "apollo-boost": "^0.1.10",
     "apollo-link-context": "^1.0.8",
+    "apollo-link-http": "^1.5.4",
     "cookie": "^0.3.1",
     "graphql": "^0.13.2",
     "graphql-anywhere": "^4.1.14",

@@ -1,21 +1,19 @@
-// @flow
-
 import queryString from 'query-string';
 
-const mL = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+// const mL = [
+//   'January',
+//   'February',
+//   'March',
+//   'April',
+//   'May',
+//   'June',
+//   'July',
+//   'August',
+//   'September',
+//   'October',
+//   'November',
+//   'December',
+// ];
 const mS = [
   'Jan',
   'Feb',
@@ -32,7 +30,8 @@ const mS = [
 ];
 
 // return date in format May 2-4, 2018
-export const parseDateRange = (startDate: string, endDate: string) => {
+// export const parseDateRange = (startDate: string, endDate: string) => {
+export const parseDateRange = (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
@@ -44,18 +43,21 @@ export const parseDateRange = (startDate: string, endDate: string) => {
   return `${month} ${startDay}-${endDay}, ${year}`;
 };
 
-export const searchCity = query => {
+export const searchCity = async query => {
   const params = queryString.stringify({
     access_token: process.env.MAPBOX_SECRET,
     type: 'place',
     autocomplete: true,
     language: 'en',
   });
-  return fetch(
+
+  const res = await fetch(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` + params,
-  )
-    .then(res => res.json())
-    .then(res => res.features);
+  );
+
+  const { features } = await res.json();
+
+  return features;
 };
 
 export const getLocation = () =>

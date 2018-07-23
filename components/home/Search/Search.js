@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Select, Icon, AutoComplete } from 'antd';
 import { Query } from 'react-apollo';
@@ -56,7 +54,7 @@ class Search extends React.Component {
   };
 
   render() {
-    const { locationList, location, tagsQuery } = this.state;
+    const { locationList, location } = this.state;
     const { locationLoading, tags, setTags, data } = this.props;
 
     return (
@@ -124,7 +122,7 @@ export default props => (
   <HomePageContext.Consumer>
     {({ getLocation, setLocation, locationLoading, tags, setTags }) => (
       <Query query={GET_TAGS_LIST}>
-        {({ loading, error, data }) => (
+        {({ data }) => (
           <Search
             {...props}
             getLocation={getLocation}

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import MapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
-import { filter } from 'graphql-anywhere';
 import MarkerIcon from './Marker';
 import PopupComponent from './Popup';
 import HomePageContext from '../HomePageContext';
@@ -45,7 +44,7 @@ class Map extends React.Component {
   };
 
   renderMarker = item => {
-    const { id, name, place } = item;
+    const { id, place } = item;
     const { latitude, longitude } = place.location.coordinates;
     return (
       <Marker key={id} longitude={longitude} latitude={latitude}>
