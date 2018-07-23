@@ -21,11 +21,10 @@ export const GET_CONFERENCE_LIST = gql`
   ${MAP_FRAGMENT}
 `;
 
-// TODO: change array to object in location
+// @TODO: change array to object in location
 
 class HomePageContainer extends React.Component<{}> {
   static async getInitialProps({ query }) {
-    console.log('test');
     return { query };
   }
 

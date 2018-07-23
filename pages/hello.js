@@ -6,7 +6,7 @@ import redirect from '../lib/redirect';
 import checkLoggedIn from '../lib/checkLoggedIn';
 
 export default class Hello extends React.Component {
-  static async getInitialProps(context, apolloClient) {
+  static async getInitialProps(context) {
     const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
     // if (!loggedInUser.user) {
@@ -17,17 +17,19 @@ export default class Hello extends React.Component {
     return { loggedInUser };
   }
 
-  signout = apolloClient => () => {
+  signout = apolloClient => async () => {
     document.cookie = cookie.serialize('token', '', {
       maxAge: -1, // Expire the cookie immediately
     });
 
     // Force a reload of all the current queries now that the user is
     // logged in, so we don't accidentally leave any state around.
-    apolloClient.cache.reset().then(() => {
-      // Redirect to a more useful page when signed out
+    try {
+      await apolloClient.cache.reset();
       redirect({}, '/signin');
-    });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   render() {

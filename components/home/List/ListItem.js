@@ -5,7 +5,7 @@ import { List as AntList, Tag, Button } from 'antd';
 
 import ListItemDescription from './ListItemDescription';
 
-import type { ListItem as ListItemType } from './__generated__/ListItem.js';
+import type { ListItem as ListItemType } from './__generated__/ListItem';
 
 type Props = {
   item: ListItemType,
@@ -22,7 +22,7 @@ const ListItem = ({ item }: Props) => {
         <div className="list-item-inner">
           <AntList.Item.Meta
             title={
-              <a href={item.url} target="_blank">
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
                 {item.name}
               </a>
             }

@@ -24,23 +24,26 @@ const RegisterBox = ({ client }) => {
   return (
     <Mutation
       mutation={CREATE_USER}
-      onCompleted={data => {
+      onCompleted={async data => {
         // Store the token in cookie
         document.cookie = cookie.serialize('token', data.signinUser.token, {
           maxAge: 30 * 24 * 60 * 60, // 30 days
         });
         // Force a reload of all the current queries now that the user is
         // logged in
-        client.cache.reset().then(() => {
+        try {
+          await client.cache.reset();
           redirect({}, '/');
-        });
+        } catch (err) {
+          console.error(err);
+        }
       }}
       onError={error => {
         // If you want to send error to external service?
-        console.log(error);
+        console.error(error);
       }}
     >
-      {(create, { data, error }) => (
+      {(create, { error }) => (
         <form
           onSubmit={e => {
             e.preventDefault();

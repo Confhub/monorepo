@@ -5,7 +5,7 @@ import { Icon, Divider } from 'antd';
 
 import { parseDateRange } from '../../helpers';
 
-import type { ListItem as ListItemType } from './__generated__/ListItem.js';
+import type { ListItem as ListItemType } from './__generated__/ListItem';
 
 type Props = {
   item: ListItemType,

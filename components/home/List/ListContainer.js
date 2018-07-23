@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 import List from './List';
 
-import type { ListItem as ListItemType } from './__generated__/ListItem.js';
+import type { ListItem as ListItemType } from './__generated__/ListItem';
 
 type Props = {
   items: ListItemType[],

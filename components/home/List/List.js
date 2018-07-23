@@ -5,7 +5,7 @@ import { List as AntList } from 'antd';
 
 import ListItem from './ListItem';
 
-import type { ListItem as ListItemType } from './__generated__/ListItem.js';
+import type { ListItem as ListItemType } from './__generated__/ListItem';
 
 type Props = {
   items: ListItemType[],
@@ -24,7 +24,9 @@ const List = ({ items = [] }: Props) => {
           />
         </React.Fragment>
       ) : (
-        <h3>No data available from the server. Please check what's wrong!</h3>
+        <h3>
+          No data available from the server. Please check what&apos;s wrong!
+        </h3>
       )}
     </div>
   );

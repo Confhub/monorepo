@@ -4,8 +4,8 @@ import { parseDateRange } from '../../helpers';
 
 const renderDescription = item => {
   const { place, startDate, endDate, price } = item;
-  const { name, location } = place;
-  const { country, city, street, zip } = location;
+  const { location } = place;
+  const { country, city } = location;
 
   return (
     <>
@@ -31,7 +31,7 @@ export default class CityInfo extends PureComponent {
     return (
       <div>
         <h4>
-          <a href={url} target="_blank">
+          <a href={url} target="_blank" rel="noopener noreferrer">
             {name}
           </a>
         </h4>

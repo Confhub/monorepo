@@ -11,7 +11,6 @@ type Props = {
 
 class ApproveList extends React.Component<Props> {
   render() {
-    console.log(this.props.data);
     return (
       <div>
         <h3>Found {this.props.data.length} new conferences to review:</h3>
@@ -20,7 +19,10 @@ class ApproveList extends React.Component<Props> {
           dataSource={this.props.data}
           renderItem={item => (
             <List.Item
-              actions={[<a>edit</a>, <PublishConferenceButton id={item.id} />]}
+              actions={[
+                <a key="link">edit</a>,
+                <PublishConferenceButton key="button" id={item.id} />,
+              ]}
             >
               <List.Item.Meta
                 avatar={<Avatar src={item.image.src} />}
