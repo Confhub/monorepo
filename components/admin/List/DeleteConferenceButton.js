@@ -29,20 +29,15 @@ class DeleteConferenceButton extends React.Component<Props> {
   };
 
   render() {
-    const { status, query } = this.props;
+    const { query } = this.props;
 
     return (
       <Mutation
         mutation={DELETE_CONFERENCE}
         update={(cache, { data: { deleteConference } }) => {
-          const data = cache.readQuery({
-            query,
-          });
-          remove(
-            status ? data.publishedConferences : data.unpublishedConferences,
-            { id: deleteConference.id },
-          );
-          cache.writeQuery({ query, data });
+          const data = cache.readQuery(query);
+          remove(data.conferencesFiltered, { id: deleteConference.id });
+          cache.writeQuery({ ...query, data });
         }}
       >
         {(deleteConference, { error }) => {

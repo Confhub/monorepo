@@ -7,18 +7,9 @@ import gql from 'graphql-tag';
 import ApproveList from './List';
 import { LIST_ITEM_FRAGMENT } from '../../home/List/ListContainer';
 
-export const GET_UNPUBLISHED_CONFERENCES_LIST = gql`
-  query unpublishedConferences {
-    unpublishedConferences {
-      ...ListItem
-    }
-  }
-  ${LIST_ITEM_FRAGMENT}
-`;
-
-export const GET_PUBLISHED_CONFERENCES_LIST = gql`
-  query publishedConferences {
-    publishedConferences {
+const GET_CONFERENCES_LIST = gql`
+  query conferencesFiltered($published: Boolean) {
+    conferencesFiltered(published: $published) {
       ...ListItem
     }
   }
@@ -36,21 +27,25 @@ class ListContainer extends React.Component<{}, {}> {
 
   render() {
     const { status } = this.state;
-    const query = status
-      ? GET_PUBLISHED_CONFERENCES_LIST
-      : GET_UNPUBLISHED_CONFERENCES_LIST;
+
+    const query = {
+      query: GET_CONFERENCES_LIST,
+      variables: { published: status },
+    };
+
     return (
-      <Query query={query}>
+      <Query {...query}>
         {({ loading, error, data }) => {
           if (loading) return 'Loading...';
           if (error) return `Error! ${error.message}`;
 
           return (
             <ApproveList
-              data={data.publishedConferences || data.unpublishedConferences}
+              data={data.conferencesFiltered}
               status={status}
               onStatusChange={this.onStatusChange}
               query={query}
+              mutation={query}
             />
           );
         }}

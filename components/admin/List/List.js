@@ -39,7 +39,6 @@ class ApproveList extends React.Component<Props> {
                 <DeleteConferenceButton
                   key="button"
                   id={item.id}
-                  status={status}
                   query={query}
                 />,
               ]}
