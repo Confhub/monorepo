@@ -1,7 +1,7 @@
 type Query {
   publishedConferences: [Conference!]!
   unpublishedConferences: [Conference!]!
-  conferencesFiltered(tags: [ID]): [Conference!]!
+  conferencesFiltered(tags: [ID], published: Boolean = true): [Conference!]!
 }
 
 type Mutation {
