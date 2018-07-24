@@ -15,6 +15,7 @@ class ApproveList extends React.Component<Props> {
     const { status, onStatusChange, query } = this.props;
     return (
       <div>
+        {/*@TODO: move swith into listcontainer*/}
         <Switch
           checkedChildren="Published"
           unCheckedChildren="Unpublished"
