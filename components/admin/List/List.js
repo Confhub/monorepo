@@ -1,9 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Switch } from 'antd';
 
 import PublishConferenceButton from './PublishConferenceButton';
+import DeleteConferenceButton from './DeleteConferenceButton';
 
 type Props = {
   data: Object,
@@ -11,8 +12,15 @@ type Props = {
 
 class ApproveList extends React.Component<Props> {
   render() {
+    const { status, onStatusChange, query } = this.props;
     return (
       <div>
+        <Switch
+          checkedChildren="Published"
+          unCheckedChildren="Unpublished"
+          value={status}
+          onChange={onStatusChange}
+        />
         <h3>Found {this.props.data.length} new conferences to review:</h3>
         <List
           itemLayout="horizontal"
@@ -21,7 +29,19 @@ class ApproveList extends React.Component<Props> {
             <List.Item
               actions={[
                 <a key="link">edit</a>,
-                <PublishConferenceButton key="button" id={item.id} />,
+                !status && (
+                  <PublishConferenceButton
+                    key="button"
+                    id={item.id}
+                    query={query}
+                  />
+                ),
+                <DeleteConferenceButton
+                  key="button"
+                  id={item.id}
+                  status={status}
+                  query={query}
+                />,
               ]}
             >
               <List.Item.Meta
