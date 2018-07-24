@@ -69,27 +69,30 @@ class HomePageContainer extends React.Component<{}> {
   };
 
   setLocationUrl = (long, lat) => {
-    Router.push({
+    const href = {
       pathname: '/',
       query: {
         ...Router.query,
         long,
         lat,
       },
-    });
+    };
+
+    Router.push(href, href, { shallow: true });
   };
 
   setLocationUrlDebounced = debounce(this.setLocationUrl, 1000);
 
   setTags = tags => {
     this.setState({ tags });
-    Router.push({
+    const href = {
       pathname: '/',
       query: {
         ...Router.query,
         tags,
       },
-    });
+    };
+    Router.push(href, href, { shallow: true });
   };
 
   render() {
@@ -106,6 +109,7 @@ class HomePageContainer extends React.Component<{}> {
       tags,
       setTags: this.setTags,
     };
+
     return (
       <HomePageContext.Provider value={context}>
         <Query query={GET_CONFERENCE_LIST} variables={{ tags }}>
