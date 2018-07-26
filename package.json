@@ -16,13 +16,13 @@
   ],
   "dependencies": {
     "@zeit/next-css": "^0.2.0",
-    "antd": "^3.7.1",
-    "apollo-boost": "^0.1.10",
+    "antd": "^3.7.2",
+    "apollo-boost": "^0.1.12",
     "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.4",
     "cookie": "^0.3.1",
     "graphql": "^0.13.2",
-    "graphql-anywhere": "^4.1.14",
+    "graphql-anywhere": "^4.1.15",
     "graphql-tag": "^2.9.2",
     "isomorphic-unfetch": "^2.1.0",
     "lodash": "^4.17.10",
@@ -34,7 +34,7 @@
     "react": "^16.4.1",
     "react-apollo": "^2.1.9",
     "react-dom": "^16.4.1",
-    "react-map-gl": "^3.3.1",
+    "react-map-gl": "^3.3.2",
     "styled-jsx-plugin-sass": "^0.2.4"
   },
   "devDependencies": {
