@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Switch } from 'antd';
 
 import ApproveList from './List';
 import { LIST_ITEM_FRAGMENT } from '../../home/List/ListContainer';
@@ -36,17 +37,31 @@ class ListContainer extends React.Component<{}, {}> {
     return (
       <Query {...query}>
         {({ loading, error, data }) => {
-          if (loading) return 'Loading...';
-          if (error) return `Error! ${error.message}`;
-
           return (
-            <ApproveList
-              data={data.conferencesFiltered}
-              status={status}
-              onStatusChange={this.onStatusChange}
-              query={query}
-              mutation={query}
-            />
+            <React.Fragment>
+              <Switch
+                checkedChildren="Published"
+                unCheckedChildren="Unpublished"
+                value={status}
+                onChange={this.onStatusChange}
+              />
+              <div className="list-wrap">
+                <ApproveList
+                  error={error}
+                  loading={loading}
+                  data={data.conferencesFiltered}
+                  status={status}
+                  onStatusChange={this.onStatusChange}
+                  query={query}
+                  mutation={query}
+                />
+              </div>
+              <style jsx>{`
+                .list-wrap {
+                  margin-top: 1.5em;
+                }
+              `}</style>
+            </React.Fragment>
           );
         }}
       </Query>

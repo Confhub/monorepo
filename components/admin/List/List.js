@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { List, Avatar, Switch } from 'antd';
+import { List, Avatar } from 'antd';
 
 import PublishConferenceButton from './PublishConferenceButton';
 import DeleteConferenceButton from './DeleteConferenceButton';
@@ -12,16 +12,15 @@ type Props = {
 
 class ApproveList extends React.Component<Props> {
   render() {
-    const { status, onStatusChange, query } = this.props;
+    const { status, query, error, loading } = this.props;
+    if (loading) {
+      return 'Loading...';
+    }
+    if (error) {
+      return `Error! ${error.message}`;
+    }
     return (
       <div>
-        {/*@TODO: move swith into listcontainer*/}
-        <Switch
-          checkedChildren="Published"
-          unCheckedChildren="Unpublished"
-          value={status}
-          onChange={onStatusChange}
-        />
         <h3>Found {this.props.data.length} new conferences to review:</h3>
         <List
           itemLayout="horizontal"
