@@ -19,13 +19,13 @@ export default {
     conferencesConnection: forwardTo('db'),
     conferencesFiltered: (
       _: any,
-      { tags }: conferencesFilteredArgs,
+      { tags, published }: conferencesFilteredArgs,
       ctx: ContextType,
       info: any,
     ) => {
       const makeQuery = extra => ({
         where: {
-          publishStatus: 'PUBLISHED',
+          publishStatus: published ? 'PUBLISHED' : 'DRAFT',
           ...extra,
         },
       });
