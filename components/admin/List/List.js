@@ -4,6 +4,7 @@ import * as React from 'react';
 import { List, Avatar } from 'antd';
 
 import PublishConferenceButton from './PublishConferenceButton';
+import DeleteConferenceButton from './DeleteConferenceButton';
 
 type Props = {
   data: Object,
@@ -11,6 +12,13 @@ type Props = {
 
 class ApproveList extends React.Component<Props> {
   render() {
+    const { status, query, error, loading } = this.props;
+    if (loading) {
+      return 'Loading...';
+    }
+    if (error) {
+      return `Error! ${error.message}`;
+    }
     return (
       <div>
         <h3>Found {this.props.data.length} new conferences to review:</h3>
@@ -21,7 +29,18 @@ class ApproveList extends React.Component<Props> {
             <List.Item
               actions={[
                 <a key="link">edit</a>,
-                <PublishConferenceButton key="button" id={item.id} />,
+                !status && (
+                  <PublishConferenceButton
+                    key="button"
+                    id={item.id}
+                    query={query}
+                  />
+                ),
+                <DeleteConferenceButton
+                  key="button"
+                  id={item.id}
+                  query={query}
+                />,
               ]}
             >
               <List.Item.Meta

@@ -5,8 +5,6 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import remove from 'lodash/remove';
 
-import { GET_UNPUBLISHED_CONFERENCES_LIST } from './ListContainer';
-
 type Props = {
   id: string,
 };
@@ -31,15 +29,14 @@ class PublishConferenceButton extends React.Component<Props> {
   };
 
   render() {
+    const { query } = this.props;
     return (
       <Mutation
         mutation={PUBLISH_CONFERENCE}
         update={(cache, { data: { publishConference } }) => {
-          const data = cache.readQuery({
-            query: GET_UNPUBLISHED_CONFERENCES_LIST,
-          });
-          remove(data.unpublishedConferences, { id: publishConference.id });
-          cache.writeQuery({ query: GET_UNPUBLISHED_CONFERENCES_LIST, data });
+          const data = cache.readQuery(query);
+          remove(data.conferencesFiltered, { id: publishConference.id });
+          cache.writeQuery({ ...query, data });
         }}
       >
         {(updateConference, { error }) => {
