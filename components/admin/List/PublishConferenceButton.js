@@ -4,6 +4,7 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import remove from 'lodash/remove';
+import { message } from 'antd';
 
 type Props = {
   id: string,
@@ -24,12 +25,13 @@ class PublishConferenceButton extends React.Component<Props> {
     });
 
     if (published) {
-      console.log('Conference published');
+      message.success('Conference published');
     }
   };
 
   render() {
     const { query } = this.props;
+
     return (
       <Mutation
         mutation={PUBLISH_CONFERENCE}
