@@ -1,5 +1,7 @@
 # ConfHub Frontend
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Confhub/confhub.svg)](https://greenkeeper.io/)
+
 ## Prerequisites
 
 ### Mapbox API key
