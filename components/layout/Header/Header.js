@@ -50,6 +50,14 @@ const Header = ({ isAuth, signOut, userData }) => (
             </a>
           </Link>
         </Menu.Item>
+
+        <Menu.Item key="newConference" style={{ float: 'right' }}>
+          <Link href="/new-conference" prefetch>
+            <a>
+              <Icon type="form" />Add new conference
+            </a>
+          </Link>
+        </Menu.Item>
       </Menu>
     )}
 
