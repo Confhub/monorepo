@@ -1,6 +1,7 @@
 # ConfHub Frontend
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/Confhub/confhub.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.com/Confhub/confhub.svg?branch=master)](https://travis-ci.com/Confhub/confhub)
 
 ## Prerequisites
 
