@@ -18,8 +18,15 @@ const Header = ({ isAuth, signOut, userData }) => (
       <Menu theme="dark" mode="horizontal" style={{ lineHeight: '64px' }}>
         <Menu.Item key="signout" style={{ float: 'right' }}>
           <a onClick={signOut}>
-            <Icon type="poweroff" />Sign Out{' '}
-            {userData ? <span>&#40;{userData.email}&#41;</span> : null}
+            <Icon type="poweroff" />
+            Sign Out{' '}
+            {userData ? (
+              <span>
+                &#40;
+                {userData.email}
+                &#41;
+              </span>
+            ) : null}
           </a>
         </Menu.Item>
       </Menu>
@@ -30,7 +37,8 @@ const Header = ({ isAuth, signOut, userData }) => (
         <Menu.Item key="signup" style={{ float: 'right' }}>
           <Link href="/create-account" prefetch>
             <a>
-              <Icon type="mail" />Sign Up
+              <Icon type="mail" />
+              Sign Up
             </a>
           </Link>
         </Menu.Item>
@@ -38,7 +46,8 @@ const Header = ({ isAuth, signOut, userData }) => (
         <Menu.Item key="signin" style={{ float: 'right' }}>
           <Link href="/signin" prefetch>
             <a>
-              <Icon type="mail" />Sign In
+              <Icon type="mail" />
+              Sign In
             </a>
           </Link>
         </Menu.Item>
@@ -46,7 +55,17 @@ const Header = ({ isAuth, signOut, userData }) => (
         <Menu.Item key="admin" style={{ float: 'right' }}>
           <Link href="/admin" prefetch>
             <a>
-              <Icon type="dashboard" />Admin Panel
+              <Icon type="dashboard" />
+              Admin Panel
+            </a>
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item key="newConference" style={{ float: 'right' }}>
+          <Link href="/new-conference" prefetch>
+            <a>
+              <Icon type="form" />
+              Add new conference
             </a>
           </Link>
         </Menu.Item>

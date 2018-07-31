@@ -37,7 +37,9 @@ const ListItem = ({ item }: Props) => {
             {item.description}
           </div>
           <div className="bottom-line">
-            {item.tags.map(tag => <Tag key={tag.id}>{tag.name}</Tag>)}
+            {item.tags.map(tag => (
+              <Tag key={tag.id}>{tag.name}</Tag>
+            ))}
           </div>
           <div className="button-wrap">
             {/* <Button style={{ marginRight: 8 }}>More info</Button>
