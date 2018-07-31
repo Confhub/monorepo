@@ -1,5 +1,10 @@
 {
   "name": "confhub-graphql",
   "alias": "graphql.confhub.win",
-  "public": true
+  "scale": {
+    "bru1": {
+      "min": 2,
+      "max": 3
+    }
+  }
 }
