@@ -1,5 +1,10 @@
 {
   "name": "confhub",
   "alias": "confhub.win",
-  "public": true
+  "scale": {
+    "bru1": {
+      "min": 2,
+      "max": 3
+    }
+  }
 }
