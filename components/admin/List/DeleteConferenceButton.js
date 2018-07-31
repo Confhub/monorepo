@@ -4,6 +4,7 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import remove from 'lodash/remove';
+import { message } from 'antd';
 
 type Props = {
   id: string,
@@ -24,7 +25,7 @@ class DeleteConferenceButton extends React.Component<Props> {
     });
 
     if (deleted) {
-      console.log('Conference deleted');
+      message.success('Conference deleted');
     }
   };
 
