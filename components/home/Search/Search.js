@@ -1,21 +1,10 @@
 import * as React from 'react';
 import { Select, Icon, AutoComplete } from 'antd';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import HomePageContext from '../HomePageContext';
 import { searchCity } from '../../helpers';
+import TagSelector from '../../TagSelector';
 
 const Option = Select.Option;
-
-const GET_TAGS_LIST = gql`
-  query tags {
-    tags {
-      id
-      name
-      slug
-    }
-  }
-`;
 
 class Search extends React.Component {
   state = {
@@ -55,7 +44,7 @@ class Search extends React.Component {
 
   render() {
     const { locationList, location } = this.state;
-    const { locationLoading, tags, setTags, data } = this.props;
+    const { locationLoading, tags, setTags } = this.props;
 
     return (
       <div className="root">
@@ -83,22 +72,7 @@ class Search extends React.Component {
           </AutoComplete>
         </label>
         <h4>Categories:</h4>
-        <Select
-          mode="multiple"
-          style={{ width: '100%' }}
-          placeholder="Choose categories"
-          value={tags}
-          onChange={setTags}
-          optionFilterProp="children"
-        >
-          {data &&
-            data.tags &&
-            data.tags.map(item => (
-              <Option key={item.id} value={item.slug}>
-                {item.name}
-              </Option>
-            ))}
-        </Select>
+        <TagSelector optionKey="slug" value={tags} onChange={setTags} />
         <style jsx>{`
           .root {
             padding: 1.5em 0.75em;
@@ -121,19 +95,14 @@ class Search extends React.Component {
 export default props => (
   <HomePageContext.Consumer>
     {({ getLocation, setLocation, locationLoading, tags, setTags }) => (
-      <Query query={GET_TAGS_LIST}>
-        {({ data }) => (
-          <Search
-            {...props}
-            getLocation={getLocation}
-            setLocation={setLocation}
-            locationLoading={locationLoading}
-            tags={tags}
-            setTags={setTags}
-            data={data}
-          />
-        )}
-      </Query>
+      <Search
+        {...props}
+        getLocation={getLocation}
+        setLocation={setLocation}
+        locationLoading={locationLoading}
+        tags={tags}
+        setTags={setTags}
+      />
     )}
   </HomePageContext.Consumer>
 );

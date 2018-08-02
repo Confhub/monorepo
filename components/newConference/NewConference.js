@@ -1,11 +1,18 @@
-// @flow
-
 import * as React from 'react';
 import { Form, Button, Col, Row, Input, Select, DatePicker } from 'antd';
+import TagSelector from '../TagSelector';
 
 const Option = Select.Option;
 
 class NewConferenceComponent extends React.Component {
+  state = {
+    tags: [],
+  };
+
+  handleTagsChange = tags => {
+    this.setState({ tags });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -21,9 +28,13 @@ class NewConferenceComponent extends React.Component {
           price,
           currency,
         } = values;
+        const { tags: rawTags } = this.state;
         const startDate = dateTime[0].format(timeFormat);
         const endDate = dateTime[1].format(timeFormat);
-
+        const tags = rawTags.map(t => ({
+          id: t.id.startsWith('tmp-') ? null : t.id,
+          name: t.name,
+        }));
         console.log('Received values of form: ', {
           name,
           location,
@@ -32,6 +43,7 @@ class NewConferenceComponent extends React.Component {
           price,
           currency,
           description,
+          tags,
         });
       }
     });
@@ -75,7 +87,6 @@ class NewConferenceComponent extends React.Component {
             </Form.Item>
           </Col>
         </Row>
-
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="DateTime">
@@ -95,6 +106,19 @@ class NewConferenceComponent extends React.Component {
                   addonAfter={this.renderCurrencySelect()}
                 />,
               )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item label="Categories">
+              <TagSelector
+                edit={true}
+                value={this.state.tags}
+                onChange={this.handleTagsChange}
+                optionKey="name"
+              />
+              ,
             </Form.Item>
           </Col>
         </Row>

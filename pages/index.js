@@ -32,7 +32,7 @@ class HomePageContainer extends React.Component<{}> {
     super(props);
 
     const { tags, long, lat } = this.props.query;
-    const defaultTags = tags && (tags.length ? tags : [tags]);
+    const defaultTags = tags && (typeof tags === 'string' ? [tags] : tags);
     const defaultLocation = long && lat ? [+long, +lat] : [25, 50];
 
     this.state = {
@@ -69,12 +69,13 @@ class HomePageContainer extends React.Component<{}> {
   };
 
   setLocationUrl = (long, lat) => {
+    const { tags } = Router.query;
     const href = {
       pathname: '/',
       query: {
-        ...Router.query,
         long,
         lat,
+        ...(tags && { tags }),
       },
     };
 
@@ -85,11 +86,12 @@ class HomePageContainer extends React.Component<{}> {
 
   setTags = tags => {
     this.setState({ tags });
+    const { long, lat } = Router.query;
     const href = {
       pathname: '/',
       query: {
-        ...Router.query,
-        tags,
+        ...(long && lat && { long, lat }),
+        tags: tags.map(t => t.slug),
       },
     };
     Router.push(href, href, { shallow: true });
@@ -112,7 +114,10 @@ class HomePageContainer extends React.Component<{}> {
 
     return (
       <HomePageContext.Provider value={context}>
-        <Query query={GET_CONFERENCE_LIST} variables={{ tags }}>
+        <Query
+          query={GET_CONFERENCE_LIST}
+          variables={{ tags: tags.map(t => t.slug || t) }}
+        >
           {({ loading, error, data }) => {
             return (
               <HomePage
