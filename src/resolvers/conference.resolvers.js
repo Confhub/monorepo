@@ -12,6 +12,18 @@ type publishConferenceArgs = {
   id: string,
 };
 
+type createConference = {
+  data: {
+    name: string,
+    description?: string,
+    image?: {
+      id?: string,
+      src?: string,
+      alt?: string,
+    },
+  },
+};
+
 export default {
   Query: {
     conference: forwardTo('db'),
@@ -65,7 +77,43 @@ export default {
     },
   },
   Mutation: {
-    createConference: forwardTo('db'),
+    createConference: (
+      _: any,
+      { data: { name, description, image } }: publishConferenceArgs,
+      ctx: ContextType,
+      info: any,
+    ) => {
+      const makeQuery = () => ({
+        data: {
+          name,
+          description,
+          image: (() => {
+            if (!image) {
+              return null;
+            }
+
+            if (image.id) {
+              return {
+                connect: {
+                  id: image.id,
+                },
+              };
+            }
+
+            return {
+              create: {
+                src: image.src || "http://via.placeholder.com/350x150",
+                alt: image.alt || name,
+              },
+            };
+          })(),
+        },
+      });
+
+      console.log(makeQuery());
+
+      return ctx.db.mutation.createConference(makeQuery(), info);
+    },
     deleteConference: forwardTo('db'),
     publishConference: (
       _: any,

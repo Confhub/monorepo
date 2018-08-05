@@ -5,5 +5,19 @@ type Query {
 }
 
 type Mutation {
+  createConference(data: CreateConferenceInput!): Conference!
   publishConference(id: ID!): Conference!
+}
+
+input CreateConferenceInput {
+  name: String!
+  description: String
+  publishStatus: PUBLISH_STATUS
+  image: CreateImageInput
+}
+
+input CreateImageInput {
+  id: ID
+  src: String
+  alt: String
 }
