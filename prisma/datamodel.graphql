@@ -66,3 +66,8 @@ enum PUBLISH_STATUS {
   DRAFT
   PUBLISHED
 }
+
+type Currency {
+  id: ID! @unique
+  name: String!
+}
