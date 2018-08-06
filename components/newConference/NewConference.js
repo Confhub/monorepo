@@ -4,6 +4,17 @@ import TagSelector from '../TagSelector';
 
 const Option = Select.Option;
 
+const prices = [
+  { label: 'Early Bird', field: 'priceEarly' },
+  { label: 'Regular', field: 'price' },
+  { label: 'Late Bird', field: 'priceLate' },
+];
+
+// @TODO: move to constants
+const timeFormat = 'YYYY-MM-DD';
+
+const formatDate = date => date.format(timeFormat);
+
 class NewConferenceComponent extends React.Component {
   state = {
     tags: [],
@@ -16,9 +27,6 @@ class NewConferenceComponent extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      // @TODO: move to constants
-      const timeFormat = 'YYYY-MM-DD';
-
       if (!err) {
         const {
           name,
@@ -26,15 +34,39 @@ class NewConferenceComponent extends React.Component {
           dateTime,
           description,
           price,
+          priceDate,
+          priceEarly,
+          priceEarlyDate,
+          priceLate,
+          priceLateDate,
           currency,
         } = values;
         const { tags: rawTags } = this.state;
-        const startDate = dateTime[0].format(timeFormat);
-        const endDate = dateTime[1].format(timeFormat);
+        const startDate = formatDate(dateTime[0]);
+        const endDate = formatDate(dateTime[1]);
         const tags = rawTags.map(t => ({
           id: t.id.startsWith('tmp-') ? null : t.id,
           name: t.name,
         }));
+
+        const priceObject = {
+          earlyBird: {
+            amount: priceEarly,
+            currency,
+            expiration: formatDate(priceEarlyDate),
+          },
+          regular: {
+            amount: price,
+            currency,
+            expiration: formatDate(priceDate),
+          },
+          lateBird: {
+            amount: priceLate,
+            currency,
+            expiration: formatDate(priceLateDate),
+          },
+        };
+
         console.log('Received values of form: ', {
           name,
           location,
@@ -44,6 +76,7 @@ class NewConferenceComponent extends React.Component {
           currency,
           description,
           tags,
+          priceObject,
         });
       }
     });
@@ -63,6 +96,35 @@ class NewConferenceComponent extends React.Component {
         <Option value="usd">USD</Option>
         <Option value="gbp">GBP</Option>
       </Select>,
+    );
+  }
+
+  renderPrice({ label, field }) {
+    const { getFieldDecorator } = this.props.form;
+
+    return (
+      <Row gutter={16} key={field}>
+        <Col span={12}>
+          <Form.Item label={label}>
+            {getFieldDecorator(field, {
+              rules: [{ required: true, message: 'Enter price' }],
+            })(
+              <Input
+                type="number"
+                placeholder="699"
+                addonAfter={this.renderCurrencySelect()}
+              />,
+            )}
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="Expires on">
+            {getFieldDecorator(field + 'Date', {
+              rules: [{ required: true, message: 'Enter dateTime' }],
+            })(<DatePicker />)}
+          </Form.Item>
+        </Col>
+      </Row>
     );
   }
 
@@ -95,19 +157,6 @@ class NewConferenceComponent extends React.Component {
               })(<DatePicker.RangePicker />)}
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item label="Price">
-              {getFieldDecorator('price', {
-                rules: [{ required: true, message: 'Enter price' }],
-              })(
-                <Input
-                  type="number"
-                  placeholder="699"
-                  addonAfter={this.renderCurrencySelect()}
-                />,
-              )}
-            </Form.Item>
-          </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
@@ -118,10 +167,15 @@ class NewConferenceComponent extends React.Component {
                 onChange={this.handleTagsChange}
                 optionKey="name"
               />
-              ,
             </Form.Item>
           </Col>
         </Row>
+        <Row gutter={16}>
+          <Col span={24}>
+            <h2>Prices:</h2>
+          </Col>
+        </Row>
+        {prices.map(price => this.renderPrice(price))}
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item label="Description">
