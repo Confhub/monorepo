@@ -12,7 +12,7 @@ type Props = {
 
 const DELETE_CONFERENCE = gql`
   mutation deleteConference($id: ID!) {
-    deleteConference(where: { id: $id }) {
+    deleteConference(id: $id) {
       id
     }
   }
@@ -25,7 +25,7 @@ class DeleteConferenceButton extends React.Component<Props> {
     });
 
     if (deleted) {
-      message.success('Conference deleted');
+      message.success('Conference removed');
     }
   };
 
@@ -37,7 +37,7 @@ class DeleteConferenceButton extends React.Component<Props> {
         mutation={DELETE_CONFERENCE}
         update={(cache, { data: { deleteConference } }) => {
           const data = cache.readQuery(query);
-          remove(data.conferencesFiltered, { id: deleteConference.id });
+          remove(data.filteredConferences, { id: deleteConference.id });
           cache.writeQuery({ ...query, data });
         }}
       >
