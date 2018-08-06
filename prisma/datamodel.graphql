@@ -8,27 +8,38 @@ type User {
 
 type Conference {
   id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
   name: String!
   description: String
+  tags: [Tag!]!
+  url: String!
   image: Image @relation(name: "ConferenceToImage", onDelete: CASCADE)
+  startDate: DateTime!
+  endDate: DateTime!
+
+  social: Social @relation(name: "ConferenceToSocial", onDelete: CASCADE)
   publishStatus: PUBLISH_STATUS @default(value: DRAFT)
-}
-
-enum PUBLISH_STATUS {
-  DRAFT
-  PUBLISHED
-}
-
-type Image {
-  id: ID! @unique
-  src: String
-  alt: String
 }
 
 type Tag {
   id: ID! @unique
   name: String!
-  slug: String!
+  slug: String! @unique
+}
+
+type Image {
+  id: ID! @unique
+  src: String!
+  alt: String
+}
+
+type Social {
+  id: ID! @unique
+  facebook: String,
+  twitter: String,
+  instagram: String
+}
+
+enum PUBLISH_STATUS {
+  DRAFT
+  PUBLISHED
 }

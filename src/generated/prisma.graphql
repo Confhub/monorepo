@@ -1,11 +1,15 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Sun Aug 05 2018 02:26:08 GMT+0200 (Central European Summer Time)
+# timestamp: Sun Aug 05 2018 18:22:53 GMT+0200 (Central European Summer Time)
 
 type AggregateConference {
   count: Int!
 }
 
 type AggregateImage {
+  count: Int!
+}
+
+type AggregateSocial {
   count: Int!
 }
 
@@ -24,11 +28,14 @@ type BatchPayload {
 
 type Conference implements Node {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   name: String!
   description: String
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  url: String!
   image(where: ImageWhereInput): Image
+  startDate: DateTime!
+  endDate: DateTime!
+  social(where: SocialWhereInput): Social
   publishStatus: PUBLISH_STATUS
 }
 
@@ -45,8 +52,13 @@ type ConferenceConnection {
 input ConferenceCreateInput {
   name: String!
   description: String
+  url: String!
+  startDate: DateTime!
+  endDate: DateTime!
   publishStatus: PUBLISH_STATUS
+  tags: TagCreateManyInput
   image: ImageCreateOneInput
+  social: SocialCreateOneInput
 }
 
 """An edge in a connection."""
@@ -61,24 +73,31 @@ type ConferenceEdge {
 enum ConferenceOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   name_ASC
   name_DESC
   description_ASC
   description_DESC
+  url_ASC
+  url_DESC
+  startDate_ASC
+  startDate_DESC
+  endDate_ASC
+  endDate_DESC
   publishStatus_ASC
   publishStatus_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type ConferencePreviousValues {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   name: String!
   description: String
+  url: String!
+  startDate: DateTime!
+  endDate: DateTime!
   publishStatus: PUBLISH_STATUS
 }
 
@@ -124,8 +143,13 @@ input ConferenceSubscriptionWhereInput {
 input ConferenceUpdateInput {
   name: String
   description: String
+  url: String
+  startDate: DateTime
+  endDate: DateTime
   publishStatus: PUBLISH_STATUS
+  tags: TagUpdateManyInput
   image: ImageUpdateOneInput
+  social: SocialUpdateOneInput
 }
 
 input ConferenceWhereInput {
@@ -177,50 +201,6 @@ input ConferenceWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -301,6 +281,90 @@ input ConferenceWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  startDate: DateTime
+
+  """All values that are not equal to given value."""
+  startDate_not: DateTime
+
+  """All values that are contained in given list."""
+  startDate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  startDate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  startDate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  startDate_lte: DateTime
+
+  """All values greater than the given value."""
+  startDate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  startDate_gte: DateTime
+  endDate: DateTime
+
+  """All values that are not equal to given value."""
+  endDate_not: DateTime
+
+  """All values that are contained in given list."""
+  endDate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  endDate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  endDate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  endDate_lte: DateTime
+
+  """All values greater than the given value."""
+  endDate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  endDate_gte: DateTime
   publishStatus: PUBLISH_STATUS
 
   """All values that are not equal to given value."""
@@ -311,7 +375,11 @@ input ConferenceWhereInput {
 
   """All values that are not contained in given list."""
   publishStatus_not_in: [PUBLISH_STATUS!]
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
   image: ImageWhereInput
+  social: SocialWhereInput
 }
 
 input ConferenceWhereUniqueInput {
@@ -584,28 +652,34 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createConference(data: ConferenceCreateInput!): Conference!
-  createTag(data: TagCreateInput!): Tag!
   createImage(data: ImageCreateInput!): Image!
+  createSocial(data: SocialCreateInput!): Social!
+  createTag(data: TagCreateInput!): Tag!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateConference(data: ConferenceUpdateInput!, where: ConferenceWhereUniqueInput!): Conference
-  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
+  updateSocial(data: SocialUpdateInput!, where: SocialWhereUniqueInput!): Social
+  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   deleteUser(where: UserWhereUniqueInput!): User
   deleteConference(where: ConferenceWhereUniqueInput!): Conference
-  deleteTag(where: TagWhereUniqueInput!): Tag
   deleteImage(where: ImageWhereUniqueInput!): Image
+  deleteSocial(where: SocialWhereUniqueInput!): Social
+  deleteTag(where: TagWhereUniqueInput!): Tag
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertConference(where: ConferenceWhereUniqueInput!, create: ConferenceCreateInput!, update: ConferenceUpdateInput!): Conference!
-  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
+  upsertSocial(where: SocialWhereUniqueInput!, create: SocialCreateInput!, update: SocialUpdateInput!): Social!
+  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyConferences(data: ConferenceUpdateInput!, where: ConferenceWhereInput): BatchPayload!
-  updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
   updateManyImages(data: ImageUpdateInput!, where: ImageWhereInput): BatchPayload!
+  updateManySocials(data: SocialUpdateInput!, where: SocialWhereInput): BatchPayload!
+  updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyConferences(where: ConferenceWhereInput): BatchPayload!
-  deleteManyTags(where: TagWhereInput): BatchPayload!
   deleteManyImages(where: ImageWhereInput): BatchPayload!
+  deleteManySocials(where: SocialWhereInput): BatchPayload!
+  deleteManyTags(where: TagWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -643,16 +717,19 @@ enum PUBLISH_STATUS {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   conferences(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Conference]!
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
+  socials(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Social]!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   user(where: UserWhereUniqueInput!): User
   conference(where: ConferenceWhereUniqueInput!): Conference
-  tag(where: TagWhereUniqueInput!): Tag
   image(where: ImageWhereUniqueInput!): Image
+  social(where: SocialWhereUniqueInput!): Social
+  tag(where: TagWhereUniqueInput!): Tag
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   conferencesConnection(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferenceConnection!
-  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
+  socialsConnection(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SocialConnection!
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -661,11 +738,314 @@ type Query {
   ): Node
 }
 
+type Social implements Node {
+  id: ID!
+  facebook: String
+  twitter: String
+  instagram: String
+}
+
+"""A connection to a list of items."""
+type SocialConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SocialEdge]!
+  aggregate: AggregateSocial!
+}
+
+input SocialCreateInput {
+  facebook: String
+  twitter: String
+  instagram: String
+}
+
+input SocialCreateOneInput {
+  create: SocialCreateInput
+  connect: SocialWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type SocialEdge {
+  """The item at the end of the edge."""
+  node: Social!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SocialOrderByInput {
+  id_ASC
+  id_DESC
+  facebook_ASC
+  facebook_DESC
+  twitter_ASC
+  twitter_DESC
+  instagram_ASC
+  instagram_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SocialPreviousValues {
+  id: ID!
+  facebook: String
+  twitter: String
+  instagram: String
+}
+
+type SocialSubscriptionPayload {
+  mutation: MutationType!
+  node: Social
+  updatedFields: [String!]
+  previousValues: SocialPreviousValues
+}
+
+input SocialSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SocialSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SocialSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SocialSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SocialWhereInput
+}
+
+input SocialUpdateDataInput {
+  facebook: String
+  twitter: String
+  instagram: String
+}
+
+input SocialUpdateInput {
+  facebook: String
+  twitter: String
+  instagram: String
+}
+
+input SocialUpdateOneInput {
+  create: SocialCreateInput
+  connect: SocialWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: SocialUpdateDataInput
+  upsert: SocialUpsertNestedInput
+}
+
+input SocialUpsertNestedInput {
+  update: SocialUpdateDataInput!
+  create: SocialCreateInput!
+}
+
+input SocialWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SocialWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SocialWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SocialWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  facebook: String
+
+  """All values that are not equal to given value."""
+  facebook_not: String
+
+  """All values that are contained in given list."""
+  facebook_in: [String!]
+
+  """All values that are not contained in given list."""
+  facebook_not_in: [String!]
+
+  """All values less than the given value."""
+  facebook_lt: String
+
+  """All values less than or equal the given value."""
+  facebook_lte: String
+
+  """All values greater than the given value."""
+  facebook_gt: String
+
+  """All values greater than or equal the given value."""
+  facebook_gte: String
+
+  """All values containing the given string."""
+  facebook_contains: String
+
+  """All values not containing the given string."""
+  facebook_not_contains: String
+
+  """All values starting with the given string."""
+  facebook_starts_with: String
+
+  """All values not starting with the given string."""
+  facebook_not_starts_with: String
+
+  """All values ending with the given string."""
+  facebook_ends_with: String
+
+  """All values not ending with the given string."""
+  facebook_not_ends_with: String
+  twitter: String
+
+  """All values that are not equal to given value."""
+  twitter_not: String
+
+  """All values that are contained in given list."""
+  twitter_in: [String!]
+
+  """All values that are not contained in given list."""
+  twitter_not_in: [String!]
+
+  """All values less than the given value."""
+  twitter_lt: String
+
+  """All values less than or equal the given value."""
+  twitter_lte: String
+
+  """All values greater than the given value."""
+  twitter_gt: String
+
+  """All values greater than or equal the given value."""
+  twitter_gte: String
+
+  """All values containing the given string."""
+  twitter_contains: String
+
+  """All values not containing the given string."""
+  twitter_not_contains: String
+
+  """All values starting with the given string."""
+  twitter_starts_with: String
+
+  """All values not starting with the given string."""
+  twitter_not_starts_with: String
+
+  """All values ending with the given string."""
+  twitter_ends_with: String
+
+  """All values not ending with the given string."""
+  twitter_not_ends_with: String
+  instagram: String
+
+  """All values that are not equal to given value."""
+  instagram_not: String
+
+  """All values that are contained in given list."""
+  instagram_in: [String!]
+
+  """All values that are not contained in given list."""
+  instagram_not_in: [String!]
+
+  """All values less than the given value."""
+  instagram_lt: String
+
+  """All values less than or equal the given value."""
+  instagram_lte: String
+
+  """All values greater than the given value."""
+  instagram_gt: String
+
+  """All values greater than or equal the given value."""
+  instagram_gte: String
+
+  """All values containing the given string."""
+  instagram_contains: String
+
+  """All values not containing the given string."""
+  instagram_not_contains: String
+
+  """All values starting with the given string."""
+  instagram_starts_with: String
+
+  """All values not starting with the given string."""
+  instagram_not_starts_with: String
+
+  """All values ending with the given string."""
+  instagram_ends_with: String
+
+  """All values not ending with the given string."""
+  instagram_not_ends_with: String
+  _MagicalBackRelation_ConferenceToSocial_every: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToSocial_some: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToSocial_none: ConferenceWhereInput
+}
+
+input SocialWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   conference(where: ConferenceSubscriptionWhereInput): ConferenceSubscriptionPayload
-  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
+  social(where: SocialSubscriptionWhereInput): SocialSubscriptionPayload
+  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
 }
 
 type Tag implements Node {
@@ -687,6 +1067,11 @@ type TagConnection {
 input TagCreateInput {
   name: String!
   slug: String!
+}
+
+input TagCreateManyInput {
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
 }
 
 """An edge in a connection."""
@@ -756,9 +1141,34 @@ input TagSubscriptionWhereInput {
   node: TagWhereInput
 }
 
+input TagUpdateDataInput {
+  name: String
+  slug: String
+}
+
 input TagUpdateInput {
   name: String
   slug: String
+}
+
+input TagUpdateManyInput {
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
+  disconnect: [TagWhereUniqueInput!]
+  delete: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueNestedInput!]
+}
+
+input TagUpdateWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput!
+  data: TagUpdateDataInput!
+}
+
+input TagUpsertWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput!
+  update: TagUpdateDataInput!
+  create: TagCreateInput!
 }
 
 input TagWhereInput {
@@ -890,10 +1300,14 @@ input TagWhereInput {
 
   """All values not ending with the given string."""
   slug_not_ends_with: String
+  _MagicalBackRelation_ConferenceToTag_every: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTag_some: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTag_none: ConferenceWhereInput
 }
 
 input TagWhereUniqueInput {
   id: ID
+  slug: String
 }
 
 type User implements Node {

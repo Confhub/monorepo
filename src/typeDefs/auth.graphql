@@ -1,9 +1,0 @@
-type AuthPayload {
-  token: String!
-  user: User!
-}
-
-type Mutation {
-  signIn(email: String!, password: String!): AuthPayload!
-  signUp(email: String!, password: String!, name: String!): AuthPayload!
-}
