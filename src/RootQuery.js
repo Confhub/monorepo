@@ -7,6 +7,7 @@ import PublishedConferences from './apps/conference/queries/PublishedConferences
 import UnpublishedConferences from './apps/conference/queries/UnpublishedConferences';
 import FilteredConferences from './apps/conference/queries/FilteredConferences';
 import Tags from './apps/tags/queries/Tags';
+import Currencies from './apps/currencies/queries/Currencies';
 
 export default new GraphQLObjectType({
   name: 'RootQuery',
@@ -17,5 +18,6 @@ export default new GraphQLObjectType({
     unpublishedConferences: UnpublishedConferences,
     filteredConferences: FilteredConferences,
     tags: Tags,
+    currencies: Currencies,
   },
 });

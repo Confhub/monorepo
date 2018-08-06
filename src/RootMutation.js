@@ -10,6 +10,9 @@ import DeleteConference from './apps/conference/mutations/DeleteConference';
 import CreateTag from './apps/tags/mutations/CreateTag';
 import DeleteTag from './apps/tags/mutations/DeleteTag';
 import UpdateTag from './apps/tags/mutations/UpdateTag';
+import CreateCurrency from './apps/currencies/mutations/CreateCurrency';
+import DeleteCurrency from './apps/currencies/mutations/DeleteCurrency';
+import UpdateCurrency from './apps/currencies/mutations/UpdateCurrency';
 
 export default new GraphQLObjectType({
   name: 'RootMutation',
@@ -23,5 +26,8 @@ export default new GraphQLObjectType({
     createTag: CreateTag,
     deleteTag: DeleteTag,
     updateTag: UpdateTag,
+    createCurrency: CreateCurrency,
+    deleteCurrency: DeleteCurrency,
+    updateCurrency: UpdateCurrency,
   },
 });
