@@ -2,6 +2,7 @@
 
 import { GraphQLObjectType } from 'graphql';
 
+import Conference from './apps/conference/queries/Conference';
 import PublishedConferences from './apps/conference/queries/PublishedConferences';
 import UnpublishedConferences from './apps/conference/queries/UnpublishedConferences';
 import FilteredConferences from './apps/conference/queries/FilteredConferences';
@@ -11,6 +12,7 @@ export default new GraphQLObjectType({
   name: 'RootQuery',
   description: 'Root Query',
   fields: {
+    conference: Conference,
     publishedConferences: PublishedConferences,
     unpublishedConferences: UnpublishedConferences,
     filteredConferences: FilteredConferences,

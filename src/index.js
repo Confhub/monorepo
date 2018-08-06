@@ -31,7 +31,7 @@ const server = new GraphQLServer({
     }
   },
   mocks: false,
-  debug: false,
+  debug: process.env.NODE_ENV === 'development',
 });
 
 server.start(options, ({ port }) => {

@@ -15,6 +15,7 @@ type Conference {
   image: Image @relation(name: "ConferenceToImage", onDelete: CASCADE)
   startDate: DateTime!
   endDate: DateTime!
+  venue: Venue,
 
   social: Social @relation(name: "ConferenceToSocial", onDelete: CASCADE)
   publishStatus: PUBLISH_STATUS @default(value: DRAFT)
@@ -30,6 +31,28 @@ type Image {
   id: ID! @unique
   src: String!
   alt: String
+}
+
+type Venue {
+  id: ID! @unique
+  type: String!
+  name: String!
+  location: Location!
+}
+
+type Location {
+  id: ID! @unique
+  country: String!
+  city: String!
+  street: String!
+  zip: Int!
+  coordinates: Coordinates
+}
+
+type Coordinates {
+  id: ID! @unique
+  latitude: Float!
+  longitude: Float!
 }
 
 type Social {

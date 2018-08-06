@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 
 import GraphQLAuthPayload from '../outputs/AuthPayload';
 
-import type { AuthPayload as AuthPayloadType } from '../types/AuthPayload';
+// import type { AuthPayload as AuthPayloadType } from '../types/AuthPayload';
 
 type argsType = {
   email: string,
@@ -27,11 +27,7 @@ export default {
       type: GraphQLString,
     },
   },
-  resolve: async (
-    _: mixed,
-    args: argsType,
-    ctx: Object,
-  ): Promise<AuthPayloadType> => {
+  resolve: async (_: mixed, args: argsType, ctx: Object) => {
     /*const checkEmail = await db.User.findOne({ email: args.email });
     if (checkEmail) {
       throw new Error(`Email address already in use`);

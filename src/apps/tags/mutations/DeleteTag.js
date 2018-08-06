@@ -2,7 +2,7 @@
 
 import { GraphQLNonNull, GraphQLID } from 'graphql';
 
-import GraphQLConference from '../outputs/Conference';
+import GraphQLTag from '../outputs/Tag';
 import { type ContextType } from '../../../helpers';
 
 type argsType = {
@@ -10,7 +10,7 @@ type argsType = {
 };
 
 export default {
-  type: GraphQLConference,
+  type: GraphQLTag,
   args: {
     id: {
       type: new GraphQLNonNull(GraphQLID),
@@ -23,7 +23,7 @@ export default {
     });
 
     if (id) {
-      return ctx.db.mutation.deleteConference(makeQuery(), info);
+      return ctx.db.mutation.deleteTag(makeQuery(), info);
     }
     throw new Error('Something went wrong');
   },

@@ -1,21 +1,27 @@
 // @flow
 
-import { GraphQLList } from 'graphql';
+import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import GraphQLConference from '../outputs/Conference';
 import { type ContextType } from '../../../helpers';
 
+type argsType = {
+  id: string,
+};
+
 export default {
-  type: new GraphQLList(GraphQLConference),
-  resolve: (_: mixed, args: any, ctx: ContextType, info: any) => {
+  type: GraphQLConference,
+  args: {
+    id: {
+      type: new GraphQLNonNull(GraphQLID),
+    },
+  },
+  resolve: (_: mixed, { id }: argsType, ctx: ContextType, info: any) => {
     // TODO: add return types
-    const makeQuery = extra => ({
-      where: {
-        publishStatus: 'PUBLISHED',
-        ...extra,
-      },
+    const makeQuery = () => ({
+      where: { id },
     });
 
-    return ctx.db.query.conferences(makeQuery(), info);
+    return ctx.db.query.conference(makeQuery(), info);
   },
 };

@@ -1,11 +1,6 @@
 // @flow
 
-import {
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLString,
-  GraphQLBoolean,
-} from 'graphql';
+import { GraphQLList, GraphQLString, GraphQLBoolean } from 'graphql';
 
 import GraphQLConference from '../outputs/Conference';
 import { type ContextType } from '../../../helpers';
