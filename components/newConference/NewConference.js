@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Form, Button, Col, Row, Input, Select, DatePicker } from 'antd';
 import TagSelector from '../TagSelector';
+import LocationSelector from '../LocationSelector';
 
 const Option = Select.Option;
 
@@ -18,6 +19,7 @@ const formatDate = date => date.format(timeFormat);
 class NewConferenceComponent extends React.Component {
   state = {
     tags: [],
+    location: null,
   };
 
   handleTagsChange = tags => {
@@ -30,7 +32,6 @@ class NewConferenceComponent extends React.Component {
       if (!err) {
         const {
           name,
-          location, // @TODO: location should coordinates? or what?
           dateTime,
           description,
           price,
@@ -41,7 +42,7 @@ class NewConferenceComponent extends React.Component {
           priceLateDate,
           currency,
         } = values;
-        const { tags: rawTags } = this.state;
+        const { tags: rawTags, location } = this.state;
         const startDate = formatDate(dateTime[0]);
         const endDate = formatDate(dateTime[1]);
         const tags = rawTags.map(t => ({
@@ -80,6 +81,10 @@ class NewConferenceComponent extends React.Component {
         });
       }
     });
+  };
+
+  setLocation = location => {
+    this.setState({ location });
   };
 
   renderCurrencySelect() {
@@ -143,9 +148,7 @@ class NewConferenceComponent extends React.Component {
           </Col>
           <Col span={12}>
             <Form.Item label="Location">
-              {getFieldDecorator('location', {
-                rules: [{ required: true, message: 'Enter location' }],
-              })(<Input placeholder="Berlin, Germany" />)}
+              <LocationSelector setLocation={this.setLocation} />
             </Form.Item>
           </Col>
         </Row>

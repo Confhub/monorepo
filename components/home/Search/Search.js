@@ -1,75 +1,31 @@
 import * as React from 'react';
-import { Select, Icon, AutoComplete } from 'antd';
 import HomePageContext from '../HomePageContext';
-import { searchCity } from '../../helpers';
 import TagSelector from '../../TagSelector';
-
-const Option = Select.Option;
+import LocationSelector from '../../LocationSelector';
 
 class Search extends React.Component {
   state = {
-    location: '',
     tags: [],
     tagsQuery: '',
-    locationList: null,
   };
 
-  handleLocationChange = async location => {
-    this.setState({
-      location,
-    });
-
-    const locationList = await searchCity(location);
-
-    this.setState({ locationList });
-  };
-
-  handleLocationSelect = location => {
-    if (location === 'my') {
-      this.props.getLocation();
-      this.setState({
-        location: 'My location',
-      });
-      return;
-    }
-
-    const item = this.state.locationList.find(item => item.id === location);
-
-    this.props.setLocation(item.center);
-    this.setState({
-      location: item.place_name_en,
-      locationList: null,
-    });
+  setLocation = ({ center }) => {
+    this.props.setLocation(center);
   };
 
   render() {
-    const { locationList, location } = this.state;
-    const { locationLoading, tags, setTags } = this.props;
+    const { locationLoading, tags, setTags, getLocation } = this.props;
 
     return (
       <div className="root">
         <label>
           <h4>Location:</h4>
-          <AutoComplete
-            disabled={locationLoading}
-            value={location}
-            filterOption={false}
-            defaultActiveFirstOption={false}
-            style={{ width: '100%' }}
-            placeholder="Select a location"
-            onSearch={this.handleLocationChange}
-            onSelect={this.handleLocationSelect}
-          >
-            <Option value="my">
-              <Icon type="environment-o" /> My Location
-            </Option>
-            {locationList &&
-              locationList.map(item => (
-                <Option key={item.id} value={item.id}>
-                  {item.place_name_en}
-                </Option>
-              ))}
-          </AutoComplete>
+          <LocationSelector
+            isSearch={true}
+            loading={locationLoading}
+            getLocation={getLocation}
+            setLocation={this.setLocation}
+          />
         </label>
         <h4>Categories:</h4>
         <TagSelector optionKey="slug" value={tags} onChange={setTags} />
