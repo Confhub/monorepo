@@ -13,9 +13,10 @@ type Conference = {
   tags?: Tag[],
   image?: Image,
   url: string,
-  social: Social,
   startDate: string,
   endDate: string,
+  location: Location,
+  social: Social,
 };
 
 type Tag = {
@@ -25,9 +26,22 @@ type Tag = {
 };
 
 type Image = {
-  id?: string,
   src?: string,
   alt?: string,
+};
+
+type Location = {
+  venueName?: string,
+  country: string,
+  city: string,
+  street: string,
+  zip: number,
+  coordinates: Coordinates,
+};
+
+type Coordinates = {
+  latitude: number,
+  longitude: number,
 };
 
 type Social = {
@@ -50,7 +64,17 @@ export default {
   resolve: async (
     _: mixed,
     {
-      data: { name, description, tags, image, url, social, startDate, endDate },
+      data: {
+        name,
+        description,
+        tags,
+        image,
+        url,
+        startDate,
+        endDate,
+        location,
+        social,
+      },
     }: argsType,
     ctx: ContextType,
     info: any,
@@ -63,9 +87,10 @@ export default {
         tags: tags ? generateTags(tags) : null,
         image: image ? generateImage(image, name) : null,
         url,
-        social: social ? generateSocial(social) : null,
         startDate,
         endDate,
+        location: generateLocation(location),
+        social: social ? generateSocial(social) : null,
       },
     });
 
@@ -96,29 +121,42 @@ const generateTags = (tags: Tag[]) => {
   };
 };
 
-const generateImage = (image: Image, name: $Values<Conference>) => {
-  if (image.id) {
-    return {
-      connect: {
-        id: image.id,
+const generateImage = ({ src, alt }: Image, name: $Values<Conference>) => ({
+  create: {
+    src: src || 'http://via.placeholder.com/350x150',
+    alt: alt || name,
+  },
+});
+
+const generateLocation = ({
+  venueName,
+  country,
+  city,
+  street,
+  zip,
+  coordinates,
+}: Location) => ({
+  create: {
+    venueName: venueName || '',
+    country,
+    city,
+    street,
+    zip,
+    coordinates: {
+      create: {
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
       },
-    };
-  }
-
-  return {
-    create: {
-      src: image.src || 'http://via.placeholder.com/350x150',
-      alt: image.alt || name,
     },
-  };
-};
+  },
+});
 
-const generateSocial = (social: Social) => {
+const generateSocial = ({ facebook, twitter, instagram }: Social) => {
   return {
     create: {
-      facebook: social.facebook || null,
-      twitter: social.twitter || null,
-      instagram: social.instagram || null,
+      facebook,
+      twitter,
+      instagram,
     },
   };
 };

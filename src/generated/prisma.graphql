@@ -1,5 +1,5 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Mon Aug 06 2018 22:25:07 GMT+0200 (Central European Summer Time)
+# timestamp: Wed Aug 08 2018 00:18:44 GMT+0200 (Central European Summer Time)
 
 type AggregateConference {
   count: Int!
@@ -33,10 +33,6 @@ type AggregateUser {
   count: Int!
 }
 
-type AggregateVenue {
-  count: Int!
-}
-
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
@@ -51,7 +47,7 @@ type Conference implements Node {
   image(where: ImageWhereInput): Image
   startDate: DateTime!
   endDate: DateTime!
-  venue(where: VenueWhereInput): Venue
+  location(where: LocationWhereInput): Location!
   social(where: SocialWhereInput): Social
   publishStatus: PUBLISH_STATUS
 }
@@ -75,7 +71,7 @@ input ConferenceCreateInput {
   publishStatus: PUBLISH_STATUS
   tags: TagCreateManyInput
   image: ImageCreateOneInput
-  venue: VenueCreateOneInput
+  location: LocationCreateOneInput!
   social: SocialCreateOneInput
 }
 
@@ -167,7 +163,7 @@ input ConferenceUpdateInput {
   publishStatus: PUBLISH_STATUS
   tags: TagUpdateManyInput
   image: ImageUpdateOneInput
-  venue: VenueUpdateOneInput
+  location: LocationUpdateOneInput
   social: SocialUpdateOneInput
 }
 
@@ -398,7 +394,7 @@ input ConferenceWhereInput {
   tags_some: TagWhereInput
   tags_none: TagWhereInput
   image: ImageWhereInput
-  venue: VenueWhereInput
+  location: LocationWhereInput
   social: SocialWhereInput
 }
 
@@ -628,6 +624,7 @@ input CoordinatesWhereUniqueInput {
 type Currency implements Node {
   id: ID!
   name: String!
+  value: String!
 }
 
 """A connection to a list of items."""
@@ -642,6 +639,7 @@ type CurrencyConnection {
 
 input CurrencyCreateInput {
   name: String!
+  value: String!
 }
 
 """An edge in a connection."""
@@ -658,6 +656,8 @@ enum CurrencyOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  value_ASC
+  value_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -667,6 +667,7 @@ enum CurrencyOrderByInput {
 type CurrencyPreviousValues {
   id: ID!
   name: String!
+  value: String!
 }
 
 type CurrencySubscriptionPayload {
@@ -710,6 +711,7 @@ input CurrencySubscriptionWhereInput {
 
 input CurrencyUpdateInput {
   name: String
+  value: String
 }
 
 input CurrencyWhereInput {
@@ -801,6 +803,46 @@ input CurrencyWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
 }
 
 input CurrencyWhereUniqueInput {
@@ -1066,6 +1108,7 @@ input ImageWhereUniqueInput {
 
 type Location implements Node {
   id: ID!
+  venueName: String
   country: String!
   city: String!
   street: String!
@@ -1084,6 +1127,7 @@ type LocationConnection {
 }
 
 input LocationCreateInput {
+  venueName: String
   country: String!
   city: String!
   street: String!
@@ -1108,6 +1152,8 @@ type LocationEdge {
 enum LocationOrderByInput {
   id_ASC
   id_DESC
+  venueName_ASC
+  venueName_DESC
   country_ASC
   country_DESC
   city_ASC
@@ -1124,6 +1170,7 @@ enum LocationOrderByInput {
 
 type LocationPreviousValues {
   id: ID!
+  venueName: String
   country: String!
   city: String!
   street: String!
@@ -1170,6 +1217,7 @@ input LocationSubscriptionWhereInput {
 }
 
 input LocationUpdateDataInput {
+  venueName: String
   country: String
   city: String
   street: String
@@ -1178,6 +1226,7 @@ input LocationUpdateDataInput {
 }
 
 input LocationUpdateInput {
+  venueName: String
   country: String
   city: String
   street: String
@@ -1247,6 +1296,46 @@ input LocationWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  venueName: String
+
+  """All values that are not equal to given value."""
+  venueName_not: String
+
+  """All values that are contained in given list."""
+  venueName_in: [String!]
+
+  """All values that are not contained in given list."""
+  venueName_not_in: [String!]
+
+  """All values less than the given value."""
+  venueName_lt: String
+
+  """All values less than or equal the given value."""
+  venueName_lte: String
+
+  """All values greater than the given value."""
+  venueName_gt: String
+
+  """All values greater than or equal the given value."""
+  venueName_gte: String
+
+  """All values containing the given string."""
+  venueName_contains: String
+
+  """All values not containing the given string."""
+  venueName_not_contains: String
+
+  """All values starting with the given string."""
+  venueName_starts_with: String
+
+  """All values not starting with the given string."""
+  venueName_not_starts_with: String
+
+  """All values ending with the given string."""
+  venueName_ends_with: String
+
+  """All values not ending with the given string."""
+  venueName_not_ends_with: String
   country: String
 
   """All values that are not equal to given value."""
@@ -1390,9 +1479,9 @@ input LocationWhereInput {
   """All values greater than or equal the given value."""
   zip_gte: Int
   coordinates: CoordinatesWhereInput
-  _MagicalBackRelation_LocationToVenue_every: VenueWhereInput
-  _MagicalBackRelation_LocationToVenue_some: VenueWhereInput
-  _MagicalBackRelation_LocationToVenue_none: VenueWhereInput
+  _MagicalBackRelation_ConferenceToLocation_every: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToLocation_some: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToLocation_none: ConferenceWhereInput
 }
 
 input LocationWhereUniqueInput {
@@ -1411,55 +1500,49 @@ type Mutation {
   createCurrency(data: CurrencyCreateInput!): Currency!
   createCoordinates(data: CoordinatesCreateInput!): Coordinates!
   createSocial(data: SocialCreateInput!): Social!
-  createLocation(data: LocationCreateInput!): Location!
   createTag(data: TagCreateInput!): Tag!
+  createLocation(data: LocationCreateInput!): Location!
   createImage(data: ImageCreateInput!): Image!
-  createVenue(data: VenueCreateInput!): Venue!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateConference(data: ConferenceUpdateInput!, where: ConferenceWhereUniqueInput!): Conference
   updateCurrency(data: CurrencyUpdateInput!, where: CurrencyWhereUniqueInput!): Currency
   updateCoordinates(data: CoordinatesUpdateInput!, where: CoordinatesWhereUniqueInput!): Coordinates
   updateSocial(data: SocialUpdateInput!, where: SocialWhereUniqueInput!): Social
-  updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+  updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
-  updateVenue(data: VenueUpdateInput!, where: VenueWhereUniqueInput!): Venue
   deleteUser(where: UserWhereUniqueInput!): User
   deleteConference(where: ConferenceWhereUniqueInput!): Conference
   deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   deleteCoordinates(where: CoordinatesWhereUniqueInput!): Coordinates
   deleteSocial(where: SocialWhereUniqueInput!): Social
-  deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteImage(where: ImageWhereUniqueInput!): Image
-  deleteVenue(where: VenueWhereUniqueInput!): Venue
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertConference(where: ConferenceWhereUniqueInput!, create: ConferenceCreateInput!, update: ConferenceUpdateInput!): Conference!
   upsertCurrency(where: CurrencyWhereUniqueInput!, create: CurrencyCreateInput!, update: CurrencyUpdateInput!): Currency!
   upsertCoordinates(where: CoordinatesWhereUniqueInput!, create: CoordinatesCreateInput!, update: CoordinatesUpdateInput!): Coordinates!
   upsertSocial(where: SocialWhereUniqueInput!, create: SocialCreateInput!, update: SocialUpdateInput!): Social!
-  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
+  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
-  upsertVenue(where: VenueWhereUniqueInput!, create: VenueCreateInput!, update: VenueUpdateInput!): Venue!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyConferences(data: ConferenceUpdateInput!, where: ConferenceWhereInput): BatchPayload!
   updateManyCurrencies(data: CurrencyUpdateInput!, where: CurrencyWhereInput): BatchPayload!
   updateManyCoordinateses(data: CoordinatesUpdateInput!, where: CoordinatesWhereInput): BatchPayload!
   updateManySocials(data: SocialUpdateInput!, where: SocialWhereInput): BatchPayload!
-  updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
   updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
+  updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
   updateManyImages(data: ImageUpdateInput!, where: ImageWhereInput): BatchPayload!
-  updateManyVenues(data: VenueUpdateInput!, where: VenueWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyConferences(where: ConferenceWhereInput): BatchPayload!
   deleteManyCurrencies(where: CurrencyWhereInput): BatchPayload!
   deleteManyCoordinateses(where: CoordinatesWhereInput): BatchPayload!
   deleteManySocials(where: SocialWhereInput): BatchPayload!
-  deleteManyLocations(where: LocationWhereInput): BatchPayload!
   deleteManyTags(where: TagWhereInput): BatchPayload!
+  deleteManyLocations(where: LocationWhereInput): BatchPayload!
   deleteManyImages(where: ImageWhereInput): BatchPayload!
-  deleteManyVenues(where: VenueWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1500,28 +1583,25 @@ type Query {
   currencies(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Currency]!
   coordinateses(where: CoordinatesWhereInput, orderBy: CoordinatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Coordinates]!
   socials(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Social]!
-  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
-  venues(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Venue]!
   user(where: UserWhereUniqueInput!): User
   conference(where: ConferenceWhereUniqueInput!): Conference
   currency(where: CurrencyWhereUniqueInput!): Currency
   coordinates(where: CoordinatesWhereUniqueInput!): Coordinates
   social(where: SocialWhereUniqueInput!): Social
-  location(where: LocationWhereUniqueInput!): Location
   tag(where: TagWhereUniqueInput!): Tag
+  location(where: LocationWhereUniqueInput!): Location
   image(where: ImageWhereUniqueInput!): Image
-  venue(where: VenueWhereUniqueInput!): Venue
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   conferencesConnection(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferenceConnection!
   currenciesConnection(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurrencyConnection!
   coordinatesesConnection(where: CoordinatesWhereInput, orderBy: CoordinatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoordinatesConnection!
   socialsConnection(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SocialConnection!
-  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
   imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
-  venuesConnection(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VenueConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1838,10 +1918,9 @@ type Subscription {
   currency(where: CurrencySubscriptionWhereInput): CurrencySubscriptionPayload
   coordinates(where: CoordinatesSubscriptionWhereInput): CoordinatesSubscriptionPayload
   social(where: SocialSubscriptionWhereInput): SocialSubscriptionPayload
-  location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
-  venue(where: VenueSubscriptionWhereInput): VenueSubscriptionPayload
 }
 
 type Tag implements Node {
@@ -2401,265 +2480,5 @@ input UserWhereInput {
 }
 
 input UserWhereUniqueInput {
-  id: ID
-}
-
-type Venue implements Node {
-  id: ID!
-  type: String!
-  name: String!
-  location(where: LocationWhereInput): Location!
-}
-
-"""A connection to a list of items."""
-type VenueConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [VenueEdge]!
-  aggregate: AggregateVenue!
-}
-
-input VenueCreateInput {
-  type: String!
-  name: String!
-  location: LocationCreateOneInput!
-}
-
-input VenueCreateOneInput {
-  create: VenueCreateInput
-  connect: VenueWhereUniqueInput
-}
-
-"""An edge in a connection."""
-type VenueEdge {
-  """The item at the end of the edge."""
-  node: Venue!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum VenueOrderByInput {
-  id_ASC
-  id_DESC
-  type_ASC
-  type_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type VenuePreviousValues {
-  id: ID!
-  type: String!
-  name: String!
-}
-
-type VenueSubscriptionPayload {
-  mutation: MutationType!
-  node: Venue
-  updatedFields: [String!]
-  previousValues: VenuePreviousValues
-}
-
-input VenueSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [VenueSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [VenueSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [VenueSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: VenueWhereInput
-}
-
-input VenueUpdateDataInput {
-  type: String
-  name: String
-  location: LocationUpdateOneInput
-}
-
-input VenueUpdateInput {
-  type: String
-  name: String
-  location: LocationUpdateOneInput
-}
-
-input VenueUpdateOneInput {
-  create: VenueCreateInput
-  connect: VenueWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: VenueUpdateDataInput
-  upsert: VenueUpsertNestedInput
-}
-
-input VenueUpsertNestedInput {
-  update: VenueUpdateDataInput!
-  create: VenueCreateInput!
-}
-
-input VenueWhereInput {
-  """Logical AND on all given filters."""
-  AND: [VenueWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [VenueWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [VenueWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  type: String
-
-  """All values that are not equal to given value."""
-  type_not: String
-
-  """All values that are contained in given list."""
-  type_in: [String!]
-
-  """All values that are not contained in given list."""
-  type_not_in: [String!]
-
-  """All values less than the given value."""
-  type_lt: String
-
-  """All values less than or equal the given value."""
-  type_lte: String
-
-  """All values greater than the given value."""
-  type_gt: String
-
-  """All values greater than or equal the given value."""
-  type_gte: String
-
-  """All values containing the given string."""
-  type_contains: String
-
-  """All values not containing the given string."""
-  type_not_contains: String
-
-  """All values starting with the given string."""
-  type_starts_with: String
-
-  """All values not starting with the given string."""
-  type_not_starts_with: String
-
-  """All values ending with the given string."""
-  type_ends_with: String
-
-  """All values not ending with the given string."""
-  type_not_ends_with: String
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  location: LocationWhereInput
-  _MagicalBackRelation_ConferenceToVenue_every: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToVenue_some: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToVenue_none: ConferenceWhereInput
-}
-
-input VenueWhereUniqueInput {
   id: ID
 }

@@ -1,8 +1,10 @@
 // @flow
 
 import {
+  GraphQLFloat,
   GraphQLID,
   GraphQLInputObjectType,
+  GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
   GraphQLString,
@@ -35,6 +37,42 @@ const GraphQLCreateConferenceImageInput = new GraphQLInputObjectType({
     },
     alt: {
       type: GraphQLString,
+    },
+  },
+});
+
+const GraphQLCreateConferenceCoordinatesInput = new GraphQLInputObjectType({
+  name: 'CreateConferenceCoordinatesInput',
+  fields: {
+    latitude: {
+      type: new GraphQLNonNull(GraphQLFloat),
+    },
+    longitude: {
+      type: new GraphQLNonNull(GraphQLFloat),
+    },
+  },
+});
+
+const GraphQLCreateConferenceLocationInput = new GraphQLInputObjectType({
+  name: 'CreateConferenceLocationInput',
+  fields: {
+    venueName: {
+      type: GraphQLString,
+    },
+    country: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    city: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    street: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    zip: {
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+    coordinates: {
+      type: new GraphQLNonNull(GraphQLCreateConferenceCoordinatesInput),
     },
   },
 });
@@ -77,6 +115,9 @@ export default new GraphQLInputObjectType({
     },
     endDate: {
       type: new GraphQLNonNull(GraphQLDateTime),
+    },
+    location: {
+      type: new GraphQLNonNull(GraphQLCreateConferenceLocationInput),
     },
     social: {
       type: GraphQLCreateConferenceSocialInput,

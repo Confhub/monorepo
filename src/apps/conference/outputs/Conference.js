@@ -8,8 +8,9 @@ import {
 } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-import GraphQLImage from './Image';
 import GraphQLTag from '../../tags/outputs/Tag';
+import GraphQLImage from './Image';
+import GraphQLLocation from './Location';
 import GraphQLSocial from './Social';
 import GraphQLPublishStatus from './PublishStatus';
 
@@ -39,6 +40,9 @@ export default new GraphQLObjectType({
     },
     endDate: {
       type: GraphQLDateTime,
+    },
+    location: {
+      type: GraphQLLocation,
     },
     social: {
       type: GraphQLSocial,

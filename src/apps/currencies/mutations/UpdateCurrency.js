@@ -1,6 +1,7 @@
 // @flow
 
 import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
+import slugify from '@sindresorhus/slugify';
 
 import GraphQLCurrency from '../outputs/Currency';
 import { type ContextType } from '../../../helpers';
@@ -30,7 +31,8 @@ export default {
     const makeQuery = () => ({
       where: { id },
       data: {
-        name: name,
+        name,
+        value: slugify(name),
       },
     });
 
