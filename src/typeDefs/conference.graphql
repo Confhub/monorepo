@@ -1,9 +1,0 @@
-type Query {
-  publishedConferences: [Conference!]!
-  unpublishedConferences: [Conference!]!
-  conferencesFiltered(tags: [ID], published: Boolean = true): [Conference!]!
-}
-
-type Mutation {
-  publishConference(id: ID!): Conference!
-}

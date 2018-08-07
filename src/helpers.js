@@ -9,7 +9,7 @@ export type ContextType = {|
 
 const getPrismaInstance = () => {
   return new Prisma({
-    typeDefs: 'src/typeDefs/prisma.graphql',
+    typeDefs: 'src/generated/prisma.graphql',
     endpoint: process.env.PRISMA_ENDPOINT,
     secret: process.env.PRISMA_SECRET,
     debug: process.env.NODE_ENV === 'development',

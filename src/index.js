@@ -2,18 +2,15 @@
 
 import { GraphQLServer } from 'graphql-yoga';
 
-import { default as typeDefs } from './typeDefs/index';
-import { default as resolvers } from './resolvers/index';
-
-// import Schema from './Schema';
+import Schema from './Schema';
 import { createContext } from './helpers';
 
-const port = parseInt(process.env.PORT, 10) || 4000;
+const options = {
+  port: parseInt(process.env.PORT, 10) || 4000,
+};
 
 const server = new GraphQLServer({
-  typeDefs,
-  resolvers,
-  // schema: Schema,
+  schema: Schema,
   context: async ({ request, connection }: GraphQLServer) => {
     if (connection) {
       const token =
@@ -34,9 +31,10 @@ const server = new GraphQLServer({
     }
   },
   mocks: false,
+  debug: process.env.NODE_ENV === 'development',
 });
 
-server.start({ port }, ({ port }) =>
+server.start(options, ({ port }) => {
   // eslint-disable-next-line no-console
-  console.log(`🚀 GraphQL server listening at localhost:${port}`),
-);
+  console.log(`🚀 GraphQL server listening at http://localhost:${port}/`);
+});

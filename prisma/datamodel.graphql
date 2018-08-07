@@ -11,34 +11,20 @@ type Conference {
   name: String!
   description: String
   tags: [Tag!]!
-  url: String
-  image: Image
+  url: String!
+  image: Image @relation(name: "ConferenceToImage", onDelete: CASCADE)
   startDate: DateTime!
   endDate: DateTime!
-  price: Price
-  topics: [Topic!]!
-  place: Place,
-  callForPapers: CallForPapers
-  social: Social
+  location: Location!,
+
+  social: Social @relation(name: "ConferenceToSocial", onDelete: CASCADE)
   publishStatus: PUBLISH_STATUS @default(value: DRAFT)
 }
 
-enum PUBLISH_STATUS {
-  DRAFT
-  PUBLISHED
-}
-
-type Place {
+type Tag {
   id: ID! @unique
-  venueType: String!
   name: String!
-  location: Location!
-}
-
-type Topic {
-  id: ID! @unique
-  title: String!
-  description: String!
+  slug: String! @unique
 }
 
 type Image {
@@ -47,23 +33,14 @@ type Image {
   alt: String
 }
 
-type Price {
+type Location {
   id: ID! @unique
-  amount: Float!
-  currency: String!
-}
-
-type CallForPapers {
-  id: ID! @unique
-  url: String
-  startDate: DateTime!
-  endDate: DateTime!
-}
-
-type Social {
-  id: ID! @unique
-  facebook: String,
-  twitter: String,
+  venueName: String
+  country: String!
+  city: String!
+  street: String!
+  zip: Int!
+  coordinates: Coordinates
 }
 
 type Coordinates {
@@ -72,17 +49,20 @@ type Coordinates {
   longitude: Float!
 }
 
-type Location {
+type Social {
   id: ID! @unique
-  country: String!
-  city: String!
-  street: String!
-  zip: Int!
-  coordinates: Coordinates
+  facebook: String,
+  twitter: String,
+  instagram: String
 }
 
-type Tag {
+type Currency {
   id: ID! @unique
   name: String!
-  slug: String!
+  value: String!
+}
+
+enum PUBLISH_STATUS {
+  DRAFT
+  PUBLISHED
 }
