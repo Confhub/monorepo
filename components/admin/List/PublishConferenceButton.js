@@ -37,7 +37,7 @@ class PublishConferenceButton extends React.Component<Props> {
         mutation={PUBLISH_CONFERENCE}
         update={(cache, { data: { publishConference } }) => {
           const data = cache.readQuery(query);
-          remove(data.conferencesFiltered, { id: publishConference.id });
+          remove(data.filteredConferences, { id: publishConference.id });
           cache.writeQuery({ ...query, data });
         }}
       >

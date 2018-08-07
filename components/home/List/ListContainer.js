@@ -13,37 +13,27 @@ type Props = {
 
 export const LIST_ITEM_FRAGMENT = gql`
   fragment ListItem on Conference {
-    publishStatus
     id
     name
     description
-    startDate
-    endDate
-    url
-    place {
-      name
-      location {
-        country
-        city
-        street
-        zip
-      }
-    }
-    image {
-      alt
-      src
-    }
-    topics {
-      id
-    }
-    price {
-      amount
-    }
     tags {
       id
       name
       slug
     }
+    image {
+      src
+      alt
+    }
+    url
+    startDate
+    endDate
+    social {
+      facebook
+      twitter
+      instagram
+    }
+    publishStatus
   }
 `;
 

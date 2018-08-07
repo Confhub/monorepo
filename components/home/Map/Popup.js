@@ -17,9 +17,7 @@ const renderDescription = item => {
         <Icon type="calendar" /> {parseDateRange(startDate, endDate)}
       </span>
       <Divider type="vertical" />
-      <span>
-        <Icon type="shopping-cart" /> {price.amount}€
-      </span>
+      <span>{/* <Icon type="shopping-cart" /> {price.amount}€*/}</span>
     </>
   );
 };

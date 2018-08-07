@@ -44,8 +44,8 @@ class Map extends React.Component {
   };
 
   renderMarker = item => {
-    const { id, place } = item;
-    const { latitude, longitude } = place.location.coordinates;
+    const { id, location } = item;
+    const { latitude, longitude } = location.coordinates;
     return (
       <Marker key={id} longitude={longitude} latitude={latitude}>
         <MarkerIcon

@@ -12,19 +12,21 @@ type Props = {
 
 class ApproveList extends React.Component<Props> {
   render() {
-    const { status, query, error, loading } = this.props;
+    const { status, query, error, loading, data } = this.props;
     if (loading) {
       return 'Loading...';
     }
+
     if (error) {
       return `Error! ${error.message}`;
     }
+
     return (
       <div>
-        <h3>Found {this.props.data.length} new conferences to review:</h3>
+        <h3>Found {data.length} new conferences to review:</h3>
         <List
           itemLayout="horizontal"
-          dataSource={this.props.data}
+          dataSource={data}
           renderItem={item => (
             <List.Item
               actions={[
@@ -45,7 +47,7 @@ class ApproveList extends React.Component<Props> {
             >
               <List.Item.Meta
                 avatar={<Avatar src={item.image.src} />}
-                title={<a href="https://ant.design">{item.name}</a>}
+                title={<a href={item.url}>{item.name}</a>}
                 description={item.description}
               />
             </List.Item>
