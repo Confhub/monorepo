@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 import HomePage from '../components/home/HomePage';
 import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
@@ -11,8 +11,8 @@ import HomePageContext from '../components/home/HomePageContext';
 import { getLocation } from '../components/helpers';
 
 export const GET_CONFERENCE_LIST = gql`
-  query conferences($tags: [ID]) {
-    conferencesFiltered(tags: $tags) {
+  query conferences($tags: [String]) {
+    filteredConferences(tags: $tags, published: true) {
       ...ListItem
       ...Map
     }
@@ -123,7 +123,7 @@ class HomePageContainer extends React.Component<{}> {
               <HomePage
                 loading={loading}
                 error={error}
-                data={data && data.conferencesFiltered}
+                data={data && data.filteredConferences}
               />
             );
           }}

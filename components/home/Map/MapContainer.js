@@ -11,12 +11,10 @@ import Map from './Map';
 export const MAP_FRAGMENT = gql`
   fragment Map on Conference {
     name
-    place {
-      location {
-        coordinates {
-          latitude
-          longitude
-        }
+    location {
+      coordinates {
+        latitude
+        longitude
       }
     }
   }

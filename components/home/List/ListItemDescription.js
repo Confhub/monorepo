@@ -12,8 +12,7 @@ type Props = {
 };
 
 const ListItemDescription = ({ item }: Props) => {
-  const { place, startDate, endDate, price } = item;
-  const { location } = place;
+  const { location, startDate, endDate, price } = item;
   const { country, city } = location;
 
   return (
@@ -26,9 +25,7 @@ const ListItemDescription = ({ item }: Props) => {
         <Icon type="calendar" /> {parseDateRange(startDate, endDate)}
       </span>
       <Divider type="vertical" />
-      <span>
-        <Icon type="shopping-cart" /> {price.amount}€
-      </span>
+      <span>{/*<Icon type="shopping-cart" /> {price.amount}€*/}</span>
     </>
   );
 };
