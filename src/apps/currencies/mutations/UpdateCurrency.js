@@ -4,6 +4,7 @@ import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
 import slugify from '@sindresorhus/slugify';
 
 import GraphQLCurrency from '../outputs/Currency';
+import { isAdminAuthorized } from '../../user/helpers';
 import { type ContextType } from '../../../helpers';
 
 type argsType = {
@@ -24,18 +25,24 @@ export default {
   resolve: async (
     _: mixed,
     { id, name }: argsType,
-    ctx: ContextType,
+    { apiToken, db }: ContextType,
     info: any,
   ) => {
     // TODO: add return types
-    const makeQuery = () => ({
-      where: { id },
-      data: {
-        name,
-        value: slugify(name),
-      },
-    });
+    const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
-    return ctx.db.mutation.updateCurrency(makeQuery(), info);
+    if (isAdmin) {
+      const makeQuery = () => ({
+        where: { id },
+        data: {
+          name,
+          value: slugify(name),
+        },
+      });
+
+      return db.mutation.updateCurrency(makeQuery(), info);
+    }
+
+    throw new Error('Something went wrong');
   },
 };

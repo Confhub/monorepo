@@ -2,8 +2,8 @@
 
 import { GraphQLNonNull, GraphQLID } from 'graphql';
 
-import GraphQLConference from '../outputs/Conference';
-import { isAdminAuthorized } from '../../user/helpers';
+import GraphQLUser from '../outputs/User';
+import { isAdminAuthorized } from '../helpers';
 import { type ContextType } from '../../../helpers';
 
 type argsType = {
@@ -11,7 +11,7 @@ type argsType = {
 };
 
 export default {
-  type: GraphQLConference,
+  type: GraphQLUser,
   args: {
     id: {
       type: new GraphQLNonNull(GraphQLID),
@@ -29,11 +29,12 @@ export default {
     if (isAdmin) {
       const makeQuery = () => ({
         where: { id },
+        data: {
+          isAdmin: true,
+        },
       });
 
-      if (id) {
-        return db.mutation.deleteConference(makeQuery(), info);
-      }
+      return db.mutation.updateUser(makeQuery(), info);
     }
 
     throw new Error('Something went wrong');

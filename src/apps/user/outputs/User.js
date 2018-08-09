@@ -1,6 +1,11 @@
 // @flow
 
-import { GraphQLObjectType, GraphQLID, GraphQLString } from 'graphql';
+import {
+  GraphQLObjectType,
+  GraphQLID,
+  GraphQLString,
+  GraphQLBoolean,
+} from 'graphql';
 
 export type User = {|
   id: string,
@@ -21,6 +26,9 @@ export default new GraphQLObjectType({
     },
     name: {
       type: GraphQLString,
+    },
+    isAdmin: {
+      type: GraphQLBoolean,
     },
     createdAt: {
       type: GraphQLString,

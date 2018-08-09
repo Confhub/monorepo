@@ -1,9 +1,10 @@
 type User {
   id: ID! @unique
-  email: String!
+  email: String! @unique
   name: String
   createdAt: DateTime!
   password: String!
+  isAdmin: Boolean! @default(value: false)
 }
 
 type Conference {

@@ -3,6 +3,7 @@
 import { GraphQLNonNull, GraphQLID } from 'graphql';
 
 import GraphQLConference from '../outputs/Conference';
+import { isAdminAuthorized } from '../../user/helpers';
 import { type ContextType } from '../../../helpers';
 
 type argsType = {
@@ -16,17 +17,27 @@ export default {
       type: new GraphQLNonNull(GraphQLID),
     },
   },
-  resolve: async (_: mixed, { id }: argsType, ctx: ContextType, info: any) => {
+  resolve: async (
+    _: mixed,
+    { id }: argsType,
+    { apiToken, db }: ContextType,
+    info: any,
+  ) => {
     // TODO: add return types
-    const makeQuery = extra => ({
-      where: { id },
-      data: { publishStatus: 'PUBLISHED' },
-      ...extra,
-    });
+    const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
-    if (id) {
-      return ctx.db.mutation.updateConference(makeQuery(), info);
+    if (isAdmin) {
+      const makeQuery = extra => ({
+        where: { id },
+        data: { publishStatus: 'PUBLISHED' },
+        ...extra,
+      });
+
+      if (id) {
+        return db.mutation.updateConference(makeQuery(), info);
+      }
     }
+
     throw new Error('Something went wrong');
   },
 };
