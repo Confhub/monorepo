@@ -28,10 +28,12 @@ export default {
     },
   },
   resolve: async (_: mixed, args: argsType, ctx: Object) => {
-    /*const checkEmail = await db.User.findOne({ email: args.email });
+    const checkEmail = await ctx.db.query.user({
+      where: { email: args.email },
+    });
     if (checkEmail) {
       throw new Error(`Email address already in use`);
-    }*/
+    }
 
     const password = await bcrypt.hash(args.password, 10);
     const user = await ctx.db.mutation.createUser({

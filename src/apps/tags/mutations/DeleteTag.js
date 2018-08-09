@@ -3,6 +3,7 @@
 import { GraphQLNonNull, GraphQLID } from 'graphql';
 
 import GraphQLTag from '../outputs/Tag';
+import { isAdminAuthorized } from '../../user/helpers';
 import { type ContextType } from '../../../helpers';
 
 type argsType = {
@@ -16,15 +17,25 @@ export default {
       type: new GraphQLNonNull(GraphQLID),
     },
   },
-  resolve: async (_: mixed, { id }: argsType, ctx: ContextType, info: any) => {
+  resolve: async (
+    _: mixed,
+    { id }: argsType,
+    { apiToken, db }: ContextType,
+    info: any,
+  ) => {
     // TODO: add return types
-    const makeQuery = () => ({
-      where: { id },
-    });
+    const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
-    if (id) {
-      return ctx.db.mutation.deleteTag(makeQuery(), info);
+    if (isAdmin) {
+      const makeQuery = () => ({
+        where: { id },
+      });
+
+      if (id) {
+        return db.mutation.deleteTag(makeQuery(), info);
+      }
     }
+
     throw new Error('Something went wrong');
   },
 };

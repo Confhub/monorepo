@@ -1,5 +1,5 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Wed Aug 08 2018 00:18:44 GMT+0200 (Central European Summer Time)
+# timestamp: Wed Aug 08 2018 02:12:25 GMT+0200 (Central European Summer Time)
 
 type AggregateConference {
   count: Int!
@@ -2191,6 +2191,7 @@ type User implements Node {
   name: String
   createdAt: DateTime!
   password: String!
+  isAdmin: Boolean!
 }
 
 """A connection to a list of items."""
@@ -2207,6 +2208,7 @@ input UserCreateInput {
   email: String!
   name: String
   password: String!
+  isAdmin: Boolean
 }
 
 """An edge in a connection."""
@@ -2229,6 +2231,8 @@ enum UserOrderByInput {
   createdAt_DESC
   password_ASC
   password_DESC
+  isAdmin_ASC
+  isAdmin_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -2239,6 +2243,7 @@ type UserPreviousValues {
   name: String
   createdAt: DateTime!
   password: String!
+  isAdmin: Boolean!
 }
 
 type UserSubscriptionPayload {
@@ -2284,6 +2289,7 @@ input UserUpdateInput {
   email: String
   name: String
   password: String
+  isAdmin: Boolean
 }
 
 input UserWhereInput {
@@ -2477,8 +2483,13 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  isAdmin: Boolean
+
+  """All values that are not equal to given value."""
+  isAdmin_not: Boolean
 }
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }

@@ -5,6 +5,7 @@ import slugify from '@sindresorhus/slugify';
 
 import GraphQLConference from '../outputs/Conference';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
+import { isAdminAuthorized } from '../../user/helpers';
 import { type ContextType } from '../../../helpers';
 
 type Conference = {
@@ -52,24 +53,30 @@ export default {
     {
       data: { name, description, tags, image, url, social, startDate, endDate },
     }: argsType,
-    ctx: ContextType,
+    { apiToken, db }: ContextType,
     info: any,
   ) => {
     // TODO: add types, for example Promise<ConferenceType>
-    const makeQuery = () => ({
-      data: {
-        name,
-        description,
-        tags: tags ? generateTags(tags) : null,
-        image: image ? generateImage(image, name) : null,
-        url,
-        social: social ? generateSocial(social) : null,
-        startDate,
-        endDate,
-      },
-    });
+    const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
-    return ctx.db.mutation.createConference(makeQuery(), info);
+    if (isAdmin) {
+      const makeQuery = () => ({
+        data: {
+          name,
+          description,
+          tags: tags ? generateTags(tags) : null,
+          image: image ? generateImage(image, name) : null,
+          url,
+          social: social ? generateSocial(social) : null,
+          startDate,
+          endDate,
+        },
+      });
+
+      return db.mutation.createConference(makeQuery(), info);
+    }
+
+    throw new Error('Something went wrong');
   },
 };
 

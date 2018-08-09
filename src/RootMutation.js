@@ -2,8 +2,9 @@
 
 import { GraphQLObjectType } from 'graphql';
 
-import SignUp from './general/mutations/SignUp';
-import SignIn from './general/mutations/SignIn';
+import SignUp from './apps/user/mutations/SignUp';
+import SignIn from './apps/user/mutations/SignIn';
+import GrantAdminRights from './apps/user/mutations/GrantAdminRights';
 import CreateConference from './apps/conference/mutations/CreateConference';
 import PublishConference from './apps/conference/mutations/PublishConference';
 import DeleteConference from './apps/conference/mutations/DeleteConference';
@@ -20,6 +21,7 @@ export default new GraphQLObjectType({
   fields: {
     signUp: SignUp,
     signIn: SignIn,
+    grantAdminRights: GrantAdminRights,
     createConference: CreateConference,
     publishConference: PublishConference,
     deleteConference: DeleteConference,
