@@ -43,16 +43,19 @@ export const parseDateRange = (startDate, endDate) => {
   return `${month} ${startDay}-${endDay}, ${year}`;
 };
 
-export const searchCity = async query => {
-  const params = queryString.stringify({
+export const searchCity = async (query, { search } = {}) => {
+  const params = {
     access_token: process.env.MAPBOX_SECRET,
-    type: 'place',
     autocomplete: true,
     language: 'en',
-  });
+  };
+
+  if (!search) {
+    params.type = 'place';
+  }
 
   const res = await fetch(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` + params,
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` + queryString.stringify(params),
   );
 
   const { features } = await res.json();

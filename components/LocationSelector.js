@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { AutoComplete, Icon, Select } from 'antd';
+import idx from 'idx';
 import { searchCity } from './helpers';
 
 const Option = Select.Option;
@@ -11,11 +12,12 @@ class LocationSelector extends React.Component {
   };
 
   handleLocationChange = async location => {
+    const { isSearch } = this.props;
     this.setState({
       location,
     });
 
-    const locationList = await searchCity(location);
+    const locationList = await searchCity(location, { search: isSearch });
 
     this.setState({ locationList });
   };
@@ -36,7 +38,18 @@ class LocationSelector extends React.Component {
 
     const name = item.place_name_en;
 
-    setLocation({ center: item.center, name });
+    const city =
+      item.context && item.context.find(i => i.id.startsWith('region'));
+    const country =
+      item.context && item.context.find(i => i.id.startsWith('country'));
+
+    setLocation({
+      center: item.center,
+      name,
+      address: idx(item, _ => _.properties.address) || null,
+      city: city ? city.text : null,
+      country: country ? country.text : null,
+    });
 
     this.setState({
       location: name,
