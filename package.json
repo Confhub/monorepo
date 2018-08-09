@@ -17,22 +17,21 @@
   "dependencies": {
     "@zeit/next-css": "^0.2.1-canary.1",
     "antd": "^3.8.0",
-    "apollo-boost": "^0.1.12",
+    "apollo-boost": "^0.1.13",
     "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.4",
     "cookie": "^0.3.1",
     "graphql": "^0.13.2",
-    "graphql-anywhere": "^4.1.15",
     "graphql-tag": "^2.9.2",
     "isomorphic-unfetch": "^2.1.1",
     "lodash": "^4.17.10",
     "next": "^6.1.1-canary.4",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.9.3",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.1.0",
     "react": "^16.4.2",
-    "react-apollo": "^2.1.9",
+    "react-apollo": "^2.1.11",
     "react-dom": "^16.4.2",
     "react-map-gl": "^3.3.4",
     "styled-jsx-plugin-sass": "^0.2.4"
@@ -54,8 +53,8 @@
     "eslint-plugin-react": "^7.10.0",
     "flow-bin": "^0.78.0",
     "madge": "^3.2.0",
-    "now": "^11.3.8",
-    "prettier": "^1.14.0"
+    "now": "^11.3.9",
+    "prettier": "^1.14.2"
   },
   "scripts": {
     "dev": "next",
