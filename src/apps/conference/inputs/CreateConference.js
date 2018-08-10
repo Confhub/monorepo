@@ -65,11 +65,8 @@ const GraphQLCreateConferenceLocationInput = new GraphQLInputObjectType({
     city: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    street: {
-      type: new GraphQLNonNull(GraphQLString),
-    },
-    zip: {
-      type: new GraphQLNonNull(GraphQLInt),
+    address: {
+      type: GraphQLString,
     },
     coordinates: {
       type: new GraphQLNonNull(GraphQLCreateConferenceCoordinatesInput),
