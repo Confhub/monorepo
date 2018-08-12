@@ -34,8 +34,7 @@ type Location = {
   venueName?: string,
   country: string,
   city: string,
-  street: string,
-  zip: number,
+  address: string,
   coordinates: Coordinates,
 };
 
@@ -132,16 +131,14 @@ const generateLocation = ({
   venueName,
   country,
   city,
-  street,
-  zip,
+  address,
   coordinates,
 }: Location) => ({
   create: {
     venueName: venueName || '',
     country,
     city,
-    street,
-    zip,
+    address,
     coordinates: {
       create: {
         latitude: coordinates.latitude,

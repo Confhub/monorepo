@@ -4,7 +4,6 @@ import {
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
-  GraphQLInt,
   GraphQLFloat,
 } from 'graphql';
 
@@ -38,11 +37,8 @@ export default new GraphQLObjectType({
     city: {
       type: GraphQLString,
     },
-    street: {
+    address: {
       type: GraphQLString,
-    },
-    zip: {
-      type: GraphQLInt,
     },
     coordinates: {
       type: GraphQLCoordinates,

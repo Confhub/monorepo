@@ -4,7 +4,6 @@ import {
   GraphQLFloat,
   GraphQLID,
   GraphQLInputObjectType,
-  GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
   GraphQLString,

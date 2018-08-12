@@ -1,11 +1,6 @@
 // @flow
 
-import {
-  GraphQLObjectType,
-  GraphQLID,
-  GraphQLString,
-  GraphQLInt,
-} from 'graphql';
+import { GraphQLObjectType, GraphQLID, GraphQLString } from 'graphql';
 
 import GraphQLCoordinates, { type Coordinates } from './Coordinates';
 
@@ -13,8 +8,7 @@ export type Location = {|
   id: string,
   country: string,
   city: string,
-  street: string,
-  zip: number,
+  address: string,
   coordinates: Coordinates,
 |};
 
@@ -30,11 +24,8 @@ export default new GraphQLObjectType({
     city: {
       type: GraphQLString,
     },
-    street: {
+    address: {
       type: GraphQLString,
-    },
-    zip: {
-      type: GraphQLInt,
     },
     coordinates: {
       type: GraphQLCoordinates,
