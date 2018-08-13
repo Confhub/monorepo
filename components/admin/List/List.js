@@ -46,7 +46,7 @@ class ApproveList extends React.Component<Props> {
               ]}
             >
               <List.Item.Meta
-                avatar={<Avatar src={item.image.src} />}
+                avatar={item.image && <Avatar src={item.image.src} />}
                 title={<a href={item.url}>{item.name}</a>}
                 description={item.description}
               />
