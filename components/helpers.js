@@ -55,7 +55,8 @@ export const searchCity = async (query, { search } = {}) => {
   }
 
   const res = await fetch(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` + queryString.stringify(params),
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` +
+      queryString.stringify(params),
   );
 
   const { features } = await res.json();
