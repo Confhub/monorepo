@@ -20,8 +20,8 @@ const Option = Select.Option;
 const { Content } = Layout;
 
 const prices = [
-  { label: 'Early Bird', field: 'priceEarly', required: true },
-  { label: 'Regular', field: 'price' },
+  { label: 'Regular', field: 'price', required: true },
+  { label: 'Early Bird', field: 'priceEarly' },
   { label: 'Late Bird', field: 'priceLate' },
 ];
 
