@@ -11,15 +11,16 @@ import {
   Select,
   DatePicker,
   Alert,
+  Checkbox,
 } from 'antd';
 import TagSelector from '../TagSelector';
 import LocationSelector from '../LocationSelector';
 
 const Option = Select.Option;
-const { Header, Content, Footer, Sider } = Layout;
+const { Content } = Layout;
 
 const prices = [
-  { label: 'Early Bird', field: 'priceEarly' },
+  { label: 'Early Bird', field: 'priceEarly', required: true },
   { label: 'Regular', field: 'price' },
   { label: 'Late Bird', field: 'priceLate' },
 ];
@@ -33,6 +34,8 @@ const CREATE_CONFERENCE = gql`
     $startDate: DateTime!
     $endDate: DateTime!
     $location: CreateConferenceLocationInput!
+    $tags: [CreateConferenceTagInput]
+    $description: String
   ) {
     createConference(
       data: {
@@ -41,6 +44,8 @@ const CREATE_CONFERENCE = gql`
         startDate: $startDate
         endDate: $endDate
         location: $location
+        tags: $tags
+        description: $description
       }
     ) {
       id
@@ -55,6 +60,8 @@ class NewConferenceComponent extends React.Component {
     loading: false,
     error: null,
     success: false,
+    priceEarlyDisabled: false,
+    priceLateDisabled: false,
   };
 
   handleTagsChange = tags => {
@@ -62,9 +69,10 @@ class NewConferenceComponent extends React.Component {
   };
 
   handleSubmit = async (e, create) => {
+    const { form } = this.props;
     e.preventDefault();
 
-    this.props.form.validateFieldsAndScroll(async (err, values) => {
+    form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         const {
           name,
@@ -79,7 +87,12 @@ class NewConferenceComponent extends React.Component {
           priceLateDate,
           currency,
         } = values;
-        const { tags: rawTags, location } = this.state;
+        const {
+          tags: rawTags,
+          location,
+          priceEarlyDisabled,
+          priceLateDisabled,
+        } = this.state;
         const startDate = formatDate(dateTime[0]);
         const endDate = formatDate(dateTime[1]);
         const tags = rawTags.map(t => ({
@@ -88,21 +101,25 @@ class NewConferenceComponent extends React.Component {
         }));
 
         const priceObject = {
-          earlyBird: {
-            amount: priceEarly,
-            currency,
-            expiration: formatDate(priceEarlyDate),
-          },
           regular: {
             amount: price,
             currency,
             expiration: formatDate(priceDate),
           },
-          lateBird: {
-            amount: priceLate,
-            currency,
-            expiration: formatDate(priceLateDate),
-          },
+          ...(!priceEarlyDisabled && {
+            earlyBird: {
+              amount: priceEarly,
+              currency,
+              expiration: formatDate(priceEarlyDate),
+            },
+          }),
+          ...(!priceLateDisabled && {
+            lateBird: {
+              amount: priceLate,
+              currency,
+              expiration: formatDate(priceLateDate),
+            },
+          }),
         };
 
         try {
@@ -122,10 +139,13 @@ class NewConferenceComponent extends React.Component {
                   latitude: location.center[1],
                 },
               },
+              tags,
+              description,
             },
           });
 
           this.setState({ loading: false, error: null, success: true });
+          form.resetFields();
           console.log('success', test);
         } catch (err) {
           console.log(err);
@@ -156,31 +176,59 @@ class NewConferenceComponent extends React.Component {
     );
   }
 
-  renderPrice({ label, field }) {
+  handleChange = event => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  renderPrice({ label, field, required }) {
     const { getFieldDecorator } = this.props.form;
 
+    const checkboxValue = this.state[field + 'Disabled'];
+    const disabled = typeof checkboxValue === 'boolean' ? checkboxValue : false;
+
     return (
-      <Row gutter={16} key={field}>
-        <Col span={12}>
+      <Row type="flex" gutter={16} key={field} align="bottom">
+        <Col span={8}>
           <Form.Item label={label}>
             {getFieldDecorator(field, {
-              rules: [{ required: false, message: 'Enter price' }],
+              rules: [{ required: disabled, message: 'Enter price' }],
             })(
               <Input
                 type="number"
                 placeholder="699"
                 addonAfter={this.renderCurrencySelect()}
+                disabled={disabled}
               />,
             )}
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col span={5}>
           <Form.Item label="Expires on">
             {getFieldDecorator(field + 'Date', {
-              rules: [{ required: false, message: 'Enter dateTime' }],
-            })(<DatePicker />)}
+              rules: [{ required: disabled, message: 'Enter dateTime' }],
+            })(<DatePicker disabled={disabled} />)}
           </Form.Item>
         </Col>
+        {!required && (
+          <Col span={3}>
+            <Form.Item>
+              <Checkbox
+                name={field + 'Disabled'}
+                value={field + 'Disabled'}
+                onChange={this.handleChange}
+              >
+                disable
+              </Checkbox>
+              ,
+            </Form.Item>
+          </Col>
+        )}
       </Row>
     );
   }
