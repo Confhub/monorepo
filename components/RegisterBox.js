@@ -6,13 +6,13 @@ import redirect from '../lib/redirect';
 
 const CREATE_USER = gql`
   mutation Create($name: String!, $email: String!, $password: String!) {
-    createUser(
-      name: $name
-      authProvider: { email: { email: $email, password: $password } }
-    ) {
-      id
+    createUser(name: $name, email: $email, password: $password) {
+      user {
+        id
+      }
     }
-    signinUser(email: { email: $email, password: $password }) {
+
+    signInUser(email: $email, password: $password) {
       token
     }
   }
@@ -26,7 +26,7 @@ const RegisterBox = ({ client }) => {
       mutation={CREATE_USER}
       onCompleted={async data => {
         // Store the token in cookie
-        document.cookie = cookie.serialize('token', data.signinUser.token, {
+        document.cookie = cookie.serialize('token', data.signInUser.token, {
           maxAge: 30 * 24 * 60 * 60, // 30 days
         });
         // Force a reload of all the current queries now that the user is
@@ -39,7 +39,6 @@ const RegisterBox = ({ client }) => {
         }
       }}
       onError={error => {
-        // If you want to send error to external service?
         console.error(error);
       }}
     >

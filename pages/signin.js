@@ -8,9 +8,9 @@ import SigninBox from '../components/SigninBox';
 
 export default class Signin extends React.Component {
   static async getInitialProps(context) {
-    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
+    const { currentUser } = await checkLoggedIn(context.apolloClient);
 
-    if (loggedInUser.user) {
+    if (currentUser.user) {
       // Already signed in? No need to continue.
       // Throw them back to the main page
       redirect(context, '/');
@@ -22,7 +22,6 @@ export default class Signin extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* SigninBox handles all login logic. */}
         <SigninBox />
         <hr />
         New?{' '}
