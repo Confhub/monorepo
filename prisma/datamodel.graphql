@@ -17,7 +17,6 @@ type Conference {
   startDate: DateTime!
   endDate: DateTime!
   location: Location!
-
   social: Social @relation(name: "ConferenceToSocial", onDelete: CASCADE)
   publishStatus: PUBLISH_STATUS @default(value: DRAFT)
 }

@@ -4,9 +4,7 @@ import { GraphQLNonNull, GraphQLString } from 'graphql';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-import GraphQLAuthPayload from '../outputs/AuthPayload';
-
-// import type { AuthPayload as AuthPayloadType } from '../types/AuthPayload';
+import GraphQLAuthPayload, { type AuthPayload } from '../outputs/AuthPayload';
 
 type argsType = {
   email: string,
@@ -27,7 +25,11 @@ export default {
       type: GraphQLString,
     },
   },
-  resolve: async (_: mixed, args: argsType, ctx: Object) => {
+  resolve: async (
+    _: mixed,
+    args: argsType,
+    ctx: Object,
+  ): Promise<AuthPayload> => {
     const checkEmail = await ctx.db.query.user({
       where: { email: args.email },
     });

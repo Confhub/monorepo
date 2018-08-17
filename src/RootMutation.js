@@ -2,8 +2,8 @@
 
 import { GraphQLObjectType } from 'graphql';
 
-import SignUp from './apps/user/mutations/SignUp';
-import SignIn from './apps/user/mutations/SignIn';
+import CreateUser from './apps/user/mutations/CreateUser';
+import SignInUser from './apps/user/mutations/SignInUser';
 import GrantAdminRights from './apps/user/mutations/GrantAdminRights';
 import CreateConference from './apps/conference/mutations/CreateConference';
 import PublishConference from './apps/conference/mutations/PublishConference';
@@ -19,8 +19,8 @@ export default new GraphQLObjectType({
   name: 'RootMutation',
   description: 'Root Mutation',
   fields: {
-    signUp: SignUp,
-    signIn: SignIn,
+    createUser: CreateUser,
+    signInUser: SignInUser,
     grantAdminRights: GrantAdminRights,
     createConference: CreateConference,
     publishConference: PublishConference,
