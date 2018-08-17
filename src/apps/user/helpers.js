@@ -6,7 +6,6 @@ export async function isUserAuthorized(token: string) {
   if (token) {
     const apiToken = token.replace('Bearer ', '');
     const { userId } = jwt.verify(apiToken, process.env.APP_SECRET);
-
     if (userId) {
       return { userId };
     }
