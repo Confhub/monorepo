@@ -17,7 +17,7 @@
   "dependencies": {
     "@zeit/next-css": "^0.2.1-canary.1",
     "antd": "^3.8.1",
-    "apollo-boost": "^0.1.13",
+    "apollo-boost": "^0.1.14",
     "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.4",
     "cookie": "^0.3.1",
@@ -51,10 +51,10 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-react": "^7.11.0",
-    "flow-bin": "^0.78.0",
+    "eslint-plugin-react": "^7.11.1",
+    "flow-bin": "^0.79.0",
     "madge": "^3.2.0",
-    "now": "^11.3.9",
+    "now": "^11.3.10",
     "prettier": "^1.14.2"
   },
   "scripts": {

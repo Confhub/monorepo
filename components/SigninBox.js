@@ -5,15 +5,14 @@ import cookie from 'cookie';
 import redirect from '../lib/redirect';
 
 const SIGN_IN = gql`
-  mutation Signin($email: String!, $password: String!) {
-    signinUser(email: { email: $email, password: $password }) {
+  mutation SignInUser($email: String!, $password: String!) {
+    signInUser(email: $email, password: $password) {
       token
     }
   }
 `;
 
-// @TODO: Find a better name for component.
-const SigninBox = ({ client }) => {
+const SignInBox = ({ client }) => {
   let email, password;
 
   return (
@@ -21,30 +20,29 @@ const SigninBox = ({ client }) => {
       mutation={SIGN_IN}
       onCompleted={async data => {
         // Store the token in cookie
-        document.cookie = cookie.serialize('token', data.signinUser.token, {
+        document.cookie = cookie.serialize('token', data.signInUser.token, {
           maxAge: 30 * 24 * 60 * 60, // 30 days
         });
         // Force a reload of all the current queries now that the user is
         // logged in
         try {
           await client.cache.reset();
-          redirect({}, '/');
+          redirect({}, '/admin');
         } catch (err) {
           console.error(err);
         }
       }}
       onError={error => {
-        // If you want to send error to external service?
         console.error(error);
       }}
     >
-      {(signinUser, { error }) => (
+      {(signInUser, { error }) => (
         <form
           onSubmit={e => {
             e.preventDefault();
             e.stopPropagation();
 
-            signinUser({
+            signInUser({
               variables: {
                 email: email.value,
                 password: password.value,
@@ -79,4 +77,4 @@ const SigninBox = ({ client }) => {
   );
 };
 
-export default withApollo(SigninBox);
+export default withApollo(SignInBox);
