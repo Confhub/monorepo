@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router'
 import debounce from 'lodash/debounce';
 
 import HomePage from '../components/home/HomePage';
@@ -24,14 +24,14 @@ export const GET_CONFERENCE_LIST = gql`
 // @TODO: change array to object in location
 
 class HomePageContainer extends React.Component<{}> {
-  static async getInitialProps({ query }) {
-    return { query };
+  static async getInitialProps({ router }) {
+    return { router };
   }
 
   constructor(props) {
     super(props);
 
-    const { tags, long, lat } = this.props.query;
+    const { tags, long, lat } = this.props.router.query;
     const defaultTags = tags && (typeof tags === 'string' ? [tags] : tags);
     const defaultLocation = long && lat ? [+long, +lat] : [25, 50];
 
@@ -133,4 +133,4 @@ class HomePageContainer extends React.Component<{}> {
   }
 }
 
-export default HomePageContainer;
+export default withRouter(HomePageContainer);
