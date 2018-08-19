@@ -1,26 +1,39 @@
 // @flow
 
-import React, { Fragment } from 'react';
+import * as React from 'react';
 import { withRouter } from 'next/router';
 
-import Meta from './Meta';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 
-class LayoutComponent extends React.Component {
+type Props = {
+  isAuth: boolean,
+  userData: any,
+  signOut: () => void,
+  children: React.Node,
+  router: any,
+};
+
+class LayoutComponent extends React.Component<Props> {
   render() {
-    const rootClasses = this.props.router.pathname === '/' ? ' home' : '';
+    const { isAuth, userData, signOut, router, children } = this.props;
+    const isHomePage = router.pathname === '/' ? ' home' : '';
+
     return (
-      <Fragment>
-        <Meta />
+      <React.Fragment>
+        <div className={`root ${isHomePage}`}>
+          <Header
+            className="header"
+            isAuth={isAuth}
+            userData={userData}
+            signOut={signOut}
+          />
 
-        <div className={'root' + rootClasses}>
-          <Header className="header" />
-
-          <div className="layout">{this.props.children}</div>
+          <div className="layout">{children}</div>
 
           <Footer className="footer" />
         </div>
+
         <style jsx>{`
           .root {
             display: grid;
@@ -58,7 +71,7 @@ class LayoutComponent extends React.Component {
             margin: 0;
           }
         `}</style>
-      </Fragment>
+      </React.Fragment>
     );
   }
 }
