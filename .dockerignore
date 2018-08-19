@@ -1,5 +1,8 @@
 *
-!src
-!yarn.lock
+!components
 !pages
+!lib
+!static
 !package.json
+!yarn.lock
+!.babelrc
