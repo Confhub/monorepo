@@ -83,8 +83,6 @@ class Map extends React.Component {
     const { items, location } = this.props;
     const [longitude, latitude] = location;
 
-    process.env.MAPBOX_SECRET;
-
     return (
       <MapGL
         {...viewport}

@@ -1,4 +1,8 @@
 FROM mhart/alpine-node:10 as base
+
+ARG MAPBOX_SECRET
+ARG GRAPHQL_ENDPOINT_URL
+
 WORKDIR /usr/src
 COPY package.json yarn.lock /usr/src/
 RUN yarn install

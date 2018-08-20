@@ -5,5 +5,11 @@
   "public": false,
   "features": {
     "cloud": "v2"
+  },
+  "build": {
+    "env": {
+      "MAPBOX_SECRET": "@mapbox-secret",
+      "GRAPHQL_ENDPOINT_URL": "@graphql-endpoint-url"
+    }
   }
 }
