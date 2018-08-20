@@ -61,4 +61,4 @@ class MyApp extends App {
 
 export default withApollo(MyApp);
 
-// types: ADMIN, MODERATOR, SPEAKER, USER
+// types: MODERATOR, SPEAKER, VISITOR

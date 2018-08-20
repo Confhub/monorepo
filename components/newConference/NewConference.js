@@ -238,7 +238,7 @@ class NewConferenceComponent extends React.Component {
     const { loading, success, error } = this.state;
 
     return (
-      <Layout>
+      <React.Fragment>
         {success && (
           <Alert
             message="Conference created!"
@@ -255,104 +255,99 @@ class NewConferenceComponent extends React.Component {
             showIcon
           />
         )}
-        <Content style={{ margin: '24px 16px' }}>
-          <div style={{ padding: 24, background: '#fff' }}>
-            <Mutation mutation={CREATE_CONFERENCE}>
-              {(createConference, { data }) => (
-                <Form
-                  layout="vertical"
-                  hideRequiredMark
-                  onSubmit={e => this.handleSubmit(e, createConference)}
-                >
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Name">
-                        {getFieldDecorator('name', {
-                          rules: [
-                            {
-                              required: true,
-                              message: 'Enter conference name',
-                            },
-                          ],
-                        })(<Input placeholder="GrpahQL Europe" />)}
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="Url">
-                        {getFieldDecorator('url', {
-                          rules: [
-                            {
-                              required: true,
-                              message: 'Enter conference name',
-                            },
-                          ],
-                        })(<Input type="url" placeholder="GrpahQL Europe" />)}
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="Location">
-                        <LocationSelector setLocation={this.setLocation} />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="DateTime">
-                        {getFieldDecorator('dateTime', {
-                          rules: [
-                            { required: true, message: 'Enter dateTime' },
-                          ],
-                        })(<DatePicker.RangePicker />)}
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Categories">
-                        <TagSelector
-                          edit={true}
-                          value={this.state.tags}
-                          onChange={this.handleTagsChange}
-                          optionKey="name"
-                        />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={24}>
-                      <h2>Prices:</h2>
-                    </Col>
-                  </Row>
-                  {prices.map(price => this.renderPrice(price))}
-                  <Row gutter={16}>
-                    <Col span={24}>
-                      <Form.Item label="Description">
-                        {getFieldDecorator('description', {
-                          rules: [
-                            {
-                              required: false,
-                              message: 'Enter description',
-                            },
-                          ],
-                        })(
-                          <Input.TextArea
-                            rows={4}
-                            placeholder="Few words about conference"
-                          />,
-                        )}
-                      </Form.Item>
-                    </Col>
-                  </Row>
 
-                  <Button type="primary" htmlType="submit" loading={loading}>
-                    Submit
-                  </Button>
-                </Form>
-              )}
-            </Mutation>
-          </div>
-        </Content>
-      </Layout>
+        <Mutation mutation={CREATE_CONFERENCE}>
+          {(createConference, { data }) => (
+            <Form
+              layout="vertical"
+              hideRequiredMark
+              onSubmit={e => this.handleSubmit(e, createConference)}
+            >
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item label="Name">
+                    {getFieldDecorator('name', {
+                      rules: [
+                        {
+                          required: true,
+                          message: 'Enter conference name',
+                        },
+                      ],
+                    })(<Input placeholder="GrpahQL Europe" />)}
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item label="Url">
+                    {getFieldDecorator('url', {
+                      rules: [
+                        {
+                          required: true,
+                          message: 'Enter conference name',
+                        },
+                      ],
+                    })(<Input type="url" placeholder="GrpahQL Europe" />)}
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item label="Location">
+                    <LocationSelector setLocation={this.setLocation} />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item label="DateTime">
+                    {getFieldDecorator('dateTime', {
+                      rules: [{ required: true, message: 'Enter dateTime' }],
+                    })(<DatePicker.RangePicker />)}
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item label="Categories">
+                    <TagSelector
+                      edit={true}
+                      value={this.state.tags}
+                      onChange={this.handleTagsChange}
+                      optionKey="name"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={24}>
+                  <h2>Prices:</h2>
+                </Col>
+              </Row>
+              {prices.map(price => this.renderPrice(price))}
+              <Row gutter={16}>
+                <Col span={24}>
+                  <Form.Item label="Description">
+                    {getFieldDecorator('description', {
+                      rules: [
+                        {
+                          required: false,
+                          message: 'Enter description',
+                        },
+                      ],
+                    })(
+                      <Input.TextArea
+                        rows={4}
+                        placeholder="Few words about conference"
+                      />,
+                    )}
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Button type="primary" htmlType="submit" loading={loading}>
+                Submit
+              </Button>
+            </Form>
+          )}
+        </Mutation>
+      </React.Fragment>
     );
   }
 }

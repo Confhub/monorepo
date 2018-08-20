@@ -9,78 +9,80 @@ type Props = {
 };
 
 const Header = ({ isAuth, userData, signOut }: Props) => (
-  <Layout.Header>
+  <Layout.Header style={{ width: '100%', background: '#ffffff' }}>
     <Link href="/">
       <div className="logo" />
     </Link>
 
-    <div style={{ float: 'right' }}>
-      <Menu theme="dark" mode="horizontal" style={{ lineHeight: '64px' }}>
-        <Menu.Item key="newConference">
-          <Link href="/new-conference" prefetch>
+    <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px' }}>
+      <Menu.Item key="newConference">
+        <Link href="/new-conference" prefetch>
+          <a>
+            <Icon type="form" />
+            Add new conference
+          </a>
+        </Link>
+      </Menu.Item>
+
+      {!isAuth && (
+        <Menu.Item key="signin">
+          <Link href="/signin" prefetch>
             <a>
-              <Icon type="form" />
-              Add new conference
+              <Icon type="mail" />
+              Sign In
             </a>
           </Link>
         </Menu.Item>
+      )}
 
-        {!isAuth && (
-          <Menu.Item key="signin">
-            <Link href="/signin" prefetch>
-              <a>
-                <Icon type="mail" />
-                Sign In
-              </a>
-            </Link>
-          </Menu.Item>
-        )}
-
-        {!isAuth && (
-          <Menu.Item key="signup">
-            <Link href="/create-account" prefetch>
-              <a>
-                <Icon type="mail" />
-                Sign Up
-              </a>
-            </Link>
-          </Menu.Item>
-        )}
-
-        {isAuth && (
-          <Menu.Item key="admin">
-            <Link href="/admin" prefetch>
-              <a>
-                <Icon type="dashboard" />
-                Admin Panel
-              </a>
-            </Link>
-          </Menu.Item>
-        )}
-
-        {isAuth && (
-          <Menu.Item key="signout">
-            <a onClick={signOut}>
-              <Icon type="poweroff" />
-              Sign Out{' '}
-              {userData ? (
-                <span>
-                  &#40;
-                  {userData.email}
-                  &#41;
-                </span>
-              ) : null}
+      {!isAuth && (
+        <Menu.Item key="signup">
+          <Link href="/create-account" prefetch>
+            <a>
+              <Icon type="mail" />
+              Sign Up
             </a>
-          </Menu.Item>
-        )}
-      </Menu>
-    </div>
+          </Link>
+        </Menu.Item>
+      )}
+
+      {isAuth && (
+        <Menu.Item key="admin">
+          <Link href="/admin" prefetch>
+            <a>
+              <Icon type="dashboard" />
+              Admin Panel
+            </a>
+          </Link>
+        </Menu.Item>
+      )}
+
+      {isAuth && (
+        <Menu.Item key="signout">
+          <a onClick={signOut}>
+            <Icon type="poweroff" />
+            Sign Out{' '}
+            {userData ? (
+              <span>
+                &#40;
+                {userData.email}
+                &#41;
+              </span>
+            ) : null}
+          </a>
+        </Menu.Item>
+      )}
+
+      {/* <Menu.Item key="user">
+        <p>Hello</p>
+        </Menu.Item> */}
+    </Menu>
 
     <style jsx>{`
       .logo {
         width: 120px;
         height: 31px;
-        background: rgba(255, 255, 255, 0.2);
+        background: #001529;
         margin: 16px 24px 16px 0;
         float: left;
         cursor: pointer;
