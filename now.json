@@ -1,10 +1,9 @@
 {
   "name": "confhub",
   "alias": "confhub.win",
-  "scale": {
-    "bru1": {
-      "min": 2,
-      "max": 3
-    }
+  "type": "docker",
+  "public": false,
+  "features": {
+    "cloud": "v2"
   }
 }
