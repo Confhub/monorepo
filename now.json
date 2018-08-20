@@ -8,8 +8,8 @@
   },
   "build": {
     "env": {
-      "MAPBOX_SECRET": "@mapbox-secret",
-      "GRAPHQL_ENDPOINT_URL": "@graphql-endpoint-url"
+      "MAPBOX_SECRET": "@confhub-mapbox-secret",
+      "GRAPHQL_ENDPOINT_URL": "@confhub-graphql-endpoint-url"
     }
   }
 }
