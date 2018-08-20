@@ -16,8 +16,6 @@ export default class MyDocument extends Document {
           />
           <meta name="description" content="" />
           <link rel="shortcut icon" href="/static/images/favicon.ico" />
-
-          <link rel="stylesheet" href="/_next/static/style.css" />
         </Head>
         <body>
           <Main />
@@ -30,7 +28,7 @@ export default class MyDocument extends Document {
           }
 
           #nprogress .bar {
-            background: #d7ff28;
+            background: #4290f7;
             position: fixed;
             z-index: 1031;
             top: 0;
@@ -45,7 +43,7 @@ export default class MyDocument extends Document {
             right: 0px;
             width: 100px;
             height: 100%;
-            box-shadow: 0 0 10px #d7ff28, 0 0 5px #d7ff28;
+            box-shadow: 0 0 10px #4290f7, 0 0 5px #4290f7;
             opacity: 1;
             transform: rotate(3deg) translate(0px, -4px);
           }

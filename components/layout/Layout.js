@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { withRouter } from 'next/router';
+import { Layout } from 'antd';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -17,11 +18,11 @@ type Props = {
 class LayoutComponent extends React.Component<Props> {
   render() {
     const { isAuth, userData, signOut, router, children } = this.props;
-    const isHomePage = router.pathname === '/' ? ' home' : '';
+    const isHomePage = router.pathname === '/';
 
     return (
       <React.Fragment>
-        <div className={`root ${isHomePage}`}>
+        <Layout className={`layout ${isHomePage ? 'home' : ''}`}>
           <Header
             className="header"
             isAuth={isAuth}
@@ -29,13 +30,22 @@ class LayoutComponent extends React.Component<Props> {
             signOut={signOut}
           />
 
-          <div className="layout">{children}</div>
+          {isHomePage ? (
+            <div>{children}</div>
+          ) : (
+            <Layout.Content
+              className="content"
+              style={{ padding: '0 20px', marginTop: 20 }}
+            >
+              <div style={{ padding: 24, background: '#fff' }}>{children}</div>
+            </Layout.Content>
+          )}
 
           <Footer className="footer" />
-        </div>
+        </Layout>
 
         <style jsx>{`
-          .root {
+          .layout {
             display: grid;
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr auto;
@@ -50,24 +60,24 @@ class LayoutComponent extends React.Component<Props> {
             height: 100vh;
           }
 
-          .home .layout {
+          .home .content {
             overflow: hidden;
           }
 
-          .root :global(.header) {
+          .layout :global(.header) {
             grid-area: header;
           }
 
-          .layout {
+          .content {
             grid-area: content;
           }
 
-          .root :global(.footer) {
+          .layout :global(.footer) {
             grid-area: footer;
             padding: 12px;
           }
 
-          .root :global(.footer p:last-child) {
+          .layout :global(.footer p:last-child) {
             margin: 0;
           }
         `}</style>
