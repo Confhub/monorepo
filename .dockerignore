@@ -1,7 +1,7 @@
 *
-!src
-!yarn.lock
 !pages
+!components
+!lib
 !package.json
 !yarn.lock
 !.babelrc
