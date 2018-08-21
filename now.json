@@ -1,10 +1,20 @@
 {
   "name": "confhub",
   "alias": "confhub.win",
-  "type": "docker",
   "public": false,
+  "type": "docker",
   "features": {
     "cloud": "v2"
+  },
+  "scale": {
+    "bru1": {
+      "min": 0,
+      "max": "auto"
+    },
+    "sfo1": {
+      "min": 0,
+      "max": "auto"
+    }
   },
   "build": {
     "env": {
