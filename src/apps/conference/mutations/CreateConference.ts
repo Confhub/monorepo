@@ -12,7 +12,7 @@ import {
   Tag,
   TagCreateManyInput,
 } from '../../../generated/prisma';
-import { Context } from '../../../helpers';
+import { Context } from '../../../utils';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 import GraphQLConference from '../outputs/Conference';
 

@@ -1,8 +1,7 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import { Conference } from '../../../generated/prisma';
-import { Context } from '../../../helpers';
-import { isAdminAuthorized } from '../../user/helpers';
+import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLConference from '../outputs/Conference';
 
 interface ArgsType {
@@ -22,9 +21,10 @@ export default {
     { apiToken, db }: Context,
     info: any,
   ): Promise<Conference> => {
-    const { isAdmin } = await isAdminAuthorized(apiToken, db);
+    const userId = getUserId(apiToken);
+    const userRole = await getUserRole(userId, db);
 
-    if (isAdmin) {
+    if (userRole === 'MODERATOR') {
       if (id) {
         return db.mutation.deleteConference(
           {
@@ -35,6 +35,6 @@ export default {
       }
     }
 
-    throw new Error('Something went wrong');
+    throw new Error('You must have moderator rights');
   },
 };

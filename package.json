@@ -42,9 +42,9 @@
     "typescript": "^3.0.1"
   },
   "scripts": {
-    "start": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
-    "dev": "npm-run-all --parallel start playground",
-    "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
+    "start": "NODE_ENV=development dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
+    "dev": "NODE_ENV=development npm-run-all --parallel start playground",
+    "debug": "NODE_ENV=development dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
     "playground": "graphql playground",
     "build": "rimraf dist && tsc",
     "serve": "node dist",

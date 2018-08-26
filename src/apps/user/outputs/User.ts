@@ -1,10 +1,7 @@
-import {
-  GraphQLBoolean,
-  GraphQLID,
-  GraphQLObjectType,
-  GraphQLString,
-} from 'graphql';
-import { DateTime, User } from '../../../generated/prisma';
+import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
+
+import { DateTime, User, USER_ROLE } from '../../../generated/prisma';
+import GraphQLUserRole from '../outputs/UserRole';
 
 export default new GraphQLObjectType({
   name: 'User',
@@ -21,9 +18,9 @@ export default new GraphQLObjectType({
       type: GraphQLString,
       resolve: ({ name }: User): string => name,
     },
-    isAdmin: {
-      type: GraphQLBoolean,
-      resolve: ({ isAdmin }: User): boolean => isAdmin,
+    role: {
+      type: GraphQLUserRole,
+      resolve: ({ role }: User): USER_ROLE => role,
     },
     createdAt: {
       type: GraphQLString,

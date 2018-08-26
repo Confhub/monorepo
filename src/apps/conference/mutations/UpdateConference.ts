@@ -2,7 +2,7 @@
 // import tslug from 'tslug';
 
 // import { Context } from '../../../helpers';
-// import { isAdminAuthorized } from '../../user/helpers';
+// import { Context, getUserId, getUserRole } from '../../../utils';
 // import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 // import GraphQLConference, { Conference } from '../outputs/Conference';
 // import { Tag } from '../../tags/outputs/Tag';
@@ -45,9 +45,10 @@
 //     { apiToken, db }: Context,
 //     info: any,
 //   ): Promise<Conference> => {
-//     const { isAdmin } = await isAdminAuthorized(apiToken, db);
+//     const userId = getUserId(apiToken);
+//     const userRole = await getUserRole(userId, db);
 
-//     if (isAdmin) {
+//     if (userRole === 'MODERATOR') {
 //       const makeQuery = () => ({
 //         data: {
 //           name,
@@ -65,7 +66,7 @@
 //       return db.mutation.createConference(makeQuery(), info);
 //     }
 
-//     throw new Error('Something went wrong');
+//     throw new Error('You must have moderator rights');
 //   },
 // };
 

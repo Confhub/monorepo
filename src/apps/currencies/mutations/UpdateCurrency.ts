@@ -2,8 +2,7 @@ import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
 import { Currency } from '../../../generated/prisma';
-import { Context } from '../../../helpers';
-import { isAdminAuthorized } from '../../user/helpers';
+import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLCurrency from '../outputs/Currency';
 
 interface ArgsType {
@@ -27,9 +26,10 @@ export default {
     { apiToken, db }: Context,
     info: any,
   ): Promise<Currency> => {
-    const { isAdmin } = await isAdminAuthorized(apiToken, db);
+    const userId = getUserId(apiToken);
+    const userRole = await getUserRole(userId, db);
 
-    if (isAdmin) {
+    if (userRole === 'MODERATOR') {
       return db.mutation.updateCurrency(
         {
           where: { id },
@@ -42,6 +42,6 @@ export default {
       );
     }
 
-    throw new Error('Something went wrong');
+    throw new Error('You must have moderator rights');
   },
 };
