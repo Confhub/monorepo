@@ -47,11 +47,12 @@
     "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
     "playground": "graphql playground",
     "build": "rimraf dist && tsc",
+    "serve": "dotenv -- node dist",
     "prettier": "prettier --write 'src/**/*.ts'",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "test-ci": "yarn lint",
-    "deploy": "now -e PRISMA_ENDPOINT=$PRISMA_ENDPOINT -e PRISMA_SECRET=$PRISMA_SECRET -e APP_SECRET=$APP_SECRET --token $NOW_TOKEN --npm",
+    "deploy": "now --regions all --token $NOW_TOKEN",
     "alias": "now alias --token=$NOW_TOKEN",
     "clear-deployments": "now rm --safe --yes confhub-graphql --token=$NOW_TOKEN"
   }
