@@ -3,7 +3,7 @@
   "description": "ConfHub GraphQL Server",
   "version": "0.0.1",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "contributors": [
     {
       "name": "Ali Zhdanov",
@@ -47,7 +47,7 @@
     "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
     "playground": "graphql playground",
     "build": "rimraf dist && tsc",
-    "serve": "dotenv -- node dist",
+    "serve": "node dist",
     "prettier": "prettier --write 'src/**/*.ts'",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "tslint -c tslint.json -p tsconfig.json --fix",

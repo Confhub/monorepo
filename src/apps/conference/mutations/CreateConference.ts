@@ -43,7 +43,7 @@ export default {
     }: ArgsType,
     ctx: ContextType,
     info: any,
-  ) => {
+  ): Promise<Conference> => {
     return ctx.db.mutation.createConference(
       {
         data: {

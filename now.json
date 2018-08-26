@@ -6,13 +6,11 @@
   "features": {
     "cloud": "v2"
   },
-  "build": {
-    "env": {
-      "PORT": "@confhub-graphql-port",
-      "PRISMA_ENDPOINT": "@confhub-graphql-prisma-endpoint",
-      "PRISMA_SECRET": "@confhub-graphql-prisma-secret",
-      "PRISMA_MANAGEMENT_API_SECRET": "@confhub-graphql-prisma-management-api-secret",
-      "APP_SECRET": "@confhub-graphql-app-secret"
-    }
+  "env": {
+    "PORT": "@confhub-graphql-port",
+    "PRISMA_ENDPOINT": "@confhub-graphql-prisma-endpoint",
+    "PRISMA_SECRET": "@confhub-graphql-prisma-secret",
+    "PRISMA_MANAGEMENT_API_SECRET": "@confhub-graphql-prisma-management-api-secret",
+    "APP_SECRET": "@confhub-graphql-app-secret"
   }
 }
