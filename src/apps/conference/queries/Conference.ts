@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import { ContextType } from '../../../helpers';
-import GraphQLConference from '../outputs/Conference';
+import GraphQLConference, { Conference } from '../outputs/Conference';
 
 interface ArgsType {
   id: string;
@@ -14,12 +14,17 @@ export default {
       type: new GraphQLNonNull(GraphQLID),
     },
   },
-  resolve: (_: any, { id }: ArgsType, ctx: ContextType, info: any) => {
-    // TODO: add return types
-    const makeQuery = () => ({
-      where: { id },
-    });
-
-    return ctx.db.query.conference(makeQuery(), info);
+  resolve: (
+    _: any,
+    { id }: ArgsType,
+    ctx: ContextType,
+    info: any,
+  ): Promise<Conference> => {
+    return ctx.db.query.conference(
+      {
+        where: { id },
+      },
+      info,
+    );
   },
 };

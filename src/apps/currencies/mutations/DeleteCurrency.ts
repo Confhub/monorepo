@@ -1,5 +1,6 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
+import { Currency } from '../../../generated/prisma';
 import { ContextType } from '../../../helpers';
 import { isAdminAuthorized } from '../../user/helpers';
 import GraphQLCurrency from '../outputs/Currency';
@@ -20,17 +21,17 @@ export default {
     { id }: ArgsType,
     { apiToken, db }: ContextType,
     info: any,
-  ) => {
-    // TODO: add return types
+  ): Promise<Currency> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
     if (isAdmin) {
-      const makeQuery = () => ({
-        where: { id },
-      });
-
       if (id) {
-        return db.mutation.deleteCurrency(makeQuery(), info);
+        return db.mutation.deleteCurrency(
+          {
+            where: { id },
+          },
+          info,
+        );
       }
     }
 

@@ -2284,7 +2284,7 @@ input TagWhereUniqueInput {
 type User implements Node {
   id: ID!
   email: String!
-  name: String
+  name: String!
   createdAt: DateTime!
   password: String!
   isAdmin: Boolean!
@@ -2302,7 +2302,7 @@ type UserConnection {
 
 input UserCreateInput {
   email: String!
-  name: String
+  name: String!
   password: String!
   isAdmin: Boolean
 }
@@ -2336,7 +2336,7 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   email: String!
-  name: String
+  name: String!
   createdAt: DateTime!
   password: String!
   isAdmin: Boolean!
@@ -3332,7 +3332,7 @@ export interface LocationWhereUniqueInput {
 
 export interface UserCreateInput {
   email: String
-  name?: String
+  name: String
   password: String
   isAdmin?: Boolean
 }
@@ -3706,7 +3706,7 @@ export interface AggregateCurrency {
 export interface UserPreviousValues {
   id: ID_Output
   email: String
-  name?: String
+  name: String
   createdAt: DateTime
   password: String
   isAdmin: Boolean
@@ -3819,7 +3819,7 @@ export interface SocialEdge {
 export interface User extends Node {
   id: ID_Output
   email: String
-  name?: String
+  name: String
   createdAt: DateTime
   password: String
   isAdmin: Boolean

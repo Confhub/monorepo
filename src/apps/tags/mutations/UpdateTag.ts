@@ -3,7 +3,7 @@ import tslug from 'tslug';
 
 import { ContextType } from '../../../helpers';
 import { isAdminAuthorized } from '../../user/helpers';
-import GraphQLTag from '../outputs/Tag';
+import GraphQLTag, { Tag } from '../outputs/Tag';
 
 interface ArgsType {
   id: string;
@@ -25,20 +25,20 @@ export default {
     { id, name }: ArgsType,
     { apiToken, db }: ContextType,
     info: any,
-  ) => {
-    // TODO: add return types
+  ): Promise<Tag> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
     if (isAdmin) {
-      const makeQuery = () => ({
-        where: { id },
-        data: {
-          name,
-          slug: tslug(name, { decamelize: true }),
+      return db.mutation.updateTag(
+        {
+          where: { id },
+          data: {
+            name,
+            slug: tslug(name, { decamelize: true }),
+          },
         },
-      });
-
-      return db.mutation.updateTag(makeQuery(), info);
+        info,
+      );
     }
 
     throw new Error('Something went wrong');

@@ -2,7 +2,7 @@ import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import { ContextType } from '../../../helpers';
 import { isAdminAuthorized } from '../helpers';
-import GraphQLUser from '../outputs/User';
+import GraphQLUser, { User } from '../outputs/User';
 
 interface ArgsType {
   id: string;
@@ -20,19 +20,19 @@ export default {
     { id }: ArgsType,
     { apiToken, db }: ContextType,
     info: any,
-  ) => {
-    // TODO: add return types
+  ): Promise<User> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
     if (isAdmin) {
-      const makeQuery = () => ({
-        where: { id },
-        data: {
-          isAdmin: true,
+      return db.mutation.updateUser(
+        {
+          where: { id },
+          data: {
+            isAdmin: true,
+          },
         },
-      });
-
-      return db.mutation.updateUser(makeQuery(), info);
+        info,
+      );
     }
 
     throw new Error('Something went wrong');

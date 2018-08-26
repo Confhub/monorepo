@@ -1,7 +1,7 @@
 import { GraphQLBoolean, GraphQLList, GraphQLString } from 'graphql';
 
 import { ContextType } from '../../../helpers';
-import GraphQLConference from '../outputs/Conference';
+import GraphQLConference, { Conference } from '../outputs/Conference';
 
 interface ArgsType {
   tags: string[];
@@ -23,22 +23,23 @@ export default {
     { tags, published }: ArgsType,
     ctx: ContextType,
     info: any,
-  ) => {
-    // TODO: add return types
-    const makeQuery = (extra?: object) => ({
-      where: {
-        publishStatus: published ? 'PUBLISHED' : 'DRAFT',
-        ...extra,
-      },
-    });
-
+  ): Promise<Conference> => {
     if (tags && tags.length) {
-      return ctx.db.query.conferences(
-        makeQuery({ tags_some: { slug_in: tags } }),
-        info,
-      );
+      return ctx.db.query.conferences({
+        where: {
+          publishStatus: published ? 'PUBLISHED' : 'DRAFT',
+          tags_some: { slug_in: tags },
+        },
+      });
     }
-    return ctx.db.query.conferences(makeQuery(), info);
+    return ctx.db.query.conferences(
+      {
+        where: {
+          publishStatus: published ? 'PUBLISHED' : 'DRAFT',
+        },
+      },
+      info,
+    );
   },
 };
 

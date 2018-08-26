@@ -1,51 +1,19 @@
 import { GraphQLNonNull } from 'graphql';
 import tslug from 'tslug';
 
+import {
+  ImageCreateOneInput,
+  LocationCreateOneInput,
+  SocialCreateOneInput,
+  TagCreateManyInput,
+} from '../../../generated/prisma';
 import { ContextType } from '../../../helpers';
+import { Tag } from '../../tags/outputs/Tag';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
-import GraphQLConference from '../outputs/Conference';
-
-interface Conference {
-  name: string;
-  description?: string;
-  tags?: Tag[];
-  image?: Image;
-  url: string;
-  startDate: string;
-  endDate: string;
-  location: Location;
-  social: Social;
-}
-
-interface Tag {
-  id?: string;
-  name?: string;
-  slug?: string;
-}
-
-interface Image {
-  src?: string;
-  alt?: string;
-}
-
-interface Location {
-  venueName?: string;
-  country: string;
-  city: string;
-  address: string;
-  coordinates: Coordinates;
-}
-
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
-
-interface Social {
-  facebook?: string;
-  twitter?: string;
-  instagram?: string;
-}
+import GraphQLConference, { Conference } from '../outputs/Conference';
+import { Image } from '../outputs/Image';
+import { Location } from '../outputs/Location';
+import { Social } from '../outputs/Social';
 
 interface ArgsType {
   data: Conference;
@@ -76,26 +44,26 @@ export default {
     ctx: ContextType,
     info: any,
   ) => {
-    // TODO: add types, for example Promise<ConferenceType>
-    const makeQuery = () => ({
-      data: {
-        name,
-        description,
-        tags: tags ? generateTags(tags) : null,
-        image: image ? generateImage(image, name) : null,
-        url,
-        startDate,
-        endDate,
-        location: generateLocation(location),
-        social: social ? generateSocial(social) : null,
+    return ctx.db.mutation.createConference(
+      {
+        data: {
+          name,
+          description,
+          tags: tags ? generateTags(tags) : null,
+          image: image ? generateImage(image, name) : null,
+          url,
+          startDate,
+          endDate,
+          location: generateLocation(location),
+          social: social ? generateSocial(social) : null,
+        },
       },
-    });
-
-    return ctx.db.mutation.createConference(makeQuery(), info);
+      info,
+    );
   },
 };
 
-const generateTags = (tags: Tag[]) => {
+const generateTags = (tags: Tag[]): TagCreateManyInput => {
   const connect = [];
   const create = [];
 
@@ -118,10 +86,13 @@ const generateTags = (tags: Tag[]) => {
   };
 };
 
-const generateImage = ({ src, alt }: Image, name: string) => ({
+const generateImage = (
+  { src, alt }: Image,
+  name: string,
+): ImageCreateOneInput => ({
   create: {
     src: src || 'http://via.placeholder.com/350x150',
-    alt: alt || name,
+    alt: alt || tslug(name),
   },
 });
 
@@ -131,7 +102,7 @@ const generateLocation = ({
   city,
   address,
   coordinates,
-}: Location) => ({
+}: Location): LocationCreateOneInput => ({
   create: {
     venueName: venueName || '',
     country,
@@ -146,7 +117,11 @@ const generateLocation = ({
   },
 });
 
-const generateSocial = ({ facebook, twitter, instagram }: Social) => {
+const generateSocial = ({
+  facebook,
+  twitter,
+  instagram,
+}: Social): SocialCreateOneInput => {
   return {
     create: {
       facebook,

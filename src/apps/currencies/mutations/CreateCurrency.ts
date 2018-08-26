@@ -1,6 +1,7 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
+import { Currency } from '../../../generated/prisma';
 import { ContextType } from '../../../helpers';
 import { isAdminAuthorized } from '../../user/helpers';
 import GraphQLCurrency from '../outputs/Currency';
@@ -21,19 +22,19 @@ export default {
     { name }: ArgsType,
     { apiToken, db }: ContextType,
     info: any,
-  ) => {
-    // TODO: add return types
+  ): Promise<Currency> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
     if (isAdmin) {
-      const makeQuery = () => ({
-        data: {
-          name,
-          value: tslug(name, { decamelize: false }),
+      return db.mutation.createCurrency(
+        {
+          data: {
+            name,
+            value: tslug(name, { decamelize: false }),
+          },
         },
-      });
-
-      return db.mutation.createCurrency(makeQuery(), info);
+        info,
+      );
     }
 
     throw new Error('Something went wrong');

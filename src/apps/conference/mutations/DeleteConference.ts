@@ -2,7 +2,7 @@ import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import { ContextType } from '../../../helpers';
 import { isAdminAuthorized } from '../../user/helpers';
-import GraphQLConference from '../outputs/Conference';
+import GraphQLConference, { Conference } from '../outputs/Conference';
 
 interface ArgsType {
   id: string;
@@ -20,17 +20,17 @@ export default {
     { id }: ArgsType,
     { apiToken, db }: ContextType,
     info: any,
-  ) => {
-    // TODO: add return types
+  ): Promise<Conference> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);
 
     if (isAdmin) {
-      const makeQuery = () => ({
-        where: { id },
-      });
-
       if (id) {
-        return db.mutation.deleteConference(makeQuery(), info);
+        return db.mutation.deleteConference(
+          {
+            where: { id },
+          },
+          info,
+        );
       }
     }
 

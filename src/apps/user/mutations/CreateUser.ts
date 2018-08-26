@@ -3,7 +3,7 @@ import { GraphQLNonNull, GraphQLString } from 'graphql';
 import * as jwt from 'jsonwebtoken';
 
 import { ContextType } from '../../../helpers';
-import GraphQLAuthPayload from '../outputs/AuthPayload';
+import GraphQLAuthPayload, { AuthPayload } from '../outputs/AuthPayload';
 
 interface ArgsType {
   email: string;
@@ -21,10 +21,14 @@ export default {
       type: new GraphQLNonNull(GraphQLString),
     },
     name: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
   },
-  resolve: async (_: any, args: ArgsType, ctx: ContextType) => {
+  resolve: async (
+    _: any,
+    args: ArgsType,
+    ctx: ContextType,
+  ): Promise<AuthPayload> => {
     const checkEmail = await ctx.db.query.user({
       where: { email: args.email },
     });
