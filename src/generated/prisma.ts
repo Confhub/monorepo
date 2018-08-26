@@ -1,7 +1,132 @@
-# source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Sun Aug 26 2018 04:54:31 GMT+0200 (Central European Summer Time)
+import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
+import { IResolvers } from 'graphql-tools/dist/Interfaces'
+import { Options } from 'graphql-binding'
+import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
-type AggregateConference {
+export interface Query {
+    users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    conferences: <T = Conference[]>(args: { where?: ConferenceWhereInput, orderBy?: ConferenceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    currencies: <T = Currency[]>(args: { where?: CurrencyWhereInput, orderBy?: CurrencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    coordinateses: <T = Coordinates[]>(args: { where?: CoordinatesWhereInput, orderBy?: CoordinatesOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    socials: <T = Social[]>(args: { where?: SocialWhereInput, orderBy?: SocialOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tags: <T = Tag[]>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    locations: <T = Location[]>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    images: <T = Image[]>(args: { where?: ImageWhereInput, orderBy?: ImageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    conference: <T = Conference | null>(args: { where: ConferenceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    currency: <T = Currency | null>(args: { where: CurrencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    coordinates: <T = Coordinates | null>(args: { where: CoordinatesWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    social: <T = Social | null>(args: { where: SocialWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    location: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    image: <T = Image | null>(args: { where: ImageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    conferencesConnection: <T = ConferenceConnection>(args: { where?: ConferenceWhereInput, orderBy?: ConferenceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    currenciesConnection: <T = CurrencyConnection>(args: { where?: CurrencyWhereInput, orderBy?: CurrencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    coordinatesesConnection: <T = CoordinatesConnection>(args: { where?: CoordinatesWhereInput, orderBy?: CoordinatesOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    socialsConnection: <T = SocialConnection>(args: { where?: SocialWhereInput, orderBy?: SocialOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tagsConnection: <T = TagConnection>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    locationsConnection: <T = LocationConnection>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    imagesConnection: <T = ImageConnection>(args: { where?: ImageWhereInput, orderBy?: ImageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
+  }
+
+export interface Mutation {
+    createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createConference: <T = Conference>(args: { data: ConferenceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createCurrency: <T = Currency>(args: { data: CurrencyCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createCoordinates: <T = Coordinates>(args: { data: CoordinatesCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createSocial: <T = Social>(args: { data: SocialCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createTag: <T = Tag>(args: { data: TagCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createLocation: <T = Location>(args: { data: LocationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createImage: <T = Image>(args: { data: ImageCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateConference: <T = Conference | null>(args: { data: ConferenceUpdateInput, where: ConferenceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateCurrency: <T = Currency | null>(args: { data: CurrencyUpdateInput, where: CurrencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateCoordinates: <T = Coordinates | null>(args: { data: CoordinatesUpdateInput, where: CoordinatesWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateSocial: <T = Social | null>(args: { data: SocialUpdateInput, where: SocialWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateTag: <T = Tag | null>(args: { data: TagUpdateInput, where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateLocation: <T = Location | null>(args: { data: LocationUpdateInput, where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateImage: <T = Image | null>(args: { data: ImageUpdateInput, where: ImageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteConference: <T = Conference | null>(args: { where: ConferenceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteCurrency: <T = Currency | null>(args: { where: CurrencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteCoordinates: <T = Coordinates | null>(args: { where: CoordinatesWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteSocial: <T = Social | null>(args: { where: SocialWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteTag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteLocation: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteImage: <T = Image | null>(args: { where: ImageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertConference: <T = Conference>(args: { where: ConferenceWhereUniqueInput, create: ConferenceCreateInput, update: ConferenceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertCurrency: <T = Currency>(args: { where: CurrencyWhereUniqueInput, create: CurrencyCreateInput, update: CurrencyUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertCoordinates: <T = Coordinates>(args: { where: CoordinatesWhereUniqueInput, create: CoordinatesCreateInput, update: CoordinatesUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertSocial: <T = Social>(args: { where: SocialWhereUniqueInput, create: SocialCreateInput, update: SocialUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertTag: <T = Tag>(args: { where: TagWhereUniqueInput, create: TagCreateInput, update: TagUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertLocation: <T = Location>(args: { where: LocationWhereUniqueInput, create: LocationCreateInput, update: LocationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertImage: <T = Image>(args: { where: ImageWhereUniqueInput, create: ImageCreateInput, update: ImageUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyConferences: <T = BatchPayload>(args: { data: ConferenceUpdateInput, where?: ConferenceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyCurrencies: <T = BatchPayload>(args: { data: CurrencyUpdateInput, where?: CurrencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyCoordinateses: <T = BatchPayload>(args: { data: CoordinatesUpdateInput, where?: CoordinatesWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManySocials: <T = BatchPayload>(args: { data: SocialUpdateInput, where?: SocialWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyTags: <T = BatchPayload>(args: { data: TagUpdateInput, where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyLocations: <T = BatchPayload>(args: { data: LocationUpdateInput, where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyImages: <T = BatchPayload>(args: { data: ImageUpdateInput, where?: ImageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyConferences: <T = BatchPayload>(args: { where?: ConferenceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyCurrencies: <T = BatchPayload>(args: { where?: CurrencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyCoordinateses: <T = BatchPayload>(args: { where?: CoordinatesWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManySocials: <T = BatchPayload>(args: { where?: SocialWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyTags: <T = BatchPayload>(args: { where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyLocations: <T = BatchPayload>(args: { where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyImages: <T = BatchPayload>(args: { where?: ImageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
+  }
+
+export interface Subscription {
+    user: <T = UserSubscriptionPayload | null>(args: { where?: UserSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    conference: <T = ConferenceSubscriptionPayload | null>(args: { where?: ConferenceSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    currency: <T = CurrencySubscriptionPayload | null>(args: { where?: CurrencySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    coordinates: <T = CoordinatesSubscriptionPayload | null>(args: { where?: CoordinatesSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    social: <T = SocialSubscriptionPayload | null>(args: { where?: SocialSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    tag: <T = TagSubscriptionPayload | null>(args: { where?: TagSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    location: <T = LocationSubscriptionPayload | null>(args: { where?: LocationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    image: <T = ImageSubscriptionPayload | null>(args: { where?: ImageSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
+  }
+
+export interface Exists {
+  User: (where?: UserWhereInput) => Promise<boolean>
+  Conference: (where?: ConferenceWhereInput) => Promise<boolean>
+  Currency: (where?: CurrencyWhereInput) => Promise<boolean>
+  Coordinates: (where?: CoordinatesWhereInput) => Promise<boolean>
+  Social: (where?: SocialWhereInput) => Promise<boolean>
+  Tag: (where?: TagWhereInput) => Promise<boolean>
+  Location: (where?: LocationWhereInput) => Promise<boolean>
+  Image: (where?: ImageWhereInput) => Promise<boolean>
+}
+
+export interface Prisma {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+  exists: Exists
+  request: <T = any>(query: string, variables?: {[key: string]: any}) => Promise<T>
+  delegate(operation: 'query' | 'mutation', fieldName: string, args: {
+    [key: string]: any;
+}, infoOrQuery?: GraphQLResolveInfo | string, options?: Options): Promise<any>;
+delegateSubscription(fieldName: string, args?: {
+    [key: string]: any;
+}, infoOrQuery?: GraphQLResolveInfo | string, options?: Options): Promise<AsyncIterator<any>>;
+getAbstractResolvers(filterSchema?: GraphQLSchema | string): IResolvers;
+}
+
+export interface BindingConstructor<T> {
+  new(options: BasePrismaOptions): T
+}
+/**
+ * Type Defs
+*/
+
+const typeDefs = `type AggregateConference {
   count: Int!
 }
 
@@ -1460,7 +1585,7 @@ input LocationWhereUniqueInput {
 }
 
 """
-The `Long` scalar type represents non-fractional signed whole numeric values.
+The \`Long\` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
@@ -2464,3 +2589,1394 @@ input UserWhereUniqueInput {
   id: ID
   email: String
 }
+`
+
+export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDefs})
+
+/**
+ * Types
+*/
+
+export type CoordinatesOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'latitude_ASC' |
+  'latitude_DESC' |
+  'longitude_ASC' |
+  'longitude_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type ConferenceOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'description_ASC' |
+  'description_DESC' |
+  'url_ASC' |
+  'url_DESC' |
+  'startDate_ASC' |
+  'startDate_DESC' |
+  'endDate_ASC' |
+  'endDate_DESC' |
+  'publishStatus_ASC' |
+  'publishStatus_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type TagOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'slug_ASC' |
+  'slug_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type PUBLISH_STATUS =   'DRAFT' |
+  'PUBLISHED'
+
+export type MutationType =   'CREATED' |
+  'UPDATED' |
+  'DELETED'
+
+export type CurrencyOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'value_ASC' |
+  'value_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type ImageOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'src_ASC' |
+  'src_DESC' |
+  'alt_ASC' |
+  'alt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type SocialOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'facebook_ASC' |
+  'facebook_DESC' |
+  'twitter_ASC' |
+  'twitter_DESC' |
+  'instagram_ASC' |
+  'instagram_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type UserOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'email_ASC' |
+  'email_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'password_ASC' |
+  'password_DESC' |
+  'isAdmin_ASC' |
+  'isAdmin_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
+
+export type LocationOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'venueName_ASC' |
+  'venueName_DESC' |
+  'country_ASC' |
+  'country_DESC' |
+  'city_ASC' |
+  'city_DESC' |
+  'address_ASC' |
+  'address_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export interface TagWhereUniqueInput {
+  id?: ID_Input
+  slug?: String
+}
+
+export interface LocationCreateInput {
+  venueName?: String
+  country: String
+  city: String
+  address?: String
+  coordinates?: CoordinatesCreateOneInput
+}
+
+export interface SocialUpdateDataInput {
+  facebook?: String
+  twitter?: String
+  instagram?: String
+}
+
+export interface UserWhereInput {
+  AND?: UserWhereInput[] | UserWhereInput
+  OR?: UserWhereInput[] | UserWhereInput
+  NOT?: UserWhereInput[] | UserWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  email?: String
+  email_not?: String
+  email_in?: String[] | String
+  email_not_in?: String[] | String
+  email_lt?: String
+  email_lte?: String
+  email_gt?: String
+  email_gte?: String
+  email_contains?: String
+  email_not_contains?: String
+  email_starts_with?: String
+  email_not_starts_with?: String
+  email_ends_with?: String
+  email_not_ends_with?: String
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  password?: String
+  password_not?: String
+  password_in?: String[] | String
+  password_not_in?: String[] | String
+  password_lt?: String
+  password_lte?: String
+  password_gt?: String
+  password_gte?: String
+  password_contains?: String
+  password_not_contains?: String
+  password_starts_with?: String
+  password_not_starts_with?: String
+  password_ends_with?: String
+  password_not_ends_with?: String
+  isAdmin?: Boolean
+  isAdmin_not?: Boolean
+}
+
+export interface SocialUpdateOneInput {
+  create?: SocialCreateInput
+  connect?: SocialWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: SocialUpdateDataInput
+  upsert?: SocialUpsertNestedInput
+}
+
+export interface LocationWhereInput {
+  AND?: LocationWhereInput[] | LocationWhereInput
+  OR?: LocationWhereInput[] | LocationWhereInput
+  NOT?: LocationWhereInput[] | LocationWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  venueName?: String
+  venueName_not?: String
+  venueName_in?: String[] | String
+  venueName_not_in?: String[] | String
+  venueName_lt?: String
+  venueName_lte?: String
+  venueName_gt?: String
+  venueName_gte?: String
+  venueName_contains?: String
+  venueName_not_contains?: String
+  venueName_starts_with?: String
+  venueName_not_starts_with?: String
+  venueName_ends_with?: String
+  venueName_not_ends_with?: String
+  country?: String
+  country_not?: String
+  country_in?: String[] | String
+  country_not_in?: String[] | String
+  country_lt?: String
+  country_lte?: String
+  country_gt?: String
+  country_gte?: String
+  country_contains?: String
+  country_not_contains?: String
+  country_starts_with?: String
+  country_not_starts_with?: String
+  country_ends_with?: String
+  country_not_ends_with?: String
+  city?: String
+  city_not?: String
+  city_in?: String[] | String
+  city_not_in?: String[] | String
+  city_lt?: String
+  city_lte?: String
+  city_gt?: String
+  city_gte?: String
+  city_contains?: String
+  city_not_contains?: String
+  city_starts_with?: String
+  city_not_starts_with?: String
+  city_ends_with?: String
+  city_not_ends_with?: String
+  address?: String
+  address_not?: String
+  address_in?: String[] | String
+  address_not_in?: String[] | String
+  address_lt?: String
+  address_lte?: String
+  address_gt?: String
+  address_gte?: String
+  address_contains?: String
+  address_not_contains?: String
+  address_starts_with?: String
+  address_not_starts_with?: String
+  address_ends_with?: String
+  address_not_ends_with?: String
+  coordinates?: CoordinatesWhereInput
+  _MagicalBackRelation_ConferenceToLocation_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToLocation_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToLocation_none?: ConferenceWhereInput
+}
+
+export interface LocationUpsertNestedInput {
+  update: LocationUpdateDataInput
+  create: LocationCreateInput
+}
+
+export interface CurrencySubscriptionWhereInput {
+  AND?: CurrencySubscriptionWhereInput[] | CurrencySubscriptionWhereInput
+  OR?: CurrencySubscriptionWhereInput[] | CurrencySubscriptionWhereInput
+  NOT?: CurrencySubscriptionWhereInput[] | CurrencySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CurrencyWhereInput
+}
+
+export interface CoordinatesUpsertNestedInput {
+  update: CoordinatesUpdateDataInput
+  create: CoordinatesCreateInput
+}
+
+export interface ImageWhereInput {
+  AND?: ImageWhereInput[] | ImageWhereInput
+  OR?: ImageWhereInput[] | ImageWhereInput
+  NOT?: ImageWhereInput[] | ImageWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  src?: String
+  src_not?: String
+  src_in?: String[] | String
+  src_not_in?: String[] | String
+  src_lt?: String
+  src_lte?: String
+  src_gt?: String
+  src_gte?: String
+  src_contains?: String
+  src_not_contains?: String
+  src_starts_with?: String
+  src_not_starts_with?: String
+  src_ends_with?: String
+  src_not_ends_with?: String
+  alt?: String
+  alt_not?: String
+  alt_in?: String[] | String
+  alt_not_in?: String[] | String
+  alt_lt?: String
+  alt_lte?: String
+  alt_gt?: String
+  alt_gte?: String
+  alt_contains?: String
+  alt_not_contains?: String
+  alt_starts_with?: String
+  alt_not_starts_with?: String
+  alt_ends_with?: String
+  alt_not_ends_with?: String
+  _MagicalBackRelation_ConferenceToImage_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToImage_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToImage_none?: ConferenceWhereInput
+}
+
+export interface CoordinatesUpdateDataInput {
+  latitude?: Float
+  longitude?: Float
+}
+
+export interface TagWhereInput {
+  AND?: TagWhereInput[] | TagWhereInput
+  OR?: TagWhereInput[] | TagWhereInput
+  NOT?: TagWhereInput[] | TagWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  slug?: String
+  slug_not?: String
+  slug_in?: String[] | String
+  slug_not_in?: String[] | String
+  slug_lt?: String
+  slug_lte?: String
+  slug_gt?: String
+  slug_gte?: String
+  slug_contains?: String
+  slug_not_contains?: String
+  slug_starts_with?: String
+  slug_not_starts_with?: String
+  slug_ends_with?: String
+  slug_not_ends_with?: String
+  _MagicalBackRelation_ConferenceToTag_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTag_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTag_none?: ConferenceWhereInput
+}
+
+export interface CoordinatesUpdateOneInput {
+  create?: CoordinatesCreateInput
+  connect?: CoordinatesWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: CoordinatesUpdateDataInput
+  upsert?: CoordinatesUpsertNestedInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface LocationUpdateDataInput {
+  venueName?: String
+  country?: String
+  city?: String
+  address?: String
+  coordinates?: CoordinatesUpdateOneInput
+}
+
+export interface LocationUpdateInput {
+  venueName?: String
+  country?: String
+  city?: String
+  address?: String
+  coordinates?: CoordinatesUpdateOneInput
+}
+
+export interface LocationUpdateOneInput {
+  create?: LocationCreateInput
+  connect?: LocationWhereUniqueInput
+  delete?: Boolean
+  update?: LocationUpdateDataInput
+  upsert?: LocationUpsertNestedInput
+}
+
+export interface CurrencyWhereInput {
+  AND?: CurrencyWhereInput[] | CurrencyWhereInput
+  OR?: CurrencyWhereInput[] | CurrencyWhereInput
+  NOT?: CurrencyWhereInput[] | CurrencyWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  value?: String
+  value_not?: String
+  value_in?: String[] | String
+  value_not_in?: String[] | String
+  value_lt?: String
+  value_lte?: String
+  value_gt?: String
+  value_gte?: String
+  value_contains?: String
+  value_not_contains?: String
+  value_starts_with?: String
+  value_not_starts_with?: String
+  value_ends_with?: String
+  value_not_ends_with?: String
+}
+
+export interface ImageUpsertNestedInput {
+  update: ImageUpdateDataInput
+  create: ImageCreateInput
+}
+
+export interface SocialUpdateInput {
+  facebook?: String
+  twitter?: String
+  instagram?: String
+}
+
+export interface ImageUpdateDataInput {
+  src?: String
+  alt?: String
+}
+
+export interface SocialSubscriptionWhereInput {
+  AND?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
+  OR?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
+  NOT?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: SocialWhereInput
+}
+
+export interface ImageUpdateOneInput {
+  create?: ImageCreateInput
+  connect?: ImageWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: ImageUpdateDataInput
+  upsert?: ImageUpsertNestedInput
+}
+
+export interface LocationSubscriptionWhereInput {
+  AND?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  OR?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  NOT?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: LocationWhereInput
+}
+
+export interface TagUpsertWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput
+  update: TagUpdateDataInput
+  create: TagCreateInput
+}
+
+export interface ConferenceWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TagUpdateDataInput {
+  name?: String
+  slug?: String
+}
+
+export interface CoordinatesWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TagUpdateWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput
+  data: TagUpdateDataInput
+}
+
+export interface ImageSubscriptionWhereInput {
+  AND?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  OR?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  NOT?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ImageWhereInput
+}
+
+export interface TagUpdateManyInput {
+  create?: TagCreateInput[] | TagCreateInput
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  disconnect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  delete?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  update?: TagUpdateWithWhereUniqueNestedInput[] | TagUpdateWithWhereUniqueNestedInput
+  upsert?: TagUpsertWithWhereUniqueNestedInput[] | TagUpsertWithWhereUniqueNestedInput
+}
+
+export interface ImageWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface ConferenceUpdateInput {
+  name?: String
+  description?: String
+  url?: String
+  startDate?: DateTime
+  endDate?: DateTime
+  publishStatus?: PUBLISH_STATUS
+  tags?: TagUpdateManyInput
+  image?: ImageUpdateOneInput
+  location?: LocationUpdateOneInput
+  social?: SocialUpdateOneInput
+}
+
+export interface CurrencyUpdateInput {
+  name?: String
+  value?: String
+}
+
+export interface UserUpdateInput {
+  email?: String
+  name?: String
+  password?: String
+  isAdmin?: Boolean
+}
+
+export interface CoordinatesWhereInput {
+  AND?: CoordinatesWhereInput[] | CoordinatesWhereInput
+  OR?: CoordinatesWhereInput[] | CoordinatesWhereInput
+  NOT?: CoordinatesWhereInput[] | CoordinatesWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  latitude?: Float
+  latitude_not?: Float
+  latitude_in?: Float[] | Float
+  latitude_not_in?: Float[] | Float
+  latitude_lt?: Float
+  latitude_lte?: Float
+  latitude_gt?: Float
+  latitude_gte?: Float
+  longitude?: Float
+  longitude_not?: Float
+  longitude_in?: Float[] | Float
+  longitude_not_in?: Float[] | Float
+  longitude_lt?: Float
+  longitude_lte?: Float
+  longitude_gt?: Float
+  longitude_gte?: Float
+  _MagicalBackRelation_CoordinatesToLocation_every?: LocationWhereInput
+  _MagicalBackRelation_CoordinatesToLocation_some?: LocationWhereInput
+  _MagicalBackRelation_CoordinatesToLocation_none?: LocationWhereInput
+}
+
+export interface CurrencyCreateInput {
+  name: String
+  value: String
+}
+
+export interface ConferenceSubscriptionWhereInput {
+  AND?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
+  OR?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
+  NOT?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ConferenceWhereInput
+}
+
+export interface SocialCreateInput {
+  facebook?: String
+  twitter?: String
+  instagram?: String
+}
+
+export interface ImageUpdateInput {
+  src?: String
+  alt?: String
+}
+
+export interface SocialCreateOneInput {
+  create?: SocialCreateInput
+  connect?: SocialWhereUniqueInput
+}
+
+export interface TagSubscriptionWhereInput {
+  AND?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
+  OR?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
+  NOT?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: TagWhereInput
+}
+
+export interface CoordinatesCreateInput {
+  latitude: Float
+  longitude: Float
+}
+
+export interface CurrencyWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface CoordinatesCreateOneInput {
+  create?: CoordinatesCreateInput
+  connect?: CoordinatesWhereUniqueInput
+}
+
+export interface LocationWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserCreateInput {
+  email: String
+  name: String
+  password: String
+  isAdmin?: Boolean
+}
+
+export interface SocialUpsertNestedInput {
+  update: SocialUpdateDataInput
+  create: SocialCreateInput
+}
+
+export interface ConferenceCreateInput {
+  name: String
+  description?: String
+  url: String
+  startDate: DateTime
+  endDate: DateTime
+  publishStatus?: PUBLISH_STATUS
+  tags?: TagCreateManyInput
+  image?: ImageCreateOneInput
+  location: LocationCreateOneInput
+  social?: SocialCreateOneInput
+}
+
+export interface ConferenceWhereInput {
+  AND?: ConferenceWhereInput[] | ConferenceWhereInput
+  OR?: ConferenceWhereInput[] | ConferenceWhereInput
+  NOT?: ConferenceWhereInput[] | ConferenceWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  description?: String
+  description_not?: String
+  description_in?: String[] | String
+  description_not_in?: String[] | String
+  description_lt?: String
+  description_lte?: String
+  description_gt?: String
+  description_gte?: String
+  description_contains?: String
+  description_not_contains?: String
+  description_starts_with?: String
+  description_not_starts_with?: String
+  description_ends_with?: String
+  description_not_ends_with?: String
+  url?: String
+  url_not?: String
+  url_in?: String[] | String
+  url_not_in?: String[] | String
+  url_lt?: String
+  url_lte?: String
+  url_gt?: String
+  url_gte?: String
+  url_contains?: String
+  url_not_contains?: String
+  url_starts_with?: String
+  url_not_starts_with?: String
+  url_ends_with?: String
+  url_not_ends_with?: String
+  startDate?: DateTime
+  startDate_not?: DateTime
+  startDate_in?: DateTime[] | DateTime
+  startDate_not_in?: DateTime[] | DateTime
+  startDate_lt?: DateTime
+  startDate_lte?: DateTime
+  startDate_gt?: DateTime
+  startDate_gte?: DateTime
+  endDate?: DateTime
+  endDate_not?: DateTime
+  endDate_in?: DateTime[] | DateTime
+  endDate_not_in?: DateTime[] | DateTime
+  endDate_lt?: DateTime
+  endDate_lte?: DateTime
+  endDate_gt?: DateTime
+  endDate_gte?: DateTime
+  publishStatus?: PUBLISH_STATUS
+  publishStatus_not?: PUBLISH_STATUS
+  publishStatus_in?: PUBLISH_STATUS[] | PUBLISH_STATUS
+  publishStatus_not_in?: PUBLISH_STATUS[] | PUBLISH_STATUS
+  tags_every?: TagWhereInput
+  tags_some?: TagWhereInput
+  tags_none?: TagWhereInput
+  image?: ImageWhereInput
+  location?: LocationWhereInput
+  social?: SocialWhereInput
+}
+
+export interface TagCreateManyInput {
+  create?: TagCreateInput[] | TagCreateInput
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+}
+
+export interface CoordinatesSubscriptionWhereInput {
+  AND?: CoordinatesSubscriptionWhereInput[] | CoordinatesSubscriptionWhereInput
+  OR?: CoordinatesSubscriptionWhereInput[] | CoordinatesSubscriptionWhereInput
+  NOT?: CoordinatesSubscriptionWhereInput[] | CoordinatesSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CoordinatesWhereInput
+}
+
+export interface LocationCreateOneInput {
+  create?: LocationCreateInput
+  connect?: LocationWhereUniqueInput
+}
+
+export interface ImageCreateInput {
+  src: String
+  alt?: String
+}
+
+export interface ImageCreateOneInput {
+  create?: ImageCreateInput
+  connect?: ImageWhereUniqueInput
+}
+
+export interface TagCreateInput {
+  name: String
+  slug: String
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
+export interface TagUpdateInput {
+  name?: String
+  slug?: String
+}
+
+export interface SocialWhereInput {
+  AND?: SocialWhereInput[] | SocialWhereInput
+  OR?: SocialWhereInput[] | SocialWhereInput
+  NOT?: SocialWhereInput[] | SocialWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  facebook?: String
+  facebook_not?: String
+  facebook_in?: String[] | String
+  facebook_not_in?: String[] | String
+  facebook_lt?: String
+  facebook_lte?: String
+  facebook_gt?: String
+  facebook_gte?: String
+  facebook_contains?: String
+  facebook_not_contains?: String
+  facebook_starts_with?: String
+  facebook_not_starts_with?: String
+  facebook_ends_with?: String
+  facebook_not_ends_with?: String
+  twitter?: String
+  twitter_not?: String
+  twitter_in?: String[] | String
+  twitter_not_in?: String[] | String
+  twitter_lt?: String
+  twitter_lte?: String
+  twitter_gt?: String
+  twitter_gte?: String
+  twitter_contains?: String
+  twitter_not_contains?: String
+  twitter_starts_with?: String
+  twitter_not_starts_with?: String
+  twitter_ends_with?: String
+  twitter_not_ends_with?: String
+  instagram?: String
+  instagram_not?: String
+  instagram_in?: String[] | String
+  instagram_not_in?: String[] | String
+  instagram_lt?: String
+  instagram_lte?: String
+  instagram_gt?: String
+  instagram_gte?: String
+  instagram_contains?: String
+  instagram_not_contains?: String
+  instagram_starts_with?: String
+  instagram_not_starts_with?: String
+  instagram_ends_with?: String
+  instagram_not_ends_with?: String
+  _MagicalBackRelation_ConferenceToSocial_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToSocial_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToSocial_none?: ConferenceWhereInput
+}
+
+export interface CoordinatesUpdateInput {
+  latitude?: Float
+  longitude?: Float
+}
+
+export interface SocialWhereUniqueInput {
+  id?: ID_Input
+}
+
+/*
+ * An object with an ID
+
+ */
+export interface Node {
+  id: ID_Output
+}
+
+export interface AggregateImage {
+  count: Int
+}
+
+export interface Location extends Node {
+  id: ID_Output
+  venueName?: String
+  country: String
+  city: String
+  address?: String
+  coordinates?: Coordinates
+}
+
+export interface ImagePreviousValues {
+  id: ID_Output
+  src: String
+  alt?: String
+}
+
+export interface BatchPayload {
+  count: Long
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface ImageConnection {
+  pageInfo: PageInfo
+  edges: ImageEdge[]
+  aggregate: AggregateImage
+}
+
+export interface Coordinates extends Node {
+  id: ID_Output
+  latitude: Float
+  longitude: Float
+}
+
+export interface TagPreviousValues {
+  id: ID_Output
+  name: String
+  slug: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface ImageEdge {
+  node: Image
+  cursor: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface LocationEdge {
+  node: Location
+  cursor: String
+}
+
+export interface AggregateLocation {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface TagEdge {
+  node: Tag
+  cursor: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface LocationConnection {
+  pageInfo: PageInfo
+  edges: LocationEdge[]
+  aggregate: AggregateLocation
+}
+
+export interface AggregateSocial {
+  count: Int
+}
+
+export interface Image extends Node {
+  id: ID_Output
+  src: String
+  alt?: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface SocialConnection {
+  pageInfo: PageInfo
+  edges: SocialEdge[]
+  aggregate: AggregateSocial
+}
+
+export interface Tag extends Node {
+  id: ID_Output
+  name: String
+  slug: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CoordinatesEdge {
+  node: Coordinates
+  cursor: String
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
+}
+
+export interface AggregateCurrency {
+  count: Int
+}
+
+export interface UserPreviousValues {
+  id: ID_Output
+  email: String
+  name: String
+  createdAt: DateTime
+  password: String
+  isAdmin: Boolean
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CurrencyConnection {
+  pageInfo: PageInfo
+  edges: CurrencyEdge[]
+  aggregate: AggregateCurrency
+}
+
+export interface Conference extends Node {
+  id: ID_Output
+  name: String
+  description?: String
+  tags?: Tag[]
+  url: String
+  image?: Image
+  startDate: DateTime
+  endDate: DateTime
+  location: Location
+  social?: Social
+  publishStatus?: PUBLISH_STATUS
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface ConferenceEdge {
+  node: Conference
+  cursor: String
+}
+
+export interface ConferenceSubscriptionPayload {
+  mutation: MutationType
+  node?: Conference
+  updatedFields?: String[]
+  previousValues?: ConferencePreviousValues
+}
+
+export interface AggregateUser {
+  count: Int
+}
+
+export interface ConferencePreviousValues {
+  id: ID_Output
+  name: String
+  description?: String
+  url: String
+  startDate: DateTime
+  endDate: DateTime
+  publishStatus?: PUBLISH_STATUS
+}
+
+/*
+ * Information about pagination in a connection.
+
+ */
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
+}
+
+export interface ImageSubscriptionPayload {
+  mutation: MutationType
+  node?: Image
+  updatedFields?: String[]
+  previousValues?: ImagePreviousValues
+}
+
+export interface Currency extends Node {
+  id: ID_Output
+  name: String
+  value: String
+}
+
+export interface CurrencySubscriptionPayload {
+  mutation: MutationType
+  node?: Currency
+  updatedFields?: String[]
+  previousValues?: CurrencyPreviousValues
+}
+
+export interface AggregateTag {
+  count: Int
+}
+
+export interface CurrencyPreviousValues {
+  id: ID_Output
+  name: String
+  value: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface SocialEdge {
+  node: Social
+  cursor: String
+}
+
+export interface User extends Node {
+  id: ID_Output
+  email: String
+  name: String
+  createdAt: DateTime
+  password: String
+  isAdmin: Boolean
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CoordinatesConnection {
+  pageInfo: PageInfo
+  edges: CoordinatesEdge[]
+  aggregate: AggregateCoordinates
+}
+
+export interface CoordinatesSubscriptionPayload {
+  mutation: MutationType
+  node?: Coordinates
+  updatedFields?: String[]
+  previousValues?: CoordinatesPreviousValues
+}
+
+export interface AggregateConference {
+  count: Int
+}
+
+export interface CoordinatesPreviousValues {
+  id: ID_Output
+  latitude: Float
+  longitude: Float
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+export interface LocationPreviousValues {
+  id: ID_Output
+  venueName?: String
+  country: String
+  city: String
+  address?: String
+}
+
+export interface Social extends Node {
+  id: ID_Output
+  facebook?: String
+  twitter?: String
+  instagram?: String
+}
+
+export interface AggregateCoordinates {
+  count: Int
+}
+
+export interface TagSubscriptionPayload {
+  mutation: MutationType
+  node?: Tag
+  updatedFields?: String[]
+  previousValues?: TagPreviousValues
+}
+
+export interface LocationSubscriptionPayload {
+  mutation: MutationType
+  node?: Location
+  updatedFields?: String[]
+  previousValues?: LocationPreviousValues
+}
+
+export interface SocialPreviousValues {
+  id: ID_Output
+  facebook?: String
+  twitter?: String
+  instagram?: String
+}
+
+export interface SocialSubscriptionPayload {
+  mutation: MutationType
+  node?: Social
+  updatedFields?: String[]
+  previousValues?: SocialPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CurrencyEdge {
+  node: Currency
+  cursor: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface TagConnection {
+  pageInfo: PageInfo
+  edges: TagEdge[]
+  aggregate: AggregateTag
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface UserConnection {
+  pageInfo: PageInfo
+  edges: UserEdge[]
+  aggregate: AggregateUser
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface ConferenceConnection {
+  pageInfo: PageInfo
+  edges: ConferenceEdge[]
+  aggregate: AggregateConference
+}
+
+/*
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+*/
+export type Long = string
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number
+export type ID_Output = string
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean
+
+export type DateTime = Date | string

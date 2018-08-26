@@ -1,7 +1,7 @@
 type User {
   id: ID! @unique
   email: String! @unique
-  name: String
+  name: String!
   createdAt: DateTime!
   password: String!
   isAdmin: Boolean! @default(value: false)
