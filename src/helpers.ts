@@ -1,6 +1,6 @@
 import { Prisma } from './generated/prisma';
 
-export interface ContextType {
+export interface Context {
   apiToken: string;
   db: Prisma;
 }
@@ -13,7 +13,7 @@ const getPrismaInstance = () => {
   });
 };
 
-export function createContext(token: string): ContextType {
+export function createContext(token: string): Context {
   return {
     apiToken: token,
     db: getPrismaInstance(),

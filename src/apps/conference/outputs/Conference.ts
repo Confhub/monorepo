@@ -6,26 +6,20 @@ import {
 } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-import { DateTime, PUBLISH_STATUS } from '../../../generated/prisma';
-import GraphQLTag, { Tag } from '../../tags/outputs/Tag';
-import GraphQLImage, { Image } from './Image';
-import GraphQLLocation, { Location } from './Location';
+import {
+  Conference,
+  DateTime,
+  Image,
+  Location,
+  PUBLISH_STATUS,
+  Social,
+  Tag,
+} from '../../../generated/prisma';
+import GraphQLTag from '../../tags/outputs/Tag';
+import GraphQLImage from './Image';
+import GraphQLLocation from './Location';
 import GraphQLPublishStatus from './PublishStatus';
-import GraphQLSocial, { Social } from './Social';
-
-export interface Conference {
-  id: string;
-  name: string;
-  description?: string;
-  tags?: Tag[];
-  image?: Image;
-  url: string;
-  startDate: DateTime;
-  endDate: DateTime;
-  location: Location;
-  social?: Social;
-  publishStatus?: PUBLISH_STATUS;
-}
+import GraphQLSocial from './Social';
 
 export default new GraphQLObjectType({
   name: 'Conference',

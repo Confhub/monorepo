@@ -1,8 +1,9 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
-import { ContextType } from '../../../helpers';
-import GraphQLTag, { Tag } from '../outputs/Tag';
+import { Tag } from '../../../generated/prisma';
+import { Context } from '../../../helpers';
+import GraphQLTag from '../outputs/Tag';
 
 interface ArgsType {
   name: string;
@@ -18,7 +19,7 @@ export default {
   resolve: async (
     _: any,
     { name }: ArgsType,
-    ctx: ContextType,
+    ctx: Context,
     info: any,
   ): Promise<Tag> => {
     return ctx.db.mutation.createTag(

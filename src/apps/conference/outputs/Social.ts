@@ -1,10 +1,5 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
-
-export interface Social {
-  facebook?: string;
-  twitter?: string;
-  instagram?: string;
-}
+import { Social } from '../../../generated/prisma';
 
 export default new GraphQLObjectType({
   name: 'Social',

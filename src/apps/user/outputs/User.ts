@@ -4,16 +4,7 @@ import {
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-import { DateTime } from '../../../generated/prisma';
-
-export interface User {
-  id: string;
-  email: string;
-  password: string;
-  name: string;
-  isAdmin: boolean;
-  createdAt: DateTime;
-}
+import { DateTime, User } from '../../../generated/prisma';
 
 export default new GraphQLObjectType({
   name: 'User',

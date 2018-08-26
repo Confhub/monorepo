@@ -1,9 +1,10 @@
 import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
-import { ContextType } from '../../../helpers';
+import { Tag } from '../../../generated/prisma';
+import { Context } from '../../../helpers';
 import { isAdminAuthorized } from '../../user/helpers';
-import GraphQLTag, { Tag } from '../outputs/Tag';
+import GraphQLTag from '../outputs/Tag';
 
 interface ArgsType {
   id: string;
@@ -23,7 +24,7 @@ export default {
   resolve: async (
     _: any,
     { id, name }: ArgsType,
-    { apiToken, db }: ContextType,
+    { apiToken, db }: Context,
     info: any,
   ): Promise<Tag> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);

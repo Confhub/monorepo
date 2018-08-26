@@ -4,21 +4,7 @@ import {
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-
-export interface Location {
-  id: string;
-  venueName?: string;
-  country: string;
-  city: string;
-  address?: string;
-  coordinates?: Coordinates;
-}
-
-interface Coordinates {
-  id: string;
-  latitude: number;
-  longitude: number;
-}
+import { Coordinates, Location } from '../../../generated/prisma';
 
 const GraphQLCoordinates = new GraphQLObjectType({
   name: 'Coordinates',

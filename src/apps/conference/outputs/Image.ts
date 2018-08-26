@@ -1,10 +1,5 @@
 import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
-
-export interface Image {
-  id: string;
-  src: string;
-  alt?: string;
-}
+import { Image } from '../../../generated/prisma';
 
 export default new GraphQLObjectType({
   name: 'Image',

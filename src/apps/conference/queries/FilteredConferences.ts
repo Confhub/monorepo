@@ -1,7 +1,8 @@
 import { GraphQLBoolean, GraphQLList, GraphQLString } from 'graphql';
 
-import { ContextType } from '../../../helpers';
-import GraphQLConference, { Conference } from '../outputs/Conference';
+import { Conference } from '../../../generated/prisma';
+import { Context } from '../../../helpers';
+import GraphQLConference from '../outputs/Conference';
 
 interface ArgsType {
   tags: string[];
@@ -21,7 +22,7 @@ export default {
   resolve: (
     _: any,
     { tags, published }: ArgsType,
-    ctx: ContextType,
+    ctx: Context,
     info: any,
   ): Promise<Conference> => {
     if (tags && tags.length) {

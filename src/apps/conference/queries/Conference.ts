@@ -1,7 +1,8 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { ContextType } from '../../../helpers';
-import GraphQLConference, { Conference } from '../outputs/Conference';
+import { Conference } from '../../../generated/prisma';
+import { Context } from '../../../helpers';
+import GraphQLConference from '../outputs/Conference';
 
 interface ArgsType {
   id: string;
@@ -17,7 +18,7 @@ export default {
   resolve: (
     _: any,
     { id }: ArgsType,
-    ctx: ContextType,
+    ctx: Context,
     info: any,
   ): Promise<Conference> => {
     return ctx.db.query.conference(

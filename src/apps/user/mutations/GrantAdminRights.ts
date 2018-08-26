@@ -1,8 +1,9 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { ContextType } from '../../../helpers';
+import { User } from '../../../generated/prisma';
+import { Context } from '../../../helpers';
 import { isAdminAuthorized } from '../helpers';
-import GraphQLUser, { User } from '../outputs/User';
+import GraphQLUser from '../outputs/User';
 
 interface ArgsType {
   id: string;
@@ -18,7 +19,7 @@ export default {
   resolve: async (
     _: any,
     { id }: ArgsType,
-    { apiToken, db }: ContextType,
+    { apiToken, db }: Context,
     info: any,
   ): Promise<User> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);

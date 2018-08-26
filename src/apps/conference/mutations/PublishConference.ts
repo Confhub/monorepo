@@ -1,8 +1,9 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { ContextType } from '../../../helpers';
+import { Conference } from '../../../generated/prisma';
+import { Context } from '../../../helpers';
 import { isAdminAuthorized } from '../../user/helpers';
-import GraphQLConference, { Conference } from '../outputs/Conference';
+import GraphQLConference from '../outputs/Conference';
 
 interface ArgsType {
   id: string;
@@ -18,7 +19,7 @@ export default {
   resolve: async (
     _: any,
     { id }: ArgsType,
-    { apiToken, db }: ContextType,
+    { apiToken, db }: Context,
     info: any,
   ): Promise<Conference> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);

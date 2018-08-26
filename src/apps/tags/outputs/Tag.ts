@@ -1,10 +1,5 @@
 import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
-
-export interface Tag {
-  id: string;
-  name: string;
-  slug: string;
-}
+import { Tag } from '../../../generated/prisma';
 
 export default new GraphQLObjectType({
   name: 'Tag',

@@ -1,7 +1,7 @@
 // import { GraphQLNonNull } from 'graphql';
 // import tslug from 'tslug';
 
-// import { ContextType } from '../../../helpers';
+// import { Context } from '../../../helpers';
 // import { isAdminAuthorized } from '../../user/helpers';
 // import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 // import GraphQLConference, { Conference } from '../outputs/Conference';
@@ -42,7 +42,7 @@
 //         social,
 //       },
 //     }: ArgsType,
-//     { apiToken, db }: ContextType,
+//     { apiToken, db }: Context,
 //     info: any,
 //   ): Promise<Conference> => {
 //     const { isAdmin } = await isAdminAuthorized(apiToken, db);

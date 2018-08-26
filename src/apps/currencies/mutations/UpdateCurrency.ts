@@ -2,7 +2,7 @@ import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
 import { Currency } from '../../../generated/prisma';
-import { ContextType } from '../../../helpers';
+import { Context } from '../../../helpers';
 import { isAdminAuthorized } from '../../user/helpers';
 import GraphQLCurrency from '../outputs/Currency';
 
@@ -24,7 +24,7 @@ export default {
   resolve: async (
     _: any,
     { id, name }: ArgsType,
-    { apiToken, db }: ContextType,
+    { apiToken, db }: Context,
     info: any,
   ): Promise<Currency> => {
     const { isAdmin } = await isAdminAuthorized(apiToken, db);

@@ -2,18 +2,19 @@ import { GraphQLNonNull } from 'graphql';
 import tslug from 'tslug';
 
 import {
+  Conference,
+  Image,
   ImageCreateOneInput,
+  Location,
   LocationCreateOneInput,
+  Social,
   SocialCreateOneInput,
+  Tag,
   TagCreateManyInput,
 } from '../../../generated/prisma';
-import { ContextType } from '../../../helpers';
-import { Tag } from '../../tags/outputs/Tag';
+import { Context } from '../../../helpers';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
-import GraphQLConference, { Conference } from '../outputs/Conference';
-import { Image } from '../outputs/Image';
-import { Location } from '../outputs/Location';
-import { Social } from '../outputs/Social';
+import GraphQLConference from '../outputs/Conference';
 
 interface ArgsType {
   data: Conference;
@@ -41,7 +42,7 @@ export default {
         social,
       },
     }: ArgsType,
-    ctx: ContextType,
+    ctx: Context,
     info: any,
   ): Promise<Conference> => {
     return ctx.db.mutation.createConference(

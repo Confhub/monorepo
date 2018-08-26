@@ -2,7 +2,7 @@ import * as bcrypt from 'bcryptjs';
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 import * as jwt from 'jsonwebtoken';
 
-import { ContextType } from '../../../helpers';
+import { Context } from '../../../helpers';
 import GraphQLAuthPayload, { AuthPayload } from '../outputs/AuthPayload';
 
 interface ArgsType {
@@ -27,7 +27,7 @@ export default {
   resolve: async (
     _: any,
     args: ArgsType,
-    ctx: ContextType,
+    ctx: Context,
   ): Promise<AuthPayload> => {
     const checkEmail = await ctx.db.query.user({
       where: { email: args.email },

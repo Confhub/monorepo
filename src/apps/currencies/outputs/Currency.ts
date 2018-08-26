@@ -1,9 +1,5 @@
 import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
-
-export interface Currency {
-  id: string;
-  name: string;
-}
+import { Currency } from '../../../generated/prisma';
 
 export default new GraphQLObjectType({
   name: 'Currency',

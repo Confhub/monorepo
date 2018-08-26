@@ -1,13 +1,14 @@
-import { ContextType } from '../../../helpers';
+import { User } from '../../../generated/prisma';
+import { Context } from '../../../helpers';
 import { isUserAuthorized } from '../helpers';
-import GraphQLUser, { User } from '../outputs/User';
+import GraphQLUser from '../outputs/User';
 
 export default {
   type: GraphQLUser,
   resolve: async (
     _: any,
     args: any,
-    { apiToken, db }: ContextType,
+    { apiToken, db }: Context,
     info: any,
   ): Promise<User> => {
     const { userId } = await isUserAuthorized(apiToken);
