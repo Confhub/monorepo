@@ -2,7 +2,7 @@ import { GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
 import { Tag } from '../../../generated/prisma';
-import { Context } from '../../../helpers';
+import { Context } from '../../../utils';
 import GraphQLTag from '../outputs/Tag';
 
 interface ArgsType {

@@ -1,38 +1,44 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { Currency } from '../../../generated/prisma';
+import { User, USER_ROLE } from '../../../generated/prisma';
 import { getUserId, getUserRole, Context } from '../../../utils';
-import GraphQLCurrency from '../outputs/Currency';
+import GraphQLUser from '../outputs/User';
+import GraphQLUserRole from '../outputs/UserRole';
 
 interface ArgsType {
   id: string;
+  newRole: USER_ROLE;
 }
 
 export default {
-  type: GraphQLCurrency,
+  type: GraphQLUser,
   args: {
     id: {
       type: new GraphQLNonNull(GraphQLID),
     },
+    newRole: {
+      type: new GraphQLNonNull(GraphQLUserRole),
+    },
   },
   resolve: async (
     _: any,
-    { id }: ArgsType,
+    { id, newRole }: ArgsType,
     { apiToken, db }: Context,
     info: any,
-  ): Promise<Currency> => {
+  ): Promise<User> => {
     const userId = getUserId(apiToken);
     const userRole = await getUserRole(userId, db);
 
     if (userRole === 'MODERATOR') {
-      if (id) {
-        return db.mutation.deleteCurrency(
-          {
-            where: { id },
+      return db.mutation.updateUser(
+        {
+          where: { id },
+          data: {
+            role: newRole,
           },
-          info,
-        );
-      }
+        },
+        info,
+      );
     }
 
     throw new Error('You must have moderator rights');

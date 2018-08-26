@@ -1,7 +1,7 @@
 import { GraphQLBoolean, GraphQLList, GraphQLString } from 'graphql';
 
 import { Conference } from '../../../generated/prisma';
-import { Context } from '../../../helpers';
+import { Context } from '../../../utils';
 import GraphQLConference from '../outputs/Conference';
 
 interface ArgsType {

@@ -1,7 +1,7 @@
 import { GraphQLServer } from 'graphql-yoga';
 
 import Schema from './Schema';
-import { createContext } from './helpers';
+import { createContext } from './utils';
 
 const options = {
   port: parseInt(process.env.PORT, 10) || 4000,

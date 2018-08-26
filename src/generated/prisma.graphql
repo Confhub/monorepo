@@ -1,5 +1,5 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Sun Aug 26 2018 04:54:31 GMT+0200 (Central European Summer Time)
+# timestamp: Mon Aug 27 2018 01:01:13 GMT+0200 (Central European Summer Time)
 
 type AggregateConference {
   count: Int!
@@ -2162,7 +2162,13 @@ type User implements Node {
   name: String!
   createdAt: DateTime!
   password: String!
-  isAdmin: Boolean!
+  role: USER_ROLE!
+}
+
+enum USER_ROLE {
+  ATTENDEE
+  SPEAKER
+  MODERATOR
 }
 
 """A connection to a list of items."""
@@ -2179,7 +2185,7 @@ input UserCreateInput {
   email: String!
   name: String!
   password: String!
-  isAdmin: Boolean
+  role: USER_ROLE
 }
 
 """An edge in a connection."""
@@ -2202,8 +2208,8 @@ enum UserOrderByInput {
   createdAt_DESC
   password_ASC
   password_DESC
-  isAdmin_ASC
-  isAdmin_DESC
+  role_ASC
+  role_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -2214,7 +2220,7 @@ type UserPreviousValues {
   name: String!
   createdAt: DateTime!
   password: String!
-  isAdmin: Boolean!
+  role: USER_ROLE!
 }
 
 type UserSubscriptionPayload {
@@ -2260,7 +2266,7 @@ input UserUpdateInput {
   email: String
   name: String
   password: String
-  isAdmin: Boolean
+  role: USER_ROLE
 }
 
 input UserWhereInput {
@@ -2454,10 +2460,16 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  isAdmin: Boolean
+  role: USER_ROLE
 
   """All values that are not equal to given value."""
-  isAdmin_not: Boolean
+  role_not: USER_ROLE
+
+  """All values that are contained in given list."""
+  role_in: [USER_ROLE!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [USER_ROLE!]
 }
 
 input UserWhereUniqueInput {

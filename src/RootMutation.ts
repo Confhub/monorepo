@@ -9,8 +9,8 @@ import UpdateCurrency from './apps/currencies/mutations/UpdateCurrency';
 import CreateTag from './apps/tags/mutations/CreateTag';
 import DeleteTag from './apps/tags/mutations/DeleteTag';
 import UpdateTag from './apps/tags/mutations/UpdateTag';
+import ChangeUserRole from './apps/user/mutations/ChangeUserRole';
 import CreateUser from './apps/user/mutations/CreateUser';
-import GrantAdminRights from './apps/user/mutations/GrantAdminRights';
 import SignInUser from './apps/user/mutations/SignInUser';
 
 export default new GraphQLObjectType({
@@ -19,7 +19,7 @@ export default new GraphQLObjectType({
   fields: {
     createUser: CreateUser,
     signInUser: SignInUser,
-    grantAdminRights: GrantAdminRights,
+    changeUserRole: ChangeUserRole,
     createConference: CreateConference,
     publishConference: PublishConference,
     deleteConference: DeleteConference,

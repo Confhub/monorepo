@@ -1,7 +1,7 @@
 import { GraphQLList } from 'graphql';
 
 import { Currency } from '../../../generated/prisma';
-import { Context } from '../../../helpers';
+import { Context } from '../../../utils';
 import GraphQLTag from '../outputs/Currency';
 
 export default {

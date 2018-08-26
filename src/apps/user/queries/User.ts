@@ -1,6 +1,5 @@
 import { User } from '../../../generated/prisma';
-import { Context } from '../../../helpers';
-import { isUserAuthorized } from '../helpers';
+import { getUserId, Context } from '../../../utils';
 import GraphQLUser from '../outputs/User';
 
 export default {
@@ -11,7 +10,7 @@ export default {
     { apiToken, db }: Context,
     info: any,
   ): Promise<User> => {
-    const { userId } = await isUserAuthorized(apiToken);
+    const userId = await getUserId(apiToken);
     return db.query.user({ where: { id: userId } }, info);
   },
 };

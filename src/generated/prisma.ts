@@ -2287,7 +2287,13 @@ type User implements Node {
   name: String!
   createdAt: DateTime!
   password: String!
-  isAdmin: Boolean!
+  role: USER_ROLE!
+}
+
+enum USER_ROLE {
+  ATTENDEE
+  SPEAKER
+  MODERATOR
 }
 
 """A connection to a list of items."""
@@ -2304,7 +2310,7 @@ input UserCreateInput {
   email: String!
   name: String!
   password: String!
-  isAdmin: Boolean
+  role: USER_ROLE
 }
 
 """An edge in a connection."""
@@ -2327,8 +2333,8 @@ enum UserOrderByInput {
   createdAt_DESC
   password_ASC
   password_DESC
-  isAdmin_ASC
-  isAdmin_DESC
+  role_ASC
+  role_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -2339,7 +2345,7 @@ type UserPreviousValues {
   name: String!
   createdAt: DateTime!
   password: String!
-  isAdmin: Boolean!
+  role: USER_ROLE!
 }
 
 type UserSubscriptionPayload {
@@ -2385,7 +2391,7 @@ input UserUpdateInput {
   email: String
   name: String
   password: String
-  isAdmin: Boolean
+  role: USER_ROLE
 }
 
 input UserWhereInput {
@@ -2579,10 +2585,16 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  isAdmin: Boolean
+  role: USER_ROLE
 
   """All values that are not equal to given value."""
-  isAdmin_not: Boolean
+  role_not: USER_ROLE
+
+  """All values that are contained in given list."""
+  role_in: [USER_ROLE!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [USER_ROLE!]
 }
 
 input UserWhereUniqueInput {
@@ -2638,12 +2650,12 @@ export type TagOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type PUBLISH_STATUS =   'DRAFT' |
-  'PUBLISHED'
-
 export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
+
+export type PUBLISH_STATUS =   'DRAFT' |
+  'PUBLISHED'
 
 export type CurrencyOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -2680,21 +2692,6 @@ export type SocialOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type UserOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'password_ASC' |
-  'password_DESC' |
-  'isAdmin_ASC' |
-  'isAdmin_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC'
-
 export type LocationOrderByInput =   'id_ASC' |
   'id_DESC' |
   'venueName_ASC' |
@@ -2709,6 +2706,25 @@ export type LocationOrderByInput =   'id_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC'
+
+export type UserOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'email_ASC' |
+  'email_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'password_ASC' |
+  'password_DESC' |
+  'role_ASC' |
+  'role_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
+
+export type USER_ROLE =   'ATTENDEE' |
+  'SPEAKER' |
+  'MODERATOR'
 
 export interface TagWhereUniqueInput {
   id?: ID_Input
@@ -2797,8 +2813,10 @@ export interface UserWhereInput {
   password_not_starts_with?: String
   password_ends_with?: String
   password_not_ends_with?: String
-  isAdmin?: Boolean
-  isAdmin_not?: Boolean
+  role?: USER_ROLE
+  role_not?: USER_ROLE
+  role_in?: USER_ROLE[] | USER_ROLE
+  role_not_in?: USER_ROLE[] | USER_ROLE
 }
 
 export interface SocialUpdateOneInput {
@@ -2810,10 +2828,10 @@ export interface SocialUpdateOneInput {
   upsert?: SocialUpsertNestedInput
 }
 
-export interface LocationWhereInput {
-  AND?: LocationWhereInput[] | LocationWhereInput
-  OR?: LocationWhereInput[] | LocationWhereInput
-  NOT?: LocationWhereInput[] | LocationWhereInput
+export interface CoordinatesWhereInput {
+  AND?: CoordinatesWhereInput[] | CoordinatesWhereInput
+  OR?: CoordinatesWhereInput[] | CoordinatesWhereInput
+  NOT?: CoordinatesWhereInput[] | CoordinatesWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -2828,71 +2846,100 @@ export interface LocationWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
-  venueName?: String
-  venueName_not?: String
-  venueName_in?: String[] | String
-  venueName_not_in?: String[] | String
-  venueName_lt?: String
-  venueName_lte?: String
-  venueName_gt?: String
-  venueName_gte?: String
-  venueName_contains?: String
-  venueName_not_contains?: String
-  venueName_starts_with?: String
-  venueName_not_starts_with?: String
-  venueName_ends_with?: String
-  venueName_not_ends_with?: String
-  country?: String
-  country_not?: String
-  country_in?: String[] | String
-  country_not_in?: String[] | String
-  country_lt?: String
-  country_lte?: String
-  country_gt?: String
-  country_gte?: String
-  country_contains?: String
-  country_not_contains?: String
-  country_starts_with?: String
-  country_not_starts_with?: String
-  country_ends_with?: String
-  country_not_ends_with?: String
-  city?: String
-  city_not?: String
-  city_in?: String[] | String
-  city_not_in?: String[] | String
-  city_lt?: String
-  city_lte?: String
-  city_gt?: String
-  city_gte?: String
-  city_contains?: String
-  city_not_contains?: String
-  city_starts_with?: String
-  city_not_starts_with?: String
-  city_ends_with?: String
-  city_not_ends_with?: String
-  address?: String
-  address_not?: String
-  address_in?: String[] | String
-  address_not_in?: String[] | String
-  address_lt?: String
-  address_lte?: String
-  address_gt?: String
-  address_gte?: String
-  address_contains?: String
-  address_not_contains?: String
-  address_starts_with?: String
-  address_not_starts_with?: String
-  address_ends_with?: String
-  address_not_ends_with?: String
-  coordinates?: CoordinatesWhereInput
-  _MagicalBackRelation_ConferenceToLocation_every?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToLocation_some?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToLocation_none?: ConferenceWhereInput
+  latitude?: Float
+  latitude_not?: Float
+  latitude_in?: Float[] | Float
+  latitude_not_in?: Float[] | Float
+  latitude_lt?: Float
+  latitude_lte?: Float
+  latitude_gt?: Float
+  latitude_gte?: Float
+  longitude?: Float
+  longitude_not?: Float
+  longitude_in?: Float[] | Float
+  longitude_not_in?: Float[] | Float
+  longitude_lt?: Float
+  longitude_lte?: Float
+  longitude_gt?: Float
+  longitude_gte?: Float
+  _MagicalBackRelation_CoordinatesToLocation_every?: LocationWhereInput
+  _MagicalBackRelation_CoordinatesToLocation_some?: LocationWhereInput
+  _MagicalBackRelation_CoordinatesToLocation_none?: LocationWhereInput
 }
 
 export interface LocationUpsertNestedInput {
   update: LocationUpdateDataInput
   create: LocationCreateInput
+}
+
+export interface SocialWhereInput {
+  AND?: SocialWhereInput[] | SocialWhereInput
+  OR?: SocialWhereInput[] | SocialWhereInput
+  NOT?: SocialWhereInput[] | SocialWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  facebook?: String
+  facebook_not?: String
+  facebook_in?: String[] | String
+  facebook_not_in?: String[] | String
+  facebook_lt?: String
+  facebook_lte?: String
+  facebook_gt?: String
+  facebook_gte?: String
+  facebook_contains?: String
+  facebook_not_contains?: String
+  facebook_starts_with?: String
+  facebook_not_starts_with?: String
+  facebook_ends_with?: String
+  facebook_not_ends_with?: String
+  twitter?: String
+  twitter_not?: String
+  twitter_in?: String[] | String
+  twitter_not_in?: String[] | String
+  twitter_lt?: String
+  twitter_lte?: String
+  twitter_gt?: String
+  twitter_gte?: String
+  twitter_contains?: String
+  twitter_not_contains?: String
+  twitter_starts_with?: String
+  twitter_not_starts_with?: String
+  twitter_ends_with?: String
+  twitter_not_ends_with?: String
+  instagram?: String
+  instagram_not?: String
+  instagram_in?: String[] | String
+  instagram_not_in?: String[] | String
+  instagram_lt?: String
+  instagram_lte?: String
+  instagram_gt?: String
+  instagram_gte?: String
+  instagram_contains?: String
+  instagram_not_contains?: String
+  instagram_starts_with?: String
+  instagram_not_starts_with?: String
+  instagram_ends_with?: String
+  instagram_not_ends_with?: String
+  _MagicalBackRelation_ConferenceToSocial_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToSocial_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToSocial_none?: ConferenceWhereInput
+}
+
+export interface CoordinatesUpsertNestedInput {
+  update: CoordinatesUpdateDataInput
+  create: CoordinatesCreateInput
 }
 
 export interface CurrencySubscriptionWhereInput {
@@ -2906,116 +2953,20 @@ export interface CurrencySubscriptionWhereInput {
   node?: CurrencyWhereInput
 }
 
-export interface CoordinatesUpsertNestedInput {
-  update: CoordinatesUpdateDataInput
-  create: CoordinatesCreateInput
-}
-
-export interface ImageWhereInput {
-  AND?: ImageWhereInput[] | ImageWhereInput
-  OR?: ImageWhereInput[] | ImageWhereInput
-  NOT?: ImageWhereInput[] | ImageWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  src?: String
-  src_not?: String
-  src_in?: String[] | String
-  src_not_in?: String[] | String
-  src_lt?: String
-  src_lte?: String
-  src_gt?: String
-  src_gte?: String
-  src_contains?: String
-  src_not_contains?: String
-  src_starts_with?: String
-  src_not_starts_with?: String
-  src_ends_with?: String
-  src_not_ends_with?: String
-  alt?: String
-  alt_not?: String
-  alt_in?: String[] | String
-  alt_not_in?: String[] | String
-  alt_lt?: String
-  alt_lte?: String
-  alt_gt?: String
-  alt_gte?: String
-  alt_contains?: String
-  alt_not_contains?: String
-  alt_starts_with?: String
-  alt_not_starts_with?: String
-  alt_ends_with?: String
-  alt_not_ends_with?: String
-  _MagicalBackRelation_ConferenceToImage_every?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToImage_some?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToImage_none?: ConferenceWhereInput
-}
-
 export interface CoordinatesUpdateDataInput {
   latitude?: Float
   longitude?: Float
 }
 
-export interface TagWhereInput {
-  AND?: TagWhereInput[] | TagWhereInput
-  OR?: TagWhereInput[] | TagWhereInput
-  NOT?: TagWhereInput[] | TagWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  slug?: String
-  slug_not?: String
-  slug_in?: String[] | String
-  slug_not_in?: String[] | String
-  slug_lt?: String
-  slug_lte?: String
-  slug_gt?: String
-  slug_gte?: String
-  slug_contains?: String
-  slug_not_contains?: String
-  slug_starts_with?: String
-  slug_not_starts_with?: String
-  slug_ends_with?: String
-  slug_not_ends_with?: String
-  _MagicalBackRelation_ConferenceToTag_every?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToTag_some?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToTag_none?: ConferenceWhereInput
+export interface ConferenceSubscriptionWhereInput {
+  AND?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
+  OR?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
+  NOT?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ConferenceWhereInput
 }
 
 export interface CoordinatesUpdateOneInput {
@@ -3060,299 +3011,6 @@ export interface LocationUpdateOneInput {
   delete?: Boolean
   update?: LocationUpdateDataInput
   upsert?: LocationUpsertNestedInput
-}
-
-export interface CurrencyWhereInput {
-  AND?: CurrencyWhereInput[] | CurrencyWhereInput
-  OR?: CurrencyWhereInput[] | CurrencyWhereInput
-  NOT?: CurrencyWhereInput[] | CurrencyWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  value?: String
-  value_not?: String
-  value_in?: String[] | String
-  value_not_in?: String[] | String
-  value_lt?: String
-  value_lte?: String
-  value_gt?: String
-  value_gte?: String
-  value_contains?: String
-  value_not_contains?: String
-  value_starts_with?: String
-  value_not_starts_with?: String
-  value_ends_with?: String
-  value_not_ends_with?: String
-}
-
-export interface ImageUpsertNestedInput {
-  update: ImageUpdateDataInput
-  create: ImageCreateInput
-}
-
-export interface SocialUpdateInput {
-  facebook?: String
-  twitter?: String
-  instagram?: String
-}
-
-export interface ImageUpdateDataInput {
-  src?: String
-  alt?: String
-}
-
-export interface SocialSubscriptionWhereInput {
-  AND?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
-  OR?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
-  NOT?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: SocialWhereInput
-}
-
-export interface ImageUpdateOneInput {
-  create?: ImageCreateInput
-  connect?: ImageWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: ImageUpdateDataInput
-  upsert?: ImageUpsertNestedInput
-}
-
-export interface LocationSubscriptionWhereInput {
-  AND?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
-  OR?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
-  NOT?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: LocationWhereInput
-}
-
-export interface TagUpsertWithWhereUniqueNestedInput {
-  where: TagWhereUniqueInput
-  update: TagUpdateDataInput
-  create: TagCreateInput
-}
-
-export interface ConferenceWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface TagUpdateDataInput {
-  name?: String
-  slug?: String
-}
-
-export interface CoordinatesWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface TagUpdateWithWhereUniqueNestedInput {
-  where: TagWhereUniqueInput
-  data: TagUpdateDataInput
-}
-
-export interface ImageSubscriptionWhereInput {
-  AND?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
-  OR?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
-  NOT?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ImageWhereInput
-}
-
-export interface TagUpdateManyInput {
-  create?: TagCreateInput[] | TagCreateInput
-  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
-  disconnect?: TagWhereUniqueInput[] | TagWhereUniqueInput
-  delete?: TagWhereUniqueInput[] | TagWhereUniqueInput
-  update?: TagUpdateWithWhereUniqueNestedInput[] | TagUpdateWithWhereUniqueNestedInput
-  upsert?: TagUpsertWithWhereUniqueNestedInput[] | TagUpsertWithWhereUniqueNestedInput
-}
-
-export interface ImageWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface ConferenceUpdateInput {
-  name?: String
-  description?: String
-  url?: String
-  startDate?: DateTime
-  endDate?: DateTime
-  publishStatus?: PUBLISH_STATUS
-  tags?: TagUpdateManyInput
-  image?: ImageUpdateOneInput
-  location?: LocationUpdateOneInput
-  social?: SocialUpdateOneInput
-}
-
-export interface CurrencyUpdateInput {
-  name?: String
-  value?: String
-}
-
-export interface UserUpdateInput {
-  email?: String
-  name?: String
-  password?: String
-  isAdmin?: Boolean
-}
-
-export interface CoordinatesWhereInput {
-  AND?: CoordinatesWhereInput[] | CoordinatesWhereInput
-  OR?: CoordinatesWhereInput[] | CoordinatesWhereInput
-  NOT?: CoordinatesWhereInput[] | CoordinatesWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  latitude?: Float
-  latitude_not?: Float
-  latitude_in?: Float[] | Float
-  latitude_not_in?: Float[] | Float
-  latitude_lt?: Float
-  latitude_lte?: Float
-  latitude_gt?: Float
-  latitude_gte?: Float
-  longitude?: Float
-  longitude_not?: Float
-  longitude_in?: Float[] | Float
-  longitude_not_in?: Float[] | Float
-  longitude_lt?: Float
-  longitude_lte?: Float
-  longitude_gt?: Float
-  longitude_gte?: Float
-  _MagicalBackRelation_CoordinatesToLocation_every?: LocationWhereInput
-  _MagicalBackRelation_CoordinatesToLocation_some?: LocationWhereInput
-  _MagicalBackRelation_CoordinatesToLocation_none?: LocationWhereInput
-}
-
-export interface CurrencyCreateInput {
-  name: String
-  value: String
-}
-
-export interface ConferenceSubscriptionWhereInput {
-  AND?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
-  OR?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
-  NOT?: ConferenceSubscriptionWhereInput[] | ConferenceSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ConferenceWhereInput
-}
-
-export interface SocialCreateInput {
-  facebook?: String
-  twitter?: String
-  instagram?: String
-}
-
-export interface ImageUpdateInput {
-  src?: String
-  alt?: String
-}
-
-export interface SocialCreateOneInput {
-  create?: SocialCreateInput
-  connect?: SocialWhereUniqueInput
-}
-
-export interface TagSubscriptionWhereInput {
-  AND?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
-  OR?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
-  NOT?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: TagWhereInput
-}
-
-export interface CoordinatesCreateInput {
-  latitude: Float
-  longitude: Float
-}
-
-export interface CurrencyWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface CoordinatesCreateOneInput {
-  create?: CoordinatesCreateInput
-  connect?: CoordinatesWhereUniqueInput
-}
-
-export interface LocationWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface UserCreateInput {
-  email: String
-  name: String
-  password: String
-  isAdmin?: Boolean
-}
-
-export interface SocialUpsertNestedInput {
-  update: SocialUpdateDataInput
-  create: SocialCreateInput
-}
-
-export interface ConferenceCreateInput {
-  name: String
-  description?: String
-  url: String
-  startDate: DateTime
-  endDate: DateTime
-  publishStatus?: PUBLISH_STATUS
-  tags?: TagCreateManyInput
-  image?: ImageCreateOneInput
-  location: LocationCreateOneInput
-  social?: SocialCreateOneInput
 }
 
 export interface ConferenceWhereInput {
@@ -3443,9 +3101,100 @@ export interface ConferenceWhereInput {
   social?: SocialWhereInput
 }
 
-export interface TagCreateManyInput {
+export interface ImageUpsertNestedInput {
+  update: ImageUpdateDataInput
+  create: ImageCreateInput
+}
+
+export interface TagSubscriptionWhereInput {
+  AND?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
+  OR?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
+  NOT?: TagSubscriptionWhereInput[] | TagSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: TagWhereInput
+}
+
+export interface ImageUpdateDataInput {
+  src?: String
+  alt?: String
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
+export interface ImageUpdateOneInput {
+  create?: ImageCreateInput
+  connect?: ImageWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: ImageUpdateDataInput
+  upsert?: ImageUpsertNestedInput
+}
+
+export interface CurrencyWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TagUpsertWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput
+  update: TagUpdateDataInput
+  create: TagCreateInput
+}
+
+export interface SocialWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TagUpdateDataInput {
+  name?: String
+  slug?: String
+}
+
+export interface LocationWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TagUpdateWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput
+  data: TagUpdateDataInput
+}
+
+export interface SocialUpdateInput {
+  facebook?: String
+  twitter?: String
+  instagram?: String
+}
+
+export interface TagUpdateManyInput {
   create?: TagCreateInput[] | TagCreateInput
   connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  disconnect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  delete?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  update?: TagUpdateWithWhereUniqueNestedInput[] | TagUpdateWithWhereUniqueNestedInput
+  upsert?: TagUpsertWithWhereUniqueNestedInput[] | TagUpsertWithWhereUniqueNestedInput
+}
+
+export interface CurrencyUpdateInput {
+  name?: String
+  value?: String
+}
+
+export interface ConferenceUpdateInput {
+  name?: String
+  description?: String
+  url?: String
+  startDate?: DateTime
+  endDate?: DateTime
+  publishStatus?: PUBLISH_STATUS
+  tags?: TagUpdateManyInput
+  image?: ImageUpdateOneInput
+  location?: LocationUpdateOneInput
+  social?: SocialUpdateOneInput
 }
 
 export interface CoordinatesSubscriptionWhereInput {
@@ -3457,6 +3206,211 @@ export interface CoordinatesSubscriptionWhereInput {
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
   node?: CoordinatesWhereInput
+}
+
+export interface UserUpdateInput {
+  email?: String
+  name?: String
+  password?: String
+  role?: USER_ROLE
+}
+
+export interface ImageWhereInput {
+  AND?: ImageWhereInput[] | ImageWhereInput
+  OR?: ImageWhereInput[] | ImageWhereInput
+  NOT?: ImageWhereInput[] | ImageWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  src?: String
+  src_not?: String
+  src_in?: String[] | String
+  src_not_in?: String[] | String
+  src_lt?: String
+  src_lte?: String
+  src_gt?: String
+  src_gte?: String
+  src_contains?: String
+  src_not_contains?: String
+  src_starts_with?: String
+  src_not_starts_with?: String
+  src_ends_with?: String
+  src_not_ends_with?: String
+  alt?: String
+  alt_not?: String
+  alt_in?: String[] | String
+  alt_not_in?: String[] | String
+  alt_lt?: String
+  alt_lte?: String
+  alt_gt?: String
+  alt_gte?: String
+  alt_contains?: String
+  alt_not_contains?: String
+  alt_starts_with?: String
+  alt_not_starts_with?: String
+  alt_ends_with?: String
+  alt_not_ends_with?: String
+  _MagicalBackRelation_ConferenceToImage_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToImage_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToImage_none?: ConferenceWhereInput
+}
+
+export interface CurrencyCreateInput {
+  name: String
+  value: String
+}
+
+export interface ImageUpdateInput {
+  src?: String
+  alt?: String
+}
+
+export interface SocialCreateInput {
+  facebook?: String
+  twitter?: String
+  instagram?: String
+}
+
+export interface TagUpdateInput {
+  name?: String
+  slug?: String
+}
+
+export interface SocialCreateOneInput {
+  create?: SocialCreateInput
+  connect?: SocialWhereUniqueInput
+}
+
+export interface LocationSubscriptionWhereInput {
+  AND?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  OR?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  NOT?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: LocationWhereInput
+}
+
+export interface CoordinatesCreateInput {
+  latitude: Float
+  longitude: Float
+}
+
+export interface CoordinatesWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface CoordinatesCreateOneInput {
+  create?: CoordinatesCreateInput
+  connect?: CoordinatesWhereUniqueInput
+}
+
+export interface ImageWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserCreateInput {
+  email: String
+  name: String
+  password: String
+  role?: USER_ROLE
+}
+
+export interface SocialUpsertNestedInput {
+  update: SocialUpdateDataInput
+  create: SocialCreateInput
+}
+
+export interface ConferenceCreateInput {
+  name: String
+  description?: String
+  url: String
+  startDate: DateTime
+  endDate: DateTime
+  publishStatus?: PUBLISH_STATUS
+  tags?: TagCreateManyInput
+  image?: ImageCreateOneInput
+  location: LocationCreateOneInput
+  social?: SocialCreateOneInput
+}
+
+export interface TagWhereInput {
+  AND?: TagWhereInput[] | TagWhereInput
+  OR?: TagWhereInput[] | TagWhereInput
+  NOT?: TagWhereInput[] | TagWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  slug?: String
+  slug_not?: String
+  slug_in?: String[] | String
+  slug_not_in?: String[] | String
+  slug_lt?: String
+  slug_lte?: String
+  slug_gt?: String
+  slug_gte?: String
+  slug_contains?: String
+  slug_not_contains?: String
+  slug_starts_with?: String
+  slug_not_starts_with?: String
+  slug_ends_with?: String
+  slug_not_ends_with?: String
+  _MagicalBackRelation_ConferenceToTag_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTag_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToTag_none?: ConferenceWhereInput
+}
+
+export interface TagCreateManyInput {
+  create?: TagCreateInput[] | TagCreateInput
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+}
+
+export interface SocialSubscriptionWhereInput {
+  AND?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
+  OR?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
+  NOT?: SocialSubscriptionWhereInput[] | SocialSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: SocialWhereInput
 }
 
 export interface LocationCreateOneInput {
@@ -3479,20 +3433,14 @@ export interface TagCreateInput {
   slug: String
 }
 
-export interface UserWhereUniqueInput {
+export interface ConferenceWhereUniqueInput {
   id?: ID_Input
-  email?: String
 }
 
-export interface TagUpdateInput {
-  name?: String
-  slug?: String
-}
-
-export interface SocialWhereInput {
-  AND?: SocialWhereInput[] | SocialWhereInput
-  OR?: SocialWhereInput[] | SocialWhereInput
-  NOT?: SocialWhereInput[] | SocialWhereInput
+export interface CurrencyWhereInput {
+  AND?: CurrencyWhereInput[] | CurrencyWhereInput
+  OR?: CurrencyWhereInput[] | CurrencyWhereInput
+  NOT?: CurrencyWhereInput[] | CurrencyWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -3507,51 +3455,114 @@ export interface SocialWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
-  facebook?: String
-  facebook_not?: String
-  facebook_in?: String[] | String
-  facebook_not_in?: String[] | String
-  facebook_lt?: String
-  facebook_lte?: String
-  facebook_gt?: String
-  facebook_gte?: String
-  facebook_contains?: String
-  facebook_not_contains?: String
-  facebook_starts_with?: String
-  facebook_not_starts_with?: String
-  facebook_ends_with?: String
-  facebook_not_ends_with?: String
-  twitter?: String
-  twitter_not?: String
-  twitter_in?: String[] | String
-  twitter_not_in?: String[] | String
-  twitter_lt?: String
-  twitter_lte?: String
-  twitter_gt?: String
-  twitter_gte?: String
-  twitter_contains?: String
-  twitter_not_contains?: String
-  twitter_starts_with?: String
-  twitter_not_starts_with?: String
-  twitter_ends_with?: String
-  twitter_not_ends_with?: String
-  instagram?: String
-  instagram_not?: String
-  instagram_in?: String[] | String
-  instagram_not_in?: String[] | String
-  instagram_lt?: String
-  instagram_lte?: String
-  instagram_gt?: String
-  instagram_gte?: String
-  instagram_contains?: String
-  instagram_not_contains?: String
-  instagram_starts_with?: String
-  instagram_not_starts_with?: String
-  instagram_ends_with?: String
-  instagram_not_ends_with?: String
-  _MagicalBackRelation_ConferenceToSocial_every?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToSocial_some?: ConferenceWhereInput
-  _MagicalBackRelation_ConferenceToSocial_none?: ConferenceWhereInput
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  value?: String
+  value_not?: String
+  value_in?: String[] | String
+  value_not_in?: String[] | String
+  value_lt?: String
+  value_lte?: String
+  value_gt?: String
+  value_gte?: String
+  value_contains?: String
+  value_not_contains?: String
+  value_starts_with?: String
+  value_not_starts_with?: String
+  value_ends_with?: String
+  value_not_ends_with?: String
+}
+
+export interface LocationWhereInput {
+  AND?: LocationWhereInput[] | LocationWhereInput
+  OR?: LocationWhereInput[] | LocationWhereInput
+  NOT?: LocationWhereInput[] | LocationWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  venueName?: String
+  venueName_not?: String
+  venueName_in?: String[] | String
+  venueName_not_in?: String[] | String
+  venueName_lt?: String
+  venueName_lte?: String
+  venueName_gt?: String
+  venueName_gte?: String
+  venueName_contains?: String
+  venueName_not_contains?: String
+  venueName_starts_with?: String
+  venueName_not_starts_with?: String
+  venueName_ends_with?: String
+  venueName_not_ends_with?: String
+  country?: String
+  country_not?: String
+  country_in?: String[] | String
+  country_not_in?: String[] | String
+  country_lt?: String
+  country_lte?: String
+  country_gt?: String
+  country_gte?: String
+  country_contains?: String
+  country_not_contains?: String
+  country_starts_with?: String
+  country_not_starts_with?: String
+  country_ends_with?: String
+  country_not_ends_with?: String
+  city?: String
+  city_not?: String
+  city_in?: String[] | String
+  city_not_in?: String[] | String
+  city_lt?: String
+  city_lte?: String
+  city_gt?: String
+  city_gte?: String
+  city_contains?: String
+  city_not_contains?: String
+  city_starts_with?: String
+  city_not_starts_with?: String
+  city_ends_with?: String
+  city_not_ends_with?: String
+  address?: String
+  address_not?: String
+  address_in?: String[] | String
+  address_not_in?: String[] | String
+  address_lt?: String
+  address_lte?: String
+  address_gt?: String
+  address_gte?: String
+  address_contains?: String
+  address_not_contains?: String
+  address_starts_with?: String
+  address_not_starts_with?: String
+  address_ends_with?: String
+  address_not_ends_with?: String
+  coordinates?: CoordinatesWhereInput
+  _MagicalBackRelation_ConferenceToLocation_every?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToLocation_some?: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToLocation_none?: ConferenceWhereInput
 }
 
 export interface CoordinatesUpdateInput {
@@ -3559,8 +3570,15 @@ export interface CoordinatesUpdateInput {
   longitude?: Float
 }
 
-export interface SocialWhereUniqueInput {
-  id?: ID_Input
+export interface ImageSubscriptionWhereInput {
+  AND?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  OR?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  NOT?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ImageWhereInput
 }
 
 /*
@@ -3575,13 +3593,10 @@ export interface AggregateImage {
   count: Int
 }
 
-export interface Location extends Node {
+export interface Coordinates extends Node {
   id: ID_Output
-  venueName?: String
-  country: String
-  city: String
-  address?: String
-  coordinates?: Coordinates
+  latitude: Float
+  longitude: Float
 }
 
 export interface ImagePreviousValues {
@@ -3604,10 +3619,11 @@ export interface ImageConnection {
   aggregate: AggregateImage
 }
 
-export interface Coordinates extends Node {
+export interface Social extends Node {
   id: ID_Output
-  latitude: Float
-  longitude: Float
+  facebook?: String
+  twitter?: String
+  instagram?: String
 }
 
 export interface TagPreviousValues {
@@ -3661,10 +3677,13 @@ export interface AggregateSocial {
   count: Int
 }
 
-export interface Image extends Node {
+export interface Location extends Node {
   id: ID_Output
-  src: String
-  alt?: String
+  venueName?: String
+  country: String
+  city: String
+  address?: String
+  coordinates?: Coordinates
 }
 
 /*
@@ -3677,10 +3696,10 @@ export interface SocialConnection {
   aggregate: AggregateSocial
 }
 
-export interface Tag extends Node {
+export interface Image extends Node {
   id: ID_Output
-  name: String
-  slug: String
+  src: String
+  alt?: String
 }
 
 /*
@@ -3709,7 +3728,7 @@ export interface UserPreviousValues {
   name: String
   createdAt: DateTime
   password: String
-  isAdmin: Boolean
+  role: USER_ROLE
 }
 
 /*
@@ -3722,18 +3741,10 @@ export interface CurrencyConnection {
   aggregate: AggregateCurrency
 }
 
-export interface Conference extends Node {
+export interface Tag extends Node {
   id: ID_Output
   name: String
-  description?: String
-  tags?: Tag[]
-  url: String
-  image?: Image
-  startDate: DateTime
-  endDate: DateTime
-  location: Location
-  social?: Social
-  publishStatus?: PUBLISH_STATUS
+  slug: String
 }
 
 /*
@@ -3766,17 +3777,6 @@ export interface ConferencePreviousValues {
   publishStatus?: PUBLISH_STATUS
 }
 
-/*
- * Information about pagination in a connection.
-
- */
-export interface PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor?: String
-  endCursor?: String
-}
-
 export interface ImageSubscriptionPayload {
   mutation: MutationType
   node?: Image
@@ -3784,10 +3784,28 @@ export interface ImageSubscriptionPayload {
   previousValues?: ImagePreviousValues
 }
 
-export interface Currency extends Node {
+export interface Conference extends Node {
   id: ID_Output
   name: String
-  value: String
+  description?: String
+  tags?: Tag[]
+  url: String
+  image?: Image
+  startDate: DateTime
+  endDate: DateTime
+  location: Location
+  social?: Social
+  publishStatus?: PUBLISH_STATUS
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface UserConnection {
+  pageInfo: PageInfo
+  edges: UserEdge[]
+  aggregate: AggregateUser
 }
 
 export interface CurrencySubscriptionPayload {
@@ -3816,13 +3834,12 @@ export interface SocialEdge {
   cursor: String
 }
 
-export interface User extends Node {
+export interface LocationPreviousValues {
   id: ID_Output
-  email: String
-  name: String
-  createdAt: DateTime
-  password: String
-  isAdmin: Boolean
+  venueName?: String
+  country: String
+  city: String
+  address?: String
 }
 
 /*
@@ -3861,19 +3878,19 @@ export interface UserEdge {
   cursor: String
 }
 
-export interface LocationPreviousValues {
+export interface User extends Node {
   id: ID_Output
-  venueName?: String
-  country: String
-  city: String
-  address?: String
+  email: String
+  name: String
+  createdAt: DateTime
+  password: String
+  role: USER_ROLE
 }
 
-export interface Social extends Node {
+export interface Currency extends Node {
   id: ID_Output
-  facebook?: String
-  twitter?: String
-  instagram?: String
+  name: String
+  value: String
 }
 
 export interface AggregateCoordinates {
@@ -3928,13 +3945,14 @@ export interface TagConnection {
 }
 
 /*
- * A connection to a list of items.
+ * Information about pagination in a connection.
 
  */
-export interface UserConnection {
-  pageInfo: PageInfo
-  edges: UserEdge[]
-  aggregate: AggregateUser
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
 }
 
 /*
@@ -3960,9 +3978,9 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type Float = number
+export type Boolean = boolean
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
@@ -3970,13 +3988,13 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string
 
 /*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number
+
+/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
 
 export type DateTime = Date | string

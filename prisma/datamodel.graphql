@@ -4,7 +4,13 @@ type User {
   name: String!
   createdAt: DateTime!
   password: String!
-  isAdmin: Boolean! @default(value: false)
+  role: USER_ROLE! @default(value: ATTENDEE)
+}
+
+enum USER_ROLE {
+  ATTENDEE
+  SPEAKER
+  MODERATOR
 }
 
 type Conference {
