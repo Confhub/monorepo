@@ -5,6 +5,7 @@ import { createContext } from './utils';
 
 const options = {
   port: parseInt(process.env.PORT, 10) || 4000,
+  debug: process.env.NODE_ENV === 'development',
 };
 
 const server = new GraphQLServer({
