@@ -1,17 +1,9 @@
-// @flow
-
 import * as React from 'react';
 import { List as AntList, Tag, Button } from 'antd';
 
 import ListItemDescription from './ListItemDescription';
 
-import type { ListItem as ListItemType } from './__generated__/ListItem';
-
-type Props = {
-  item: ListItemType,
-};
-
-const ListItem = ({ item }: Props) => {
+const ListItem = ({ item }) => {
   return (
     <div className="list">
       <AntList.Item

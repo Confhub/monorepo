@@ -1,14 +1,8 @@
-// @flow
-
 import * as React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import remove from 'lodash/remove';
 import { message } from 'antd';
-
-type Props = {
-  id: string,
-};
 
 const PUBLISH_CONFERENCE = gql`
   mutation publishConference($id: ID!) {
@@ -18,7 +12,7 @@ const PUBLISH_CONFERENCE = gql`
   }
 `;
 
-class PublishConferenceButton extends React.Component<Props> {
+class PublishConferenceButton extends React.Component {
   onButtonClick = async publishConference => {
     const published = await publishConference({
       variables: { id: this.props.id },

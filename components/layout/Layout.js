@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { withRouter } from 'next/router';
 import { Layout } from 'antd';
@@ -7,15 +5,7 @@ import { Layout } from 'antd';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 
-type Props = {
-  isAuth: boolean,
-  userData: any,
-  signOut: () => void,
-  children: React.Node,
-  router: any,
-};
-
-class LayoutComponent extends React.Component<Props> {
+class LayoutComponent extends React.Component {
   render() {
     const { isAuth, userData, signOut, router, children } = this.props;
     const isHomePage = router.pathname === '/';

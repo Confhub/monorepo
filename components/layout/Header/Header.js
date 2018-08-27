@@ -2,13 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Layout, Menu, Icon } from 'antd';
 
-type Props = {
-  isAuth: boolean,
-  userData: any,
-  signOut: () => void,
-};
-
-const Header = ({ isAuth, userData, signOut }: Props) => (
+const Header = ({ isAuth, userData, signOut }) => (
   <Layout.Header style={{ width: '100%', background: '#ffffff' }}>
     <Link href="/">
       <div className="logo" />

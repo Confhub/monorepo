@@ -1,12 +1,10 @@
-// @flow
-
 import * as React from 'react';
 import { withApollo } from 'react-apollo';
 
 import AdminPage from '../components/admin/AdminPage';
 
-class AdminPageContainer extends React.Component<{}> {
-  // static async getInitialProps(context: any) {
+class AdminPageContainer extends React.Component {
+  // static async getInitialProps(context) {
 
   //   const { currentUser } = await checkLoggedIn(context.apolloClient);
 

@@ -6,16 +6,6 @@
   "features": {
     "cloud": "v2"
   },
-  "scale": {
-    "bru1": {
-      "min": 0,
-      "max": "auto"
-    },
-    "sfo1": {
-      "min": 0,
-      "max": "auto"
-    }
-  },
   "build": {
     "env": {
       "MAPBOX_SECRET": "@confhub-mapbox-secret",

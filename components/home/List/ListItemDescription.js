@@ -1,18 +1,10 @@
-// @flow
-
 import * as React from 'react';
 import { Icon, Divider } from 'antd';
 
 import { parseDateRange } from '../../helpers';
 
-import type { ListItem as ListItemType } from './__generated__/ListItem';
-
-type Props = {
-  item: ListItemType,
-};
-
-const ListItemDescription = ({ item }: Props) => {
-  const { location, startDate, endDate, price } = item;
+const ListItemDescription = ({ item }) => {
+  const { location, startDate, endDate } = item;
   const { country, city } = location;
 
   return (

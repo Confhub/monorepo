@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo';
@@ -20,7 +18,7 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App {
-  static async getInitialProps({ ctx }: any) {
+  static async getInitialProps({ ctx }) {
     const { currentUser } = await checkLoggedIn(ctx.apolloClient);
 
     if (currentUser.user) {

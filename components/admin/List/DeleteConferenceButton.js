@@ -1,14 +1,8 @@
-// @flow
-
 import * as React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import remove from 'lodash/remove';
 import { message } from 'antd';
-
-type Props = {
-  id: string,
-};
 
 const DELETE_CONFERENCE = gql`
   mutation deleteConference($id: ID!) {
@@ -18,7 +12,7 @@ const DELETE_CONFERENCE = gql`
   }
 `;
 
-class DeleteConferenceButton extends React.Component<Props> {
+class DeleteConferenceButton extends React.Component {
   onButtonClick = async deleteConference => {
     const deleted = await deleteConference({
       variables: { id: this.props.id },
