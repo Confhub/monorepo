@@ -1,4 +1,9 @@
-import { GraphQLList, GraphQLString } from 'graphql';
+import {
+  GraphQLInputObjectType,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLString,
+} from 'graphql';
 
 import { Conference, PUBLISH_STATUS } from '../../../generated/prisma';
 import { Context } from '../../../utils';
@@ -6,18 +11,49 @@ import GraphQLConference from '../outputs/Conference';
 import GraphQLPublishStatus from '../outputs/PublishStatus';
 
 interface ArgsType {
-  publishStatus: PUBLISH_STATUS;
-  tags: string[];
+  sortBy?: {
+    publishStatus?: PUBLISH_STATUS;
+    tags?: string[];
+  };
+  skip?: number;
+  after?: string;
+  before?: string;
+  first?: number;
+  last?: number;
 }
 
-export default {
-  type: new GraphQLList(GraphQLConference),
-  args: {
+const GraphQLSearchConferenceInput = new GraphQLInputObjectType({
+  name: 'SearchConferenceInput',
+  fields: {
     publishStatus: {
       type: GraphQLPublishStatus,
     },
     tags: {
       type: new GraphQLList(GraphQLString),
+    },
+  },
+});
+
+export default {
+  type: new GraphQLList(GraphQLConference),
+  args: {
+    sortBy: {
+      type: GraphQLSearchConferenceInput,
+    },
+    skip: {
+      type: GraphQLInt,
+    },
+    after: {
+      type: GraphQLString,
+    },
+    before: {
+      type: GraphQLString,
+    },
+    first: {
+      type: GraphQLInt,
+    },
+    last: {
+      type: GraphQLInt,
     },
   },
   resolve: (
@@ -27,8 +63,8 @@ export default {
     info: any,
   ): Promise<Conference> => {
     const makeQuery = () => {
-      if (args) {
-        const { publishStatus, tags } = args;
+      if (args && args.sortBy) {
+        const { publishStatus, tags } = args.sortBy;
 
         return {
           where: {
