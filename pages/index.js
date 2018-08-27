@@ -1,22 +1,22 @@
 // @flow
 
-import * as React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import Router, { withRouter } from 'next/router';
-import debounce from 'lodash/debounce';
+import * as React from "react";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+import Router, { withRouter } from "next/router";
+import debounce from "lodash/debounce";
 
-import HomePage from '../components/home/HomePage';
-import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
-import { MAP_FRAGMENT } from '../components/home/Map/MapContainer';
-import HomePageContext from '../components/home/HomePageContext';
-import { getLocation } from '../components/helpers';
+import HomePage from "../components/home/HomePage";
+import { LIST_ITEM_FRAGMENT } from "../components/home/List/ListContainer";
+import { MAP_FRAGMENT } from "../components/home/Map/MapContainer";
+import HomePageContext from "../components/home/HomePageContext";
+import { getLocation } from "../components/helpers";
 
-import 'mapbox-gl/dist/mapbox-gl.css';
+import "mapbox-gl/dist/mapbox-gl.css";
 
 export const GET_CONFERENCE_LIST = gql`
   query conferences($tags: [String]) {
-    filteredConferences(tags: $tags, published: true) {
+    conferences(sortBy: { publishStatus: PUBLISHED, tags: $tags }) {
       ...ListItem
       ...Map
     }
@@ -36,26 +36,26 @@ class HomePageContainer extends React.Component<{}> {
     super(props);
 
     const { tags, long, lat } = this.props.router.query;
-    const defaultTags = tags && (typeof tags === 'string' ? [tags] : tags);
+    const defaultTags = tags && (typeof tags === "string" ? [tags] : tags);
     const defaultLocation = long && lat ? [+long, +lat] : [25, 50];
 
     this.state = {
       hoveredItem: null,
       location: defaultLocation,
       locationLoading: false,
-      tags: defaultTags || [],
+      tags: defaultTags || []
     };
   }
 
   onEnter = id => {
     this.setState({
-      hoveredItem: id,
+      hoveredItem: id
     });
   };
 
   onLeave = id => {
     this.setState(prevState => ({
-      hoveredItem: id === prevState.id ? null : prevState.id,
+      hoveredItem: id === prevState.id ? null : prevState.id
     }));
   };
 
@@ -75,12 +75,12 @@ class HomePageContainer extends React.Component<{}> {
   setLocationUrl = (long, lat) => {
     const { tags } = Router.query;
     const href = {
-      pathname: '/',
+      pathname: "/",
       query: {
         long,
         lat,
-        ...(tags && { tags }),
-      },
+        ...(tags && { tags })
+      }
     };
 
     Router.push(href, href, { shallow: true });
@@ -92,11 +92,11 @@ class HomePageContainer extends React.Component<{}> {
     this.setState({ tags });
     const { long, lat } = Router.query;
     const href = {
-      pathname: '/',
+      pathname: "/",
       query: {
         ...(long && lat && { long, lat }),
-        tags: tags.map(t => t.slug),
-      },
+        tags: tags.map(t => t.slug)
+      }
     };
     Router.push(href, href, { shallow: true });
   };
@@ -113,7 +113,7 @@ class HomePageContainer extends React.Component<{}> {
       location,
       locationLoading,
       tags,
-      setTags: this.setTags,
+      setTags: this.setTags
     };
 
     return (
@@ -127,7 +127,7 @@ class HomePageContainer extends React.Component<{}> {
               <HomePage
                 loading={loading}
                 error={error}
-                data={data && data.filteredConferences}
+                data={data && data.conferences}
               />
             );
           }}
