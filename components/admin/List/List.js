@@ -1,18 +1,12 @@
-// @flow
-
 import * as React from 'react';
 import { List, Avatar } from 'antd';
 
 import PublishConferenceButton from './PublishConferenceButton';
 import DeleteConferenceButton from './DeleteConferenceButton';
 
-type Props = {
-  data: Object,
-};
-
-class ApproveList extends React.Component<Props> {
+class ApproveList extends React.Component {
   render() {
-    const { status, query, error, loading, data } = this.props;
+    const { publishStatus, query, error, loading, data } = this.props;
     if (loading) {
       return 'Loading...';
     }
@@ -31,7 +25,7 @@ class ApproveList extends React.Component<Props> {
             <List.Item
               actions={[
                 <a key="link">edit</a>,
-                !status && (
+                publishStatus === 'DRAFT' && (
                   <PublishConferenceButton
                     key="button"
                     id={item.id}

@@ -1,17 +1,9 @@
-// @flow
-
 import * as React from 'react';
 import { List as AntList } from 'antd';
 
 import ListItem from './ListItem';
 
-import type { ListItem as ListItemType } from './__generated__/ListItem';
-
-type Props = {
-  items: ListItemType[],
-};
-
-const List = ({ items = [] }: Props) => {
+const List = ({ items = [] }) => {
   return (
     <div className="list">
       {items.length ? (

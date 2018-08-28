@@ -3,7 +3,7 @@ import { Button, Icon, Divider } from 'antd';
 import { parseDateRange } from '../../helpers';
 
 const renderDescription = item => {
-  const { place, startDate, endDate, price } = item;
+  const { place, startDate, endDate } = item;
   const { location } = place;
   const { country, city } = location;
 

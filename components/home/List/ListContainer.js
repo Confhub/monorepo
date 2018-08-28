@@ -1,15 +1,7 @@
-// @flow
-
 import * as React from 'react';
 import gql from 'graphql-tag';
 
 import List from './List';
-
-import type { ListItem as ListItemType } from './__generated__/ListItem';
-
-type Props = {
-  items: ListItemType[],
-};
 
 export const LIST_ITEM_FRAGMENT = gql`
   fragment ListItem on Conference {
@@ -37,7 +29,7 @@ export const LIST_ITEM_FRAGMENT = gql`
   }
 `;
 
-const ListContainer = ({ items }: Props) => {
+const ListContainer = ({ items }) => {
   return <List items={items} />;
 };
 

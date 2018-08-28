@@ -9,11 +9,10 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "prettier",
-    "prettier/react",
-    "plugin:flowtype/recommended"
+    "prettier/react"
   ],
   "parser": "babel-eslint",
-  "plugins": ["import", "prettier", "promise", "flowtype", "react"],
+  "plugins": ["import", "prettier", "promise", "react"],
   "rules": {
     "react/jsx-uses-vars": 2,
     "no-use-before-define": 0,
@@ -41,13 +40,6 @@
     "promise/avoid-new": "off",
     "promise/prefer-await-to-then": "error",
     "promise/prefer-await-to-callbacks": "off",
-    // "flowtype/require-valid-file-annotation": [
-    //   "error",
-    //   "always",
-    //   {
-    //     "annotationStyle": "line"
-    //   }
-    // ],
     "eol-last": "error",
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "react/prop-types": 0,
@@ -57,8 +49,7 @@
     {
       "files": ["next.config.js"],
       "rules": {
-        "import/no-extraneous-dependencies": "off",
-        "flowtype/require-valid-file-annotation": "off"
+        "import/no-extraneous-dependencies": "off"
       }
     }
   ],

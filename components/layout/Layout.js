@@ -1,28 +1,18 @@
-// @flow
+import * as React from "react";
+import { withRouter } from "next/router";
+import { Layout } from "antd";
 
-import * as React from 'react';
-import { withRouter } from 'next/router';
-import { Layout } from 'antd';
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
-
-type Props = {
-  isAuth: boolean,
-  userData: any,
-  signOut: () => void,
-  children: React.Node,
-  router: any,
-};
-
-class LayoutComponent extends React.Component<Props> {
+class LayoutComponent extends React.Component {
   render() {
     const { isAuth, userData, signOut, router, children } = this.props;
-    const isHomePage = router.pathname === '/';
+    const isHomePage = router.pathname === "/";
 
     return (
       <React.Fragment>
-        <Layout className={`layout ${isHomePage ? 'home' : ''}`}>
+        <Layout className={`layout ${isHomePage ? "home" : ""}`}>
           <Header
             className="header"
             isAuth={isAuth}
@@ -35,9 +25,9 @@ class LayoutComponent extends React.Component<Props> {
           ) : (
             <Layout.Content
               className="content"
-              style={{ padding: '0 20px', marginTop: 20 }}
+              style={{ padding: "0 20px", marginTop: 20 }}
             >
-              <div style={{ padding: 24, background: '#fff' }}>{children}</div>
+              <div style={{ padding: 24, background: "#fff" }}>{children}</div>
             </Layout.Content>
           )}
 
@@ -50,9 +40,9 @@ class LayoutComponent extends React.Component<Props> {
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr auto;
             grid-template-areas:
-              'header'
-              'content'
-              'footer';
+              "header"
+              "content"
+              "footer";
           }
 
           .home {

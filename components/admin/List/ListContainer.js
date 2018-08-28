@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -9,29 +7,31 @@ import ApproveList from './List';
 import { LIST_ITEM_FRAGMENT } from '../../home/List/ListContainer';
 
 const GET_CONFERENCES_LIST = gql`
-  query filteredConferences($published: Boolean) {
-    filteredConferences(published: $published) {
+  query conferences($publishStatus: PublishStatus) {
+    conferences(sortBy: { publishStatus: $publishStatus }) {
       ...ListItem
     }
   }
   ${LIST_ITEM_FRAGMENT}
 `;
 
-class ListContainer extends React.Component<{}, {}> {
+class ListContainer extends React.Component {
   state = {
-    status: false,
+    publishStatus: 'DRAFT',
   };
 
-  onStatusChange = status => {
-    this.setState({ status });
+  onStatusChange = () => {
+    this.state.publishStatus === 'DRAFT'
+      ? this.setState({ publishStatus: 'PUBLISHED' })
+      : this.setState({ publishStatus: 'DRAFT' });
   };
 
   render() {
-    const { status } = this.state;
+    const { publishStatus } = this.state;
 
     const query = {
       query: GET_CONFERENCES_LIST,
-      variables: { published: status },
+      variables: { publishStatus },
     };
 
     return (
@@ -40,16 +40,16 @@ class ListContainer extends React.Component<{}, {}> {
           <React.Fragment>
             <Switch
               checkedChildren="Published"
-              unCheckedChildren="Unpublished"
-              value={status}
+              unCheckedChildren="Drafts"
+              value={publishStatus}
               onChange={this.onStatusChange}
             />
             <div className="list-wrap">
               <ApproveList
                 error={error}
                 loading={loading}
-                data={data.filteredConferences}
-                status={status}
+                data={data.conferences}
+                publishStatus={publishStatus}
                 onStatusChange={this.onStatusChange}
                 query={query}
                 mutation={query}

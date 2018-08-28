@@ -6,7 +6,7 @@ const Dotenv = require('dotenv-webpack');
 
 // fix: prevents error when .css files are required by node
 if (typeof require !== 'undefined') {
-  require.extensions['.css'] = file => {};
+  require.extensions['.css'] = () => {};
 }
 
 module.exports = withCSS({

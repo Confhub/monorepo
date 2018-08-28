@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -16,7 +14,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 export const GET_CONFERENCE_LIST = gql`
   query conferences($tags: [String]) {
-    filteredConferences(tags: $tags, published: true) {
+    conferences(sortBy: { publishStatus: PUBLISHED, tags: $tags }) {
       ...ListItem
       ...Map
     }
@@ -27,7 +25,7 @@ export const GET_CONFERENCE_LIST = gql`
 
 // @TODO: change array to object in location
 
-class HomePageContainer extends React.Component<{}> {
+class HomePageContainer extends React.Component {
   static async getInitialProps({ router }) {
     return { router };
   }
@@ -127,7 +125,7 @@ class HomePageContainer extends React.Component<{}> {
               <HomePage
                 loading={loading}
                 error={error}
-                data={data && data.filteredConferences}
+                data={data && data.conferences}
               />
             );
           }}
