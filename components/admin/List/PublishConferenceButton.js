@@ -1,8 +1,8 @@
-import * as React from 'react';
-import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
-import remove from 'lodash/remove';
-import { message } from 'antd';
+import * as React from "react";
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+import remove from "lodash/remove";
+import { message } from "antd";
 
 const PUBLISH_CONFERENCE = gql`
   mutation publishConference($id: ID!) {
@@ -15,11 +15,11 @@ const PUBLISH_CONFERENCE = gql`
 class PublishConferenceButton extends React.Component {
   onButtonClick = async publishConference => {
     const published = await publishConference({
-      variables: { id: this.props.id },
+      variables: { id: this.props.id }
     });
 
     if (published) {
-      message.success('Conference published');
+      message.success("Conference published");
     }
   };
 
@@ -31,7 +31,7 @@ class PublishConferenceButton extends React.Component {
         mutation={PUBLISH_CONFERENCE}
         update={(cache, { data: { publishConference } }) => {
           const data = cache.readQuery(query);
-          remove(data.filteredConferences, { id: publishConference.id });
+          remove(data.conferences, { id: publishConference.id });
           cache.writeQuery({ ...query, data });
         }}
       >

@@ -31,7 +31,7 @@ class DeleteConferenceButton extends React.Component {
         mutation={DELETE_CONFERENCE}
         update={(cache, { data: { deleteConference } }) => {
           const data = cache.readQuery(query);
-          remove(data.filteredConferences, { id: deleteConference.id });
+          remove(data.conferences, { id: deleteConference.id });
           cache.writeQuery({ ...query, data });
         }}
       >

@@ -1,14 +1,14 @@
-import * as React from 'react';
-import Link from 'next/link';
-import { Layout, Menu, Icon } from 'antd';
+import * as React from "react";
+import Link from "next/link";
+import { Layout, Menu, Icon } from "antd";
 
 const Header = ({ isAuth, userData, signOut }) => (
-  <Layout.Header style={{ width: '100%', background: '#ffffff' }}>
+  <Layout.Header style={{ width: "100%", background: "#ffffff" }}>
     <Link href="/">
       <div className="logo" />
     </Link>
 
-    <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px' }}>
+    <Menu theme="light" mode="horizontal" style={{ lineHeight: "64px" }}>
       <Menu.Item key="newConference">
         <Link href="/new-conference" prefetch>
           <a>
@@ -55,7 +55,7 @@ const Header = ({ isAuth, userData, signOut }) => (
         <Menu.Item key="signout">
           <a onClick={signOut}>
             <Icon type="poweroff" />
-            Sign Out{' '}
+            Sign Out{" "}
             {userData ? (
               <span>
                 &#40;

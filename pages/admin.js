@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { withApollo } from 'react-apollo';
+import * as React from "react";
+import { withApollo } from "react-apollo";
 
-import AdminPage from '../components/admin/AdminPage';
+import AdminPage from "../components/admin/AdminPage";
 
 class AdminPageContainer extends React.Component {
   // static async getInitialProps(context) {
