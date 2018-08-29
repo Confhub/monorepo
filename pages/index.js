@@ -45,6 +45,15 @@ class HomePageContainer extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { pathname, query } = this.props.router;
+
+    // verify props have changed to avoid an infinite loop
+    if (query !== prevProps.router.query) {
+      // console.log(pathname, query);
+    }
+  }
+
   onEnter = id => {
     this.setState({
       hoveredItem: id,
@@ -84,7 +93,7 @@ class HomePageContainer extends React.Component {
     Router.push(href, href, { shallow: true });
   };
 
-  setLocationUrlDebounced = debounce(this.setLocationUrl, 1000);
+  setLocationUrlDebounced = debounce(this.setLocationUrl, 300);
 
   setTags = tags => {
     this.setState({ tags });

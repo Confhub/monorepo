@@ -4551,9 +4551,9 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-next@^7.0.0-canary.4:
-  version "7.0.0-canary.4"
-  resolved "https://registry.yarnpkg.com/next/-/next-7.0.0-canary.4.tgz#d370ff07413f2c02ff063e05bdbd428d37af3dfe"
+next@^7.0.0-canary.5:
+  version "7.0.0-canary.5"
+  resolved "https://registry.yarnpkg.com/next/-/next-7.0.0-canary.5.tgz#eae92f1a57d50130edf9043fbf1d7c6f42668bbc"
   dependencies:
     "@babel/core" "7.0.0"
     "@babel/plugin-proposal-class-properties" "7.0.0"

@@ -1,23 +1,12 @@
-import * as React from "react";
-import { withApollo } from "react-apollo";
+import * as React from 'react';
+import { withApollo } from 'react-apollo';
 
-import AdminPage from "../components/admin/AdminPage";
+import AdminPageContainer from '../components/admin/AdminPage';
 
-class AdminPageContainer extends React.Component {
-  // static async getInitialProps(context) {
-
-  //   const { currentUser } = await checkLoggedIn(context.apolloClient);
-
-  //   if (!currentUser.user || !currentUser.user.isAdmin) {
-  //     redirect(context, '/');
-  //   }
-
-  //   return {};
-  // }
-
+class AdminPage extends React.Component {
   render() {
-    return <AdminPage />;
+    return <AdminPageContainer />;
   }
 }
 
-export default withApollo(AdminPageContainer);
+export default withApollo(AdminPage);
