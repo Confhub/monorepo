@@ -1,19 +1,5 @@
 import queryString from 'query-string';
 
-// const mL = [
-//   'January',
-//   'February',
-//   'March',
-//   'April',
-//   'May',
-//   'June',
-//   'July',
-//   'August',
-//   'September',
-//   'October',
-//   'November',
-//   'December',
-// ];
 const mS = [
   'Jan',
   'Feb',
@@ -81,3 +67,44 @@ export const getLocation = () =>
 
     navigator.geolocation.getCurrentPosition(success, error, options);
   });
+
+const cloudName = 'alizhdanov';
+const unsignedUploadPreset = 'is2hk7eh';
+
+export const handleImageLoading = async file => {
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  const fd = new FormData();
+  fd.append('upload_preset', unsignedUploadPreset);
+  fd.append('file', file);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: fd,
+    });
+
+    return await response.json();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const customRequest = async ({ file, headers, onError, onSuccess }) => {
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  const formData = new FormData();
+  formData.append('upload_preset', unsignedUploadPreset);
+  formData.append('file', file);
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    onSuccess(data, file);
+  } catch (e) {
+    onError(e);
+  }
+};

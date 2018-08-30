@@ -12,9 +12,12 @@ import {
   DatePicker,
   Alert,
   Checkbox,
+  Upload,
+  Icon,
 } from 'antd';
 import TagSelector from '../TagSelector';
 import LocationSelector from '../LocationSelector';
+import { customRequest } from '../helpers';
 
 const Option = Select.Option;
 const { Content } = Layout;
@@ -86,6 +89,7 @@ class NewConferenceComponent extends React.Component {
           priceLate,
           priceLateDate,
           currency,
+          image,
         } = values;
         const {
           tags: rawTags,
@@ -141,6 +145,9 @@ class NewConferenceComponent extends React.Component {
               },
               tags,
               description,
+              image: {
+                src: image[0].response.secure_url,
+              },
             },
           });
 
@@ -232,6 +239,13 @@ class NewConferenceComponent extends React.Component {
       </Row>
     );
   }
+
+  normFile = e => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -336,6 +350,23 @@ class NewConferenceComponent extends React.Component {
                         rows={4}
                         placeholder="Few words about conference"
                       />,
+                    )}
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={24}>
+                  <Form.Item label="Upload">
+                    {getFieldDecorator('image', {
+                      valuePropName: 'fileList',
+                      getValueFromEvent: this.normFile,
+                    })(
+                      <Upload name="logo" customRequest={customRequest}>
+                        <Button>
+                          <Icon type="upload" /> Click to upload
+                        </Button>
+                      </Upload>,
                     )}
                   </Form.Item>
                 </Col>
