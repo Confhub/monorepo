@@ -44,6 +44,8 @@ class TagSelector extends React.Component {
         value={sanitizedValues}
         onChange={this.handleChange}
         optionFilterProp="children"
+        tokenSeparators={[',']}
+        size="large"
       >
         {data &&
           data.tags &&
