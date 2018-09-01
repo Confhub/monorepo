@@ -16,9 +16,7 @@ const List = ({ items = [] }) => {
           />
         </React.Fragment>
       ) : (
-        <h3>
-          No data available from the server. Please check what&apos;s wrong!
-        </h3>
+        <h3>No data available :(</h3>
       )}
     </div>
   );

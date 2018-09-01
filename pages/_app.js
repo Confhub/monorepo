@@ -22,6 +22,12 @@ class MyApp extends App {
   static async getInitialProps({ ctx }) {
     const { currentUser } = await checkLoggedIn(ctx.apolloClient);
 
+    if (ctx.pathname === '/signin' || ctx.pathname === '/create-account') {
+      if (currentUser.user) {
+        redirect(ctx, '/');
+      }
+    }
+
     if (ctx.pathname === '/admin') {
       if (isEmpty(currentUser) || currentUser.user.role !== 'MODERATOR') {
         redirect(ctx, '/');
