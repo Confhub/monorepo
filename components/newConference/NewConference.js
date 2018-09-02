@@ -59,9 +59,12 @@ const CREATE_CONFERENCE = gql`
 `;
 
 class NewConferenceComponent extends React.Component {
+  alerts = React.createRef();
+
   state = {
     tags: [],
     location: null,
+    locationError: false,
     loading: false,
     error: null,
     success: false,
@@ -73,12 +76,24 @@ class NewConferenceComponent extends React.Component {
     this.setState({ tags });
   };
 
+  validateCustomFields = () => {
+    let valid = true;
+    const { location } = this.state;
+
+    if (!location) {
+      valid = false;
+      this.setState({ locationError: true });
+    }
+
+    return valid;
+  };
+
   handleSubmit = async (e, create) => {
     const { form } = this.props;
     e.preventDefault();
 
     form.validateFieldsAndScroll(async (err, values) => {
-      if (!err) {
+      if (this.validateCustomFields() && !err) {
         const {
           name,
           url,
@@ -147,18 +162,30 @@ class NewConferenceComponent extends React.Component {
               },
               tags,
               description,
-              image: {
-                src: image[0].response.secure_url,
-              },
+              ...(!!image && {
+                image: {
+                  src: image[0].response.secure_url,
+                },
+              }),
             },
           });
 
           this.setState({ loading: false, error: null, success: true });
           form.resetFields();
           console.log('success', test);
+          this.alerts.current &&
+            this.alerts.current.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
         } catch (err) {
           console.log(err);
           this.setState({ loading: false, success: false, error: err });
+          this.alerts.current &&
+            this.alerts.current.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
         }
       }
     });
@@ -206,7 +233,7 @@ class NewConferenceComponent extends React.Component {
         <Col span={8}>
           <Form.Item label={label}>
             {getFieldDecorator(field, {
-              rules: [{ required: disabled, message: 'Enter price' }],
+              rules: [{ required: !disabled, message: 'Enter price' }],
             })(
               <Input
                 type="number"
@@ -220,7 +247,7 @@ class NewConferenceComponent extends React.Component {
         <Col span={5}>
           <Form.Item label="Expires on">
             {getFieldDecorator(field + 'Date', {
-              rules: [{ required: disabled, message: 'Enter dateTime' }],
+              rules: [{ required: !disabled, message: 'Enter dateTime' }],
             })(<DatePicker disabled={disabled} />)}
           </Form.Item>
         </Col>
@@ -243,34 +270,33 @@ class NewConferenceComponent extends React.Component {
   }
 
   normFile = e => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
+    return e && e.file;
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { loading, success, error } = this.state;
+    const { loading, success, error, locationError } = this.state;
 
     return (
       <React.Fragment>
-        {success && (
-          <Alert
-            message="Conference created!"
-            description="Thank you for creating conference. It will be visible, after it'll pass validation"
-            type="success"
-            showIcon
-          />
-        )}
-        {error && (
-          <Alert
-            message="Conference was not created"
-            description="We've encountered some problem on server"
-            type="warning"
-            showIcon
-          />
-        )}
+        <div ref={this.alerts}>
+          {success && (
+            <Alert
+              message="Conference created!"
+              description="Thank you for creating conference. It will be visible, after it'll pass validation"
+              type="success"
+              showIcon
+            />
+          )}
+          {error && (
+            <Alert
+              message="Conference was not created"
+              description="We've encountered some problem on server"
+              type="warning"
+              showIcon
+            />
+          )}
+        </div>
 
         <Mutation mutation={CREATE_CONFERENCE}>
           {(createConference, { data }) => (
@@ -286,7 +312,7 @@ class NewConferenceComponent extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: 'Enter conference name',
+                          message: 'Enter name',
                         },
                       ],
                     })(<Input placeholder="GrpahQL Europe" />)}
@@ -298,14 +324,18 @@ class NewConferenceComponent extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: 'Enter conference name',
+                          message: 'Enter url',
                         },
                       ],
                     })(<Input type="url" placeholder="GrpahQL Europe" />)}
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Location">
+                  <Form.Item
+                    label="Location"
+                    help={locationError ? 'Enter location' : null}
+                    validateStatus={locationError ? 'error' : null}
+                  >
                     <LocationSelector setLocation={this.setLocation} />
                   </Form.Item>
                 </Col>
@@ -361,10 +391,17 @@ class NewConferenceComponent extends React.Component {
                 <Col span={24}>
                   <Form.Item label="Upload">
                     {getFieldDecorator('image', {
-                      valuePropName: 'fileList',
+                      valuePropName: 'file',
                       getValueFromEvent: this.normFile,
                     })(
-                      <Upload name="logo" customRequest={customRequest}>
+                      // TODO: should load only one file
+                      <Upload
+                        name="logo"
+                        customRequest={customRequest}
+                        onChange={() =>
+                          console.log(this.props.form.getFieldValue('image'))
+                        }
+                      >
                         <Button>
                           <Icon type="upload" /> Click to upload
                         </Button>
