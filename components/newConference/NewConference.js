@@ -39,6 +39,7 @@ const CREATE_CONFERENCE = gql`
     $location: CreateConferenceLocationInput!
     $tags: [CreateConferenceTagInput]
     $description: String
+    $image: CreateConferenceImageInput
   ) {
     createConference(
       data: {
@@ -49,6 +50,7 @@ const CREATE_CONFERENCE = gql`
         location: $location
         tags: $tags
         description: $description
+        image: $image
       }
     ) {
       id

@@ -108,3 +108,16 @@ export const customRequest = async ({ file, headers, onError, onSuccess }) => {
     onError(e);
   }
 };
+
+export const setImageParams = (url, params) => {
+  // if img hosted not in cloudinary, don't modify it
+  if (!url.includes('cloudinary.com')) {
+    return url;
+  }
+  // 7 is length of 'upload/' string
+  const sliceIndex = url.indexOf('upload/') + 7;
+  const start = url.slice(0, sliceIndex);
+  const end = url.slice(sliceIndex);
+
+  return `${start}${params}/${end}`;
+};

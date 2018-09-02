@@ -3,6 +3,8 @@ import { List, Avatar } from 'antd';
 
 import PublishConferenceButton from './PublishConferenceButton';
 import DeleteConferenceButton from './DeleteConferenceButton';
+import { setImageParams } from '../../helpers';
+import { THUMBNAILS_OPTIONS } from '../../constants';
 
 class ApproveList extends React.Component {
   render() {
@@ -40,7 +42,13 @@ class ApproveList extends React.Component {
               ]}
             >
               <List.Item.Meta
-                avatar={item.image && <Avatar src={item.image.src} />}
+                avatar={
+                  item.image && (
+                    <Avatar
+                      src={setImageParams(item.image.src, THUMBNAILS_OPTIONS)}
+                    />
+                  )
+                }
                 title={<a href={item.url}>{item.name}</a>}
                 description={item.description}
               />

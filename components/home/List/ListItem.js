@@ -2,6 +2,8 @@ import * as React from 'react';
 import { List as AntList, Tag, Button } from 'antd';
 
 import ListItemDescription from './ListItemDescription';
+import { setImageParams } from '../../helpers';
+import { THUMBNAILS_OPTIONS } from '../../constants';
 
 const ListItem = ({ item }) => {
   return (
@@ -23,8 +25,12 @@ const ListItem = ({ item }) => {
           <div className="block">
             <img
               className="thumbnail"
-              alt="logo"
-              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+              alt={item.image ? item.image.alt : 'conf logo'}
+              src={
+                item.image
+                  ? setImageParams(item.image.src, THUMBNAILS_OPTIONS)
+                  : 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
+              }
             />
             {item.description}
           </div>
