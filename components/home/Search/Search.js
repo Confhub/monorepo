@@ -5,55 +5,40 @@ import TagSelector from '../../TagSelector';
 import LocationSelector from '../../LocationSelector';
 
 const priceOptions = [
-  { label: '💵 < $500', value: 'less-than-500' },
-  { label: '💵 < $1000', value: 'less-than-1000' },
+  { id: 0, label: '💵 < $500', value: 'less-than-500' },
+  { id: 1, label: '💵 < $1000', value: 'less-than-1000' },
 ];
 
 const timeOptions = [
-  { label: '⏰ < 1 month', value: 'january' },
-  { label: '⏰ < 3 months', value: 'february' },
-  { label: '⏰ < 6 month', value: 'march' },
-  { label: '⏰ < 1 year', value: 'april' },
+  { id: 0, label: '⏰ < 1 month', value: 'january' },
+  { id: 1, label: '⏰ < 3 months', value: 'february' },
+  { id: 2, label: '⏰ < 6 month', value: 'march' },
+  { id: 3, label: '⏰ < 1 year', value: 'april' },
 ];
 
 const locationOptions = [
-  { label: '🚴‍ Current city', value: 'europe' },
-  { label: '🚗 < 500 Km', value: 'north-america' },
-  { label: '✈️ < 1000 Km', value: 'latin-america' },
+  { id: 0, label: '🚴‍ Current city', value: 'europe' },
+  { id: 1, label: '🚗 < 500 Km', value: 'north-america' },
+  { id: 2, label: '✈️ < 1000 Km', value: 'latin-america' },
 ];
 
 const continentOptions = [
-  { label: '🌎 North America', value: 'north-america' },
-  { label: '☀️ Latin America', value: 'latin-america' },
-  { label: '🇪🇺 Europe', value: 'europe' },
-  { label: '🌍 Africa', value: 'africa' },
-  { label: '🕌 Middle East', value: 'middle-east' },
-  { label: '⛩ Asia', value: 'asia' },
-  { label: '🏄 Oceania', value: 'oceania' },
-];
-
-const monthOptions = [
-  { label: 'Jan', value: 'january' },
-  { label: 'Feb', value: 'february' },
-  { label: 'Mar', value: 'march' },
-  { label: 'Apr', value: 'april' },
-  { label: 'May', value: 'may' },
-  { label: 'Jun', value: 'june' },
-  { label: 'Jul', value: 'july' },
-  { label: 'Aug', value: 'august' },
-  { label: 'Sep', value: 'september' },
-  { label: 'Oct', value: 'october' },
-  { label: 'Nov', value: 'november' },
-  { label: 'Dec', value: 'december' },
+  { id: 0, label: '🌎 North America', value: 'north-america' },
+  { id: 1, label: '💃🏻 Latin America', value: 'latin-america' },
+  { id: 2, label: '🇪🇺 Europe', value: 'europe' },
+  { id: 3, label: '🌍 Africa', value: 'africa' },
+  { id: 4, label: '🕌 Middle East', value: 'middle-east' },
+  { id: 5, label: '⛩ Asia', value: 'asia' },
+  { id: 6, label: '🏄 Oceania', value: 'oceania' },
 ];
 
 const languagesOptions = [
-  { label: '🇬🇧 English', value: 'english' },
-  { label: '🇪🇸 Spanish', value: 'spanish' },
-  { label: '🇫🇷 French', value: 'french' },
-  { label: '🇨🇳 Chinese', value: 'chenese' },
-  { label: '🇷🇺 Russian', value: 'russian' },
-  { label: '🇮🇳 Hindi', value: 'hindi' },
+  { id: 0, label: '🇬🇧 English', value: 'english' },
+  { id: 1, label: '🇪🇸 Spanish', value: 'spanish' },
+  { id: 2, label: '🇫🇷 French', value: 'french' },
+  { id: 3, label: '🇨🇳 Chinese', value: 'chenese' },
+  { id: 4, label: '🇷🇺 Russian', value: 'russian' },
+  { id: 5, label: '🇮🇳 Hindi', value: 'hindi' },
 ];
 
 class Search extends React.Component {
@@ -89,8 +74,10 @@ class Search extends React.Component {
         />
         <div className="group-wrapper first">
           <Radio.Group buttonStyle="solid" size="large">
-            {priceOptions.map((item, id) => (
-              <Radio.Button value={item.value}>{item.label}</Radio.Button>
+            {priceOptions.map(item => (
+              <Radio.Button key={item.id} value={item.value}>
+                {item.label}
+              </Radio.Button>
             ))}
           </Radio.Group>
         </div>
@@ -103,30 +90,38 @@ class Search extends React.Component {
         </div>
         <div className="group-wrapper">
           <Radio.Group buttonStyle="solid" size="large">
-            {timeOptions.map((item, id) => (
-              <Radio.Button value={item.value}>{item.label}</Radio.Button>
+            {timeOptions.map(item => (
+              <Radio.Button key={item.id} value={item.value}>
+                {item.label}
+              </Radio.Button>
             ))}
           </Radio.Group>
         </div>
         <div>
           <Radio.Group buttonStyle="solid" size="large">
-            {locationOptions.map((item, id) => (
-              <Radio.Button value={item.value}>{item.label}</Radio.Button>
+            {locationOptions.map(item => (
+              <Radio.Button key={item.id} value={item.value}>
+                {item.label}
+              </Radio.Button>
             ))}
           </Radio.Group>
         </div>
         or
         <div className="group-wrapper">
           <Radio.Group buttonStyle="solid" size="large">
-            {continentOptions.map((item, id) => (
-              <Radio.Button value={item.value}>{item.label}</Radio.Button>
+            {continentOptions.map(item => (
+              <Radio.Button key={item.id} value={item.value}>
+                {item.label}
+              </Radio.Button>
             ))}
           </Radio.Group>
         </div>
         <div className="group-wrapper">
           <Radio.Group buttonStyle="solid" size="large">
-            {languagesOptions.map((item, id) => (
-              <Radio.Button value={item.value}>{item.label}</Radio.Button>
+            {languagesOptions.map(item => (
+              <Radio.Button key={item.id} value={item.value}>
+                {item.label}
+              </Radio.Button>
             ))}
           </Radio.Group>
         </div>

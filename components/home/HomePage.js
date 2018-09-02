@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Search from './Search/Search';
-import ListContainer from './List/ListContainer';
-import MapContainer from './Map/MapContainer';
+import Search from "./Search/Search";
+import ListContainer from "./List/ListContainer";
+import MapContainer from "./Map/MapContainer";
 
 const HomePage = ({ data }) => (
   <div className="root">
@@ -16,10 +16,9 @@ const HomePage = ({ data }) => (
     <style jsx>{`
       .root {
         display: grid;
-        grid-template-columns: 60% 1fr;
-        grid-template-rows: 100%;
-        grid-template-areas: 'map sidebar';
-        height: 100%;
+        grid-template-columns: 530px 1fr;
+        grid-template-areas: "sidebar map";
+        height: 100vh;
       }
 
       .map {

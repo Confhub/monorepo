@@ -77,14 +77,16 @@ const Header = ({ isAuth, userData, signOut }) => (
         </Menu.SubMenu>
       )}
 
-      {/* {isAuth && (
-        <div className={`role-badge ${userData.role.toLowerCase()}`}>
-          {userData.role}
-        </div>
-      )} */}
+      {isAuth && (
+        <Menu.Item key="role" disabled>
+          <div className={`role-badge ${userData.role.toLowerCase()}`}>
+            {userData.role}
+          </div>
+        </Menu.Item>
+      )}
     </Menu>
 
-    <style jsx>{`
+    <style jsx global>{`
       .logo {
         width: 120px;
         height: 31px;
