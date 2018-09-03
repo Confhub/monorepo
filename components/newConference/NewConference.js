@@ -16,7 +16,8 @@ import {
   Icon,
 } from 'antd';
 import TagSelector from '../TagSelector';
-import LocationSelector from '../LocationSelector';
+// import LocationSelector from '../LocationSelector';
+import LocationSelector from '../NewLocationSelector';
 import { customRequest } from '../helpers';
 
 const Option = Select.Option;

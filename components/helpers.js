@@ -121,3 +121,60 @@ export const setImageParams = (url, params) => {
 
   return `${start}${params}/${end}`;
 };
+
+////////////////////////
+// GOOGLE PLACES
+////////////////////////
+
+// IMPORTANT: session token can save a lot of money, please don't remove it
+// some info - https://developers.google.com/places/web-service/autocomplete#session_tokens
+const sessiontoken = Math.random()
+  .toString(36)
+  .slice(2);
+
+// getting detailed data about place by it's id
+// more info
+// https://developers.google.com/places/web-service/details
+export const getPlaceDetails = async placeid => {
+  const params = {
+    key: 'AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI',
+    placeid,
+    fields: 'geometry,formatted_address,address_components',
+    language: 'en',
+    sessiontoken,
+  };
+  const url =
+    'https://maps.googleapis.com/maps/api/place/details/json?' +
+    queryString.stringify(params);
+
+  const res = await fetch(url, { mode: 'cors' });
+
+  const { result } = await res.json();
+
+  return result;
+};
+
+// getting autocomplete data by query
+// more info
+// https://developers.google.com/places/web-service/autocomplete
+export const getPlaceAutocomplete = async query => {
+  const params = {
+    key: 'AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI',
+    input: query,
+    language: 'en',
+    sessiontoken,
+  };
+  const url =
+    'https://maps.googleapis.com/maps/api/place/autocomplete/json?' +
+    queryString.stringify(params);
+
+  try {
+    const res = await fetch(url);
+
+    const { predictions } = await res.json();
+
+    return predictions;
+  } catch (e) {
+    console.log(e);
+  }
+};
