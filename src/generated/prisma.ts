@@ -633,7 +633,6 @@ input CoordinatesUpdateInput {
 input CoordinatesUpdateOneInput {
   create: CoordinatesCreateInput
   connect: CoordinatesWhereUniqueInput
-  disconnect: Boolean
   delete: Boolean
   update: CoordinatesUpdateDataInput
   upsert: CoordinatesUpsertNestedInput
@@ -1234,10 +1233,11 @@ input ImageWhereUniqueInput {
 type Location implements Node {
   id: ID!
   venueName: String
+  continent: String!
   country: String!
   city: String!
-  address: String
-  coordinates(where: CoordinatesWhereInput): Coordinates
+  address: String!
+  coordinates(where: CoordinatesWhereInput): Coordinates!
 }
 
 """A connection to a list of items."""
@@ -1252,10 +1252,11 @@ type LocationConnection {
 
 input LocationCreateInput {
   venueName: String
+  continent: String!
   country: String!
   city: String!
-  address: String
-  coordinates: CoordinatesCreateOneInput
+  address: String!
+  coordinates: CoordinatesCreateOneInput!
 }
 
 input LocationCreateOneInput {
@@ -1277,6 +1278,8 @@ enum LocationOrderByInput {
   id_DESC
   venueName_ASC
   venueName_DESC
+  continent_ASC
+  continent_DESC
   country_ASC
   country_DESC
   city_ASC
@@ -1292,9 +1295,10 @@ enum LocationOrderByInput {
 type LocationPreviousValues {
   id: ID!
   venueName: String
+  continent: String!
   country: String!
   city: String!
-  address: String
+  address: String!
 }
 
 type LocationSubscriptionPayload {
@@ -1338,6 +1342,7 @@ input LocationSubscriptionWhereInput {
 
 input LocationUpdateDataInput {
   venueName: String
+  continent: String
   country: String
   city: String
   address: String
@@ -1346,6 +1351,7 @@ input LocationUpdateDataInput {
 
 input LocationUpdateInput {
   venueName: String
+  continent: String
   country: String
   city: String
   address: String
@@ -1454,6 +1460,46 @@ input LocationWhereInput {
 
   """All values not ending with the given string."""
   venueName_not_ends_with: String
+  continent: String
+
+  """All values that are not equal to given value."""
+  continent_not: String
+
+  """All values that are contained in given list."""
+  continent_in: [String!]
+
+  """All values that are not contained in given list."""
+  continent_not_in: [String!]
+
+  """All values less than the given value."""
+  continent_lt: String
+
+  """All values less than or equal the given value."""
+  continent_lte: String
+
+  """All values greater than the given value."""
+  continent_gt: String
+
+  """All values greater than or equal the given value."""
+  continent_gte: String
+
+  """All values containing the given string."""
+  continent_contains: String
+
+  """All values not containing the given string."""
+  continent_not_contains: String
+
+  """All values starting with the given string."""
+  continent_starts_with: String
+
+  """All values not starting with the given string."""
+  continent_not_starts_with: String
+
+  """All values ending with the given string."""
+  continent_ends_with: String
+
+  """All values not ending with the given string."""
+  continent_not_ends_with: String
   country: String
 
   """All values that are not equal to given value."""
@@ -2696,6 +2742,8 @@ export type LocationOrderByInput =   'id_ASC' |
   'id_DESC' |
   'venueName_ASC' |
   'venueName_DESC' |
+  'continent_ASC' |
+  'continent_DESC' |
   'country_ASC' |
   'country_DESC' |
   'city_ASC' |
@@ -2733,10 +2781,11 @@ export interface TagWhereUniqueInput {
 
 export interface LocationCreateInput {
   venueName?: String
+  continent: String
   country: String
   city: String
-  address?: String
-  coordinates?: CoordinatesCreateOneInput
+  address: String
+  coordinates: CoordinatesCreateOneInput
 }
 
 export interface SocialUpdateDataInput {
@@ -2972,7 +3021,6 @@ export interface ConferenceSubscriptionWhereInput {
 export interface CoordinatesUpdateOneInput {
   create?: CoordinatesCreateInput
   connect?: CoordinatesWhereUniqueInput
-  disconnect?: Boolean
   delete?: Boolean
   update?: CoordinatesUpdateDataInput
   upsert?: CoordinatesUpsertNestedInput
@@ -2991,6 +3039,7 @@ export interface UserSubscriptionWhereInput {
 
 export interface LocationUpdateDataInput {
   venueName?: String
+  continent?: String
   country?: String
   city?: String
   address?: String
@@ -2999,6 +3048,7 @@ export interface LocationUpdateDataInput {
 
 export interface LocationUpdateInput {
   venueName?: String
+  continent?: String
   country?: String
   city?: String
   address?: String
@@ -3517,6 +3567,20 @@ export interface LocationWhereInput {
   venueName_not_starts_with?: String
   venueName_ends_with?: String
   venueName_not_ends_with?: String
+  continent?: String
+  continent_not?: String
+  continent_in?: String[] | String
+  continent_not_in?: String[] | String
+  continent_lt?: String
+  continent_lte?: String
+  continent_gt?: String
+  continent_gte?: String
+  continent_contains?: String
+  continent_not_contains?: String
+  continent_starts_with?: String
+  continent_not_starts_with?: String
+  continent_ends_with?: String
+  continent_not_ends_with?: String
   country?: String
   country_not?: String
   country_in?: String[] | String
@@ -3680,10 +3744,11 @@ export interface AggregateSocial {
 export interface Location extends Node {
   id: ID_Output
   venueName?: String
+  continent: String
   country: String
   city: String
-  address?: String
-  coordinates?: Coordinates
+  address: String
+  coordinates: Coordinates
 }
 
 /*
@@ -3837,9 +3902,10 @@ export interface SocialEdge {
 export interface LocationPreviousValues {
   id: ID_Output
   venueName?: String
+  continent: String
   country: String
   city: String
-  address?: String
+  address: String
 }
 
 /*

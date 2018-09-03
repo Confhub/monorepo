@@ -15,6 +15,7 @@ import {
 import { Context } from '../../../utils';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 import GraphQLConference from '../outputs/Conference';
+import { detectContinent } from './helpers';
 
 interface ArgsType {
   data: Conference;
@@ -106,6 +107,7 @@ const generateLocation = ({
 }: Location): LocationCreateOneInput => ({
   create: {
     venueName: venueName || '',
+    continent: detectContinent(country.toLowerCase()),
     country,
     city,
     address,

@@ -42,10 +42,11 @@ type Image {
 type Location {
   id: ID! @unique
   venueName: String
+  continent: String!
   country: String!
   city: String!
-  address: String
-  coordinates: Coordinates
+  address: String!
+  coordinates: Coordinates!
 }
 
 type Coordinates {
