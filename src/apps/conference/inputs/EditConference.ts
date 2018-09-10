@@ -15,10 +15,10 @@ import {
 } from './ConferenceShared';
 
 export default new GraphQLInputObjectType({
-  name: 'CreateConferenceInput',
+  name: 'EditConferenceInput',
   fields: {
     name: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: GraphQLString,
     },
     description: {
       type: GraphQLString,
@@ -30,16 +30,16 @@ export default new GraphQLInputObjectType({
       type: GraphQLCreateConferenceImageInput,
     },
     url: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: GraphQLString,
     },
     startDate: {
-      type: new GraphQLNonNull(GraphQLDateTime),
+      type: GraphQLDateTime,
     },
     endDate: {
-      type: new GraphQLNonNull(GraphQLDateTime),
+      type: GraphQLDateTime,
     },
     location: {
-      type: new GraphQLNonNull(GraphQLCreateConferenceLocationInput),
+      type: GraphQLCreateConferenceLocationInput,
     },
     social: {
       type: GraphQLCreateConferenceSocialInput,
