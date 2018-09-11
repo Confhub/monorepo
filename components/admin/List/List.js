@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import { List, Avatar } from 'antd';
 
 import PublishConferenceButton from './PublishConferenceButton';
@@ -26,7 +27,15 @@ class ApproveList extends React.Component {
           renderItem={item => (
             <List.Item
               actions={[
-                <a key="link">edit</a>,
+                <Link
+                  key="link"
+                  href={{
+                    pathname: '/edit-conference',
+                    query: { id: item.id },
+                  }}
+                >
+                  <a>edit</a>
+                </Link>,
                 publishStatus === 'DRAFT' && (
                   <PublishConferenceButton
                     key="button"

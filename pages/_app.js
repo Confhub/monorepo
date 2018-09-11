@@ -19,7 +19,7 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App {
-  static async getInitialProps({ ctx }) {
+  static async getInitialProps({ ctx, query }) {
     const { currentUser } = await checkLoggedIn(ctx.apolloClient);
 
     if (ctx.pathname === '/signin' || ctx.pathname === '/create-account') {
@@ -35,10 +35,10 @@ class MyApp extends App {
     }
 
     if (currentUser.user) {
-      return { isAuth: true, userData: currentUser.user };
+      return { isAuth: true, userData: currentUser.user, query: ctx.query };
     }
 
-    return { isAuth: false, userData: {} };
+    return { isAuth: false, userData: {}, query: ctx.query };
   }
 
   signOut = () => {
@@ -52,13 +52,13 @@ class MyApp extends App {
   };
 
   render() {
-    const { Component, pageProps, apolloClient, isAuth, userData } = this.props;
+    const { Component, apolloClient, isAuth, userData, query } = this.props;
 
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
           <Layout isAuth={isAuth} userData={userData} signOut={this.signOut}>
-            <Component {...pageProps} userData={userData} />
+            <Component query={query} userData={userData} />
           </Layout>
         </ApolloProvider>
       </Container>

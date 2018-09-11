@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { AutoComplete, Icon, Select } from 'antd';
 import idx from 'idx';
+import throttle from 'lodash/throttle';
 import { getPlaceAutocomplete, getPlaceDetails } from './helpers';
 
 const Option = Select.Option;
 
 class LocationSelector extends React.Component {
   state = {
-    location: '',
+    location: this.props.initialValue || '',
     locationList: null,
   };
 
@@ -16,10 +17,18 @@ class LocationSelector extends React.Component {
       location,
     });
 
+    this.getLocationListThrottled(location);
+  };
+
+  getLocationList = async location => {
     const locationList = await getPlaceAutocomplete(location);
 
     this.setState({ locationList });
   };
+
+  getLocationListThrottled = throttle(this.getLocationList, 600, {
+    leading: false,
+  });
 
   handleLocationSelect = async location => {
     const { getLocation, setLocation } = this.props;
@@ -40,7 +49,10 @@ class LocationSelector extends React.Component {
     const name = idx(placeDetails, _ => _.formatted_address) || null;
 
     const city =
-      placeDetails.address_components &&
+      (placeDetails.address_components &&
+        placeDetails.address_components.find(i =>
+          i.types.includes('locality'),
+        )) ||
       placeDetails.address_components.find(i =>
         i.types.includes('administrative_area_level_1'),
       );
@@ -49,7 +61,7 @@ class LocationSelector extends React.Component {
       placeDetails.address_components.find(i => i.types.includes('country'));
 
     setLocation({
-      center: idx(placeDetails, _ => _.geometry.location) || null,
+      coordinates: idx(placeDetails, _ => _.geometry.location) || null,
       name,
       address: name,
       city: city ? city.long_name : null,
