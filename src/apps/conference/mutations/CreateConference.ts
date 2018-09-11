@@ -1,21 +1,15 @@
 import { GraphQLNonNull } from 'graphql';
-import tslug from 'tslug';
 
-import {
-  Conference,
-  Image,
-  ImageCreateOneInput,
-  Location,
-  LocationCreateOneInput,
-  Social,
-  SocialCreateOneInput,
-  Tag,
-  TagCreateManyInput,
-} from '../../../generated/prisma';
+import { Conference } from '../../../generated/prisma';
 import { Context } from '../../../utils';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 import GraphQLConference from '../outputs/Conference';
-import { detectContinent } from './helpers';
+import {
+  generateLocation,
+  generateTagsCreate,
+  generateImage,
+  generateSocial,
+} from './ConferenceShared';
 
 interface ArgsType {
   data: Conference;
@@ -51,7 +45,7 @@ export default {
         data: {
           name,
           description,
-          tags: tags ? generateTags(tags) : null,
+          tags: tags ? generateTagsCreate(tags) : null,
           image: image ? generateImage(image, name) : null,
           url,
           startDate,
@@ -63,73 +57,4 @@ export default {
       info,
     );
   },
-};
-
-const generateTags = (tags: Tag[]): TagCreateManyInput => {
-  const connect = [];
-  const create = [];
-
-  tags.map(tag => {
-    if (tag.id) {
-      return connect.push({
-        id: tag.id,
-      });
-    }
-
-    return create.push({
-      name: tag.name,
-      slug: tslug(tag.name, { decamelize: false }),
-    });
-  });
-
-  return {
-    connect,
-    create,
-  };
-};
-
-const generateImage = (
-  { src, alt }: Image,
-  name: string,
-): ImageCreateOneInput => ({
-  create: {
-    src: src || 'http://via.placeholder.com/350x150',
-    alt: alt || tslug(name),
-  },
-});
-
-const generateLocation = ({
-  venueName,
-  country,
-  city,
-  address,
-  coordinates,
-}: Location): LocationCreateOneInput => ({
-  create: {
-    venueName: venueName || '',
-    continent: detectContinent(country.toLowerCase()),
-    country,
-    city,
-    address,
-    coordinates: {
-      create: {
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude,
-      },
-    },
-  },
-});
-
-const generateSocial = ({
-  facebook,
-  twitter,
-  instagram,
-}: Social): SocialCreateOneInput => {
-  return {
-    create: {
-      facebook,
-      twitter,
-      instagram,
-    },
-  };
 };
