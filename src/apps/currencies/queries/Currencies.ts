@@ -6,7 +6,12 @@ import GraphQLTag from '../outputs/Currency';
 
 export default {
   type: new GraphQLList(GraphQLTag),
-  resolve: (_: any, args: any, ctx: Context, info: any): Promise<Currency> => {
+  resolve: (
+    _: any,
+    args: any,
+    ctx: Context,
+    info: any,
+  ): Promise<Currency[]> => {
     return ctx.db.query.currencies(info);
   },
 };

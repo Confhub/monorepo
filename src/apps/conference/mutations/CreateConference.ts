@@ -5,10 +5,10 @@ import { Context } from '../../../utils';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 import GraphQLConference from '../outputs/Conference';
 import {
-  generateLocation,
-  generateTagsCreate,
   generateImage,
+  generateLocation,
   generateSocial,
+  generateTagsCreate,
 } from './ConferenceShared';
 
 interface ArgsType {

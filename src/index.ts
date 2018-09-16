@@ -1,37 +1,24 @@
-import { GraphQLServer } from 'graphql-yoga';
+import { ApolloServer } from 'apollo-server';
 
 import Schema from './Schema';
 import { createContext } from './utils';
 
-const options = {
-  port: parseInt(process.env.PORT, 10) || 4000,
-  debug: process.env.NODE_ENV === 'development',
-};
+const port = parseInt(process.env.PORT, 10) || 4000;
 
-const server = new GraphQLServer({
+const server = new ApolloServer({
   schema: Schema,
-  context: async ({ request, connection }) => {
-    if (connection) {
-      const token =
-        connection.context.Authorization ||
-        connection.context.authorization ||
-        process.env.DEV_API_TOKEN ||
-        '';
-
-      return createContext(token);
-    } else {
-      if (!request || !request.headers) {
-        return;
-      }
-      const token =
-        request.headers.authorization || process.env.DEV_API_TOKEN || '';
-
-      return createContext(token);
+  context: async ({ req }) => {
+    if (!req || !req.headers) {
+      return;
     }
+
+    const token = req.headers.authorization || process.env.DEV_API_TOKEN || '';
+
+    return createContext(token);
   },
 });
 
-server.start(options, ({ port }) => {
+server.listen({ port }).then(({ url }) => {
   // tslint:disable-next-line:no-console
-  console.log(`🚀 GraphQL server listening at http://localhost:${port}/`);
+  console.log(`🚀 GraphQL server listening at ${url}`);
 });

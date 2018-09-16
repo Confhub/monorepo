@@ -1,6 +1,7 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { Context, getUserId, getUserRole } from '../../../utils';
+import { Conference, ConferenceUpdateInput } from '../../../generated/prisma';
+import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLEditConferenceInput from '../inputs/EditConference';
 import GraphQLConference from '../outputs/Conference';
 import {
@@ -9,7 +10,6 @@ import {
   generateSocial,
   generateTagsUpdate,
 } from './ConferenceShared';
-import { Conference, ConferenceUpdateInput } from '../../../generated/prisma';
 
 interface ArgsType {
   id: string;

@@ -8,9 +8,9 @@ import {
 } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import {
-  GraphQLCreateConferenceSocialInput,
-  GraphQLCreateConferenceLocationInput,
   GraphQLCreateConferenceImageInput,
+  GraphQLCreateConferenceLocationInput,
+  GraphQLCreateConferenceSocialInput,
   GraphQLCreateConferenceTagInput,
 } from './ConferenceShared';
 

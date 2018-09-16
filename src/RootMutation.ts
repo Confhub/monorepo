@@ -1,9 +1,9 @@
 import { GraphQLObjectType } from 'graphql';
 
 import CreateConference from './apps/conference/mutations/CreateConference';
-import UpdateConference from './apps/conference/mutations/UpdateConference';
 import DeleteConference from './apps/conference/mutations/DeleteConference';
 import PublishConference from './apps/conference/mutations/PublishConference';
+import UpdateConference from './apps/conference/mutations/UpdateConference';
 import CreateCurrency from './apps/currencies/mutations/CreateCurrency';
 import DeleteCurrency from './apps/currencies/mutations/DeleteCurrency';
 import UpdateCurrency from './apps/currencies/mutations/UpdateCurrency';

@@ -114,7 +114,7 @@ export default {
     args: ArgsType,
     ctx: Context,
     info: any,
-  ): Promise<Conference> => {
+  ): Promise<Conference[]> => {
     const makeQuery = () => {
       if (args && args.sortBy) {
         const { publishStatus, tags, location } = args.sortBy;
