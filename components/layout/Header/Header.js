@@ -12,7 +12,7 @@ const Header = ({ isAuth, userData, signOut }) => (
       <Menu.Item key="newConference">
         <Link href="/new-conference" prefetch>
           <a>
-            <Icon type="form" />
+            <Icon type="form" theme="outlined" />
             Add new conference
           </a>
         </Link>
@@ -22,7 +22,7 @@ const Header = ({ isAuth, userData, signOut }) => (
         <Menu.Item key="signin">
           <Link href="/signin" prefetch>
             <a>
-              <Icon type="mail" />
+              <Icon type="mail" theme="outlined" />
               Sign In
             </a>
           </Link>
@@ -33,7 +33,7 @@ const Header = ({ isAuth, userData, signOut }) => (
         <Menu.Item key="signup">
           <Link href="/create-account" prefetch>
             <a>
-              <Icon type="mail" />
+              <Icon type="mail" theme="outlined" />
               Sign Up
             </a>
           </Link>
@@ -45,7 +45,7 @@ const Header = ({ isAuth, userData, signOut }) => (
           <Menu.Item key="admin">
             <Link href="/admin" prefetch>
               <a>
-                <Icon type="dashboard" />
+                <Icon type="dashboard" theme="outlined" />
                 Admin Panel
               </a>
             </Link>
@@ -56,21 +56,21 @@ const Header = ({ isAuth, userData, signOut }) => (
         <Menu.SubMenu
           title={
             <span>
-              <Icon type="user" />
+              <Icon type="user" theme="outlined" />
               <span>{`${userData.name} (${userData.email})`}</span>
             </span>
           }
         >
           <Menu.Item key="profile">
-            <Icon type="profile" /> Profile
+            <Icon type="profile" theme="outlined" /> Profile
           </Menu.Item>
           <Menu.Item key="settings">
-            <Icon type="setting" /> Settings
+            <Icon type="setting" theme="outlined" /> Settings
           </Menu.Item>
 
           <Menu.Item key="signout">
             <a onClick={signOut}>
-              <Icon type="poweroff" />
+              <Icon type="poweroff" theme="outlined" />
               Sign Out
             </a>
           </Menu.Item>

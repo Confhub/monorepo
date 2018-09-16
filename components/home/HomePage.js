@@ -1,23 +1,23 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Search from "./Search/Search";
-import ListContainer from "./List/ListContainer";
-import MapContainer from "./Map/MapContainer";
+import Search from './Search/Search';
+import ListContainer from './List/ListContainer';
+import MapContainer from './Map/MapContainer';
 
 const HomePage = ({ data }) => (
   <div className="root">
-    <div id="map-wrap" className="map">
-      <MapContainer items={data} />
-    </div>
     <div className="sidebar">
       <Search />
       <ListContainer items={data} />
+    </div>
+    <div id="map-wrap" className="map">
+      <MapContainer items={data} />
     </div>
     <style jsx>{`
       .root {
         display: grid;
         grid-template-columns: 530px 1fr;
-        grid-template-areas: "sidebar map";
+        grid-template-areas: 'sidebar map';
         height: 100vh;
       }
 

@@ -1,12 +1,43 @@
 import * as React from 'react';
-import { Checkbox, Radio } from 'antd';
+import { Checkbox, Row, Col, Radio } from 'antd';
 import { HomePageContext } from '../HomePageContext';
 import TagSelector from '../../TagSelector';
-import LocationSelector from '../../LocationSelector';
+
+const categoryOptions = [
+  {
+    id: 0,
+    label: '💻 Tech',
+    value: 'tech',
+    disabled: false,
+    defaultChecked: true,
+  },
+  {
+    id: 1,
+    label: '💊 Medicine',
+    value: 'medicine',
+    disabled: true,
+    defaultChecked: false,
+  },
+  {
+    id: 2,
+    label: '👔 Business',
+    value: 'business',
+    disabled: true,
+    defaultChecked: false,
+  },
+  {
+    id: 3,
+    label: '👩‍💼 Law',
+    value: 'law',
+    disabled: true,
+    defaultChecked: false,
+  },
+];
 
 const priceOptions = [
-  { id: 0, label: '💵 < $500', value: 'less-than-500' },
-  { id: 1, label: '💵 < $1000', value: 'less-than-1000' },
+  { id: 0, label: '💵 > 0', value: 'more-than-0' },
+  { id: 1, label: '💵 < $500', value: 'less-than-500' },
+  { id: 2, label: '💵 < $1000', value: 'less-than-1000' },
 ];
 
 const timeOptions = [
@@ -36,10 +67,34 @@ const languagesOptions = [
   { id: 0, label: '🇬🇧 English', value: 'english' },
   { id: 1, label: '🇪🇸 Spanish', value: 'spanish' },
   { id: 2, label: '🇫🇷 French', value: 'french' },
-  { id: 3, label: '🇨🇳 Chinese', value: 'chenese' },
+  { id: 3, label: '🇨🇳 Сhinese', value: 'chinese' },
   { id: 4, label: '🇷🇺 Russian', value: 'russian' },
   { id: 5, label: '🇮🇳 Hindi', value: 'hindi' },
 ];
+
+const renderCheckbox = (item, colSpan) => (
+  <Col span={colSpan} key={item.id}>
+    <Checkbox
+      value={item.value}
+      disabled={item.disabled}
+      defaultChecked={item.defaultChecked}
+    >
+      {item.label}
+    </Checkbox>
+  </Col>
+);
+
+const renderRadio = (item, colSpan) => (
+  <Col span={colSpan} key={item.id}>
+    <Radio
+      value={item.value}
+      disabled={item.disabled}
+      defaultChecked={item.defaultChecked}
+    >
+      {item.label}
+    </Radio>
+  </Col>
+);
 
 class Search extends React.Component {
   setLocation = ({ center }) => {
@@ -57,74 +112,59 @@ class Search extends React.Component {
 
     return (
       <div className="root">
-        {/* <label>
-          <h4>Location:</h4>
-          <LocationSelector
-            isSearch={true}
-            loading={locationLoading}
-            getLocation={getLocation}
-            setLocation={this.setLocation}
+        {/* <div className="group-wrapper">
+          <CheckboxDiv options={categoryOptions} />
+        </div> */}
+        <h4>Categories</h4>
+        <div className="group-wrapper">
+          <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
+            <Row>{categoryOptions.map(item => renderCheckbox(item, 6))}</Row>
+          </Checkbox.Group>
+        </div>
+        <h4>Topics</h4>
+        <div className="group-wrapper">
+          <TagSelector
+            optionKey="slug"
+            value={state.tags}
+            onChange={updateTags}
           />
-        </label> */}
-        <h4>Categories:</h4>
-        <TagSelector
-          optionKey="slug"
-          value={state.tags}
-          onChange={updateTags}
-        />
-        <div className="group-wrapper first">
-          <Radio.Group buttonStyle="solid" size="large">
-            {priceOptions.map(item => (
-              <Radio.Button key={item.id} value={item.value}>
-                {item.label}
-              </Radio.Button>
-            ))}
-          </Radio.Group>
         </div>
+        <h4>Price</h4>
         <div className="group-wrapper">
-          <Radio.Group buttonStyle="solid" size="large">
-            <Radio.Button onChange={() => console.log('updated')}>
-              🐦 Has Early bird price
-            </Radio.Button>
+          <Radio.Group style={{ width: '100%' }} onChange={() => null}>
+            <Row>{priceOptions.map(item => renderRadio(item, 8))}</Row>
           </Radio.Group>
+          <Row>
+            <Col span={24}>
+              <Checkbox onChange={() => null}>🐦 Has Early Bird price</Checkbox>
+            </Col>
+          </Row>
         </div>
+        <h4>Time</h4>
         <div className="group-wrapper">
-          <Radio.Group buttonStyle="solid" size="large">
-            {timeOptions.map(item => (
-              <Radio.Button key={item.id} value={item.value}>
-                {item.label}
-              </Radio.Button>
-            ))}
+          <Radio.Group style={{ width: '100%' }} onChange={() => null}>
+            <Row>{timeOptions.map(item => renderRadio(item, 8))}</Row>
           </Radio.Group>
         </div>
+        <h4>Region</h4>
         <div>
-          <Radio.Group buttonStyle="solid" size="large">
-            {locationOptions.map(item => (
-              <Radio.Button key={item.id} value={item.value}>
-                {item.label}
-              </Radio.Button>
-            ))}
+          <Radio.Group style={{ width: '100%' }} onChange={() => null}>
+            <Row>{locationOptions.map(item => renderRadio(item, 8))}</Row>
           </Radio.Group>
         </div>
         or
         <div className="group-wrapper">
-          <Radio.Group buttonStyle="solid" size="large">
-            {continentOptions.map(item => (
-              <Radio.Button key={item.id} value={item.value}>
-                {item.label}
-              </Radio.Button>
-            ))}
-          </Radio.Group>
+          <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
+            <Row>{continentOptions.map(item => renderCheckbox(item, 8))}</Row>
+          </Checkbox.Group>
         </div>
+        <h4>Language</h4>
         <div className="group-wrapper">
-          <Radio.Group buttonStyle="solid" size="large">
-            {languagesOptions.map(item => (
-              <Radio.Button key={item.id} value={item.value}>
-                {item.label}
-              </Radio.Button>
-            ))}
-          </Radio.Group>
+          <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
+            <Row>{languagesOptions.map(item => renderCheckbox(item, 6))}</Row>
+          </Checkbox.Group>
         </div>
+        <p>Call for papers</p>
         <style jsx>{`
           .root {
             padding: 1.5em 0.75em;
