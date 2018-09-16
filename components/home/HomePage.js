@@ -6,20 +6,19 @@ import MapContainer from './Map/MapContainer';
 
 const HomePage = ({ data }) => (
   <div className="root">
-    <div id="map-wrap" className="map">
-      <MapContainer items={data} />
-    </div>
     <div className="sidebar">
       <Search />
       <ListContainer items={data} />
     </div>
+    <div id="map-wrap" className="map">
+      <MapContainer items={data} />
+    </div>
     <style jsx>{`
       .root {
         display: grid;
-        grid-template-columns: 60% 1fr;
-        grid-template-rows: 100%;
-        grid-template-areas: 'map sidebar';
-        height: 100%;
+        grid-template-columns: 530px 1fr;
+        grid-template-areas: 'sidebar map';
+        height: 100vh;
       }
 
       .map {

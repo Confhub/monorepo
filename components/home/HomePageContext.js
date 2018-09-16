@@ -7,38 +7,24 @@ export const HomePageContext = React.createContext();
 export default class HomePageProvider extends React.Component {
   constructor(props) {
     super(props);
-    const {
-      tags,
-      ne_lat, // North-East Latitude (The upper-left corner)
-      ne_lng, // North-East Longitude (The upper-right corner)
-      sw_lat, // South-West Latitude (The lower-left corner)
-      sw_lng, // South-East Longitude (The lower-right corner)
-      zoom, // The scale of a map
-    } = props.router.query;
+    const { tags, location } = props.router.query;
 
     this.state = {
       tags: (tags && tags.split(',')) || [],
       mapCenterCoordinates: {
         latitude: 46.366870009004,
         longitude: 6.662937741235142,
-        zoom: 1.8809936544603247,
+        zoom: 4.099026990316624, // The scale of a map
       },
+      mapViewportActive: location ? false : true,
       mapViewport: {
-        neLatitude:
-          (ne_lat && ne_lng && sw_lat && sw_lng && parseFloat(ne_lat)) ||
-          70.25416955053973,
-        neLongitude:
-          (ne_lat && ne_lng && sw_lat && sw_lng && parseFloat(ne_lng)) ||
-          92.56617725833974,
-        swLatitude:
-          (ne_lat && ne_lng && sw_lat && sw_lng && parseFloat(sw_lat)) ||
-          4.726261975313662,
-        swLongitude:
-          (ne_lat && ne_lng && sw_lat && sw_lng && parseFloat(sw_lng)) ||
-          -79.24030177586899,
+        neLatitude: 70.25416955053973, // North-East Latitude (The upper-left corner)
+        neLongitude: 92.56617725833974, // North-East Longitude (The upper-right corner)
+        swLatitude: 4.726261975313662, // South-West Latitude (The lower-left corner)
+        swLongitude: -79.24030177586899, // South-East Longitude (The lower-right corner)
         bearing: 0,
         pitch: 0,
-        width: 900,
+        width: 500,
         height: 500,
       },
       locationLoading: false,
@@ -52,14 +38,11 @@ export default class HomePageProvider extends React.Component {
           state: this.state,
           updateTags: tags => {
             this.setState({ tags }, () => {
-              const { ne_lat, ne_lng, sw_lat, sw_lng } = Router.query;
+              const { location } = Router.query;
               const href = {
                 pathname: '/',
                 query: {
-                  ...(ne_lat &&
-                    ne_lng &&
-                    sw_lat &&
-                    sw_lng && { ne_lat, ne_lng, sw_lat, sw_lng }),
+                  ...(location && { location }),
                   ...(tags.length && {
                     tags: tags.map(tag => tag.slug).join(),
                   }),
@@ -69,26 +52,16 @@ export default class HomePageProvider extends React.Component {
               Router.push(href, href, { shallow: true });
             });
           },
-          updateMapLocation: mapCenterCoordinates => {
+          updateMapPosition: mapCenterCoordinates => {
             this.setState({ mapCenterCoordinates });
           },
-          updateMapViewport: mapViewport => {
-            this.setState({ mapViewport }, () => {
-              const { tags } = Router.query;
-              const href = {
-                pathname: '/',
-                query: {
-                  ne_lat: mapViewport.neLatitude,
-                  ne_lng: mapViewport.neLongitude,
-                  sw_lat: mapViewport.swLatitude,
-                  sw_lng: mapViewport.swLongitude,
-                  zoom: mapViewport.zoom,
-                  ...(tags && { tags }),
-                },
-              };
-
-              Router.push(href, href, { shallow: true });
+          updateMapSize: mapSize => {
+            this.setState({
+              mapViewport: { ...this.state.mapViewport, ...mapSize },
             });
+          },
+          updateMapViewport: mapViewport => {
+            this.setState({ mapViewport });
           },
         }}
       >

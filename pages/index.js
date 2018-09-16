@@ -13,9 +13,17 @@ import HomePageProvider, {
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 export const GET_CONFERENCE_LIST = gql`
-  query conferences($tags: [String], $location: ConferenceSortByLocationInput) {
+  query conferences(
+    $tags: [String]
+    $location: LocationCoordinatesInput
+    $continent: String
+  ) {
     conferences(
-      sortBy: { publishStatus: PUBLISHED, tags: $tags, location: $location }
+      sortBy: {
+        publishStatus: PUBLISHED
+        tags: $tags
+        location: { coordinates: $location, continent: $continent }
+      }
     ) {
       ...ListItem
       ...Map
@@ -27,7 +35,7 @@ export const GET_CONFERENCE_LIST = gql`
 
 class HomePageContainer extends React.Component {
   render() {
-    const { tags, mapViewport } = this.props.context.state;
+    const { tags, mapViewport, mapViewportActive } = this.props.context.state;
     const { neLatitude, neLongitude, swLatitude, swLongitude } = mapViewport;
 
     return (
@@ -35,7 +43,11 @@ class HomePageContainer extends React.Component {
         query={GET_CONFERENCE_LIST}
         variables={{
           tags: tags.map(tag => tag.slug || tag),
-          location: { neLatitude, neLongitude, swLatitude, swLongitude },
+          ...(mapViewportActive
+            ? {
+                location: { neLatitude, neLongitude, swLatitude, swLongitude },
+              }
+            : { continent: 'Europe' }),
         }}
       >
         {({ loading, error, data }) => {

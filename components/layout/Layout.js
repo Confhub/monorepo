@@ -31,7 +31,7 @@ class LayoutComponent extends React.Component {
             </Layout.Content>
           )}
 
-          <Footer className="footer" />
+          {/* <Footer className="footer" /> */}
         </Layout>
 
         <style jsx>{`
