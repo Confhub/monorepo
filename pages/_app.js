@@ -5,6 +5,7 @@ import cookie from 'cookie';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import isEmpty from 'lodash/isEmpty';
+import Head from 'next/head';
 
 import Layout from '../components/layout/Layout';
 import withApollo from '../lib/withApollo';
@@ -56,6 +57,16 @@ class MyApp extends App {
 
     return (
       <Container>
+        <Head>
+          <title>ConfHub</title>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <meta name="description" content="" />
+          <link rel="shortcut icon" href="/static/images/favicon.ico" />
+        </Head>
         <ApolloProvider client={apolloClient}>
           <Layout isAuth={isAuth} userData={userData} signOut={this.signOut}>
             <Component query={query} userData={userData} />
