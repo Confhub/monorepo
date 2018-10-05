@@ -1,7 +1,11 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Mon Sep 03 2018 02:09:30 GMT+0200 (Central European Summer Time)
+# timestamp: Fri Oct 05 2018 16:08:08 GMT+0200 (CEST)
 
 type AggregateConference {
+  count: Int!
+}
+
+type AggregateConferencePrice {
   count: Int!
 }
 
@@ -18,6 +22,10 @@ type AggregateImage {
 }
 
 type AggregateLocation {
+  count: Int!
+}
+
+type AggregatePrice {
   count: Int!
 }
 
@@ -50,6 +58,7 @@ type Conference implements Node {
   location(where: LocationWhereInput): Location!
   social(where: SocialWhereInput): Social
   publishStatus: PUBLISH_STATUS
+  price(where: ConferencePriceWhereInput): ConferencePrice
 }
 
 """A connection to a list of items."""
@@ -73,6 +82,7 @@ input ConferenceCreateInput {
   image: ImageCreateOneInput
   location: LocationCreateOneInput!
   social: SocialCreateOneInput
+  price: ConferencePriceCreateOneInput
 }
 
 """An edge in a connection."""
@@ -113,6 +123,182 @@ type ConferencePreviousValues {
   startDate: DateTime!
   endDate: DateTime!
   publishStatus: PUBLISH_STATUS
+}
+
+type ConferencePrice implements Node {
+  id: ID!
+  regular(where: PriceWhereInput): Price!
+  earlyBird(where: PriceWhereInput): Price!
+  lateBird(where: PriceWhereInput): Price!
+}
+
+"""A connection to a list of items."""
+type ConferencePriceConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ConferencePriceEdge]!
+  aggregate: AggregateConferencePrice!
+}
+
+input ConferencePriceCreateInput {
+  regular: PriceCreateOneInput!
+  earlyBird: PriceCreateOneInput!
+  lateBird: PriceCreateOneInput!
+}
+
+input ConferencePriceCreateOneInput {
+  create: ConferencePriceCreateInput
+  connect: ConferencePriceWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type ConferencePriceEdge {
+  """The item at the end of the edge."""
+  node: ConferencePrice!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ConferencePriceOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ConferencePricePreviousValues {
+  id: ID!
+}
+
+type ConferencePriceSubscriptionPayload {
+  mutation: MutationType!
+  node: ConferencePrice
+  updatedFields: [String!]
+  previousValues: ConferencePricePreviousValues
+}
+
+input ConferencePriceSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ConferencePriceSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ConferencePriceSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ConferencePriceSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ConferencePriceWhereInput
+}
+
+input ConferencePriceUpdateDataInput {
+  regular: PriceUpdateOneInput
+  earlyBird: PriceUpdateOneInput
+  lateBird: PriceUpdateOneInput
+}
+
+input ConferencePriceUpdateInput {
+  regular: PriceUpdateOneInput
+  earlyBird: PriceUpdateOneInput
+  lateBird: PriceUpdateOneInput
+}
+
+input ConferencePriceUpdateOneInput {
+  create: ConferencePriceCreateInput
+  connect: ConferencePriceWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ConferencePriceUpdateDataInput
+  upsert: ConferencePriceUpsertNestedInput
+}
+
+input ConferencePriceUpsertNestedInput {
+  update: ConferencePriceUpdateDataInput!
+  create: ConferencePriceCreateInput!
+}
+
+input ConferencePriceWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ConferencePriceWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ConferencePriceWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ConferencePriceWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  regular: PriceWhereInput
+  earlyBird: PriceWhereInput
+  lateBird: PriceWhereInput
+  _MagicalBackRelation_ConferenceToConferencePrice_every: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToConferencePrice_some: ConferenceWhereInput
+  _MagicalBackRelation_ConferenceToConferencePrice_none: ConferenceWhereInput
+}
+
+input ConferencePriceWhereUniqueInput {
+  id: ID
 }
 
 type ConferenceSubscriptionPayload {
@@ -165,6 +351,7 @@ input ConferenceUpdateInput {
   image: ImageUpdateOneInput
   location: LocationUpdateOneInput
   social: SocialUpdateOneInput
+  price: ConferencePriceUpdateOneInput
 }
 
 input ConferenceWhereInput {
@@ -396,6 +583,7 @@ input ConferenceWhereInput {
   image: ImageWhereInput
   location: LocationWhereInput
   social: SocialWhereInput
+  price: ConferencePriceWhereInput
 }
 
 input ConferenceWhereUniqueInput {
@@ -641,6 +829,11 @@ input CurrencyCreateInput {
   value: String!
 }
 
+input CurrencyCreateOneInput {
+  create: CurrencyCreateInput
+  connect: CurrencyWhereUniqueInput
+}
+
 """An edge in a connection."""
 type CurrencyEdge {
   """The item at the end of the edge."""
@@ -708,9 +901,27 @@ input CurrencySubscriptionWhereInput {
   node: CurrencyWhereInput
 }
 
+input CurrencyUpdateDataInput {
+  name: String
+  value: String
+}
+
 input CurrencyUpdateInput {
   name: String
   value: String
+}
+
+input CurrencyUpdateOneInput {
+  create: CurrencyCreateInput
+  connect: CurrencyWhereUniqueInput
+  delete: Boolean
+  update: CurrencyUpdateDataInput
+  upsert: CurrencyUpsertNestedInput
+}
+
+input CurrencyUpsertNestedInput {
+  update: CurrencyUpdateDataInput!
+  create: CurrencyCreateInput!
 }
 
 input CurrencyWhereInput {
@@ -842,6 +1053,9 @@ input CurrencyWhereInput {
 
   """All values not ending with the given string."""
   value_not_ends_with: String
+  _MagicalBackRelation_CurrencyToPrice_every: PriceWhereInput
+  _MagicalBackRelation_CurrencyToPrice_some: PriceWhereInput
+  _MagicalBackRelation_CurrencyToPrice_none: PriceWhereInput
 }
 
 input CurrencyWhereUniqueInput {
@@ -1514,52 +1728,64 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createConference(data: ConferenceCreateInput!): Conference!
-  createCurrency(data: CurrencyCreateInput!): Currency!
   createCoordinates(data: CoordinatesCreateInput!): Coordinates!
+  createConferencePrice(data: ConferencePriceCreateInput!): ConferencePrice!
   createSocial(data: SocialCreateInput!): Social!
   createTag(data: TagCreateInput!): Tag!
   createLocation(data: LocationCreateInput!): Location!
+  createPrice(data: PriceCreateInput!): Price!
   createImage(data: ImageCreateInput!): Image!
+  createCurrency(data: CurrencyCreateInput!): Currency!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateConference(data: ConferenceUpdateInput!, where: ConferenceWhereUniqueInput!): Conference
-  updateCurrency(data: CurrencyUpdateInput!, where: CurrencyWhereUniqueInput!): Currency
   updateCoordinates(data: CoordinatesUpdateInput!, where: CoordinatesWhereUniqueInput!): Coordinates
+  updateConferencePrice(data: ConferencePriceUpdateInput!, where: ConferencePriceWhereUniqueInput!): ConferencePrice
   updateSocial(data: SocialUpdateInput!, where: SocialWhereUniqueInput!): Social
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
+  updatePrice(data: PriceUpdateInput!, where: PriceWhereUniqueInput!): Price
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
+  updateCurrency(data: CurrencyUpdateInput!, where: CurrencyWhereUniqueInput!): Currency
   deleteUser(where: UserWhereUniqueInput!): User
   deleteConference(where: ConferenceWhereUniqueInput!): Conference
-  deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   deleteCoordinates(where: CoordinatesWhereUniqueInput!): Coordinates
+  deleteConferencePrice(where: ConferencePriceWhereUniqueInput!): ConferencePrice
   deleteSocial(where: SocialWhereUniqueInput!): Social
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteLocation(where: LocationWhereUniqueInput!): Location
+  deletePrice(where: PriceWhereUniqueInput!): Price
   deleteImage(where: ImageWhereUniqueInput!): Image
+  deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertConference(where: ConferenceWhereUniqueInput!, create: ConferenceCreateInput!, update: ConferenceUpdateInput!): Conference!
-  upsertCurrency(where: CurrencyWhereUniqueInput!, create: CurrencyCreateInput!, update: CurrencyUpdateInput!): Currency!
   upsertCoordinates(where: CoordinatesWhereUniqueInput!, create: CoordinatesCreateInput!, update: CoordinatesUpdateInput!): Coordinates!
+  upsertConferencePrice(where: ConferencePriceWhereUniqueInput!, create: ConferencePriceCreateInput!, update: ConferencePriceUpdateInput!): ConferencePrice!
   upsertSocial(where: SocialWhereUniqueInput!, create: SocialCreateInput!, update: SocialUpdateInput!): Social!
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
+  upsertPrice(where: PriceWhereUniqueInput!, create: PriceCreateInput!, update: PriceUpdateInput!): Price!
   upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
+  upsertCurrency(where: CurrencyWhereUniqueInput!, create: CurrencyCreateInput!, update: CurrencyUpdateInput!): Currency!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyConferences(data: ConferenceUpdateInput!, where: ConferenceWhereInput): BatchPayload!
-  updateManyCurrencies(data: CurrencyUpdateInput!, where: CurrencyWhereInput): BatchPayload!
   updateManyCoordinateses(data: CoordinatesUpdateInput!, where: CoordinatesWhereInput): BatchPayload!
+  updateManyConferencePrices(data: ConferencePriceUpdateInput!, where: ConferencePriceWhereInput): BatchPayload!
   updateManySocials(data: SocialUpdateInput!, where: SocialWhereInput): BatchPayload!
   updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
   updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
+  updateManyPrices(data: PriceUpdateInput!, where: PriceWhereInput): BatchPayload!
   updateManyImages(data: ImageUpdateInput!, where: ImageWhereInput): BatchPayload!
+  updateManyCurrencies(data: CurrencyUpdateInput!, where: CurrencyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyConferences(where: ConferenceWhereInput): BatchPayload!
-  deleteManyCurrencies(where: CurrencyWhereInput): BatchPayload!
   deleteManyCoordinateses(where: CoordinatesWhereInput): BatchPayload!
+  deleteManyConferencePrices(where: ConferencePriceWhereInput): BatchPayload!
   deleteManySocials(where: SocialWhereInput): BatchPayload!
   deleteManyTags(where: TagWhereInput): BatchPayload!
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  deleteManyPrices(where: PriceWhereInput): BatchPayload!
   deleteManyImages(where: ImageWhereInput): BatchPayload!
+  deleteManyCurrencies(where: CurrencyWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1589,6 +1815,253 @@ type PageInfo {
   endCursor: String
 }
 
+type Price implements Node {
+  id: ID!
+  amount: String!
+  currency(where: CurrencyWhereInput): Currency!
+  expiration: DateTime
+}
+
+"""A connection to a list of items."""
+type PriceConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PriceEdge]!
+  aggregate: AggregatePrice!
+}
+
+input PriceCreateInput {
+  amount: String!
+  expiration: DateTime
+  currency: CurrencyCreateOneInput!
+}
+
+input PriceCreateOneInput {
+  create: PriceCreateInput
+  connect: PriceWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type PriceEdge {
+  """The item at the end of the edge."""
+  node: Price!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PriceOrderByInput {
+  id_ASC
+  id_DESC
+  amount_ASC
+  amount_DESC
+  expiration_ASC
+  expiration_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PricePreviousValues {
+  id: ID!
+  amount: String!
+  expiration: DateTime
+}
+
+type PriceSubscriptionPayload {
+  mutation: MutationType!
+  node: Price
+  updatedFields: [String!]
+  previousValues: PricePreviousValues
+}
+
+input PriceSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PriceSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PriceSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PriceSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PriceWhereInput
+}
+
+input PriceUpdateDataInput {
+  amount: String
+  expiration: DateTime
+  currency: CurrencyUpdateOneInput
+}
+
+input PriceUpdateInput {
+  amount: String
+  expiration: DateTime
+  currency: CurrencyUpdateOneInput
+}
+
+input PriceUpdateOneInput {
+  create: PriceCreateInput
+  connect: PriceWhereUniqueInput
+  delete: Boolean
+  update: PriceUpdateDataInput
+  upsert: PriceUpsertNestedInput
+}
+
+input PriceUpsertNestedInput {
+  update: PriceUpdateDataInput!
+  create: PriceCreateInput!
+}
+
+input PriceWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PriceWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PriceWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PriceWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  amount: String
+
+  """All values that are not equal to given value."""
+  amount_not: String
+
+  """All values that are contained in given list."""
+  amount_in: [String!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [String!]
+
+  """All values less than the given value."""
+  amount_lt: String
+
+  """All values less than or equal the given value."""
+  amount_lte: String
+
+  """All values greater than the given value."""
+  amount_gt: String
+
+  """All values greater than or equal the given value."""
+  amount_gte: String
+
+  """All values containing the given string."""
+  amount_contains: String
+
+  """All values not containing the given string."""
+  amount_not_contains: String
+
+  """All values starting with the given string."""
+  amount_starts_with: String
+
+  """All values not starting with the given string."""
+  amount_not_starts_with: String
+
+  """All values ending with the given string."""
+  amount_ends_with: String
+
+  """All values not ending with the given string."""
+  amount_not_ends_with: String
+  expiration: DateTime
+
+  """All values that are not equal to given value."""
+  expiration_not: DateTime
+
+  """All values that are contained in given list."""
+  expiration_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  expiration_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  expiration_lt: DateTime
+
+  """All values less than or equal the given value."""
+  expiration_lte: DateTime
+
+  """All values greater than the given value."""
+  expiration_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  expiration_gte: DateTime
+  currency: CurrencyWhereInput
+  _MagicalBackRelation_EarlybirdPrice_every: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlybirdPrice_some: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlybirdPrice_none: ConferencePriceWhereInput
+  _MagicalBackRelation_LatebirdPrice_every: ConferencePriceWhereInput
+  _MagicalBackRelation_LatebirdPrice_some: ConferencePriceWhereInput
+  _MagicalBackRelation_LatebirdPrice_none: ConferencePriceWhereInput
+  _MagicalBackRelation_RegularPrice_every: ConferencePriceWhereInput
+  _MagicalBackRelation_RegularPrice_some: ConferencePriceWhereInput
+  _MagicalBackRelation_RegularPrice_none: ConferencePriceWhereInput
+}
+
+input PriceWhereUniqueInput {
+  id: ID
+}
+
 enum PUBLISH_STATUS {
   DRAFT
   PUBLISHED
@@ -1597,28 +2070,34 @@ enum PUBLISH_STATUS {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   conferences(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Conference]!
-  currencies(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Currency]!
   coordinateses(where: CoordinatesWhereInput, orderBy: CoordinatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Coordinates]!
+  conferencePrices(where: ConferencePriceWhereInput, orderBy: ConferencePriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConferencePrice]!
   socials(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Social]!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
+  prices(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Price]!
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
+  currencies(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Currency]!
   user(where: UserWhereUniqueInput!): User
   conference(where: ConferenceWhereUniqueInput!): Conference
-  currency(where: CurrencyWhereUniqueInput!): Currency
   coordinates(where: CoordinatesWhereUniqueInput!): Coordinates
+  conferencePrice(where: ConferencePriceWhereUniqueInput!): ConferencePrice
   social(where: SocialWhereUniqueInput!): Social
   tag(where: TagWhereUniqueInput!): Tag
   location(where: LocationWhereUniqueInput!): Location
+  price(where: PriceWhereUniqueInput!): Price
   image(where: ImageWhereUniqueInput!): Image
+  currency(where: CurrencyWhereUniqueInput!): Currency
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   conferencesConnection(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferenceConnection!
-  currenciesConnection(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurrencyConnection!
   coordinatesesConnection(where: CoordinatesWhereInput, orderBy: CoordinatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoordinatesConnection!
+  conferencePricesConnection(where: ConferencePriceWhereInput, orderBy: ConferencePriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferencePriceConnection!
   socialsConnection(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SocialConnection!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  pricesConnection(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PriceConnection!
   imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
+  currenciesConnection(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurrencyConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1932,12 +2411,14 @@ input SocialWhereUniqueInput {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   conference(where: ConferenceSubscriptionWhereInput): ConferenceSubscriptionPayload
-  currency(where: CurrencySubscriptionWhereInput): CurrencySubscriptionPayload
   coordinates(where: CoordinatesSubscriptionWhereInput): CoordinatesSubscriptionPayload
+  conferencePrice(where: ConferencePriceSubscriptionWhereInput): ConferencePriceSubscriptionPayload
   social(where: SocialSubscriptionWhereInput): SocialSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  price(where: PriceSubscriptionWhereInput): PriceSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
+  currency(where: CurrencySubscriptionWhereInput): CurrencySubscriptionPayload
 }
 
 type Tag implements Node {
