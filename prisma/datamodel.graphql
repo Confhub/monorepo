@@ -25,6 +25,7 @@ type Conference {
   location: Location!
   social: Social @relation(name: "ConferenceToSocial", onDelete: CASCADE)
   publishStatus: PUBLISH_STATUS @default(value: DRAFT)
+  price: ConferencePrice
 }
 
 type Tag {
@@ -66,6 +67,20 @@ type Currency {
   id: ID! @unique
   name: String!
   value: String!
+}
+
+type Price {
+  id: ID! @unique
+  amount: String!
+  currency: Currency!
+  expiration: DateTime
+}
+
+type ConferencePrice {
+  id: ID! @unique
+  regular: Price! @relation(name: "RegularPrice")
+  earlyBird: Price! @relation(name: "EarlybirdPrice")
+  lateBird: Price! @relation(name: "LatebirdPrice")
 }
 
 enum PUBLISH_STATUS {
