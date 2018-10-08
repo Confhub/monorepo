@@ -1,5 +1,5 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Fri Oct 05 2018 16:08:08 GMT+0200 (CEST)
+# timestamp: Sun Oct 07 2018 22:07:04 GMT+0200 (CEST)
 
 type AggregateConference {
   count: Int!
@@ -127,9 +127,9 @@ type ConferencePreviousValues {
 
 type ConferencePrice implements Node {
   id: ID!
-  regular(where: PriceWhereInput): Price!
-  earlyBird(where: PriceWhereInput): Price!
-  lateBird(where: PriceWhereInput): Price!
+  regular(where: PriceWhereInput): Price
+  earlyBird(where: PriceWhereInput): Price
+  lateBird(where: PriceWhereInput): Price
 }
 
 """A connection to a list of items."""
@@ -143,9 +143,9 @@ type ConferencePriceConnection {
 }
 
 input ConferencePriceCreateInput {
-  regular: PriceCreateOneInput!
-  earlyBird: PriceCreateOneInput!
-  lateBird: PriceCreateOneInput!
+  regular: PriceCreateOneInput
+  earlyBird: PriceCreateOneInput
+  lateBird: PriceCreateOneInput
 }
 
 input ConferencePriceCreateOneInput {
@@ -914,6 +914,7 @@ input CurrencyUpdateInput {
 input CurrencyUpdateOneInput {
   create: CurrencyCreateInput
   connect: CurrencyWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: CurrencyUpdateDataInput
   upsert: CurrencyUpsertNestedInput
@@ -1817,8 +1818,8 @@ type PageInfo {
 
 type Price implements Node {
   id: ID!
-  amount: String!
-  currency(where: CurrencyWhereInput): Currency!
+  amount: String
+  currency(where: CurrencyWhereInput): Currency
   expiration: DateTime
 }
 
@@ -1833,9 +1834,9 @@ type PriceConnection {
 }
 
 input PriceCreateInput {
-  amount: String!
+  amount: String
   expiration: DateTime
-  currency: CurrencyCreateOneInput!
+  currency: CurrencyCreateOneInput
 }
 
 input PriceCreateOneInput {
@@ -1867,7 +1868,7 @@ enum PriceOrderByInput {
 
 type PricePreviousValues {
   id: ID!
-  amount: String!
+  amount: String
   expiration: DateTime
 }
 
@@ -1925,6 +1926,7 @@ input PriceUpdateInput {
 input PriceUpdateOneInput {
   create: PriceCreateInput
   connect: PriceWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: PriceUpdateDataInput
   upsert: PriceUpsertNestedInput

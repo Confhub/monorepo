@@ -9,7 +9,12 @@ import {
   generateLocation,
   generateSocial,
   generateTagsUpdate,
+  generatePrice,
 } from './ConferenceShared';
+import {
+  ConferencePrice,
+  ConferencePriceUpdateOneInput,
+} from '../../../generated/prisma';
 
 interface ArgsType {
   id: string;
@@ -40,12 +45,13 @@ export default {
         endDate,
         location,
         social,
+        price,
       },
     }: ArgsType,
     { apiToken, db }: Context,
     info: any,
   ): Promise<Conference> => {
-    const conference = await db.query.conference({ where: { id } }, info);
+    const conference = await db.query.conference({ where: { id } });
 
     const userId = getUserId(apiToken);
     const userRole = await getUserRole(userId, db);
@@ -78,9 +84,42 @@ export default {
       if (social) {
         query.social = generateSocial(social);
       }
+      if (price) {
+        console.log('LOOOOOG---', { conference });
+
+        query.price = generatePrices(price, conference.price);
+      }
 
       return db.mutation.updateConference({ data: query, where: { id } }, info);
     }
     throw new Error('You must have moderator rights');
   },
 };
+
+function generatePrices(
+  prices: ConferencePrice,
+  oldPrices: ConferencePrice,
+): ConferencePriceUpdateOneInput {
+  const { regular, earlyBird, lateBird } = prices;
+
+  return {
+    update: {
+      regular: generateUpdatePrice(regular, oldPrices && oldPrices.regular),
+      earlyBird: generateUpdatePrice(earlyBird, oldPrices && oldPrices.earlyBird),
+      lateBird: generateUpdatePrice(lateBird, oldPrices && oldPrices.lateBird),
+    },
+  };
+}
+
+function generateUpdatePrice(price, oldPrice) {
+  if (!price) {
+    return null;
+  }
+
+  return {
+    upsert: {
+      update: { ...generatePrice(price) },
+      create: { ...generatePrice({...oldPrice, ...price}) },
+    },
+  };
+}

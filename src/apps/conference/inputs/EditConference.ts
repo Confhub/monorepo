@@ -12,6 +12,7 @@ import {
   GraphQLCreateConferenceLocationInput,
   GraphQLCreateConferenceSocialInput,
   GraphQLCreateConferenceTagInput,
+  GraphQLConferencePricesInput,
 } from './ConferenceShared';
 
 export default new GraphQLInputObjectType({
@@ -43,6 +44,9 @@ export default new GraphQLInputObjectType({
     },
     social: {
       type: GraphQLCreateConferenceSocialInput,
+    },
+    price: {
+      type: GraphQLConferencePricesInput,
     },
   },
 });

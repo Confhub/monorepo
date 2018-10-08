@@ -274,9 +274,9 @@ type ConferencePreviousValues {
 
 type ConferencePrice implements Node {
   id: ID!
-  regular(where: PriceWhereInput): Price!
-  earlyBird(where: PriceWhereInput): Price!
-  lateBird(where: PriceWhereInput): Price!
+  regular(where: PriceWhereInput): Price
+  earlyBird(where: PriceWhereInput): Price
+  lateBird(where: PriceWhereInput): Price
 }
 
 """A connection to a list of items."""
@@ -290,9 +290,9 @@ type ConferencePriceConnection {
 }
 
 input ConferencePriceCreateInput {
-  regular: PriceCreateOneInput!
-  earlyBird: PriceCreateOneInput!
-  lateBird: PriceCreateOneInput!
+  regular: PriceCreateOneInput
+  earlyBird: PriceCreateOneInput
+  lateBird: PriceCreateOneInput
 }
 
 input ConferencePriceCreateOneInput {
@@ -1061,6 +1061,7 @@ input CurrencyUpdateInput {
 input CurrencyUpdateOneInput {
   create: CurrencyCreateInput
   connect: CurrencyWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: CurrencyUpdateDataInput
   upsert: CurrencyUpsertNestedInput
@@ -1964,8 +1965,8 @@ type PageInfo {
 
 type Price implements Node {
   id: ID!
-  amount: String!
-  currency(where: CurrencyWhereInput): Currency!
+  amount: String
+  currency(where: CurrencyWhereInput): Currency
   expiration: DateTime
 }
 
@@ -1980,9 +1981,9 @@ type PriceConnection {
 }
 
 input PriceCreateInput {
-  amount: String!
+  amount: String
   expiration: DateTime
-  currency: CurrencyCreateOneInput!
+  currency: CurrencyCreateOneInput
 }
 
 input PriceCreateOneInput {
@@ -2014,7 +2015,7 @@ enum PriceOrderByInput {
 
 type PricePreviousValues {
   id: ID!
-  amount: String!
+  amount: String
   expiration: DateTime
 }
 
@@ -2072,6 +2073,7 @@ input PriceUpdateInput {
 input PriceUpdateOneInput {
   create: PriceCreateInput
   connect: PriceWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: PriceUpdateDataInput
   upsert: PriceUpsertNestedInput
@@ -3387,6 +3389,7 @@ export interface CurrencyCreateInput {
 export interface CurrencyUpdateOneInput {
   create?: CurrencyCreateInput
   connect?: CurrencyWhereUniqueInput
+  disconnect?: Boolean
   delete?: Boolean
   update?: CurrencyUpdateDataInput
   upsert?: CurrencyUpsertNestedInput
@@ -3458,6 +3461,7 @@ export interface PriceWhereInput {
 export interface PriceUpdateOneInput {
   create?: PriceCreateInput
   connect?: PriceWhereUniqueInput
+  disconnect?: Boolean
   delete?: Boolean
   update?: PriceUpdateDataInput
   upsert?: PriceUpsertNestedInput
@@ -4221,9 +4225,9 @@ export interface CurrencyCreateOneInput {
 }
 
 export interface PriceCreateInput {
-  amount: String
+  amount?: String
   expiration?: DateTime
-  currency: CurrencyCreateOneInput
+  currency?: CurrencyCreateOneInput
 }
 
 export interface PriceCreateOneInput {
@@ -4232,9 +4236,9 @@ export interface PriceCreateOneInput {
 }
 
 export interface ConferencePriceCreateInput {
-  regular: PriceCreateOneInput
-  earlyBird: PriceCreateOneInput
-  lateBird: PriceCreateOneInput
+  regular?: PriceCreateOneInput
+  earlyBird?: PriceCreateOneInput
+  lateBird?: PriceCreateOneInput
 }
 
 export interface ConferencePriceWhereInput {
@@ -4580,8 +4584,8 @@ export interface CoordinatesEdge {
 
 export interface Price extends Node {
   id: ID_Output
-  amount: String
-  currency: Currency
+  amount?: String
+  currency?: Currency
   expiration?: DateTime
 }
 
@@ -4623,9 +4627,9 @@ export interface UserEdge {
 
 export interface ConferencePrice extends Node {
   id: ID_Output
-  regular: Price
-  earlyBird: Price
-  lateBird: Price
+  regular?: Price
+  earlyBird?: Price
+  lateBird?: Price
 }
 
 /*
@@ -4782,7 +4786,7 @@ export interface SocialConnection {
 
 export interface PricePreviousValues {
   id: ID_Output
-  amount: String
+  amount?: String
   expiration?: DateTime
 }
 

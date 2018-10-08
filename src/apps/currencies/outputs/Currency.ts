@@ -12,5 +12,9 @@ export default new GraphQLObjectType({
       type: GraphQLString,
       resolve: ({ name }: Currency): string => name,
     },
+    value: {
+      type: GraphQLString,
+      resolve: ({ value }: Currency): string => value,
+    },
   },
 });

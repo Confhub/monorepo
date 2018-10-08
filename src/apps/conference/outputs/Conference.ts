@@ -20,6 +20,7 @@ import GraphQLImage from './Image';
 import GraphQLLocation from './Location';
 import GraphQLPublishStatus from './PublishStatus';
 import GraphQLSocial from './Social';
+import GraphQLPrices from './Price';
 
 export default new GraphQLObjectType({
   name: 'Conference',
@@ -67,6 +68,9 @@ export default new GraphQLObjectType({
     publishStatus: {
       type: GraphQLPublishStatus,
       resolve: ({ publishStatus }: Conference): PUBLISH_STATUS => publishStatus,
+    },
+    price: {
+      type: GraphQLPrices,
     },
   },
 });

@@ -1,4 +1,5 @@
 import tslug from 'tslug';
+import idx from 'idx';
 import {
   Image,
   ImageCreateOneInput,
@@ -9,6 +10,10 @@ import {
   Tag,
   TagCreateManyInput,
   TagUpdateManyInput,
+  ConferencePriceCreateOneInput,
+  ConferencePrice,
+  Price,
+  PriceCreateInput,
 } from '../../../generated/prisma';
 import { detectContinent } from './helpers';
 
@@ -96,6 +101,24 @@ export const generateSocial = ({
       facebook,
       twitter,
       instagram,
+    },
+  };
+};
+
+export const generatePrice = (price: Price): PriceCreateInput => {
+  if (!price) {
+    return null;
+  }
+
+  const currencyId = idx(price, _ => _.currency.id);
+
+  return {
+    amount: price.amount,
+    expiration: price.expiration,
+    currency: {
+      connect: {
+        id: currencyId,
+      },
     },
   };
 };
