@@ -18,9 +18,9 @@ import {
 import GraphQLTag from '../../tags/outputs/Tag';
 import GraphQLImage from './Image';
 import GraphQLLocation from './Location';
+import GraphQLPrices from './Price';
 import GraphQLPublishStatus from './PublishStatus';
 import GraphQLSocial from './Social';
-import GraphQLPrices from './Price';
 
 export default new GraphQLObjectType({
   name: 'Conference',

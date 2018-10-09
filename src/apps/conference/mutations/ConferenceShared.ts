@@ -1,19 +1,19 @@
-import tslug from 'tslug';
 import idx from 'idx';
+import tslug from 'tslug';
 import {
+  ConferencePrice,
+  ConferencePriceCreateOneInput,
   Image,
   ImageCreateOneInput,
   Location,
   LocationCreateOneInput,
+  Price,
+  PriceCreateInput,
   Social,
   SocialCreateOneInput,
   Tag,
   TagCreateManyInput,
   TagUpdateManyInput,
-  ConferencePriceCreateOneInput,
-  ConferencePrice,
-  Price,
-  PriceCreateInput,
 } from '../../../generated/prisma';
 import { detectContinent } from './helpers';
 

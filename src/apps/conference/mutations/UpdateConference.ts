@@ -1,20 +1,22 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { Conference, ConferenceUpdateInput } from '../../../generated/prisma';
+import {
+  Conference,
+  ConferencePrice,
+  ConferencePriceUpdateOneInput,
+  ConferenceUpdateInput,
+} from '../../../generated/prisma';
+
 import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLEditConferenceInput from '../inputs/EditConference';
 import GraphQLConference from '../outputs/Conference';
 import {
   generateImage,
   generateLocation,
+  generatePrice,
   generateSocial,
   generateTagsUpdate,
-  generatePrice,
 } from './ConferenceShared';
-import {
-  ConferencePrice,
-  ConferencePriceUpdateOneInput,
-} from '../../../generated/prisma';
 
 interface ArgsType {
   id: string;
@@ -105,7 +107,10 @@ function generatePrices(
   return {
     update: {
       regular: generateUpdatePrice(regular, oldPrices && oldPrices.regular),
-      earlyBird: generateUpdatePrice(earlyBird, oldPrices && oldPrices.earlyBird),
+      earlyBird: generateUpdatePrice(
+        earlyBird,
+        oldPrices && oldPrices.earlyBird,
+      ),
       lateBird: generateUpdatePrice(lateBird, oldPrices && oldPrices.lateBird),
     },
   };
@@ -119,7 +124,7 @@ function generateUpdatePrice(price, oldPrice) {
   return {
     upsert: {
       update: { ...generatePrice(price) },
-      create: { ...generatePrice({...oldPrice, ...price}) },
+      create: { ...generatePrice({ ...oldPrice, ...price }) },
     },
   };
 }

@@ -1,4 +1,4 @@
-import { GraphQLID, GraphQLInputObjectType, GraphQLString } from "graphql";
+import { GraphQLInputObjectType, GraphQLID, GraphQLString } from "graphql";
 import { Currency } from '../../../generated/prisma';
 
 export default new GraphQLInputObjectType({

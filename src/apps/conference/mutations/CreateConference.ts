@@ -11,9 +11,9 @@ import GraphQLConference from '../outputs/Conference';
 import {
   generateImage,
   generateLocation,
+  generatePrice,
   generateSocial,
   generateTagsCreate,
-  generatePrice,
 } from './ConferenceShared';
 
 interface ArgsType {
