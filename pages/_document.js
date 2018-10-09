@@ -1,10 +1,19 @@
 import * as React from 'react';
-import Document, { Main, NextScript } from 'next/document';
+import Document, { Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   render() {
     return (
       <html lang="en">
+        <Head>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <meta name="description" content="" />
+          <link rel="shortcut icon" href="/static/images/favicon.ico" />
+        </Head>
         <body>
           <Main />
           <NextScript />
