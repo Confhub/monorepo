@@ -1,5 +1,5 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Sun Oct 07 2018 22:07:04 GMT+0200 (CEST)
+# timestamp: Wed Oct 10 2018 01:33:27 GMT+0200 (Central European Summer Time)
 
 type AggregateConference {
   count: Int!
@@ -1734,8 +1734,8 @@ type Mutation {
   createSocial(data: SocialCreateInput!): Social!
   createTag(data: TagCreateInput!): Tag!
   createLocation(data: LocationCreateInput!): Location!
-  createPrice(data: PriceCreateInput!): Price!
   createImage(data: ImageCreateInput!): Image!
+  createPrice(data: PriceCreateInput!): Price!
   createCurrency(data: CurrencyCreateInput!): Currency!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateConference(data: ConferenceUpdateInput!, where: ConferenceWhereUniqueInput!): Conference
@@ -1744,8 +1744,8 @@ type Mutation {
   updateSocial(data: SocialUpdateInput!, where: SocialWhereUniqueInput!): Social
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
-  updatePrice(data: PriceUpdateInput!, where: PriceWhereUniqueInput!): Price
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
+  updatePrice(data: PriceUpdateInput!, where: PriceWhereUniqueInput!): Price
   updateCurrency(data: CurrencyUpdateInput!, where: CurrencyWhereUniqueInput!): Currency
   deleteUser(where: UserWhereUniqueInput!): User
   deleteConference(where: ConferenceWhereUniqueInput!): Conference
@@ -1754,8 +1754,8 @@ type Mutation {
   deleteSocial(where: SocialWhereUniqueInput!): Social
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteLocation(where: LocationWhereUniqueInput!): Location
-  deletePrice(where: PriceWhereUniqueInput!): Price
   deleteImage(where: ImageWhereUniqueInput!): Image
+  deletePrice(where: PriceWhereUniqueInput!): Price
   deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertConference(where: ConferenceWhereUniqueInput!, create: ConferenceCreateInput!, update: ConferenceUpdateInput!): Conference!
@@ -1764,8 +1764,8 @@ type Mutation {
   upsertSocial(where: SocialWhereUniqueInput!, create: SocialCreateInput!, update: SocialUpdateInput!): Social!
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
-  upsertPrice(where: PriceWhereUniqueInput!, create: PriceCreateInput!, update: PriceUpdateInput!): Price!
   upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
+  upsertPrice(where: PriceWhereUniqueInput!, create: PriceCreateInput!, update: PriceUpdateInput!): Price!
   upsertCurrency(where: CurrencyWhereUniqueInput!, create: CurrencyCreateInput!, update: CurrencyUpdateInput!): Currency!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyConferences(data: ConferenceUpdateInput!, where: ConferenceWhereInput): BatchPayload!
@@ -1774,8 +1774,8 @@ type Mutation {
   updateManySocials(data: SocialUpdateInput!, where: SocialWhereInput): BatchPayload!
   updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
   updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
-  updateManyPrices(data: PriceUpdateInput!, where: PriceWhereInput): BatchPayload!
   updateManyImages(data: ImageUpdateInput!, where: ImageWhereInput): BatchPayload!
+  updateManyPrices(data: PriceUpdateInput!, where: PriceWhereInput): BatchPayload!
   updateManyCurrencies(data: CurrencyUpdateInput!, where: CurrencyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyConferences(where: ConferenceWhereInput): BatchPayload!
@@ -1784,8 +1784,8 @@ type Mutation {
   deleteManySocials(where: SocialWhereInput): BatchPayload!
   deleteManyTags(where: TagWhereInput): BatchPayload!
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
-  deleteManyPrices(where: PriceWhereInput): BatchPayload!
   deleteManyImages(where: ImageWhereInput): BatchPayload!
+  deleteManyPrices(where: PriceWhereInput): BatchPayload!
   deleteManyCurrencies(where: CurrencyWhereInput): BatchPayload!
 }
 
@@ -1820,7 +1820,7 @@ type Price implements Node {
   id: ID!
   amount: String
   currency(where: CurrencyWhereInput): Currency
-  expiration: DateTime
+  expirationDate: DateTime
 }
 
 """A connection to a list of items."""
@@ -1835,7 +1835,7 @@ type PriceConnection {
 
 input PriceCreateInput {
   amount: String
-  expiration: DateTime
+  expirationDate: DateTime
   currency: CurrencyCreateOneInput
 }
 
@@ -1858,8 +1858,8 @@ enum PriceOrderByInput {
   id_DESC
   amount_ASC
   amount_DESC
-  expiration_ASC
-  expiration_DESC
+  expirationDate_ASC
+  expirationDate_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1869,7 +1869,7 @@ enum PriceOrderByInput {
 type PricePreviousValues {
   id: ID!
   amount: String
-  expiration: DateTime
+  expirationDate: DateTime
 }
 
 type PriceSubscriptionPayload {
@@ -1913,13 +1913,13 @@ input PriceSubscriptionWhereInput {
 
 input PriceUpdateDataInput {
   amount: String
-  expiration: DateTime
+  expirationDate: DateTime
   currency: CurrencyUpdateOneInput
 }
 
 input PriceUpdateInput {
   amount: String
-  expiration: DateTime
+  expirationDate: DateTime
   currency: CurrencyUpdateOneInput
 }
 
@@ -2026,38 +2026,38 @@ input PriceWhereInput {
 
   """All values not ending with the given string."""
   amount_not_ends_with: String
-  expiration: DateTime
+  expirationDate: DateTime
 
   """All values that are not equal to given value."""
-  expiration_not: DateTime
+  expirationDate_not: DateTime
 
   """All values that are contained in given list."""
-  expiration_in: [DateTime!]
+  expirationDate_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  expiration_not_in: [DateTime!]
+  expirationDate_not_in: [DateTime!]
 
   """All values less than the given value."""
-  expiration_lt: DateTime
+  expirationDate_lt: DateTime
 
   """All values less than or equal the given value."""
-  expiration_lte: DateTime
+  expirationDate_lte: DateTime
 
   """All values greater than the given value."""
-  expiration_gt: DateTime
+  expirationDate_gt: DateTime
 
   """All values greater than or equal the given value."""
-  expiration_gte: DateTime
+  expirationDate_gte: DateTime
   currency: CurrencyWhereInput
-  _MagicalBackRelation_EarlybirdPrice_every: ConferencePriceWhereInput
-  _MagicalBackRelation_EarlybirdPrice_some: ConferencePriceWhereInput
-  _MagicalBackRelation_EarlybirdPrice_none: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_every: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_some: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_none: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_every: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_some: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_none: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_every: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_some: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_none: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_every: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_some: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_none: ConferencePriceWhereInput
 }
 
 input PriceWhereUniqueInput {
@@ -2077,8 +2077,8 @@ type Query {
   socials(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Social]!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
-  prices(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Price]!
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
+  prices(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Price]!
   currencies(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Currency]!
   user(where: UserWhereUniqueInput!): User
   conference(where: ConferenceWhereUniqueInput!): Conference
@@ -2087,8 +2087,8 @@ type Query {
   social(where: SocialWhereUniqueInput!): Social
   tag(where: TagWhereUniqueInput!): Tag
   location(where: LocationWhereUniqueInput!): Location
-  price(where: PriceWhereUniqueInput!): Price
   image(where: ImageWhereUniqueInput!): Image
+  price(where: PriceWhereUniqueInput!): Price
   currency(where: CurrencyWhereUniqueInput!): Currency
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   conferencesConnection(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferenceConnection!
@@ -2097,8 +2097,8 @@ type Query {
   socialsConnection(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SocialConnection!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
-  pricesConnection(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PriceConnection!
   imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
+  pricesConnection(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PriceConnection!
   currenciesConnection(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurrencyConnection!
 
   """Fetches an object given its ID"""
@@ -2418,8 +2418,8 @@ type Subscription {
   social(where: SocialSubscriptionWhereInput): SocialSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
-  price(where: PriceSubscriptionWhereInput): PriceSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
+  price(where: PriceSubscriptionWhereInput): PriceSubscriptionPayload
   currency(where: CurrencySubscriptionWhereInput): CurrencySubscriptionPayload
 }
 

@@ -116,6 +116,3 @@ export const GraphQLConferencePricesInput = new GraphQLInputObjectType({
     },
   },
 });
-
-
-

@@ -16,7 +16,7 @@ import {
   generatePrice,
   generateSocial,
   generateTagsUpdate,
-} from './ConferenceShared';
+} from './helpers';
 
 interface ArgsType {
   id: string;
@@ -87,7 +87,7 @@ export default {
         query.social = generateSocial(social);
       }
       if (price) {
-        console.log('LOOOOOG---', { conference });
+        // console.log('LOOOOOG---', { conference });
 
         query.price = generatePrices(price, conference.price);
       }

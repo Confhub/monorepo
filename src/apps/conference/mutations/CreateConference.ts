@@ -14,7 +14,7 @@ import {
   generatePrice,
   generateSocial,
   generateTagsCreate,
-} from './ConferenceShared';
+} from './helpers';
 
 interface ArgsType {
   data: Conference;

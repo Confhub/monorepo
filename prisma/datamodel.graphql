@@ -73,14 +73,14 @@ type Price {
   id: ID! @unique
   amount: String
   currency: Currency
-  expiration: DateTime
+  expirationDate: DateTime
 }
 
 type ConferencePrice {
   id: ID! @unique
   regular: Price @relation(name: "RegularPrice")
-  earlyBird: Price @relation(name: "EarlybirdPrice")
-  lateBird: Price @relation(name: "LatebirdPrice")
+  earlyBird: Price @relation(name: "EarlyBirdPrice")
+  lateBird: Price @relation(name: "LateBirdPrice")
 }
 
 enum PUBLISH_STATUS {
