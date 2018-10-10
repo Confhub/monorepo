@@ -1,5 +1,5 @@
 # source: https://confhub-dev.herokuapp.com/confhub-dev/dev
-# timestamp: Wed Oct 10 2018 01:33:27 GMT+0200 (Central European Summer Time)
+# timestamp: Thu Oct 11 2018 00:48:50 GMT+0200 (Central European Summer Time)
 
 type AggregateConference {
   count: Int!
@@ -10,10 +10,6 @@ type AggregateConferencePrice {
 }
 
 type AggregateCoordinates {
-  count: Int!
-}
-
-type AggregateCurrency {
   count: Int!
 }
 
@@ -808,259 +804,9 @@ input CoordinatesWhereUniqueInput {
   id: ID
 }
 
-type Currency implements Node {
-  id: ID!
-  name: String!
-  value: String!
-}
-
-"""A connection to a list of items."""
-type CurrencyConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [CurrencyEdge]!
-  aggregate: AggregateCurrency!
-}
-
-input CurrencyCreateInput {
-  name: String!
-  value: String!
-}
-
-input CurrencyCreateOneInput {
-  create: CurrencyCreateInput
-  connect: CurrencyWhereUniqueInput
-}
-
-"""An edge in a connection."""
-type CurrencyEdge {
-  """The item at the end of the edge."""
-  node: Currency!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum CurrencyOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  value_ASC
-  value_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type CurrencyPreviousValues {
-  id: ID!
-  name: String!
-  value: String!
-}
-
-type CurrencySubscriptionPayload {
-  mutation: MutationType!
-  node: Currency
-  updatedFields: [String!]
-  previousValues: CurrencyPreviousValues
-}
-
-input CurrencySubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CurrencySubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CurrencySubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CurrencySubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: CurrencyWhereInput
-}
-
-input CurrencyUpdateDataInput {
-  name: String
-  value: String
-}
-
-input CurrencyUpdateInput {
-  name: String
-  value: String
-}
-
-input CurrencyUpdateOneInput {
-  create: CurrencyCreateInput
-  connect: CurrencyWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: CurrencyUpdateDataInput
-  upsert: CurrencyUpsertNestedInput
-}
-
-input CurrencyUpsertNestedInput {
-  update: CurrencyUpdateDataInput!
-  create: CurrencyCreateInput!
-}
-
-input CurrencyWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CurrencyWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CurrencyWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CurrencyWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  value: String
-
-  """All values that are not equal to given value."""
-  value_not: String
-
-  """All values that are contained in given list."""
-  value_in: [String!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [String!]
-
-  """All values less than the given value."""
-  value_lt: String
-
-  """All values less than or equal the given value."""
-  value_lte: String
-
-  """All values greater than the given value."""
-  value_gt: String
-
-  """All values greater than or equal the given value."""
-  value_gte: String
-
-  """All values containing the given string."""
-  value_contains: String
-
-  """All values not containing the given string."""
-  value_not_contains: String
-
-  """All values starting with the given string."""
-  value_starts_with: String
-
-  """All values not starting with the given string."""
-  value_not_starts_with: String
-
-  """All values ending with the given string."""
-  value_ends_with: String
-
-  """All values not ending with the given string."""
-  value_not_ends_with: String
-  _MagicalBackRelation_CurrencyToPrice_every: PriceWhereInput
-  _MagicalBackRelation_CurrencyToPrice_some: PriceWhereInput
-  _MagicalBackRelation_CurrencyToPrice_none: PriceWhereInput
-}
-
-input CurrencyWhereUniqueInput {
-  id: ID
+enum CURRENCY {
+  USD
+  EUR
 }
 
 scalar DateTime
@@ -1736,7 +1482,6 @@ type Mutation {
   createLocation(data: LocationCreateInput!): Location!
   createImage(data: ImageCreateInput!): Image!
   createPrice(data: PriceCreateInput!): Price!
-  createCurrency(data: CurrencyCreateInput!): Currency!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateConference(data: ConferenceUpdateInput!, where: ConferenceWhereUniqueInput!): Conference
   updateCoordinates(data: CoordinatesUpdateInput!, where: CoordinatesWhereUniqueInput!): Coordinates
@@ -1746,7 +1491,6 @@ type Mutation {
   updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
   updatePrice(data: PriceUpdateInput!, where: PriceWhereUniqueInput!): Price
-  updateCurrency(data: CurrencyUpdateInput!, where: CurrencyWhereUniqueInput!): Currency
   deleteUser(where: UserWhereUniqueInput!): User
   deleteConference(where: ConferenceWhereUniqueInput!): Conference
   deleteCoordinates(where: CoordinatesWhereUniqueInput!): Coordinates
@@ -1756,7 +1500,6 @@ type Mutation {
   deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteImage(where: ImageWhereUniqueInput!): Image
   deletePrice(where: PriceWhereUniqueInput!): Price
-  deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertConference(where: ConferenceWhereUniqueInput!, create: ConferenceCreateInput!, update: ConferenceUpdateInput!): Conference!
   upsertCoordinates(where: CoordinatesWhereUniqueInput!, create: CoordinatesCreateInput!, update: CoordinatesUpdateInput!): Coordinates!
@@ -1766,7 +1509,6 @@ type Mutation {
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
   upsertPrice(where: PriceWhereUniqueInput!, create: PriceCreateInput!, update: PriceUpdateInput!): Price!
-  upsertCurrency(where: CurrencyWhereUniqueInput!, create: CurrencyCreateInput!, update: CurrencyUpdateInput!): Currency!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyConferences(data: ConferenceUpdateInput!, where: ConferenceWhereInput): BatchPayload!
   updateManyCoordinateses(data: CoordinatesUpdateInput!, where: CoordinatesWhereInput): BatchPayload!
@@ -1776,7 +1518,6 @@ type Mutation {
   updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
   updateManyImages(data: ImageUpdateInput!, where: ImageWhereInput): BatchPayload!
   updateManyPrices(data: PriceUpdateInput!, where: PriceWhereInput): BatchPayload!
-  updateManyCurrencies(data: CurrencyUpdateInput!, where: CurrencyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyConferences(where: ConferenceWhereInput): BatchPayload!
   deleteManyCoordinateses(where: CoordinatesWhereInput): BatchPayload!
@@ -1786,7 +1527,6 @@ type Mutation {
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
   deleteManyImages(where: ImageWhereInput): BatchPayload!
   deleteManyPrices(where: PriceWhereInput): BatchPayload!
-  deleteManyCurrencies(where: CurrencyWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1818,8 +1558,8 @@ type PageInfo {
 
 type Price implements Node {
   id: ID!
-  amount: String
-  currency(where: CurrencyWhereInput): Currency
+  amount: Float!
+  currency: CURRENCY
   expirationDate: DateTime
 }
 
@@ -1834,9 +1574,9 @@ type PriceConnection {
 }
 
 input PriceCreateInput {
-  amount: String
+  amount: Float!
+  currency: CURRENCY
   expirationDate: DateTime
-  currency: CurrencyCreateOneInput
 }
 
 input PriceCreateOneInput {
@@ -1858,6 +1598,8 @@ enum PriceOrderByInput {
   id_DESC
   amount_ASC
   amount_DESC
+  currency_ASC
+  currency_DESC
   expirationDate_ASC
   expirationDate_DESC
   updatedAt_ASC
@@ -1868,7 +1610,8 @@ enum PriceOrderByInput {
 
 type PricePreviousValues {
   id: ID!
-  amount: String
+  amount: Float!
+  currency: CURRENCY
   expirationDate: DateTime
 }
 
@@ -1912,15 +1655,15 @@ input PriceSubscriptionWhereInput {
 }
 
 input PriceUpdateDataInput {
-  amount: String
+  amount: Float
+  currency: CURRENCY
   expirationDate: DateTime
-  currency: CurrencyUpdateOneInput
 }
 
 input PriceUpdateInput {
-  amount: String
+  amount: Float
+  currency: CURRENCY
   expirationDate: DateTime
-  currency: CurrencyUpdateOneInput
 }
 
 input PriceUpdateOneInput {
@@ -1986,46 +1729,38 @@ input PriceWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  amount: String
+  amount: Float
 
   """All values that are not equal to given value."""
-  amount_not: String
+  amount_not: Float
 
   """All values that are contained in given list."""
-  amount_in: [String!]
+  amount_in: [Float!]
 
   """All values that are not contained in given list."""
-  amount_not_in: [String!]
+  amount_not_in: [Float!]
 
   """All values less than the given value."""
-  amount_lt: String
+  amount_lt: Float
 
   """All values less than or equal the given value."""
-  amount_lte: String
+  amount_lte: Float
 
   """All values greater than the given value."""
-  amount_gt: String
+  amount_gt: Float
 
   """All values greater than or equal the given value."""
-  amount_gte: String
+  amount_gte: Float
+  currency: CURRENCY
 
-  """All values containing the given string."""
-  amount_contains: String
+  """All values that are not equal to given value."""
+  currency_not: CURRENCY
 
-  """All values not containing the given string."""
-  amount_not_contains: String
+  """All values that are contained in given list."""
+  currency_in: [CURRENCY!]
 
-  """All values starting with the given string."""
-  amount_starts_with: String
-
-  """All values not starting with the given string."""
-  amount_not_starts_with: String
-
-  """All values ending with the given string."""
-  amount_ends_with: String
-
-  """All values not ending with the given string."""
-  amount_not_ends_with: String
+  """All values that are not contained in given list."""
+  currency_not_in: [CURRENCY!]
   expirationDate: DateTime
 
   """All values that are not equal to given value."""
@@ -2048,7 +1783,6 @@ input PriceWhereInput {
 
   """All values greater than or equal the given value."""
   expirationDate_gte: DateTime
-  currency: CurrencyWhereInput
   _MagicalBackRelation_EarlyBirdPrice_every: ConferencePriceWhereInput
   _MagicalBackRelation_EarlyBirdPrice_some: ConferencePriceWhereInput
   _MagicalBackRelation_EarlyBirdPrice_none: ConferencePriceWhereInput
@@ -2079,7 +1813,6 @@ type Query {
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
   prices(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Price]!
-  currencies(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Currency]!
   user(where: UserWhereUniqueInput!): User
   conference(where: ConferenceWhereUniqueInput!): Conference
   coordinates(where: CoordinatesWhereUniqueInput!): Coordinates
@@ -2089,7 +1822,6 @@ type Query {
   location(where: LocationWhereUniqueInput!): Location
   image(where: ImageWhereUniqueInput!): Image
   price(where: PriceWhereUniqueInput!): Price
-  currency(where: CurrencyWhereUniqueInput!): Currency
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   conferencesConnection(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferenceConnection!
   coordinatesesConnection(where: CoordinatesWhereInput, orderBy: CoordinatesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoordinatesConnection!
@@ -2099,7 +1831,6 @@ type Query {
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
   imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
   pricesConnection(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PriceConnection!
-  currenciesConnection(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurrencyConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -2420,7 +2151,6 @@ type Subscription {
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
   price(where: PriceSubscriptionWhereInput): PriceSubscriptionPayload
-  currency(where: CurrencySubscriptionWhereInput): CurrencySubscriptionPayload
 }
 
 type Tag implements Node {

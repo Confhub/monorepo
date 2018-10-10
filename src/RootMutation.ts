@@ -4,9 +4,6 @@ import CreateConference from './apps/conference/mutations/CreateConference';
 import DeleteConference from './apps/conference/mutations/DeleteConference';
 import PublishConference from './apps/conference/mutations/PublishConference';
 import UpdateConference from './apps/conference/mutations/UpdateConference';
-import CreateCurrency from './apps/currencies/mutations/CreateCurrency';
-import DeleteCurrency from './apps/currencies/mutations/DeleteCurrency';
-import UpdateCurrency from './apps/currencies/mutations/UpdateCurrency';
 import CreateTag from './apps/tags/mutations/CreateTag';
 import DeleteTag from './apps/tags/mutations/DeleteTag';
 import UpdateTag from './apps/tags/mutations/UpdateTag';
@@ -28,8 +25,5 @@ export default new GraphQLObjectType({
     createTag: CreateTag,
     deleteTag: DeleteTag,
     updateTag: UpdateTag,
-    createCurrency: CreateCurrency,
-    deleteCurrency: DeleteCurrency,
-    updateCurrency: UpdateCurrency,
   },
 });

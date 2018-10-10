@@ -63,16 +63,10 @@ type Social {
   instagram: String
 }
 
-type Currency {
-  id: ID! @unique
-  name: String!
-  value: String!
-}
-
 type Price {
   id: ID! @unique
-  amount: String
-  currency: Currency
+  amount: Float!
+  currency: CURRENCY @default(value: USD)
   expirationDate: DateTime
 }
 
@@ -81,6 +75,11 @@ type ConferencePrice {
   regular: Price @relation(name: "RegularPrice")
   earlyBird: Price @relation(name: "EarlyBirdPrice")
   lateBird: Price @relation(name: "LateBirdPrice")
+}
+
+enum CURRENCY {
+  USD
+  EUR
 }
 
 enum PUBLISH_STATUS {

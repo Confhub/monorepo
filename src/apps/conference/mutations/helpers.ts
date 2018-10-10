@@ -1,8 +1,5 @@
-import idx from 'idx';
 import tslug from 'tslug';
 import {
-  ConferencePrice,
-  ConferencePriceCreateOneInput,
   Image,
   ImageCreateOneInput,
   Location,
@@ -109,16 +106,10 @@ export const generatePrice = (price: Price): PriceCreateInput => {
     return null;
   }
 
-  const currencyId = idx(price, _ => _.currency.id);
-
   return {
     amount: price.amount,
     expirationDate: price.expirationDate,
-    currency: {
-      connect: {
-        id: currencyId,
-      },
-    },
+    currency: price.currency,
   };
 };
 
