@@ -1,19 +1,19 @@
-import { GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLFloat, GraphQLObjectType } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-import { Currency, DateTime, Price } from '../../../generated/prisma';
-import GraphQLCurrency from '../../currencies/outputs/Currency';
+import { CURRENCY, DateTime, Price } from '../../../generated/prisma';
+import GraphQLCurrency from './Currency';
 
 export default new GraphQLObjectType({
   name: 'Price',
   fields: {
     amount: {
-      type: GraphQLString,
-      resolve: ({ amount }: Price): string => amount,
+      type: GraphQLFloat,
+      resolve: ({ amount }: Price): number => amount,
     },
     currency: {
       type: GraphQLCurrency,
-      resolve: ({ currency }: Price): Currency => currency,
+      resolve: ({ currency }: Price): CURRENCY => currency,
     },
     expirationDate: {
       type: GraphQLDateTime,

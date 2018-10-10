@@ -1,19 +1,16 @@
 import {
-  GraphQLFloat,
   GraphQLInputObjectType,
-  GraphQLID,
   GraphQLList,
   GraphQLNonNull,
   GraphQLString,
 } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
-import {
-  GraphQLConferencePricesInput,
-  GraphQLCreateConferenceImageInput,
-  GraphQLCreateConferenceLocationInput,
-  GraphQLCreateConferenceSocialInput,
-  GraphQLCreateConferenceTagInput,
-} from './ConferenceShared';
+
+import GraphQLConferencePricesInput from './ConferencePrice';
+import GraphQLConferenceImageInput from './Image';
+import GraphQLConferenceLocationInput from './Location';
+import GraphQLConferenceSocialInput from './Social';
+import GraphQLConferenceTagInput from './Tag';
 
 export default new GraphQLInputObjectType({
   name: 'CreateConferenceInput',
@@ -25,10 +22,10 @@ export default new GraphQLInputObjectType({
       type: GraphQLString,
     },
     tags: {
-      type: new GraphQLList(GraphQLCreateConferenceTagInput),
+      type: new GraphQLList(GraphQLConferenceTagInput),
     },
     image: {
-      type: GraphQLCreateConferenceImageInput,
+      type: GraphQLConferenceImageInput,
     },
     url: {
       type: new GraphQLNonNull(GraphQLString),
@@ -40,10 +37,10 @@ export default new GraphQLInputObjectType({
       type: new GraphQLNonNull(GraphQLDateTime),
     },
     location: {
-      type: new GraphQLNonNull(GraphQLCreateConferenceLocationInput),
+      type: new GraphQLNonNull(GraphQLConferenceLocationInput),
     },
     social: {
-      type: GraphQLCreateConferenceSocialInput,
+      type: GraphQLConferenceSocialInput,
     },
     price: {
       type: GraphQLConferencePricesInput,
