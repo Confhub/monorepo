@@ -1,15 +1,23 @@
+import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { Conference, ConferenceUpdateInput } from '../../../generated/prisma';
+import {
+  Conference,
+  ConferencePrice,
+  ConferencePriceUpdateOneInput,
+  ConferenceUpdateInput,
+} from '../../../generated/prisma';
+
 import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLEditConferenceInput from '../inputs/EditConference';
 import GraphQLConference from '../outputs/Conference';
 import {
   generateImage,
   generateLocation,
+  generatePrice,
   generateSocial,
   generateTagsUpdate,
-} from './ConferenceShared';
+} from './helpers';
 
 interface ArgsType {
   id: string;
@@ -40,47 +48,64 @@ export default {
         endDate,
         location,
         social,
+        price,
       },
     }: ArgsType,
     { apiToken, db }: Context,
     info: any,
-  ): Promise<Conference> => {
-    const conference = await db.query.conference({ where: { id } }, info);
-
+  ): Promise<Conference | null> => {
+    const conference = await db.query.conference({ where: { id } });
     const userId = getUserId(apiToken);
     const userRole = await getUserRole(userId, db);
+
     if (userRole === 'MODERATOR') {
-      const query: ConferenceUpdateInput = {};
-      if (name) {
-        query.name = name;
-      }
-      if (url) {
-        query.url = url;
-      }
-      if (startDate) {
-        query.startDate = startDate;
-      }
-      if (endDate) {
-        query.endDate = endDate;
-      }
-      if (description) {
-        query.description = description;
-      }
-      if (tags) {
-        query.tags = generateTagsUpdate(tags, conference.tags);
-      }
-      if (image) {
-        query.image = generateImage(image, name || conference.name);
-      }
-      if (location) {
-        query.location = generateLocation(location);
-      }
-      if (social) {
-        query.social = generateSocial(social);
-      }
+      const query: ConferenceUpdateInput = {
+        ...(name && { name }),
+        ...(url && { url }),
+        ...(startDate && { startDate }),
+        ...(endDate && { endDate }),
+        ...(description && { description }),
+        ...(tags && { tags: generateTagsUpdate(tags, conference.tags) }),
+        ...(image && { image: generateImage(image, name || conference.name) }),
+        ...(location && { location: generateLocation(location) }),
+        ...(social && { social: generateSocial(social) }),
+        ...(price && { price: generatePrices(price, conference.price) }),
+      };
 
       return db.mutation.updateConference({ data: query, where: { id } }, info);
     }
-    throw new Error('You must have moderator rights');
+
+    throw new AuthenticationError('You must have moderator rights');
   },
 };
+
+function generatePrices(
+  prices: ConferencePrice,
+  oldPrices: ConferencePrice,
+): ConferencePriceUpdateOneInput {
+  const { regular, earlyBird, lateBird } = prices;
+
+  return {
+    update: {
+      regular: generateUpdatePrice(regular, oldPrices && oldPrices.regular),
+      earlyBird: generateUpdatePrice(
+        earlyBird,
+        oldPrices && oldPrices.earlyBird,
+      ),
+      lateBird: generateUpdatePrice(lateBird, oldPrices && oldPrices.lateBird),
+    },
+  };
+}
+
+function generateUpdatePrice(price, oldPrice) {
+  if (!price) {
+    return null;
+  }
+
+  return {
+    upsert: {
+      update: { ...generatePrice(price) },
+      create: { ...generatePrice({ ...oldPrice, ...price }) },
+    },
+  };
+}

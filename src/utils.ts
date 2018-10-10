@@ -2,6 +2,8 @@ import * as jwt from 'jsonwebtoken';
 
 import { Prisma, USER_ROLE } from './generated/prisma';
 
+export const APP_SECRET = process.env.APP_SECRET || '';
+
 export interface Context {
   apiToken: string;
   db: Prisma;
@@ -25,7 +27,7 @@ export function createContext(token: string): Context {
 export function getUserId(token: string): string {
   if (token) {
     const apiToken = token.replace('Bearer ', '');
-    const { userId } = jwt.verify(apiToken, process.env.APP_SECRET) as {
+    const { userId } = jwt.verify(apiToken, APP_SECRET) as {
       userId: string;
     };
     return userId;

@@ -1,8 +1,9 @@
+import { ApolloError } from 'apollo-server';
 import * as bcrypt from 'bcryptjs';
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 import * as jwt from 'jsonwebtoken';
 
-import { Context } from '../../../utils';
+import { APP_SECRET, Context } from '../../../utils';
 import GraphQLAuthPayload, { AuthPayload } from '../outputs/AuthPayload';
 
 interface ArgsType {
@@ -33,7 +34,7 @@ export default {
       where: { email: args.email },
     });
     if (checkEmail) {
-      throw new Error(`Email address already in use`);
+      throw new ApolloError('Email address already in use');
     }
 
     const password = await bcrypt.hash(args.password, 10);
@@ -42,7 +43,7 @@ export default {
     });
 
     return {
-      token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
+      token: jwt.sign({ userId: user.id }, APP_SECRET),
       user,
     };
   },

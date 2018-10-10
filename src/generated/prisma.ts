@@ -11,8 +11,8 @@ export interface Query {
     socials: <T = Social[]>(args: { where?: SocialWhereInput, orderBy?: SocialOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     tags: <T = Tag[]>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     locations: <T = Location[]>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    prices: <T = Price[]>(args: { where?: PriceWhereInput, orderBy?: PriceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     images: <T = Image[]>(args: { where?: ImageWhereInput, orderBy?: ImageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    prices: <T = Price[]>(args: { where?: PriceWhereInput, orderBy?: PriceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     currencies: <T = Currency[]>(args: { where?: CurrencyWhereInput, orderBy?: CurrencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     conference: <T = Conference | null>(args: { where: ConferenceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -21,8 +21,8 @@ export interface Query {
     social: <T = Social | null>(args: { where: SocialWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     tag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     location: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    price: <T = Price | null>(args: { where: PriceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     image: <T = Image | null>(args: { where: ImageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    price: <T = Price | null>(args: { where: PriceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     currency: <T = Currency | null>(args: { where: CurrencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     conferencesConnection: <T = ConferenceConnection>(args: { where?: ConferenceWhereInput, orderBy?: ConferenceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -31,8 +31,8 @@ export interface Query {
     socialsConnection: <T = SocialConnection>(args: { where?: SocialWhereInput, orderBy?: SocialOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     tagsConnection: <T = TagConnection>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     locationsConnection: <T = LocationConnection>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    pricesConnection: <T = PriceConnection>(args: { where?: PriceWhereInput, orderBy?: PriceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     imagesConnection: <T = ImageConnection>(args: { where?: ImageWhereInput, orderBy?: ImageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    pricesConnection: <T = PriceConnection>(args: { where?: PriceWhereInput, orderBy?: PriceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     currenciesConnection: <T = CurrencyConnection>(args: { where?: CurrencyWhereInput, orderBy?: CurrencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
@@ -45,8 +45,8 @@ export interface Mutation {
     createSocial: <T = Social>(args: { data: SocialCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createTag: <T = Tag>(args: { data: TagCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createLocation: <T = Location>(args: { data: LocationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createPrice: <T = Price>(args: { data: PriceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createImage: <T = Image>(args: { data: ImageCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createPrice: <T = Price>(args: { data: PriceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createCurrency: <T = Currency>(args: { data: CurrencyCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateConference: <T = Conference | null>(args: { data: ConferenceUpdateInput, where: ConferenceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -55,8 +55,8 @@ export interface Mutation {
     updateSocial: <T = Social | null>(args: { data: SocialUpdateInput, where: SocialWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateTag: <T = Tag | null>(args: { data: TagUpdateInput, where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateLocation: <T = Location | null>(args: { data: LocationUpdateInput, where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updatePrice: <T = Price | null>(args: { data: PriceUpdateInput, where: PriceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateImage: <T = Image | null>(args: { data: ImageUpdateInput, where: ImageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updatePrice: <T = Price | null>(args: { data: PriceUpdateInput, where: PriceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateCurrency: <T = Currency | null>(args: { data: CurrencyUpdateInput, where: CurrencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteConference: <T = Conference | null>(args: { where: ConferenceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -65,8 +65,8 @@ export interface Mutation {
     deleteSocial: <T = Social | null>(args: { where: SocialWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteTag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteLocation: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deletePrice: <T = Price | null>(args: { where: PriceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteImage: <T = Image | null>(args: { where: ImageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deletePrice: <T = Price | null>(args: { where: PriceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteCurrency: <T = Currency | null>(args: { where: CurrencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertConference: <T = Conference>(args: { where: ConferenceWhereUniqueInput, create: ConferenceCreateInput, update: ConferenceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -75,8 +75,8 @@ export interface Mutation {
     upsertSocial: <T = Social>(args: { where: SocialWhereUniqueInput, create: SocialCreateInput, update: SocialUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertTag: <T = Tag>(args: { where: TagWhereUniqueInput, create: TagCreateInput, update: TagUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertLocation: <T = Location>(args: { where: LocationWhereUniqueInput, create: LocationCreateInput, update: LocationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertPrice: <T = Price>(args: { where: PriceWhereUniqueInput, create: PriceCreateInput, update: PriceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertImage: <T = Image>(args: { where: ImageWhereUniqueInput, create: ImageCreateInput, update: ImageUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertPrice: <T = Price>(args: { where: PriceWhereUniqueInput, create: PriceCreateInput, update: PriceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertCurrency: <T = Currency>(args: { where: CurrencyWhereUniqueInput, create: CurrencyCreateInput, update: CurrencyUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyConferences: <T = BatchPayload>(args: { data: ConferenceUpdateInput, where?: ConferenceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -85,8 +85,8 @@ export interface Mutation {
     updateManySocials: <T = BatchPayload>(args: { data: SocialUpdateInput, where?: SocialWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyTags: <T = BatchPayload>(args: { data: TagUpdateInput, where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyLocations: <T = BatchPayload>(args: { data: LocationUpdateInput, where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyPrices: <T = BatchPayload>(args: { data: PriceUpdateInput, where?: PriceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyImages: <T = BatchPayload>(args: { data: ImageUpdateInput, where?: ImageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyPrices: <T = BatchPayload>(args: { data: PriceUpdateInput, where?: PriceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyCurrencies: <T = BatchPayload>(args: { data: CurrencyUpdateInput, where?: CurrencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyConferences: <T = BatchPayload>(args: { where?: ConferenceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -95,8 +95,8 @@ export interface Mutation {
     deleteManySocials: <T = BatchPayload>(args: { where?: SocialWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyTags: <T = BatchPayload>(args: { where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyLocations: <T = BatchPayload>(args: { where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyPrices: <T = BatchPayload>(args: { where?: PriceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyImages: <T = BatchPayload>(args: { where?: ImageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyPrices: <T = BatchPayload>(args: { where?: PriceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyCurrencies: <T = BatchPayload>(args: { where?: CurrencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
@@ -108,8 +108,8 @@ export interface Subscription {
     social: <T = SocialSubscriptionPayload | null>(args: { where?: SocialSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     tag: <T = TagSubscriptionPayload | null>(args: { where?: TagSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     location: <T = LocationSubscriptionPayload | null>(args: { where?: LocationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    price: <T = PriceSubscriptionPayload | null>(args: { where?: PriceSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     image: <T = ImageSubscriptionPayload | null>(args: { where?: ImageSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    price: <T = PriceSubscriptionPayload | null>(args: { where?: PriceSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     currency: <T = CurrencySubscriptionPayload | null>(args: { where?: CurrencySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
   }
 
@@ -121,8 +121,8 @@ export interface Exists {
   Social: (where?: SocialWhereInput) => Promise<boolean>
   Tag: (where?: TagWhereInput) => Promise<boolean>
   Location: (where?: LocationWhereInput) => Promise<boolean>
-  Price: (where?: PriceWhereInput) => Promise<boolean>
   Image: (where?: ImageWhereInput) => Promise<boolean>
+  Price: (where?: PriceWhereInput) => Promise<boolean>
   Currency: (where?: CurrencyWhereInput) => Promise<boolean>
 }
 
@@ -274,9 +274,9 @@ type ConferencePreviousValues {
 
 type ConferencePrice implements Node {
   id: ID!
-  regular(where: PriceWhereInput): Price!
-  earlyBird(where: PriceWhereInput): Price!
-  lateBird(where: PriceWhereInput): Price!
+  regular(where: PriceWhereInput): Price
+  earlyBird(where: PriceWhereInput): Price
+  lateBird(where: PriceWhereInput): Price
 }
 
 """A connection to a list of items."""
@@ -290,9 +290,9 @@ type ConferencePriceConnection {
 }
 
 input ConferencePriceCreateInput {
-  regular: PriceCreateOneInput!
-  earlyBird: PriceCreateOneInput!
-  lateBird: PriceCreateOneInput!
+  regular: PriceCreateOneInput
+  earlyBird: PriceCreateOneInput
+  lateBird: PriceCreateOneInput
 }
 
 input ConferencePriceCreateOneInput {
@@ -1061,6 +1061,7 @@ input CurrencyUpdateInput {
 input CurrencyUpdateOneInput {
   create: CurrencyCreateInput
   connect: CurrencyWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: CurrencyUpdateDataInput
   upsert: CurrencyUpsertNestedInput
@@ -1880,8 +1881,8 @@ type Mutation {
   createSocial(data: SocialCreateInput!): Social!
   createTag(data: TagCreateInput!): Tag!
   createLocation(data: LocationCreateInput!): Location!
-  createPrice(data: PriceCreateInput!): Price!
   createImage(data: ImageCreateInput!): Image!
+  createPrice(data: PriceCreateInput!): Price!
   createCurrency(data: CurrencyCreateInput!): Currency!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateConference(data: ConferenceUpdateInput!, where: ConferenceWhereUniqueInput!): Conference
@@ -1890,8 +1891,8 @@ type Mutation {
   updateSocial(data: SocialUpdateInput!, where: SocialWhereUniqueInput!): Social
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
-  updatePrice(data: PriceUpdateInput!, where: PriceWhereUniqueInput!): Price
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
+  updatePrice(data: PriceUpdateInput!, where: PriceWhereUniqueInput!): Price
   updateCurrency(data: CurrencyUpdateInput!, where: CurrencyWhereUniqueInput!): Currency
   deleteUser(where: UserWhereUniqueInput!): User
   deleteConference(where: ConferenceWhereUniqueInput!): Conference
@@ -1900,8 +1901,8 @@ type Mutation {
   deleteSocial(where: SocialWhereUniqueInput!): Social
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteLocation(where: LocationWhereUniqueInput!): Location
-  deletePrice(where: PriceWhereUniqueInput!): Price
   deleteImage(where: ImageWhereUniqueInput!): Image
+  deletePrice(where: PriceWhereUniqueInput!): Price
   deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertConference(where: ConferenceWhereUniqueInput!, create: ConferenceCreateInput!, update: ConferenceUpdateInput!): Conference!
@@ -1910,8 +1911,8 @@ type Mutation {
   upsertSocial(where: SocialWhereUniqueInput!, create: SocialCreateInput!, update: SocialUpdateInput!): Social!
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
-  upsertPrice(where: PriceWhereUniqueInput!, create: PriceCreateInput!, update: PriceUpdateInput!): Price!
   upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
+  upsertPrice(where: PriceWhereUniqueInput!, create: PriceCreateInput!, update: PriceUpdateInput!): Price!
   upsertCurrency(where: CurrencyWhereUniqueInput!, create: CurrencyCreateInput!, update: CurrencyUpdateInput!): Currency!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyConferences(data: ConferenceUpdateInput!, where: ConferenceWhereInput): BatchPayload!
@@ -1920,8 +1921,8 @@ type Mutation {
   updateManySocials(data: SocialUpdateInput!, where: SocialWhereInput): BatchPayload!
   updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
   updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
-  updateManyPrices(data: PriceUpdateInput!, where: PriceWhereInput): BatchPayload!
   updateManyImages(data: ImageUpdateInput!, where: ImageWhereInput): BatchPayload!
+  updateManyPrices(data: PriceUpdateInput!, where: PriceWhereInput): BatchPayload!
   updateManyCurrencies(data: CurrencyUpdateInput!, where: CurrencyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyConferences(where: ConferenceWhereInput): BatchPayload!
@@ -1930,8 +1931,8 @@ type Mutation {
   deleteManySocials(where: SocialWhereInput): BatchPayload!
   deleteManyTags(where: TagWhereInput): BatchPayload!
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
-  deleteManyPrices(where: PriceWhereInput): BatchPayload!
   deleteManyImages(where: ImageWhereInput): BatchPayload!
+  deleteManyPrices(where: PriceWhereInput): BatchPayload!
   deleteManyCurrencies(where: CurrencyWhereInput): BatchPayload!
 }
 
@@ -1964,9 +1965,9 @@ type PageInfo {
 
 type Price implements Node {
   id: ID!
-  amount: String!
-  currency(where: CurrencyWhereInput): Currency!
-  expiration: DateTime
+  amount: String
+  currency(where: CurrencyWhereInput): Currency
+  expirationDate: DateTime
 }
 
 """A connection to a list of items."""
@@ -1980,9 +1981,9 @@ type PriceConnection {
 }
 
 input PriceCreateInput {
-  amount: String!
-  expiration: DateTime
-  currency: CurrencyCreateOneInput!
+  amount: String
+  expirationDate: DateTime
+  currency: CurrencyCreateOneInput
 }
 
 input PriceCreateOneInput {
@@ -2004,8 +2005,8 @@ enum PriceOrderByInput {
   id_DESC
   amount_ASC
   amount_DESC
-  expiration_ASC
-  expiration_DESC
+  expirationDate_ASC
+  expirationDate_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -2014,8 +2015,8 @@ enum PriceOrderByInput {
 
 type PricePreviousValues {
   id: ID!
-  amount: String!
-  expiration: DateTime
+  amount: String
+  expirationDate: DateTime
 }
 
 type PriceSubscriptionPayload {
@@ -2059,19 +2060,20 @@ input PriceSubscriptionWhereInput {
 
 input PriceUpdateDataInput {
   amount: String
-  expiration: DateTime
+  expirationDate: DateTime
   currency: CurrencyUpdateOneInput
 }
 
 input PriceUpdateInput {
   amount: String
-  expiration: DateTime
+  expirationDate: DateTime
   currency: CurrencyUpdateOneInput
 }
 
 input PriceUpdateOneInput {
   create: PriceCreateInput
   connect: PriceWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: PriceUpdateDataInput
   upsert: PriceUpsertNestedInput
@@ -2171,38 +2173,38 @@ input PriceWhereInput {
 
   """All values not ending with the given string."""
   amount_not_ends_with: String
-  expiration: DateTime
+  expirationDate: DateTime
 
   """All values that are not equal to given value."""
-  expiration_not: DateTime
+  expirationDate_not: DateTime
 
   """All values that are contained in given list."""
-  expiration_in: [DateTime!]
+  expirationDate_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  expiration_not_in: [DateTime!]
+  expirationDate_not_in: [DateTime!]
 
   """All values less than the given value."""
-  expiration_lt: DateTime
+  expirationDate_lt: DateTime
 
   """All values less than or equal the given value."""
-  expiration_lte: DateTime
+  expirationDate_lte: DateTime
 
   """All values greater than the given value."""
-  expiration_gt: DateTime
+  expirationDate_gt: DateTime
 
   """All values greater than or equal the given value."""
-  expiration_gte: DateTime
+  expirationDate_gte: DateTime
   currency: CurrencyWhereInput
-  _MagicalBackRelation_EarlybirdPrice_every: ConferencePriceWhereInput
-  _MagicalBackRelation_EarlybirdPrice_some: ConferencePriceWhereInput
-  _MagicalBackRelation_EarlybirdPrice_none: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_every: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_some: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_none: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_every: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_some: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_none: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_every: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_some: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_none: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_every: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_some: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_none: ConferencePriceWhereInput
 }
 
 input PriceWhereUniqueInput {
@@ -2222,8 +2224,8 @@ type Query {
   socials(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Social]!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
-  prices(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Price]!
   images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
+  prices(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Price]!
   currencies(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Currency]!
   user(where: UserWhereUniqueInput!): User
   conference(where: ConferenceWhereUniqueInput!): Conference
@@ -2232,8 +2234,8 @@ type Query {
   social(where: SocialWhereUniqueInput!): Social
   tag(where: TagWhereUniqueInput!): Tag
   location(where: LocationWhereUniqueInput!): Location
-  price(where: PriceWhereUniqueInput!): Price
   image(where: ImageWhereUniqueInput!): Image
+  price(where: PriceWhereUniqueInput!): Price
   currency(where: CurrencyWhereUniqueInput!): Currency
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   conferencesConnection(where: ConferenceWhereInput, orderBy: ConferenceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConferenceConnection!
@@ -2242,8 +2244,8 @@ type Query {
   socialsConnection(where: SocialWhereInput, orderBy: SocialOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SocialConnection!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
-  pricesConnection(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PriceConnection!
   imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
+  pricesConnection(where: PriceWhereInput, orderBy: PriceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PriceConnection!
   currenciesConnection(where: CurrencyWhereInput, orderBy: CurrencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CurrencyConnection!
 
   """Fetches an object given its ID"""
@@ -2563,8 +2565,8 @@ type Subscription {
   social(where: SocialSubscriptionWhereInput): SocialSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
-  price(where: PriceSubscriptionWhereInput): PriceSubscriptionPayload
   image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
+  price(where: PriceSubscriptionWhereInput): PriceSubscriptionPayload
   currency(where: CurrencySubscriptionWhereInput): CurrencySubscriptionPayload
 }
 
@@ -3258,23 +3260,23 @@ export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
 
-export type PriceOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'amount_ASC' |
-  'amount_DESC' |
-  'expiration_ASC' |
-  'expiration_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
 export type ImageOrderByInput =   'id_ASC' |
   'id_DESC' |
   'src_ASC' |
   'src_DESC' |
   'alt_ASC' |
   'alt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type PriceOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'amount_ASC' |
+  'amount_DESC' |
+  'expirationDate_ASC' |
+  'expirationDate_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -3387,6 +3389,7 @@ export interface CurrencyCreateInput {
 export interface CurrencyUpdateOneInput {
   create?: CurrencyCreateInput
   connect?: CurrencyWhereUniqueInput
+  disconnect?: Boolean
   delete?: Boolean
   update?: CurrencyUpdateDataInput
   upsert?: CurrencyUpsertNestedInput
@@ -3399,7 +3402,7 @@ export interface SocialCreateOneInput {
 
 export interface PriceUpdateDataInput {
   amount?: String
-  expiration?: DateTime
+  expirationDate?: DateTime
   currency?: CurrencyUpdateOneInput
 }
 
@@ -3435,29 +3438,30 @@ export interface PriceWhereInput {
   amount_not_starts_with?: String
   amount_ends_with?: String
   amount_not_ends_with?: String
-  expiration?: DateTime
-  expiration_not?: DateTime
-  expiration_in?: DateTime[] | DateTime
-  expiration_not_in?: DateTime[] | DateTime
-  expiration_lt?: DateTime
-  expiration_lte?: DateTime
-  expiration_gt?: DateTime
-  expiration_gte?: DateTime
+  expirationDate?: DateTime
+  expirationDate_not?: DateTime
+  expirationDate_in?: DateTime[] | DateTime
+  expirationDate_not_in?: DateTime[] | DateTime
+  expirationDate_lt?: DateTime
+  expirationDate_lte?: DateTime
+  expirationDate_gt?: DateTime
+  expirationDate_gte?: DateTime
   currency?: CurrencyWhereInput
-  _MagicalBackRelation_EarlybirdPrice_every?: ConferencePriceWhereInput
-  _MagicalBackRelation_EarlybirdPrice_some?: ConferencePriceWhereInput
-  _MagicalBackRelation_EarlybirdPrice_none?: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_every?: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_some?: ConferencePriceWhereInput
-  _MagicalBackRelation_LatebirdPrice_none?: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_every?: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_some?: ConferencePriceWhereInput
+  _MagicalBackRelation_EarlyBirdPrice_none?: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_every?: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_some?: ConferencePriceWhereInput
   _MagicalBackRelation_RegularPrice_none?: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_every?: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_some?: ConferencePriceWhereInput
+  _MagicalBackRelation_LateBirdPrice_none?: ConferencePriceWhereInput
 }
 
 export interface PriceUpdateOneInput {
   create?: PriceCreateInput
   connect?: PriceWhereUniqueInput
+  disconnect?: Boolean
   delete?: Boolean
   update?: PriceUpdateDataInput
   upsert?: PriceUpsertNestedInput
@@ -3611,15 +3615,15 @@ export interface ConferencePriceUpdateOneInput {
   upsert?: ConferencePriceUpsertNestedInput
 }
 
-export interface PriceSubscriptionWhereInput {
-  AND?: PriceSubscriptionWhereInput[] | PriceSubscriptionWhereInput
-  OR?: PriceSubscriptionWhereInput[] | PriceSubscriptionWhereInput
-  NOT?: PriceSubscriptionWhereInput[] | PriceSubscriptionWhereInput
+export interface ImageSubscriptionWhereInput {
+  AND?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  OR?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+  NOT?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
   mutation_in?: MutationType[] | MutationType
   updatedFields_contains?: String
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
-  node?: PriceWhereInput
+  node?: ImageWhereInput
 }
 
 export interface SocialUpsertNestedInput {
@@ -3793,7 +3797,7 @@ export interface ImageUpsertNestedInput {
   create: ImageCreateInput
 }
 
-export interface ImageWhereUniqueInput {
+export interface PriceWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -3802,10 +3806,9 @@ export interface ImageUpdateDataInput {
   alt?: String
 }
 
-export interface PriceUpdateInput {
-  amount?: String
-  expiration?: DateTime
-  currency?: CurrencyUpdateOneInput
+export interface ImageUpdateInput {
+  src?: String
+  alt?: String
 }
 
 export interface ImageUpdateOneInput {
@@ -3928,15 +3931,15 @@ export interface ConferenceUpdateInput {
   price?: ConferencePriceUpdateOneInput
 }
 
-export interface ImageSubscriptionWhereInput {
-  AND?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
-  OR?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
-  NOT?: ImageSubscriptionWhereInput[] | ImageSubscriptionWhereInput
+export interface PriceSubscriptionWhereInput {
+  AND?: PriceSubscriptionWhereInput[] | PriceSubscriptionWhereInput
+  OR?: PriceSubscriptionWhereInput[] | PriceSubscriptionWhereInput
+  NOT?: PriceSubscriptionWhereInput[] | PriceSubscriptionWhereInput
   mutation_in?: MutationType[] | MutationType
   updatedFields_contains?: String
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
-  node?: ImageWhereInput
+  node?: PriceWhereInput
 }
 
 export interface UserCreateInput {
@@ -4190,9 +4193,10 @@ export interface SocialWhereInput {
   _MagicalBackRelation_ConferenceToSocial_none?: ConferenceWhereInput
 }
 
-export interface ImageUpdateInput {
-  src?: String
-  alt?: String
+export interface PriceUpdateInput {
+  amount?: String
+  expirationDate?: DateTime
+  currency?: CurrencyUpdateOneInput
 }
 
 export interface SocialCreateInput {
@@ -4201,7 +4205,7 @@ export interface SocialCreateInput {
   instagram?: String
 }
 
-export interface PriceWhereUniqueInput {
+export interface ImageWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -4221,9 +4225,9 @@ export interface CurrencyCreateOneInput {
 }
 
 export interface PriceCreateInput {
-  amount: String
-  expiration?: DateTime
-  currency: CurrencyCreateOneInput
+  amount?: String
+  expirationDate?: DateTime
+  currency?: CurrencyCreateOneInput
 }
 
 export interface PriceCreateOneInput {
@@ -4232,9 +4236,9 @@ export interface PriceCreateOneInput {
 }
 
 export interface ConferencePriceCreateInput {
-  regular: PriceCreateOneInput
-  earlyBird: PriceCreateOneInput
-  lateBird: PriceCreateOneInput
+  regular?: PriceCreateOneInput
+  earlyBird?: PriceCreateOneInput
+  lateBird?: PriceCreateOneInput
 }
 
 export interface ConferencePriceWhereInput {
@@ -4439,8 +4443,8 @@ export interface AggregateCurrency {
  * An edge in a connection.
 
  */
-export interface ImageEdge {
-  node: Image
+export interface PriceEdge {
+  node: Price
   cursor: String
 }
 
@@ -4448,24 +4452,24 @@ export interface BatchPayload {
   count: Long
 }
 
-export interface AggregatePrice {
+export interface AggregateImage {
   count: Int
 }
 
-export interface ImagePreviousValues {
+export interface PricePreviousValues {
   id: ID_Output
-  src: String
-  alt?: String
+  amount?: String
+  expirationDate?: DateTime
 }
 
 /*
  * A connection to a list of items.
 
  */
-export interface PriceConnection {
+export interface ImageConnection {
   pageInfo: PageInfo
-  edges: PriceEdge[]
-  aggregate: AggregatePrice
+  edges: ImageEdge[]
+  aggregate: AggregateImage
 }
 
 export interface User extends Node {
@@ -4486,11 +4490,11 @@ export interface LocationEdge {
   cursor: String
 }
 
-export interface ImageSubscriptionPayload {
+export interface PriceSubscriptionPayload {
   mutation: MutationType
-  node?: Image
+  node?: Price
   updatedFields?: String[]
-  previousValues?: ImagePreviousValues
+  previousValues?: PricePreviousValues
 }
 
 export interface AggregateTag {
@@ -4580,9 +4584,9 @@ export interface CoordinatesEdge {
 
 export interface Price extends Node {
   id: ID_Output
-  amount: String
-  currency: Currency
-  expiration?: DateTime
+  amount?: String
+  currency?: Currency
+  expirationDate?: DateTime
 }
 
 export interface AggregateConference {
@@ -4623,9 +4627,9 @@ export interface UserEdge {
 
 export interface ConferencePrice extends Node {
   id: ID_Output
-  regular: Price
-  earlyBird: Price
-  lateBird: Price
+  regular?: Price
+  earlyBird?: Price
+  lateBird?: Price
 }
 
 /*
@@ -4646,7 +4650,7 @@ export interface ConferencePriceSubscriptionPayload {
   previousValues?: ConferencePricePreviousValues
 }
 
-export interface AggregateImage {
+export interface AggregatePrice {
   count: Int
 }
 
@@ -4658,8 +4662,8 @@ export interface ConferencePricePreviousValues {
  * An edge in a connection.
 
  */
-export interface PriceEdge {
-  node: Price
+export interface ImageEdge {
+  node: Image
   cursor: String
 }
 
@@ -4780,17 +4784,17 @@ export interface SocialConnection {
   aggregate: AggregateSocial
 }
 
-export interface PricePreviousValues {
+export interface ImagePreviousValues {
   id: ID_Output
-  amount: String
-  expiration?: DateTime
+  src: String
+  alt?: String
 }
 
-export interface PriceSubscriptionPayload {
+export interface ImageSubscriptionPayload {
   mutation: MutationType
-  node?: Price
+  node?: Image
   updatedFields?: String[]
-  previousValues?: PricePreviousValues
+  previousValues?: ImagePreviousValues
 }
 
 export interface Image extends Node {
@@ -4825,10 +4829,10 @@ export interface TagEdge {
  * A connection to a list of items.
 
  */
-export interface ImageConnection {
+export interface PriceConnection {
   pageInfo: PageInfo
-  edges: ImageEdge[]
-  aggregate: AggregateImage
+  edges: PriceEdge[]
+  aggregate: AggregatePrice
 }
 
 export interface CurrencySubscriptionPayload {

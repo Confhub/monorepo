@@ -18,6 +18,7 @@ import {
 import GraphQLTag from '../../tags/outputs/Tag';
 import GraphQLImage from './Image';
 import GraphQLLocation from './Location';
+import GraphQLPrices from './Price';
 import GraphQLPublishStatus from './PublishStatus';
 import GraphQLSocial from './Social';
 
@@ -67,6 +68,9 @@ export default new GraphQLObjectType({
     publishStatus: {
       type: GraphQLPublishStatus,
       resolve: ({ publishStatus }: Conference): PUBLISH_STATUS => publishStatus,
+    },
+    price: {
+      type: GraphQLPrices,
     },
   },
 });

@@ -7,6 +7,7 @@ import {
   GraphQLString,
 } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
+import GraphQLCurrencyInput from '../../currencies/inputs/Currency';
 
 export const GraphQLCreateConferenceTagInput = new GraphQLInputObjectType({
   name: 'CreateConferenceTagInput',
@@ -82,6 +83,36 @@ export const GraphQLCreateConferenceSocialInput = new GraphQLInputObjectType({
     },
     instagram: {
       type: GraphQLString,
+    },
+  },
+});
+
+export const GraphQLConferencePriceInput = new GraphQLInputObjectType({
+  name: 'ConferencePriceInput',
+  fields: {
+    amount: {
+      type: GraphQLString,
+    },
+    expiration: {
+      type: GraphQLDateTime,
+    },
+    currency: {
+      type: GraphQLCurrencyInput,
+    },
+  },
+});
+
+export const GraphQLConferencePricesInput = new GraphQLInputObjectType({
+  name: 'ConferencePricesInput',
+  fields: {
+    regular: {
+      type: GraphQLConferencePriceInput,
+    },
+    earlyBird: {
+      type: GraphQLConferencePriceInput,
+    },
+    lateBird: {
+      type: GraphQLConferencePriceInput,
     },
   },
 });

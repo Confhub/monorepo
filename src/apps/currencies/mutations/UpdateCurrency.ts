@@ -1,3 +1,4 @@
+import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
@@ -25,7 +26,7 @@ export default {
     { id, name }: ArgsType,
     { apiToken, db }: Context,
     info: any,
-  ): Promise<Currency> => {
+  ): Promise<Currency | null> => {
     const userId = getUserId(apiToken);
     const userRole = await getUserRole(userId, db);
 
@@ -42,6 +43,6 @@ export default {
       );
     }
 
-    throw new Error('You must have moderator rights');
+    throw new AuthenticationError('You must have moderator rights');
   },
 };

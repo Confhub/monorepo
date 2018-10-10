@@ -1,3 +1,4 @@
+import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import { Conference } from '../../../generated/prisma';
@@ -20,7 +21,7 @@ export default {
     { id }: ArgsType,
     { apiToken, db }: Context,
     info: any,
-  ): Promise<Conference> => {
+  ): Promise<Conference | null> => {
     const userId = getUserId(apiToken);
     const userRole = await getUserRole(userId, db);
 
@@ -36,6 +37,6 @@ export default {
       }
     }
 
-    throw new Error('You must have moderator rights');
+    throw new AuthenticationError('You must have moderator rights');
   },
 };

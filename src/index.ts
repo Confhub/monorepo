@@ -1,13 +1,14 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, ServerInfo } from 'apollo-server';
+import * as http from 'http';
 
 import Schema from './Schema';
 import { createContext } from './utils';
 
-const port = parseInt(process.env.PORT, 10) || 4000;
+const port = (process.env.PORT && parseInt(process.env.PORT, 10)) || 4000;
 
 const server = new ApolloServer({
   schema: Schema,
-  context: async ({ req }) => {
+  context: async ({ req }: any) => {
     if (!req || !req.headers) {
       return;
     }

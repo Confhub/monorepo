@@ -20,6 +20,7 @@
     "bcryptjs": "^2.4.3",
     "graphql": "^14.0.2",
     "graphql-iso-date": "^3.6.1",
+    "idx": "^2.4.0",
     "jsonwebtoken": "^8.3.0",
     "prisma-binding": "^2.1.6",
     "tslug": "^1.0.3"
@@ -38,7 +39,7 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
-    "typescript": "^3.1.1"
+    "typescript": "^3.1.2"
   },
   "scripts": {
     "start": "NODE_ENV=development dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
