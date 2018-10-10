@@ -1,3 +1,4 @@
+import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import {
@@ -52,49 +53,29 @@ export default {
     }: ArgsType,
     { apiToken, db }: Context,
     info: any,
-  ): Promise<Conference> => {
+  ): Promise<Conference | null> => {
     const conference = await db.query.conference({ where: { id } });
-
     const userId = getUserId(apiToken);
     const userRole = await getUserRole(userId, db);
-    if (userRole === 'MODERATOR') {
-      const query: ConferenceUpdateInput = {};
-      if (name) {
-        query.name = name;
-      }
-      if (url) {
-        query.url = url;
-      }
-      if (startDate) {
-        query.startDate = startDate;
-      }
-      if (endDate) {
-        query.endDate = endDate;
-      }
-      if (description) {
-        query.description = description;
-      }
-      if (tags) {
-        query.tags = generateTagsUpdate(tags, conference.tags);
-      }
-      if (image) {
-        query.image = generateImage(image, name || conference.name);
-      }
-      if (location) {
-        query.location = generateLocation(location);
-      }
-      if (social) {
-        query.social = generateSocial(social);
-      }
-      if (price) {
-        // console.log('LOOOOOG---', { conference });
 
-        query.price = generatePrices(price, conference.price);
-      }
+    if (userRole === 'MODERATOR') {
+      const query: ConferenceUpdateInput = {
+        ...(name && { name }),
+        ...(url && { url }),
+        ...(startDate && { startDate }),
+        ...(endDate && { endDate }),
+        ...(description && { description }),
+        ...(tags && { tags: generateTagsUpdate(tags, conference.tags) }),
+        ...(image && { image: generateImage(image, name || conference.name) }),
+        ...(location && { location: generateLocation(location) }),
+        ...(social && { social: generateSocial(social) }),
+        ...(price && { price: generatePrices(price, conference.price) }),
+      };
 
       return db.mutation.updateConference({ data: query, where: { id } }, info);
     }
-    throw new Error('You must have moderator rights');
+
+    throw new AuthenticationError('You must have moderator rights');
   },
 };
 

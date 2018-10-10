@@ -1,3 +1,4 @@
+import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import { User, USER_ROLE } from '../../../generated/prisma';
@@ -25,7 +26,7 @@ export default {
     { id, newRole }: ArgsType,
     { apiToken, db }: Context,
     info: any,
-  ): Promise<User> => {
+  ): Promise<User | null> => {
     const userId = getUserId(apiToken);
     const userRole = await getUserRole(userId, db);
 
@@ -41,6 +42,6 @@ export default {
       );
     }
 
-    throw new Error('You must have moderator rights');
+    throw new AuthenticationError('You must have moderator rights');
   },
 };
