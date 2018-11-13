@@ -101,18 +101,6 @@ export const generateSocial = ({
   };
 };
 
-export const generatePrice = (price: Price): PriceCreateInput => {
-  if (!price) {
-    return null;
-  }
-
-  return {
-    amount: price.amount,
-    expirationDate: price.expirationDate,
-    currency: price.currency,
-  };
-};
-
 export const detectContinent = (code: string): string => {
   const countryCodes = {
     af: 'Asia', // "Islamic Republic of Afghanistan")

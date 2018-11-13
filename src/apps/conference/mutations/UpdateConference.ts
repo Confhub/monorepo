@@ -3,9 +3,10 @@ import { GraphQLID, GraphQLNonNull } from 'graphql';
 
 import {
   Conference,
-  ConferencePrice,
-  ConferencePriceUpdateOneInput,
   ConferenceUpdateInput,
+  Price,
+  PriceUpdateManyInput,
+  PriceUpsertWithWhereUniqueNestedInput,
 } from '../../../generated/prisma';
 
 import { getUserId, getUserRole, Context } from '../../../utils';
@@ -14,7 +15,6 @@ import GraphQLConference from '../outputs/Conference';
 import {
   generateImage,
   generateLocation,
-  generatePrice,
   generateSocial,
   generateTagsUpdate,
 } from './helpers';
@@ -48,7 +48,7 @@ export default {
         endDate,
         location,
         social,
-        price,
+        prices,
       },
     }: ArgsType,
     { apiToken, db }: Context,
@@ -59,6 +59,7 @@ export default {
     const userRole = await getUserRole(userId, db);
 
     if (userRole === 'MODERATOR') {
+      console.log('PRICES', conference.prices);
       const query: ConferenceUpdateInput = {
         ...(name && { name }),
         ...(url && { url }),
@@ -69,7 +70,7 @@ export default {
         ...(image && { image: generateImage(image, name || conference.name) }),
         ...(location && { location: generateLocation(location) }),
         ...(social && { social: generateSocial(social) }),
-        ...(price && { price: generatePrices(price, conference.price) }),
+        ...(prices && { prices: generatePrices(prices) }),
       };
 
       return db.mutation.updateConference({ data: query, where: { id } }, info);
@@ -79,33 +80,26 @@ export default {
   },
 };
 
-function generatePrices(
-  prices: ConferencePrice,
-  oldPrices: ConferencePrice,
-): ConferencePriceUpdateOneInput {
-  const { regular, earlyBird, lateBird } = prices;
+function generatePrices(prices: Price[]): PriceUpdateManyInput {
+  const [create, update, remove] = prices.reduce(
+    (acc, price) => {
+      let item = 0;
+      if (price.id) {
+        const { id, ...data } = price;
+        item = Object.keys(data).length ? 1 : 2;
+      }
+      acc[item].push(price);
 
-  return {
-    update: {
-      regular: generateUpdatePrice(regular, oldPrices && oldPrices.regular),
-      earlyBird: generateUpdatePrice(
-        earlyBird,
-        oldPrices && oldPrices.earlyBird,
-      ),
-      lateBird: generateUpdatePrice(lateBird, oldPrices && oldPrices.lateBird),
+      return acc;
     },
-  };
-}
-
-function generateUpdatePrice(price, oldPrice) {
-  if (!price) {
-    return null;
-  }
-
+    [[], [], []],
+  );
   return {
-    upsert: {
-      update: { ...generatePrice(price) },
-      create: { ...generatePrice({ ...oldPrice, ...price }) },
-    },
+    create,
+    update: update.map(({ id, ...data }) => ({
+      where: { id },
+      data,
+    })),
+    delete: remove,
   };
 }

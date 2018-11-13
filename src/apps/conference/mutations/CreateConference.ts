@@ -1,17 +1,12 @@
 import { GraphQLNonNull } from 'graphql';
 
-import {
-  Conference,
-  ConferencePrice,
-  ConferencePriceCreateOneInput,
-} from '../../../generated/prisma';
+import { Conference } from '../../../generated/prisma';
 import { Context } from '../../../utils';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 import GraphQLConference from '../outputs/Conference';
 import {
   generateImage,
   generateLocation,
-  generatePrice,
   generateSocial,
   generateTagsCreate,
 } from './helpers';
@@ -40,7 +35,7 @@ export default {
         endDate,
         location,
         social,
-        price,
+        prices,
       },
     }: ArgsType,
     ctx: Context,
@@ -58,24 +53,10 @@ export default {
           endDate,
           location: generateLocation(location),
           social: social ? generateSocial(social) : null,
-          price: generatePrices(price),
+          prices: { create: prices },
         },
       },
       info,
     );
   },
 };
-
-function generatePrices(
-  prices: ConferencePrice,
-): ConferencePriceCreateOneInput {
-  const { regular, earlyBird, lateBird } = prices;
-
-  return {
-    create: {
-      regular: { create: { ...generatePrice(regular) } },
-      earlyBird: { create: { ...generatePrice(earlyBird) } },
-      lateBird: { create: { ...generatePrice(lateBird) } },
-    },
-  };
-}

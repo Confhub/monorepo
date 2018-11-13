@@ -8,20 +8,20 @@ import { GraphQLDateTime } from 'graphql-iso-date';
 
 import {
   Conference,
-  ConferencePrice,
   DateTime,
   Image,
   Location,
   PUBLISH_STATUS,
   Social,
   Tag,
+  Price,
 } from '../../../generated/prisma';
 import GraphQLTag from '../../tags/outputs/Tag';
-import GraphQLConferencePrice from './ConferencePrice';
 import GraphQLImage from './Image';
 import GraphQLLocation from './Location';
 import GraphQLPublishStatus from './PublishStatus';
 import GraphQLSocial from './Social';
+import GraphQLPrice from './Price';
 
 export default new GraphQLObjectType({
   name: 'Conference',
@@ -70,9 +70,9 @@ export default new GraphQLObjectType({
       type: GraphQLPublishStatus,
       resolve: ({ publishStatus }: Conference): PUBLISH_STATUS => publishStatus,
     },
-    price: {
-      type: GraphQLConferencePrice,
-      resolve: ({ price }: Conference): ConferencePrice => price,
+    prices: {
+      type: new GraphQLList(GraphQLPrice),
+      resolve: ({ prices }: Conference): Price[] => prices,
     },
   },
 });
