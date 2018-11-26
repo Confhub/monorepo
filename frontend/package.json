@@ -1,0 +1,73 @@
+{
+  "name": "confhub",
+  "version": "0.0.1",
+  "description": "ConfHub Frontend",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Ali Zhdanov",
+      "email": "zhdanov.alik@yandex.ru"
+    },
+    {
+      "name": "Yuri Yakovlev",
+      "email": "hi@mynameisyuri.com",
+      "url": "https://mynameisyuri.com"
+    }
+  ],
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "antd": "^3.10.1",
+    "apollo-boost": "^0.1.15",
+    "apollo-link-context": "^1.0.8",
+    "apollo-link-http": "^1.5.4",
+    "cookie": "^0.3.1",
+    "countries-list": "^2.3.2",
+    "dotenv-webpack": "^1.5.7",
+    "graphql": "^14.0.0",
+    "graphql-tag": "^2.10.0",
+    "idx": "^2.4.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "lodash": "^4.17.10",
+    "mapbox-gl": "^0.50.0",
+    "moment": "^2.22.2",
+    "next": "^7.0.2",
+    "node-sass": "^4.9.4",
+    "nprogress": "^0.2.0",
+    "query-string": "^6.2.0",
+    "react": "^16.5.2",
+    "react-apollo": "^2.2.4",
+    "react-dom": "^16.5.2",
+    "react-map-gl": "^4.0.0-beta.1",
+    "styled-jsx-plugin-sass": "^0.3.0",
+    "viewport-mercator-project": "^6.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-import": "^1.9.1",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "now": "^11.4.6",
+    "prettier": "^1.14.3"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test-ci": "echo add real checks",
+    "deploy": "now --regions all --token $NOW_TOKEN",
+    "alias": "now alias --token=$NOW_TOKEN",
+    "clear-deployments": "now rm --safe --yes confhub --token=$NOW_TOKEN",
+    "schema:download": "apollo schema:download --endpoint=http://localhost:4000 schema.json",
+    "schema:generate": "apollo codegen:generate --addTypename --useFlowExactObjects --target=flow --schema=schema.json --queries='{pages,components,lib}/**/*.js'"
+  }
+}

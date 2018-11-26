@@ -1,0 +1,56 @@
+import React, { PureComponent } from 'react';
+import { Button, Icon, Divider } from 'antd';
+import { parseDateRange } from '../../helpers';
+
+const renderDescription = item => {
+  const { place, startDate, endDate } = item;
+  const { location } = place;
+  const { country, city } = location;
+
+  return (
+    <>
+      <span>
+        <Icon type="environment-o" /> {city}, {country}
+      </span>
+      <Divider type="vertical" />
+      <span>
+        <Icon type="calendar" /> {parseDateRange(startDate, endDate)}
+      </span>
+      <Divider type="vertical" />
+      <span>{/* <Icon type="shopping-cart" /> {price.amount}€*/}</span>
+    </>
+  );
+};
+
+export default class CityInfo extends PureComponent {
+  render() {
+    const { info } = this.props;
+    const { name, url } = info;
+    return (
+      <div>
+        <h4>
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {name}
+          </a>
+        </h4>
+        <div className="button-wrap">{renderDescription(info)}</div>
+        <div>
+          {/* <Button size="small" style={{ marginRight: 8 }}>
+            More info
+          </Button>
+          <Button size="small" type="primary">
+            Get tickets
+          </Button> */}
+          <Button size="small" type="primary" href={url} target="_blank">
+            More info
+          </Button>
+        </div>
+        <style jsx>{`
+          .button-wrap {
+            margin-bottom: 0.75em;
+          }
+        `}</style>
+      </div>
+    );
+  }
+}
