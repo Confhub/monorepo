@@ -1,0 +1,16 @@
+{
+  "name": "confhub-graphql",
+  "alias": "graphql.confhub.win",
+  "public": false,
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
+  },
+  "env": {
+    "PORT": "@confhub-graphql-port",
+    "PRISMA_ENDPOINT": "@confhub-graphql-prisma-endpoint",
+    "PRISMA_SECRET": "@confhub-graphql-prisma-secret",
+    "PRISMA_MANAGEMENT_API_SECRET": "@confhub-graphql-prisma-management-api-secret",
+    "APP_SECRET": "@confhub-graphql-app-secret"
+  }
+}
