@@ -1,6 +1,6 @@
 import {
-  GraphQLID,
   GraphQLFloat,
+  GraphQLID,
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
@@ -9,8 +9,8 @@ import { GraphQLDateTime } from 'graphql-iso-date';
 import {
   CURRENCY,
   DateTime,
-  Price,
   ID_Output,
+  Price,
 } from '../../../generated/prisma';
 import GraphQLCurrency from './Currency';
 

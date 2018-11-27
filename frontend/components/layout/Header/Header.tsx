@@ -40,17 +40,16 @@ const Header = ({ isAuth, userData, signOut }) => (
         </Menu.Item>
       )}
 
-      {isAuth &&
-        userData.role === 'MODERATOR' && (
-          <Menu.Item key="admin">
-            <Link href="/admin" prefetch>
-              <a>
-                <Icon type="dashboard" theme="outlined" />
-                Admin Panel
-              </a>
-            </Link>
-          </Menu.Item>
-        )}
+      {isAuth && userData.role === 'MODERATOR' && (
+        <Menu.Item key="admin">
+          <Link href="/admin" prefetch>
+            <a>
+              <Icon type="dashboard" theme="outlined" />
+              Admin Panel
+            </a>
+          </Link>
+        </Menu.Item>
+      )}
 
       {isAuth && (
         <Menu.SubMenu

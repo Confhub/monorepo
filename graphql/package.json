@@ -2,19 +2,7 @@
   "name": "confhub-graphql",
   "description": "ConfHub GraphQL Server",
   "version": "0.0.1",
-  "license": "MIT",
   "main": "dist/index.js",
-  "contributors": [
-    {
-      "name": "Ali Zhdanov",
-      "email": "zhdanov.alik@yandex.ru"
-    },
-    {
-      "name": "Yuri Yakovlev",
-      "email": "hi@mynameisyuri.com",
-      "url": "https://mynameisyuri.com"
-    }
-  ],
   "dependencies": {
     "apollo-server": "^2.2.3",
     "bcryptjs": "^2.4.3",

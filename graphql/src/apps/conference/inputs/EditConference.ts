@@ -3,9 +3,9 @@ import { GraphQLDateTime } from 'graphql-iso-date';
 
 import GraphQLConferenceImageInput from './Image';
 import GraphQLConferenceLocationInput from './Location';
+import GraphQLConferencePriceInput from './Price';
 import GraphQLConferenceSocialInput from './Social';
 import GraphQLConferenceTagInput from './Tag';
-import GraphQLConferencePriceInput from './Price';
 
 export default new GraphQLInputObjectType({
   name: 'EditConferenceInput',

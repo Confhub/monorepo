@@ -59,7 +59,8 @@ export default {
     const userRole = await getUserRole(userId, db);
 
     if (userRole === 'MODERATOR') {
-      console.log('PRICES', conference.prices);
+      // console.log('PRICES', conference.prices);
+
       const query: ConferenceUpdateInput = {
         ...(name && { name }),
         ...(url && { url }),

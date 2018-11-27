@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "confhub",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Ali Zhdanov",
+      "email": "zhdanov.alik@yandex.ru"
+    },
+    {
+      "name": "Yuri Yakovlev",
+      "email": "hi@mynameisyuri.com",
+      "url": "https://mynameisyuri.com"
+    }
+  ]
+}

@@ -1,22 +1,11 @@
 {
-  "name": "confhub",
+  "name": "confhub-frontend",
   "version": "0.0.1",
   "description": "ConfHub Frontend",
-  "license": "MIT",
-  "contributors": [
-    {
-      "name": "Ali Zhdanov",
-      "email": "zhdanov.alik@yandex.ru"
-    },
-    {
-      "name": "Yuri Yakovlev",
-      "email": "hi@mynameisyuri.com",
-      "url": "https://mynameisyuri.com"
-    }
-  ],
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "@zeit/next-typescript": "^1.1.1",
     "antd": "^3.10.9",
     "apollo-boost": "^0.1.22",
     "apollo-link-context": "^1.0.10",
@@ -43,26 +32,25 @@
     "viewport-mercator-project": "^6.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
+    "@types/cookie": "^0.3.2",
+    "@types/lodash": "^4.14.118",
+    "@types/moment": "^2.13.0",
+    "@types/next": "^7.0.5",
+    "@types/nprogress": "^0.0.29",
+    "@types/react": "^16.7.7",
+    "@types/react-dom": "^16.0.10",
     "babel-plugin-import": "^1.11.0",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-prettier": "^3.0.0",
-    "eslint-plugin-promise": "^4.0.0",
-    "eslint-plugin-react": "^7.11.1",
     "now": "^11.4.6",
-    "prettier": "^1.15.2"
+    "prettier": "^1.15.2",
+    "typescript": "^3.1.6"
   },
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "tsc --noEmit -p tsconfig.json && tslint -c tslint.json -p tsconfig.json",
+    "lint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "test-ci": "echo add real checks",
     "deploy": "now --regions all --token $NOW_TOKEN",
     "alias": "now alias --token=$NOW_TOKEN",

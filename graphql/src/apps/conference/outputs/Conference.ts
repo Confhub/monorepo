@@ -11,17 +11,17 @@ import {
   DateTime,
   Image,
   Location,
+  Price,
   PUBLISH_STATUS,
   Social,
   Tag,
-  Price,
 } from '../../../generated/prisma';
 import GraphQLTag from '../../tags/outputs/Tag';
 import GraphQLImage from './Image';
 import GraphQLLocation from './Location';
+import GraphQLPrice from './Price';
 import GraphQLPublishStatus from './PublishStatus';
 import GraphQLSocial from './Social';
-import GraphQLPrice from './Price';
 
 export default new GraphQLObjectType({
   name: 'Conference',

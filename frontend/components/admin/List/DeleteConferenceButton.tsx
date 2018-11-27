@@ -1,8 +1,12 @@
-import * as React from 'react';
-import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
-import remove from 'lodash/remove';
-import { message } from 'antd';
+import * as React from "react";
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+import remove from "lodash/remove";
+import { message } from "antd";
+
+interface Props {
+  id: string;
+}
 
 const DELETE_CONFERENCE = gql`
   mutation deleteConference($id: ID!) {
@@ -12,14 +16,14 @@ const DELETE_CONFERENCE = gql`
   }
 `;
 
-class DeleteConferenceButton extends React.Component {
+class DeleteConferenceButton extends React.Component<Props> {
   onButtonClick = async deleteConference => {
     const deleted = await deleteConference({
-      variables: { id: this.props.id },
+      variables: { id: this.props.id }
     });
 
     if (deleted) {
-      message.success('Conference removed');
+      message.success("Conference removed");
     }
   };
 
