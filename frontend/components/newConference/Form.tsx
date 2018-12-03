@@ -1,30 +1,12 @@
 import * as React from 'react';
 import idx from 'idx';
-import {
-  Form,
-  Button,
-  Col,
-  Row,
-  Input,
-  Select,
-  DatePicker,
-  Alert,
-  Checkbox,
-  Upload,
-  Icon,
-} from 'antd';
+import { Form, Button, Col, Row, Input, DatePicker, Alert } from 'antd';
+import Prices from './form/Prices';
+import UploadFile from './form/Upload';
 import TagSelector from '../TagSelector';
+import { parsePrice } from './utils';
 
 import LocationSelector from '../NewLocationSelector';
-import { customRequest } from '../helpers';
-
-const Option = Select.Option;
-
-const prices = [
-  { label: 'Regular', field: 'price', required: true },
-  { label: 'Early Bird', field: 'priceEarly' },
-  { label: 'Late Bird', field: 'priceLate' },
-];
 
 const formatDate = date => date && date.utc().format();
 
@@ -32,6 +14,7 @@ class FormComponent extends React.Component {
   static defaultProps = {
     data: {},
   };
+
   alerts = React.createRef();
 
   state = {
@@ -41,8 +24,6 @@ class FormComponent extends React.Component {
     loading: false,
     error: null,
     success: false,
-    priceEarlyDisabled: false,
-    priceLateDisabled: false,
   };
 
   handleTagsChange = tags => {
@@ -66,27 +47,24 @@ class FormComponent extends React.Component {
     e.preventDefault();
 
     form.validateFieldsAndScroll(async (err, values) => {
+      console.log(values.prices);
+
       if (this.validateCustomFields() && !err) {
         const {
           name,
           url,
           dateTime,
           description,
-          // price,
+          prices,
           // priceDate,
           // priceEarly,
           // priceEarlyDate,
           // priceLate,
           // priceLateDate,
-          // currency,
+          currency,
           image,
         } = values;
-        const {
-          tags: rawTags,
-          location,
-          // priceEarlyDisabled,
-          // priceLateDisabled,
-        } = this.state;
+        const { tags: rawTags, location } = this.state;
         const startDate = formatDate(dateTime[0]);
         const endDate = formatDate(dateTime[1]);
         const tags = rawTags.map(t => ({
@@ -94,31 +72,9 @@ class FormComponent extends React.Component {
           name: t.name,
         }));
 
-        // const priceObject = {
-        //   regular: {
-        //     amount: price,
-        //     currency,
-        //     expiration: formatDate(priceDate),
-        //   },
-        //   ...(!priceEarlyDisabled && {
-        //     earlyBird: {
-        //       amount: priceEarly,
-        //       currency,
-        //       expiration: formatDate(priceEarlyDate),
-        //     },
-        //   }),
-        //   ...(!priceLateDisabled && {
-        //     lateBird: {
-        //       amount: priceLate,
-        //       currency,
-        //       expiration: formatDate(priceLateDate),
-        //     },
-        //   }),
-        // };
-
         try {
           this.setState({ loading: true });
-          const test = await this.props.onSubmit({
+          await this.props.onSubmit({
             name,
             url,
             startDate,
@@ -139,6 +95,14 @@ class FormComponent extends React.Component {
                 src: image[0].response.secure_url,
               },
             }),
+            // @TODO: a bit ugly, move it probably inside parse price
+            prices: parsePrice(
+              prices.map(i => ({
+                ...i,
+                amount: +i.amount,
+                currency: currency.toUpperCase(),
+              }))
+            ),
           });
 
           this.setState({
@@ -170,23 +134,6 @@ class FormComponent extends React.Component {
     this.setState({ location });
   };
 
-  renderCurrencySelect() {
-    const { getFieldDecorator } = this.props.form;
-
-    // @TODO: value should be currency id??
-
-    return getFieldDecorator('currency', {
-      rules: [{ required: true, message: 'Enter currency' }],
-      initialValue: 'eur',
-    })(
-      <Select style={{ width: 80 }}>
-        <Option value="eur">EUR</Option>
-        <Option value="usd">USD</Option>
-        <Option value="gbp">GBP</Option>
-      </Select>,
-    );
-  }
-
   handleChange = event => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -195,57 +142,6 @@ class FormComponent extends React.Component {
     this.setState({
       [name]: value,
     });
-  };
-
-  renderPrice({ label, field, required }) {
-    const { getFieldDecorator } = this.props.form;
-
-    const checkboxValue = this.state[field + 'Disabled'];
-    const disabled = typeof checkboxValue === 'boolean' ? checkboxValue : false;
-
-    return (
-      <Row type="flex" gutter={16} key={field} align="bottom">
-        <Col span={8}>
-          <Form.Item label={label}>
-            {getFieldDecorator(field, {
-              rules: [{ required: !disabled, message: 'Enter price' }],
-            })(
-              <Input
-                type="number"
-                placeholder="699"
-                addonAfter={this.renderCurrencySelect()}
-                disabled={disabled}
-              />,
-            )}
-          </Form.Item>
-        </Col>
-        <Col span={5}>
-          <Form.Item label="Expires on">
-            {getFieldDecorator(field + 'Date', {
-              rules: [{ required: !disabled, message: 'Enter dateTime' }],
-            })(<DatePicker disabled={disabled} />)}
-          </Form.Item>
-        </Col>
-        {!required && (
-          <Col span={3}>
-            <Form.Item>
-              <Checkbox
-                name={field + 'Disabled'}
-                value={field + 'Disabled'}
-                onChange={this.handleChange}
-              >
-                disable
-              </Checkbox>
-              ,
-            </Form.Item>
-          </Col>
-        )}
-      </Row>
-    );
-  }
-
-  normFile = e => {
-    return e && e.fileList && e.fileList.slice(-1);
   };
 
   render() {
@@ -336,12 +232,9 @@ class FormComponent extends React.Component {
               </Form.Item>
             </Col>
           </Row>
-          {/* <Row gutter={16}>
-            <Col span={24}>
-              <h2>Prices:</h2>
-            </Col>
-          </Row>
-          {prices.map(price => this.renderPrice(price))} */}
+
+          <Prices form={form} data={data && data.prices} />
+
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item label="Description">
@@ -357,33 +250,13 @@ class FormComponent extends React.Component {
                   <Input.TextArea
                     rows={4}
                     placeholder="Few words about conference"
-                  />,
+                  />
                 )}
               </Form.Item>
             </Col>
           </Row>
 
-          <Row gutter={16}>
-            <Col span={24}>
-              <Form.Item label="Upload">
-                {getFieldDecorator('image', {
-                  initialValue: data.image,
-                  valuePropName: 'fileList',
-                  getValueFromEvent: this.normFile,
-                })(
-                  <Upload
-                    name="logo"
-                    customRequest={customRequest}
-                    listType="picture-card"
-                  >
-                    <Button>
-                      <Icon type="upload" /> Click to upload
-                    </Button>
-                  </Upload>,
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
+          <UploadFile form={form} data={data} />
 
           <Button type="primary" htmlType="submit" loading={loading}>
             Submit
