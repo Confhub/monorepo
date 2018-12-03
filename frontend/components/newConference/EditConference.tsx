@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import moment from 'moment';
 import { isEqual } from 'lodash';
+import idx from 'idx';
 
 import Form from './Form';
 
@@ -99,6 +100,7 @@ class EditConference extends React.Component {
       description,
       image,
       location,
+      prices,
     } = this.props.data;
 
     const data = {
@@ -129,6 +131,8 @@ class EditConference extends React.Component {
           lat: location.coordinates.latitude,
         },
       },
+      prices: prices.map(({ currency, __typename, ...i }) => i),
+      currency: idx(prices, _ => _[0].currency),
     };
     return (
       <Mutation mutation={EDIT_CONFERENCE}>
@@ -171,6 +175,12 @@ EditConference.fragments = {
           latitude
           longitude
         }
+      }
+      prices {
+        name
+        amount
+        currency
+        expirationDate
       }
     }
   `,

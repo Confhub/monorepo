@@ -10,10 +10,11 @@ const CREATE_CONFERENCE = gql`
     $url: String!
     $startDate: DateTime!
     $endDate: DateTime!
-    $location: CreateConferenceLocationInput!
-    $tags: [CreateConferenceTagInput]
+    $location: ConferenceLocationInput!
+    $tags: [ConferenceTagInput]
     $description: String
-    $image: CreateConferenceImageInput
+    $image: ConferenceImageInput
+    $prices: [PriceInput]
   ) {
     createConference(
       data: {
@@ -25,6 +26,7 @@ const CREATE_CONFERENCE = gql`
         tags: $tags
         description: $description
         image: $image
+        prices: $prices
       }
     ) {
       id
