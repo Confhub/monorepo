@@ -12,10 +12,14 @@ const formatDate = date => date && date.utc().format();
 
 class FormComponent extends React.Component {
   static defaultProps = {
-    data: {},
+    data: {
+      tags: [],
+      location: null,
+    },
   };
 
   alerts = React.createRef();
+  location = React.createRef();
 
   state = {
     tags: this.props.data.tags,
@@ -47,7 +51,7 @@ class FormComponent extends React.Component {
     e.preventDefault();
 
     form.validateFieldsAndScroll(async (err, values) => {
-      console.log(values.prices);
+      console.log(values);
 
       if (this.validateCustomFields() && !err) {
         const {
@@ -109,9 +113,9 @@ class FormComponent extends React.Component {
             loading: false,
             error: null,
             success: true,
-            location: null,
           });
-          form.resetFields();
+          this.resetForm();
+
           this.alerts.current &&
             this.alerts.current.scrollIntoView({
               behavior: 'smooth',
@@ -128,6 +132,14 @@ class FormComponent extends React.Component {
         }
       }
     });
+  };
+
+  resetForm = () => {
+    const { resetFields } = this.props.form;
+
+    resetFields();
+    this.setState({ tags: [], location: null });
+    this.location.current.reset();
   };
 
   setLocation = location => {
@@ -204,6 +216,7 @@ class FormComponent extends React.Component {
                 validateStatus={locationError ? 'error' : null}
               >
                 <LocationSelector
+                  ref={this.location}
                   setLocation={this.setLocation}
                   initialValue={idx(data, _ => _.location.address)}
                 />

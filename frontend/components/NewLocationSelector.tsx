@@ -51,10 +51,10 @@ class LocationSelector extends React.Component {
     const city =
       (placeDetails.address_components &&
         placeDetails.address_components.find(i =>
-          i.types.includes('locality'),
+          i.types.includes('locality')
         )) ||
       placeDetails.address_components.find(i =>
-        i.types.includes('administrative_area_level_1'),
+        i.types.includes('administrative_area_level_1')
       );
     const country =
       placeDetails.address_components &&
@@ -71,6 +71,13 @@ class LocationSelector extends React.Component {
 
     this.setState({
       location: name,
+      locationList: null,
+    });
+  };
+
+  reset = () => {
+    this.setState({
+      location: '',
       locationList: null,
     });
   };
