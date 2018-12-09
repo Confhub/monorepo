@@ -23,7 +23,7 @@ const GraphQLConferencePriceInput = new GraphQLInputObjectType({
     currency: {
       type: GraphQLCurrency,
     },
-    expiration: {
+    expirationDate: {
       type: GraphQLDateTime,
     },
   },

@@ -1,16 +1,26 @@
 import * as React from 'react';
 import idx from 'idx';
 import { Form, Button, Col, Row, Input, DatePicker, Alert } from 'antd';
+import { ApolloError } from 'apollo-client';
 import Prices from './form/Prices';
 import UploadFile from './form/Upload';
 import TagSelector from '../TagSelector';
 import { parsePrice } from './utils';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 import LocationSelector from '../NewLocationSelector';
 
 const formatDate = date => date && date.utc().format();
 
-class FormComponent extends React.Component {
+type Props = {
+  loading: boolean;
+  error: ApolloError;
+  result: string | null;
+  form: WrappedFormUtils;
+  onSubmit: (Object) => void;
+};
+
+class FormComponent extends React.Component<Props> {
   static defaultProps = {
     data: {
       tags: [],
@@ -60,11 +70,6 @@ class FormComponent extends React.Component {
           dateTime,
           description,
           prices,
-          // priceDate,
-          // priceEarly,
-          // priceEarlyDate,
-          // priceLate,
-          // priceLateDate,
           currency,
           image,
         } = values;
@@ -74,65 +79,60 @@ class FormComponent extends React.Component {
         const tags = rawTags.map(t => ({
           id: t.id.startsWith('tmp-') ? null : t.id,
           name: t.name,
+          slug: t.slug || null,
         }));
 
-        try {
-          this.setState({ loading: true });
-          await this.props.onSubmit({
-            name,
-            url,
-            startDate,
-            endDate,
-            location: {
-              country: location.country,
-              city: location.city,
-              address: location.address,
-              coordinates: {
-                longitude: location.coordinates.lng,
-                latitude: location.coordinates.lat,
-              },
+        this.props.onSubmit({
+          name,
+          url,
+          startDate,
+          endDate,
+          location: {
+            country: location.country,
+            city: location.city,
+            address: location.address,
+            coordinates: {
+              longitude: location.coordinates.lng,
+              latitude: location.coordinates.lat,
             },
-            tags,
-            description,
-            ...(!!image && {
-              image: {
-                src: image[0].response.secure_url,
-              },
-            }),
-            // @TODO: a bit ugly, move it probably inside parse price
-            prices: parsePrice(
-              prices.map(i => ({
-                ...i,
-                amount: +i.amount,
-                currency: currency.toUpperCase(),
-              }))
-            ),
-          });
-
-          this.setState({
-            loading: false,
-            error: null,
-            success: true,
-          });
-          this.resetForm();
-
-          this.alerts.current &&
-            this.alerts.current.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
-        } catch (err) {
-          console.log(err);
-          this.setState({ loading: false, success: false, error: err });
-          this.alerts.current &&
-            this.alerts.current.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
-        }
+          },
+          tags,
+          description,
+          ...(!!image && {
+            image: {
+              src: image[0].response.secure_url,
+            },
+          }),
+          // @TODO: a bit ugly, move it probably inside parse price
+          prices: parsePrice(
+            prices.map(i => ({
+              ...i,
+              amount: +i.amount,
+              currency: currency.toUpperCase(),
+            }))
+          ),
+        });
       }
     });
   };
+
+  componentDidUpdate(prevProps) {
+    // scroll to top
+    // show success
+    const { result, error } = this.props;
+
+    if (error !== prevProps.error || result !== prevProps.result) {
+      this.alerts.current &&
+        this.alerts.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+
+      if (result) {
+        this.resetForm();
+      }
+    }
+  }
 
   resetForm = () => {
     const { resetFields } = this.props.form;
@@ -157,14 +157,14 @@ class FormComponent extends React.Component {
   };
 
   render() {
-    const { data, form } = this.props;
+    const { data, form, loading, error, result } = this.props;
     const { getFieldDecorator } = form;
-    const { loading, success, error, locationError } = this.state;
+    const { locationError } = this.state;
 
     return (
       <React.Fragment>
         <div ref={this.alerts}>
-          {success && (
+          {result && (
             <Alert
               message="Conference created!"
               description="Thank you for creating conference. It will be visible, after it'll pass validation"
