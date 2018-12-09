@@ -1,6 +1,7 @@
 import * as React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
+import idx from 'idx';
 
 import Form from './Form';
 
@@ -42,9 +43,16 @@ class NewConference extends React.Component {
   render() {
     return (
       <Mutation mutation={CREATE_CONFERENCE}>
-        {createConference => (
-          <Form onSubmit={data => this.onSubmit(createConference, data)} />
-        )}
+        {(createConference, { loading, error, data }) => {
+          return (
+            <Form
+              onSubmit={data => this.onSubmit(createConference, data)}
+              loading={loading}
+              error={error}
+              result={idx(data, _ => _.createConference.id)}
+            />
+          );
+        }}
       </Mutation>
     );
   }

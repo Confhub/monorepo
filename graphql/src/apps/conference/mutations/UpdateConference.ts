@@ -74,6 +74,8 @@ export default {
         ...(prices && { prices: generatePrices(prices) }),
       };
 
+      console.log({ query });
+
       return db.mutation.updateConference({ data: query, where: { id } }, info);
     }
 

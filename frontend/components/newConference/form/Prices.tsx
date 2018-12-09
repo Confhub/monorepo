@@ -37,65 +37,67 @@ class Prices extends React.Component {
       const item = data && data[price];
 
       return (
-        <Row key={price} type="flex" gutter={16} align="bottom">
-          <Col span={8}>
-            <Form.Item label={index === 0 ? 'Price' : ''}>
-              {getFieldDecorator(`${formName}.amount`, {
-                rules: [
-                  {
-                    required: true,
-                    whitespace: true,
-                    message:
-                      "Please input passenger's name or delete this field.",
-                  },
-                ],
-                initialValue: item && item.amount,
-              })(
-                <Input
-                  type="number"
-                  placeholder="699"
-                  addonAfter={this.renderCurrencySelect(price)}
-                />
-              )}
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label={index === 0 ? 'Name' : ''}>
-              {getFieldDecorator(`${formName}.name`, {
-                rules: [
-                  {
-                    required: !extraEnabled,
-                    whitespace: true,
-                    message: 'Please input price name.',
-                  },
-                ],
-                initialValue: item && item.name,
-              })(<Input disabled={extraEnabled} placeholder="Name" />)}
-            </Form.Item>
-          </Col>
-          <Col span={6}>
-            <Form.Item label={index === 0 ? 'Expiration' : ''}>
-              {getFieldDecorator(`${formName}.expirationDate`, {
-                rules: [
-                  { required: !extraEnabled, message: 'Expiration time' },
-                ],
-                initialValue: item && item.expirationDate, // @TODO: make it moment??
-              })(<DatePicker disabled={extraEnabled} />)}
-            </Form.Item>
-          </Col>
-          {prices.length > 1 ? (
-            <Col span={2}>
-              <Form.Item>
-                <Icon
-                  className="dynamic-delete-button"
-                  type="minus-circle-o"
-                  disabled={prices.length === 1}
-                  onClick={() => this.remove(price)}
-                />
+        <div className="wrapper">
+          <Row key={price} type="flex" gutter={16}>
+            <Col span={8}>
+              <Form.Item label={index === 0 ? 'Price' : ''}>
+                {getFieldDecorator(`${formName}.amount`, {
+                  rules: [
+                    {
+                      required: true,
+                      whitespace: true,
+                      message:
+                        "Please input conference's amount or delete this field.",
+                    },
+                  ],
+                  initialValue: item && item.amount && item.amount.toString(),
+                })(
+                  <Input
+                    type="number"
+                    placeholder="699"
+                    addonAfter={this.renderCurrencySelect(price)}
+                  />
+                )}
               </Form.Item>
             </Col>
-          ) : null}
-        </Row>
+            <Col span={8}>
+              <Form.Item label={index === 0 ? 'Name' : ''}>
+                {getFieldDecorator(`${formName}.name`, {
+                  rules: [
+                    {
+                      required: !extraEnabled,
+                      whitespace: true,
+                      message: 'Please input price name.',
+                    },
+                  ],
+                  initialValue: item && item.name,
+                })(<Input disabled={extraEnabled} placeholder="Name" />)}
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item label={index === 0 ? 'Expiration' : ''}>
+                {getFieldDecorator(`${formName}.expirationDate`, {
+                  rules: [
+                    { required: !extraEnabled, message: 'Expiration time' },
+                  ],
+                  initialValue: item && item.expirationDate, // @TODO: make it moment??
+                })(<DatePicker disabled={extraEnabled} />)}
+              </Form.Item>
+            </Col>
+            {prices.length > 1 ? (
+              <Col className="icon-wrap" span={2}>
+                <Form.Item label={index === 0 ? '-' : ''}>
+                  <Icon
+                    className="dynamic-delete-button"
+                    type="minus-circle-o"
+                    disabled={prices.length === 1}
+                    onClick={() => this.remove(price)}
+                  />
+                </Form.Item>
+              </Col>
+            ) : null}
+          </Row>
+        </div>
       );
     });
   };

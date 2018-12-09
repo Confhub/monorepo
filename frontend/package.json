@@ -6,7 +6,7 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
-    "antd": "^3.10.9",
+    "antd": "^3.11.1",
     "apollo-boost": "^0.1.22",
     "apollo-link-context": "^1.0.10",
     "apollo-link-http": "^1.5.7",
