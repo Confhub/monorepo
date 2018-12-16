@@ -1,13 +1,13 @@
+import { Button, Col, Form, Icon, Row, Upload } from 'antd';
 import * as React from 'react';
-import { Form, Row, Col, Button, Icon, Upload } from 'antd';
 import { customRequest } from '../../helpers';
 
 class UploadFile extends React.Component {
-  normFile = e => {
+  public normFile = e => {
     return e && e.fileList && e.fileList.slice(-1);
   };
 
-  render() {
+  public render() {
     const { data, form } = this.props;
 
     const { getFieldDecorator } = form;

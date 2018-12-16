@@ -1,9 +1,9 @@
+import { Button, List as AntList, Tag } from 'antd';
 import * as React from 'react';
-import { List as AntList, Tag, Button } from 'antd';
 
-import ListItemDescription from './ListItemDescription';
-import { setImageParams } from '../../helpers';
 import { THUMBNAILS_OPTIONS } from '../../constants';
+import { setImageParams } from '../../helpers';
+import ListItemDescription from './ListItemDescription';
 
 const ListItem = ({ item }) => {
   return (
@@ -49,7 +49,7 @@ const ListItem = ({ item }) => {
         </div>
       </AntList.Item>
 
-      <style jsx>{`
+      <style jsx={true}>{`
         .list-item-inner {
           padding: 0 0.75em;
         }

@@ -1,5 +1,5 @@
+import { Button, Divider, Icon } from 'antd';
 import React, { PureComponent } from 'react';
-import { Button, Icon, Divider } from 'antd';
 import { parseDateRange } from '../../helpers';
 
 const renderDescription = item => {
@@ -23,7 +23,7 @@ const renderDescription = item => {
 };
 
 export default class CityInfo extends PureComponent {
-  render() {
+  public render() {
     const { info } = this.props;
     const { name, url } = info;
     return (
@@ -45,7 +45,7 @@ export default class CityInfo extends PureComponent {
             More info
           </Button>
         </div>
-        <style jsx>{`
+        <style jsx={true}>{`
           .button-wrap {
             margin-bottom: 0.75em;
           }

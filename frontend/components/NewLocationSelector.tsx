@@ -1,18 +1,22 @@
-import * as React from 'react';
 import { AutoComplete, Icon, Select } from 'antd';
 import idx from 'idx';
 import throttle from 'lodash/throttle';
+import * as React from 'react';
 import { getPlaceAutocomplete, getPlaceDetails } from './helpers';
 
 const Option = Select.Option;
 
 class LocationSelector extends React.Component {
-  state = {
+  public state = {
     location: this.props.initialValue || '',
     locationList: null,
   };
 
-  handleLocationChange = async location => {
+  public getLocationListThrottled = throttle(this.getLocationList, 600, {
+    leading: false,
+  });
+
+  public handleLocationChange = async location => {
     this.setState({
       location,
     });
@@ -20,17 +24,13 @@ class LocationSelector extends React.Component {
     this.getLocationListThrottled(location);
   };
 
-  getLocationList = async location => {
+  public getLocationList = async location => {
     const locationList = await getPlaceAutocomplete(location);
 
     this.setState({ locationList });
   };
 
-  getLocationListThrottled = throttle(this.getLocationList, 600, {
-    leading: false,
-  });
-
-  handleLocationSelect = async location => {
+  public handleLocationSelect = async location => {
     const { getLocation, setLocation } = this.props;
     const { locationList } = this.state;
 
@@ -75,14 +75,14 @@ class LocationSelector extends React.Component {
     });
   };
 
-  reset = () => {
+  public reset = () => {
     this.setState({
       location: '',
       locationList: null,
     });
   };
 
-  render() {
+  public render() {
     const { loading, isSearch } = this.props;
     const { locationList, location } = this.state;
 

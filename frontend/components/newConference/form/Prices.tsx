@@ -1,5 +1,5 @@
+import { Button, Col, DatePicker, Form, Icon, Input, Row, Select } from 'antd';
 import * as React from 'react';
-import { Col, Row, Form, Input, DatePicker, Select, Button, Icon } from 'antd';
 
 const Option = Select.Option;
 
@@ -8,7 +8,7 @@ const PRICE_KEYS = 'prices_keys';
 let KEY_INDEX = 1;
 
 class Prices extends React.Component {
-  renderCurrencySelect() {
+  public renderCurrencySelect() {
     const { getFieldDecorator } = this.props.form;
 
     // @TODO: value should be currency id??
@@ -26,7 +26,7 @@ class Prices extends React.Component {
     );
   }
 
-  renderPrices = prices => {
+  public renderPrices = prices => {
     const { data, form } = this.props;
     const { getFieldDecorator } = form;
     // enable extra fields (name, exp. date) only in the're more then 1 item
@@ -102,7 +102,7 @@ class Prices extends React.Component {
     });
   };
 
-  add = () => {
+  public add = () => {
     const { form } = this.props;
     const prices = form.getFieldValue(PRICE_KEYS);
     const nextPrices = prices.concat(KEY_INDEX++);
@@ -112,7 +112,7 @@ class Prices extends React.Component {
     });
   };
 
-  remove = price => {
+  public remove = price => {
     const { form } = this.props;
     const prices = form.getFieldValue(PRICE_KEYS);
 
@@ -134,7 +134,7 @@ class Prices extends React.Component {
   //   }
   // }
 
-  render() {
+  public render() {
     const { form, data } = this.props;
     const { getFieldValue, getFieldDecorator, setFieldsValue } = form;
     getFieldDecorator(PRICE_KEYS, {

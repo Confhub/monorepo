@@ -1,7 +1,7 @@
-import * as React from 'react';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
 import idx from 'idx';
+import * as React from 'react';
+import { Mutation } from 'react-apollo';
 
 import Form from './Form';
 
@@ -36,11 +36,11 @@ const CREATE_CONFERENCE = gql`
 `;
 
 class NewConference extends React.Component {
-  onSubmit(mutation, data) {
+  public onSubmit(mutation, data) {
     mutation({ variables: data });
   }
 
-  render() {
+  public render() {
     return (
       <Mutation mutation={CREATE_CONFERENCE}>
         {(createConference, { loading, error, data }) => {

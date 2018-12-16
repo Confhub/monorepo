@@ -1,12 +1,12 @@
-import * as React from 'react';
-import MapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
-import WebMercatorViewport from 'viewport-mercator-project';
-import debounce from 'lodash/debounce';
+import debounce from "lodash/debounce";
+import * as React from "react";
+import MapGL, { Marker, NavigationControl, Popup } from "react-map-gl";
+// import WebMercatorViewport from 'viewport-mercator-project';
 
-import MarkerIcon from './Marker';
-import PopupComponent from './Popup';
+import MarkerIcon from "./Marker";
+// import PopupComponent from './Popup';
 
-const MAPBOX_STYLE = 'mapbox://styles/mapbox/streets-v9';
+const MAPBOX_STYLE = "mapbox://styles/mapbox/streets-v9";
 
 const WIDTH_OFFSET = 530;
 const HEIGHT_OFFSET = 64;
@@ -26,7 +26,7 @@ class Map extends React.Component {
     this.props.context.updateMapSize({ width, height });
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     // this.props.context.updateMapSize(
     //   {
     //     ...this.props.context.state.mapViewport,
@@ -45,47 +45,47 @@ class Map extends React.Component {
   //   window.onresize = null;
   // }
 
-  getSize() {
+  public getSize() {
     const { innerWidth, innerHeight } = window;
 
     return {
       width: innerWidth >= 576 ? innerWidth - WIDTH_OFFSET : innerWidth,
-      height: innerHeight - HEIGHT_OFFSET,
+      height: innerHeight - HEIGHT_OFFSET
     };
   }
 
-  updateViewport = (mapViewport, bounds) => {
+  public updateViewport = (mapViewport, bounds) => {
     this.props.context.updateMapViewport({
       ...mapViewport,
-      ...bounds,
+      ...bounds
     });
   };
 
-  updateBounds = () => {
+  public updateBounds = () => {
     const { _ne, _sw } = this.mapRef.current.getMap().getBounds();
 
     return {
       neLatitude: _ne.lat,
       neLongitude: _ne.lng,
       swLatitude: _sw.lat,
-      swLongitude: _sw.lng,
+      swLongitude: _sw.lng
     };
   };
 
-  onViewportChange = mapViewport => {
+  public onViewportChange = mapViewport => {
     this.props.context.updateMapPosition({
       latitude: mapViewport.latitude,
       longitude: mapViewport.longitude,
-      zoom: mapViewport.zoom,
+      zoom: mapViewport.zoom
     });
 
     this.props.context.state.mapViewportActive &&
       this.updateViewportDebounced(mapViewport, this.updateBounds());
   };
 
-  updateViewportDebounced = debounce(this.updateViewport, 500);
+  public updateViewportDebounced = debounce(this.updateViewport, 500);
 
-  renderMarker = item => {
+  public renderMarker = item => {
     const { id, location } = item;
     const { latitude, longitude } = location.coordinates;
     return (
@@ -122,7 +122,7 @@ class Map extends React.Component {
   //   );
   // }
 
-  render() {
+  public render() {
     const { items, context } = this.props;
     const { mapViewport, mapCenterCoordinates } = context.state;
 
@@ -164,7 +164,7 @@ class Map extends React.Component {
           />
         </div>
 
-        <style jsx>{`
+        <style jsx={true}>{`
           .nav {
             position: absolute;
             top: 0;

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import Router from 'next/router';
+import * as React from 'react';
 import WebMercatorViewport from 'viewport-mercator-project';
 
 export const HomePageContext = React.createContext();
@@ -31,7 +31,7 @@ export default class HomePageProvider extends React.Component {
     };
   }
 
-  render() {
+  public render() {
     return (
       <HomePageContext.Provider
         value={{

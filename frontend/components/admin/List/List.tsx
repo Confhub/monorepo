@@ -1,14 +1,14 @@
-import * as React from 'react';
+import { Avatar, List } from 'antd';
 import Link from 'next/link';
-import { List, Avatar } from 'antd';
+import * as React from 'react';
 
-import PublishConferenceButton from './PublishConferenceButton';
-import DeleteConferenceButton from './DeleteConferenceButton';
-import { setImageParams } from '../../helpers';
 import { THUMBNAILS_OPTIONS } from '../../constants';
+import { setImageParams } from '../../helpers';
+import DeleteConferenceButton from './DeleteConferenceButton';
+import PublishConferenceButton from './PublishConferenceButton';
 
 class ApproveList extends React.Component {
-  render() {
+  public render() {
     const { publishStatus, query, error, loading, data } = this.props;
     if (loading) {
       return 'Loading...';

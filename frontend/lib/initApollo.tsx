@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "apollo-boost";
-import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
+import { createHttpLink } from "apollo-link-http";
 import fetch from "isomorphic-unfetch";
 
 let apolloClient = null;
