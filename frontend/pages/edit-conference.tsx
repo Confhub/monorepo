@@ -1,6 +1,6 @@
+import gql from 'graphql-tag';
 import * as React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import EditConference from '../components/newConference/EditConference';
 
@@ -14,7 +14,7 @@ const GET_CONFERENCE = gql`
 `;
 
 class NewConferencePage extends React.Component {
-  render() {
+  public render() {
     const { query } = this.props;
     if (!query && query.id) {
       return 'Please, provide conference ID';

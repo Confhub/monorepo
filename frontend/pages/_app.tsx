@@ -1,26 +1,26 @@
-import * as React from "react";
-import App, { Container } from "next/app";
-import { ApolloProvider } from "react-apollo";
 import cookie from "cookie";
+import isEmpty from "lodash/isEmpty";
+import App, { Container } from "next/app";
+import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
-import isEmpty from "lodash/isEmpty";
-import Head from "next/head";
+import * as React from "react";
+import { ApolloProvider } from "react-apollo";
 
 import Layout from "../components/layout/Layout";
-import withApollo from "../lib/withApollo";
-import redirect from "../lib/redirect";
 import checkLoggedIn from "../lib/checkLoggedIn";
+import redirect from "../lib/redirect";
+import withApollo from "../lib/withApollo";
 
 Router.events.on("routeChangeStart", url => {
-  if (url.includes("/?")) return;
+  if (url.includes("/?")) { return; }
   NProgress.start();
 });
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 class MyApp extends App {
-  static async getInitialProps({ ctx, query }) {
+  public static async getInitialProps({ ctx, query }) {
     const { currentUser } = await checkLoggedIn(ctx.apolloClient);
 
     if (ctx.pathname === "/signin" || ctx.pathname === "/create-account") {
@@ -42,7 +42,7 @@ class MyApp extends App {
     return { isAuth: false, userData: {}, query: ctx.query };
   }
 
-  signOut = () => {
+  public signOut = () => {
     this.props.apolloClient.cache.reset().then(() => {
       redirect({}, "/");
 
@@ -52,7 +52,7 @@ class MyApp extends App {
     });
   };
 
-  render() {
+  public render() {
     const { Component, apolloClient, isAuth, userData, query } = this.props;
 
     return (

@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Mutation, withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
 import cookie from 'cookie';
+import gql from 'graphql-tag';
+import * as React from 'react';
+import { withApollo, Mutation } from 'react-apollo';
 import redirect from '../lib/redirect';
 
 const CREATE_USER = gql`

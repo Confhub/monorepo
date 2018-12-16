@@ -1,11 +1,11 @@
-import * as React from 'react';
-import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
-import moment from 'moment';
-import { isEqual } from 'lodash';
-import idx from 'idx';
+import gql from "graphql-tag";
+import idx from "idx";
+import { isEqual } from "lodash";
+import moment from "moment";
+import * as React from "react";
+import { Mutation } from "react-apollo";
 
-import Form from './Form';
+import Form from "./Form";
 
 const EDIT_CONFERENCE = gql`
   mutation UpdateConference(
@@ -40,8 +40,8 @@ const EDIT_CONFERENCE = gql`
 `;
 
 const isTheSameDate = (left, right) => {
-  const l = left.split('T')[0];
-  const r = right.split('T')[0];
+  const l = left.split("T")[0];
+  const r = right.split("T")[0];
 
   return l === r;
 };
@@ -50,7 +50,7 @@ const isTheSameDate = (left, right) => {
 const sanitizeData = ({ __typename, ...data }) => data;
 
 class EditConference extends React.Component {
-  onSubmit = (mutation, data) => {
+  public onSubmit = (mutation, data) => {
     const {
       name,
       url,
@@ -60,7 +60,7 @@ class EditConference extends React.Component {
       location,
       tags,
       image,
-      prices,
+      prices
     } = this.props.data;
     const vars = {};
     if (name !== data.name) {
@@ -84,7 +84,7 @@ class EditConference extends React.Component {
     const sanitizedTags = tags && tags.map(sanitizeData);
 
     if (!isEqual(sanitizedTags, data.tags)) {
-      console.log(tags, data.tags);
+      // console.log(tags, data.tags);
       vars.tags = data.tags;
     }
     if (image.src !== data.image.src) {
@@ -92,19 +92,19 @@ class EditConference extends React.Component {
     }
     const sanitizedPrice = prices && prices.map(sanitizeData);
     if (!isEqual(sanitizedPrice, data.prices)) {
-      console.log(prices, data.prices);
+      // console.log(prices, data.prices);
       vars.prices = data.prices;
     }
 
     mutation({
       variables: {
         id: this.props.data.id,
-        ...vars,
-      },
+        ...vars
+      }
     });
   };
 
-  render() {
+  public render() {
     const {
       name,
       url,
@@ -114,7 +114,7 @@ class EditConference extends React.Component {
       description,
       image,
       location,
-      prices,
+      prices
     } = this.props.data;
 
     const data = {
@@ -127,14 +127,14 @@ class EditConference extends React.Component {
         image: [
           {
             uid: image.id,
-            name: image.alt || 'thumbnail',
-            status: 'done',
+            name: image.alt || "thumbnail",
+            status: "done",
             response: {
-              secure_url: image.src,
+              secure_url: image.src
             },
-            url: image.src,
-          },
-        ],
+            url: image.src
+          }
+        ]
       }),
       location: {
         country: location.country,
@@ -142,11 +142,11 @@ class EditConference extends React.Component {
         address: location.address,
         coordinates: {
           lng: location.coordinates.longitude,
-          lat: location.coordinates.latitude,
-        },
+          lat: location.coordinates.latitude
+        }
       },
       prices: prices.map(({ currency, __typename, ...i }) => i),
-      currency: idx(prices, _ => _[0].currency),
+      currency: idx(prices, _ => _[0].currency)
     };
     return (
       <Mutation mutation={EDIT_CONFERENCE}>
@@ -200,7 +200,7 @@ EditConference.fragments = {
         expirationDate
       }
     }
-  `,
+  `
 };
 
 export default EditConference;

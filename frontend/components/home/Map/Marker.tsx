@@ -11,7 +11,7 @@ const pinStyle = {
 };
 
 export default class Marker extends PureComponent {
-  render() {
+  public render() {
     const { size = 20, onClick } = this.props;
 
     return (

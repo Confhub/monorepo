@@ -1,8 +1,8 @@
-import * as React from "react";
-import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
-import remove from "lodash/remove";
 import { message } from "antd";
+import gql from "graphql-tag";
+import remove from "lodash/remove";
+import * as React from "react";
+import { Mutation } from "react-apollo";
 
 interface Props {
   id: string;
@@ -17,7 +17,7 @@ const DELETE_CONFERENCE = gql`
 `;
 
 class DeleteConferenceButton extends React.Component<Props> {
-  onButtonClick = async deleteConference => {
+  public onButtonClick = async deleteConference => {
     const deleted = await deleteConference({
       variables: { id: this.props.id }
     });
@@ -27,7 +27,7 @@ class DeleteConferenceButton extends React.Component<Props> {
     }
   };
 
-  render() {
+  public render() {
     const { query } = this.props;
 
     return (
@@ -40,7 +40,7 @@ class DeleteConferenceButton extends React.Component<Props> {
         }}
       >
         {(deleteConference, { error }) => {
-          if (error) return <p>Error :(</p>;
+          if (error) { return <p>Error :(</p>; }
 
           return (
             <a onClick={() => this.onButtonClick(deleteConference)}>delete</a>

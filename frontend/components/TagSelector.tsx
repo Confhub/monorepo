@@ -1,14 +1,14 @@
-import * as React from 'react';
 import { Select } from 'antd';
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import * as React from 'react';
+import { Query } from 'react-apollo';
 
 const Option = Select.Option;
 
 // @TODO: reuse it in two places
 
 class TagSelector extends React.Component {
-  handleChange = values => {
+  public handleChange = values => {
     const { data, onChange, optionKey } = this.props;
     const tags = data.tags;
     const items = values.map(
@@ -22,7 +22,7 @@ class TagSelector extends React.Component {
     onChange(items);
   };
 
-  componentDidMount() {
+  public componentDidMount() {
     // On first page load tags might be just list of slug,
     // we need to change it to a proper list of objects
     const { tags, data, optionKey, onChange } = this.props;
@@ -32,7 +32,7 @@ class TagSelector extends React.Component {
     }
   }
 
-  render() {
+  public render() {
     const { value, data, edit, optionKey } = this.props;
     const sanitizedValues = value ? value.map(i => i[optionKey] || i) : [];
 

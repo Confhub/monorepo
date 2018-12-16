@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { List as AntList } from 'antd';
+import * as React from 'react';
 
 import ListItem from './ListItem';
 

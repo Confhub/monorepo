@@ -1,7 +1,7 @@
-import React from "react";
 import cookie from "cookie";
-import { getDataFromTree } from "react-apollo";
 import Head from "next/head";
+import React from "react";
+import { getDataFromTree } from "react-apollo";
 
 import initApollo from "./initApollo";
 
@@ -14,9 +14,9 @@ function parseCookies(req, options = {}) {
 
 export default App => {
   return class WithData extends React.Component {
-    static displayName = `WithData(${App.displayName})`;
+    public static displayName = `WithData(${App.displayName})`;
 
-    static async getInitialProps(ctx) {
+    public static async getInitialProps(ctx) {
       const {
         Component,
         router,
@@ -87,7 +87,7 @@ export default App => {
       });
     }
 
-    render() {
+    public render() {
       return <App {...this.props} apolloClient={this.apolloClient} />;
     }
   };

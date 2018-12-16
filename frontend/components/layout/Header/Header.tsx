@@ -1,6 +1,6 @@
-import * as React from 'react';
+import { Icon, Layout, Menu } from 'antd';
 import Link from 'next/link';
-import { Layout, Menu, Icon } from 'antd';
+import * as React from 'react';
 
 const Header = ({ isAuth, userData, signOut }) => (
   <Layout.Header style={{ width: '100%', background: '#ffffff' }}>
@@ -10,7 +10,7 @@ const Header = ({ isAuth, userData, signOut }) => (
 
     <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px' }}>
       <Menu.Item key="newConference">
-        <Link href="/new-conference" prefetch>
+        <Link href="/new-conference" prefetch={true}>
           <a>
             <Icon type="form" theme="outlined" />
             Add new conference
@@ -20,7 +20,7 @@ const Header = ({ isAuth, userData, signOut }) => (
 
       {!isAuth && (
         <Menu.Item key="signin">
-          <Link href="/signin" prefetch>
+          <Link href="/signin" prefetch={true}>
             <a>
               <Icon type="mail" theme="outlined" />
               Sign In
@@ -31,7 +31,7 @@ const Header = ({ isAuth, userData, signOut }) => (
 
       {!isAuth && (
         <Menu.Item key="signup">
-          <Link href="/create-account" prefetch>
+          <Link href="/create-account" prefetch={true}>
             <a>
               <Icon type="mail" theme="outlined" />
               Sign Up
@@ -42,7 +42,7 @@ const Header = ({ isAuth, userData, signOut }) => (
 
       {isAuth && userData.role === 'MODERATOR' && (
         <Menu.Item key="admin">
-          <Link href="/admin" prefetch>
+          <Link href="/admin" prefetch={true}>
             <a>
               <Icon type="dashboard" theme="outlined" />
               Admin Panel
@@ -77,7 +77,7 @@ const Header = ({ isAuth, userData, signOut }) => (
       )}
 
       {isAuth && (
-        <Menu.Item key="role" disabled>
+        <Menu.Item key="role" disabled={true}>
           <div className={`role-badge ${userData.role.toLowerCase()}`}>
             {userData.role}
           </div>
@@ -85,7 +85,7 @@ const Header = ({ isAuth, userData, signOut }) => (
       )}
     </Menu>
 
-    <style jsx global>{`
+    <style jsx={true} global={true}>{`
       .logo {
         width: 120px;
         height: 31px;

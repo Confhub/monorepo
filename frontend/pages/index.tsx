@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
+import * as React from 'react';
+import { Query } from 'react-apollo';
 
 import HomePage from '../components/home/HomePage';
-import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
-import { MAP_FRAGMENT } from '../components/home/Map/MapContainer';
 import HomePageProvider, {
   HomePageContext,
 } from '../components/home/HomePageContext';
+import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
+import { MAP_FRAGMENT } from '../components/home/Map/MapContainer';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -34,7 +34,7 @@ export const GET_CONFERENCE_LIST = gql`
 `;
 
 class HomePageContainer extends React.Component {
-  render() {
+  public render() {
     const { tags, mapViewport, mapViewportActive } = this.props.context.state;
     const { neLatitude, neLongitude, swLatitude, swLongitude } = mapViewport;
 

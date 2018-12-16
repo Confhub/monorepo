@@ -1,5 +1,5 @@
+import { Divider, Icon } from 'antd';
 import * as React from 'react';
-import { Icon, Divider } from 'antd';
 
 import { parseDateRange } from '../../helpers';
 

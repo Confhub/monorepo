@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { withRouter } from 'next/router';
 import { Layout } from 'antd';
+import { withRouter } from 'next/router';
+import * as React from 'react';
 
-import Header from './Header/Header';
 import Footer from './Footer/Footer';
+import Header from './Header/Header';
 
 class LayoutComponent extends React.Component {
-  render() {
+  public render() {
     const { isAuth, userData, signOut, router, children } = this.props;
     const isHomePage = router.pathname === '/';
 
@@ -34,7 +34,7 @@ class LayoutComponent extends React.Component {
           {/* <Footer className="footer" /> */}
         </Layout>
 
-        <style jsx>{`
+        <style jsx={true}>{`
           .layout {
             display: grid;
             grid-template-columns: 1fr;

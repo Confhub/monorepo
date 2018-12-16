@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Layout } from 'antd';
+import * as React from 'react';
 
 const Footer = () => (
   <Layout.Footer style={{ textAlign: 'center' }} className="footer">

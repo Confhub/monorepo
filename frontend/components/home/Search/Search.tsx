@@ -1,7 +1,7 @@
+import { Checkbox, Col, Radio, Row } from 'antd';
 import * as React from 'react';
-import { Checkbox, Row, Col, Radio } from 'antd';
-import { HomePageContext } from '../HomePageContext';
 import TagSelector from '../../TagSelector';
+import { HomePageContext } from '../HomePageContext';
 
 const categoryOptions = [
   {
@@ -97,11 +97,11 @@ const renderRadio = (item, colSpan) => (
 );
 
 class Search extends React.Component {
-  setLocation = ({ center }) => {
+  public setLocation = ({ center }) => {
     this.props.setLocation(center);
   };
 
-  render() {
+  public render() {
     const {
       getLocation,
       setLocation,
@@ -165,7 +165,7 @@ class Search extends React.Component {
           </Checkbox.Group>
         </div>
         <p>Call for papers</p>
-        <style jsx>{`
+        <style jsx={true}>{`
           .root {
             padding: 1.5em 0.75em;
             border-bottom: 1px solid #e8e8e8;

@@ -1,8 +1,8 @@
-import * as React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
+import * as React from 'react';
 
 class MyDocument extends Document {
-  render() {
+  public render() {
     return (
       <html lang="en">
         <Head>
@@ -19,7 +19,7 @@ class MyDocument extends Document {
           <NextScript />
         </body>
 
-        <style jsx global>{`
+        <style jsx={true} global={true}>{`
           #nprogress {
             pointer-events: none;
           }

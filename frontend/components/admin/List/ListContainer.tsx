@@ -1,10 +1,10 @@
+import { Switch } from 'antd';
+import gql from 'graphql-tag';
 import * as React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Switch } from 'antd';
 
-import ApproveList from './List';
 import { LIST_ITEM_FRAGMENT } from '../../home/List/ListContainer';
+import ApproveList from './List';
 
 const GET_CONFERENCES_LIST = gql`
   query conferences($publishStatus: PublishStatus) {
@@ -16,17 +16,17 @@ const GET_CONFERENCES_LIST = gql`
 `;
 
 class ListContainer extends React.Component {
-  state = {
+  public state = {
     publishStatus: 'DRAFT',
   };
 
-  onStatusChange = () => {
+  public onStatusChange = () => {
     this.state.publishStatus === 'DRAFT'
       ? this.setState({ publishStatus: 'PUBLISHED' })
       : this.setState({ publishStatus: 'DRAFT' });
   };
 
-  render() {
+  public render() {
     const { publishStatus } = this.state;
 
     const query = {
@@ -55,7 +55,7 @@ class ListContainer extends React.Component {
                 mutation={query}
               />
             </div>
-            <style jsx>{`
+            <style jsx={true}>{`
               .list-wrap {
                 margin-top: 1.5em;
               }

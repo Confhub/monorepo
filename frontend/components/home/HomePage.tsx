@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import Search from './Search/Search';
 import ListContainer from './List/ListContainer';
 import MapContainer from './Map/MapContainer';
+import Search from './Search/Search';
 
 const HomePage = ({ data }) => (
   <div className="root">
@@ -13,7 +13,7 @@ const HomePage = ({ data }) => (
     <div id="map-wrap" className="map">
       <MapContainer items={data} />
     </div>
-    <style jsx>{`
+    <style jsx={true}>{`
       .root {
         display: grid;
         grid-template-columns: 530px 1fr;

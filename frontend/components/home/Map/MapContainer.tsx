@@ -1,6 +1,6 @@
-import * as React from 'react';
-import dynamic from 'next/dynamic';
 import gql from 'graphql-tag';
+import dynamic from 'next/dynamic';
+import * as React from 'react';
 
 import { HomePageContext } from '../HomePageContext';
 

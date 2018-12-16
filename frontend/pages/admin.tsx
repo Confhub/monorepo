@@ -4,7 +4,7 @@ import { withApollo } from 'react-apollo';
 import AdminPageContainer from '../components/admin/AdminPage';
 
 class AdminPage extends React.Component {
-  render() {
+  public render() {
     return <AdminPageContainer />;
   }
 }
