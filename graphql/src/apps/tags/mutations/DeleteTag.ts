@@ -1,8 +1,9 @@
 import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { Tag } from '../../../generated/prisma';
-import { getUserId, getUserRole, Context } from '../../../utils';
+import { Tag } from '../../../generated/prisma-client';
+import { Context } from '../../../types';
+import { getUserId, getUserRole } from '../../../utils';
 import GraphQLTag from '../outputs/Tag';
 
 interface ArgsType {
@@ -17,22 +18,18 @@ export default {
     },
   },
   resolve: async (
-    _: any,
+    parent: any,
     { id }: ArgsType,
-    { apiToken, db }: Context,
-    info: any,
+    { apiToken, prisma }: Context,
   ): Promise<Tag | null> => {
     const userId = getUserId(apiToken);
-    const userRole = await getUserRole(userId, db);
+    const userRole = await getUserRole(userId);
 
     if (userRole === 'MODERATOR') {
       if (id) {
-        return db.mutation.deleteTag(
-          {
-            where: { id },
-          },
-          info,
-        );
+        return prisma.deleteTag({
+          id,
+        });
       }
     }
 

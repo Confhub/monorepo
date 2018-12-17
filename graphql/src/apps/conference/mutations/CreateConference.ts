@@ -1,7 +1,11 @@
 import { GraphQLNonNull } from 'graphql';
 
-import { Conference } from '../../../generated/prisma';
-import { Context } from '../../../utils';
+import {
+  Conference,
+  ConferenceCreateInput,
+  ConferencePromise,
+} from '../../../generated/prisma-client';
+import { Context } from '../../../types';
 import GraphQLCreateConferenceInput from '../inputs/CreateConference';
 import GraphQLConference from '../outputs/Conference';
 import {
@@ -12,7 +16,7 @@ import {
 } from './helpers';
 
 interface ArgsType {
-  data: Conference;
+  data: ConferenceCreateInput;
 }
 
 export default {
@@ -23,7 +27,7 @@ export default {
     },
   },
   resolve: async (
-    _: any,
+    parent: any,
     {
       data: {
         name,
@@ -38,25 +42,21 @@ export default {
         prices,
       },
     }: ArgsType,
-    ctx: Context,
-    info: any,
+    { prisma }: Context,
   ): Promise<Conference> => {
-    return ctx.db.mutation.createConference(
-      {
-        data: {
-          name,
-          description,
-          tags: tags ? generateTagsCreate(tags) : null,
-          image: image ? generateImage(image, name) : null,
-          url,
-          startDate,
-          endDate,
-          location: generateLocation(location),
-          social: social ? generateSocial(social) : null,
-          prices: { create: prices },
-        },
+    return prisma.createConference({
+      data: {
+        name,
+        description,
+        tags: tags ? generateTagsCreate(tags) : null,
+        image: image ? generateImage(image, name) : null,
+        url,
+        startDate,
+        endDate,
+        location: generateLocation(location),
+        social: social ? generateSocial(social) : null,
+        prices: { create: prices },
       },
-      info,
-    );
+    });
   },
 };

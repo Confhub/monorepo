@@ -11,7 +11,7 @@ import {
   Tag,
   TagCreateManyInput,
   TagUpdateManyInput,
-} from '../../../generated/prisma';
+} from '../../../generated/prisma-client';
 
 export const generateTagsCreate = (
   tags: Tag[],

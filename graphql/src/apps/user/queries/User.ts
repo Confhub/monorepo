@@ -1,16 +1,17 @@
-import { User } from '../../../generated/prisma';
-import { getUserId, Context } from '../../../utils';
+import { User } from '../../../generated/prisma-client';
+import { Context } from '../../../types';
+import { getUserId } from '../../../utils';
 import GraphQLUser from '../outputs/User';
 
 export default {
   type: GraphQLUser,
   resolve: async (
-    _: any,
+    parent: any,
     args: any,
-    { apiToken, db }: Context,
-    info: any,
+    { apiToken, prisma }: Context,
   ): Promise<User> => {
     const userId = await getUserId(apiToken);
-    return db.query.user({ where: { id: userId } }, info);
+
+    return prisma.user({ id: userId });
   },
 };

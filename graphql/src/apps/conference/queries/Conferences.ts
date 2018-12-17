@@ -6,12 +6,16 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import { Conference, PUBLISH_STATUS } from '../../../generated/prisma';
-import { Context } from '../../../utils';
+import {
+  Conference,
+  FragmentableArray,
+  PUBLISH_STATUS,
+} from '../../../generated/prisma-client';
+import { Context } from '../../../types';
 import GraphQLConference from '../outputs/Conference';
 import GraphQLPublishStatus from '../outputs/PublishStatus';
 
-interface ArgsType {
+interface Args {
   sortBy?: {
     publishStatus?: PUBLISH_STATUS;
     tags?: string[];
@@ -110,11 +114,10 @@ export default {
     },
   },
   resolve: (
-    _: any,
-    args: ArgsType,
+    parent: any,
+    args: Args,
     ctx: Context,
-    info: any,
-  ): Promise<Conference[]> => {
+  ): FragmentableArray<Conference> => {
     const makeQuery = () => {
       if (args && args.sortBy) {
         const { publishStatus, tags, location } = args.sortBy;
@@ -150,9 +153,9 @@ export default {
         };
       }
 
-      return null;
+      return {};
     };
 
-    return ctx.db.query.conferences(makeQuery(), info);
+    return ctx.prisma.conferences(makeQuery());
   },
 };

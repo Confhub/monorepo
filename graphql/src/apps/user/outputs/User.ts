@@ -1,6 +1,10 @@
 import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
 
-import { DateTime, User, USER_ROLE } from '../../../generated/prisma';
+import {
+  DateTimeOutput,
+  User,
+  USER_ROLE,
+} from '../../../generated/prisma-client';
 import GraphQLUserRole from '../outputs/UserRole';
 
 export default new GraphQLObjectType({
@@ -24,7 +28,7 @@ export default new GraphQLObjectType({
     },
     createdAt: {
       type: GraphQLString,
-      resolve: ({ createdAt }: User): DateTime => createdAt,
+      resolve: ({ createdAt }: User): DateTimeOutput => createdAt,
     },
   },
 });

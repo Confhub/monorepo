@@ -4,7 +4,8 @@ import {
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-import { Coordinates, Location } from '../../../generated/prisma';
+
+import { Coordinates, Location } from '../../../generated/prisma-client';
 
 const GraphQLCoordinates = new GraphQLObjectType({
   name: 'Coordinates',

@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
-import { Social } from '../../../generated/prisma';
+
+import { Social } from '../../../generated/prisma-client';
 
 export default new GraphQLObjectType({
   name: 'Social',

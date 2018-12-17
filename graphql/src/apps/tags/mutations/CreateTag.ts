@@ -1,8 +1,8 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
-import { Tag } from '../../../generated/prisma';
-import { Context } from '../../../utils';
+import { Tag } from '../../../generated/prisma-client';
+import { Context } from '../../../types';
 import GraphQLTag from '../outputs/Tag';
 
 interface ArgsType {
@@ -19,17 +19,13 @@ export default {
   resolve: async (
     _: any,
     { name }: ArgsType,
-    ctx: Context,
-    info: any,
+    { prisma }: Context,
   ): Promise<Tag> => {
-    return ctx.db.mutation.createTag(
-      {
-        data: {
-          name,
-          slug: tslug(name, { decamelize: true }),
-        },
+    return prisma.createTag({
+      data: {
+        name,
+        slug: tslug(name, { decamelize: true }),
       },
-      info,
-    );
+    });
   },
 };

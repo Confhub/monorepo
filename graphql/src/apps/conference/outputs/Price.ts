@@ -8,10 +8,10 @@ import { GraphQLDateTime } from 'graphql-iso-date';
 
 import {
   CURRENCY,
-  DateTime,
+  DateTimeOutput,
   ID_Output,
   Price,
-} from '../../../generated/prisma';
+} from '../../../generated/prisma-client';
 import GraphQLCurrency from './Currency';
 
 export default new GraphQLObjectType({
@@ -35,7 +35,7 @@ export default new GraphQLObjectType({
     },
     expirationDate: {
       type: GraphQLDateTime,
-      resolve: ({ expirationDate }: Price): DateTime => expirationDate,
+      resolve: ({ expirationDate }: Price): DateTimeOutput => expirationDate,
     },
   },
 });

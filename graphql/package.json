@@ -1,8 +1,8 @@
 {
   "name": "confhub-graphql",
   "description": "ConfHub GraphQL Server",
-  "version": "0.0.1",
-  "main": "dist/index.js",
+  "version": "1.0.0",
+  "main": "dist/index.ts",
   "dependencies": {
     "apollo-server": "^2.3.1",
     "bcryptjs": "^2.4.3",
@@ -10,7 +10,7 @@
     "graphql-iso-date": "^3.6.1",
     "idx": "^2.5.1",
     "jsonwebtoken": "^8.4.0",
-    "prisma-binding": "^2.2.11",
+    "prisma-client-lib": "^1.22.2",
     "tslug": "^1.0.3"
   },
   "devDependencies": {
@@ -18,8 +18,10 @@
     "@types/graphql-iso-date": "^3.3.1",
     "@types/jsonwebtoken": "^8.3.0",
     "dotenv-cli": "^1.4.0",
-    "graphql-cli": "3.0.3",
-    "nodemon": "1.18.9",
+    "get-graphql-schema": "^2.1.2",
+    "graphql-cli": "^3.0.3",
+    "graphqlgen": "^0.4.0",
+    "nodemon": "^1.18.9",
     "now": "^12.1.12",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.2",
@@ -33,6 +35,8 @@
     "start": "NODE_ENV=development dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
     "dev": "NODE_ENV=development npm-run-all --parallel start playground",
     "debug": "NODE_ENV=development dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
+    "generate": "graphqlgen",
+    "get-schema": "graphql get-schema",
     "playground": "graphql playground",
     "build": "rimraf dist && tsc --build --verbose",
     "serve": "node dist",
@@ -40,7 +44,7 @@
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "test-ci": "yarn lint",
-    "deploy": "now --regions all --token $NOW_TOKEN",
+    "deploy": "now --token $NOW_TOKEN",
     "alias": "now alias --token=$NOW_TOKEN",
     "clear-deployments": "now rm --safe --yes confhub-graphql --token=$NOW_TOKEN"
   }

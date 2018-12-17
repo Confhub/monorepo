@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    // `strict` will be enabled once this is fixed: https://github.com/prisma/graphqlgen/issues/319 ...
     // "strict": true,
+    // ... until then we include the options from `strict` that are not concerned by this bug
     "target": "es2017",
     "moduleResolution": "node",
     "module": "commonjs",

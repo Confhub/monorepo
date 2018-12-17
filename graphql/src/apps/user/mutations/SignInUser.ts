@@ -3,7 +3,8 @@ import * as bcrypt from 'bcryptjs';
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 import * as jwt from 'jsonwebtoken';
 
-import { APP_SECRET, Context } from '../../../utils';
+import { Context } from '../../../types';
+import { APP_SECRET } from '../../../utils';
 import GraphQLAuthPayload, { AuthPayload } from '../outputs/AuthPayload';
 
 interface ArgsType {
@@ -24,9 +25,9 @@ export default {
   resolve: async (
     _: any,
     { email, password }: ArgsType,
-    ctx: Context,
+    { prisma }: Context,
   ): Promise<AuthPayload> => {
-    const user = await ctx.db.query.user({ where: { email } });
+    const user = await prisma.user({ email });
     if (!user) {
       throw new ApolloError(`No such user found for email: ${email}`);
     }

@@ -1,5 +1,6 @@
 import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
-import { Image } from '../../../generated/prisma';
+
+import { Image } from '../../../generated/prisma-client';
 
 export default new GraphQLObjectType({
   name: 'Image',

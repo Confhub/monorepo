@@ -1,0 +1,198 @@
+# source: http://localhost:4000
+# timestamp: Mon Dec 17 2018 15:42:20 GMT+0100 (Central European Standard Time)
+
+schema {
+  query: RootQuery
+  mutation: RootMutation
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type Conference {
+  id: ID
+  name: String
+  description: String
+  tags: [Tag]
+  image: Image
+  url: String
+  startDate: DateTime
+  endDate: DateTime
+  social: Social
+  publishStatus: PublishStatus
+  prices: [Price]
+}
+
+input ConferenceCoordinatesInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+input ConferenceImageInput {
+  id: ID
+  src: String
+  alt: String
+}
+
+input ConferenceLocationInput {
+  venueName: String
+  country: String!
+  city: String!
+  address: String
+  coordinates: ConferenceCoordinatesInput!
+}
+
+input ConferenceSocialInput {
+  facebook: String
+  twitter: String
+  instagram: String
+}
+
+input ConferenceSortByInput {
+  publishStatus: PublishStatus
+  tags: [String]
+  location: ConferenceSortByLocationInput
+}
+
+input ConferenceSortByLocationInput {
+  """Sort by Coordinates"""
+  coordinates: LocationCoordinatesInput
+
+  """Sort by Continents"""
+  continent: String
+}
+
+input ConferenceTagInput {
+  id: ID
+  name: String
+  slug: String
+}
+
+input CreateConferenceInput {
+  name: String!
+  description: String
+  tags: [ConferenceTagInput]
+  image: ConferenceImageInput
+  url: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  location: ConferenceLocationInput!
+  social: ConferenceSocialInput
+  prices: [PriceInput]
+}
+
+enum Currency {
+  USD
+  EUR
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
+`date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
+8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+input EditConferenceInput {
+  name: String
+  description: String
+  tags: [ConferenceTagInput]
+  image: ConferenceImageInput
+  url: String
+  startDate: DateTime
+  endDate: DateTime
+  location: ConferenceLocationInput
+  social: ConferenceSocialInput
+  prices: [PriceInput]
+}
+
+type Image {
+  id: ID
+  src: String
+  alt: String
+}
+
+input LocationCoordinatesInput {
+  """North-East Latitude (The upper-left corner)"""
+  neLatitude: Float
+
+  """North-East Longitude (The upper-right corner)"""
+  neLongitude: Float
+
+  """South-West Latitude (The lower-left corner)"""
+  swLatitude: Float
+
+  """South-East Longitude (The lower-right corner)"""
+  swLongitude: Float
+}
+
+type Price {
+  id: ID
+  name: String
+  amount: Float
+  currency: Currency
+  expirationDate: DateTime
+}
+
+input PriceInput {
+  id: ID
+  name: String
+  amount: Float
+  currency: Currency
+  expirationDate: DateTime
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+"""Root Mutation"""
+type RootMutation {
+  createUser(email: String!, password: String!, name: String!): AuthPayload
+  signInUser(email: String!, password: String!): AuthPayload
+  changeUserRole(id: ID!, newRole: UserRole!): User
+  createConference(data: CreateConferenceInput!): Conference
+  updateConference(id: ID!, data: EditConferenceInput!): Conference
+  publishConference(id: ID!): Conference
+  deleteConference(id: ID!): Conference
+  createTag(name: String!): Tag
+  deleteTag(id: ID!): Tag
+  updateTag(id: ID!, name: String!): Tag
+}
+
+"""Root Query"""
+type RootQuery {
+  user: User
+  conference(id: ID!): Conference
+  conferences(sortBy: ConferenceSortByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Conference]
+  tags: [Tag]
+}
+
+type Social {
+  facebook: String
+  twitter: String
+  instagram: String
+}
+
+type Tag {
+  id: ID
+  name: String
+  slug: String
+}
+
+type User {
+  id: ID
+  email: String
+  name: String
+  role: UserRole
+  createdAt: String
+}
+
+enum UserRole {
+  ATTENDEE
+  SPEAKER
+  MODERATOR
+}

@@ -1,8 +1,9 @@
 import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { Conference } from '../../../generated/prisma';
-import { getUserId, getUserRole, Context } from '../../../utils';
+import { Conference } from '../../../generated/prisma-client';
+import { Context } from '../../../types';
+import { getUserId, getUserRole } from '../../../utils';
 import GraphQLConference from '../outputs/Conference';
 
 interface ArgsType {
@@ -17,23 +18,19 @@ export default {
     },
   },
   resolve: async (
-    _: any,
+    parent: any,
     { id }: ArgsType,
-    { apiToken, db }: Context,
-    info: any,
+    { apiToken, prisma }: Context,
   ): Promise<Conference | null> => {
     const userId = getUserId(apiToken);
-    const userRole = await getUserRole(userId, db);
+    const userRole = await getUserRole(userId);
 
     if (userRole === 'MODERATOR') {
       if (id) {
-        return db.mutation.updateConference(
-          {
-            where: { id },
-            data: { publishStatus: 'PUBLISHED' },
-          },
-          info,
-        );
+        return prisma.updateConference({
+          where: { id },
+          data: { publishStatus: 'PUBLISHED' },
+        });
       }
     }
 

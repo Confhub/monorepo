@@ -1,4 +1,4 @@
-import { GraphQLEnumType, GraphQLID, GraphQLString } from 'graphql';
+import { GraphQLEnumType } from 'graphql';
 
 export default new GraphQLEnumType({
   name: 'Currency',

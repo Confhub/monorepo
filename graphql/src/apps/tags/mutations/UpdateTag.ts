@@ -2,8 +2,9 @@ import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
 import tslug from 'tslug';
 
-import { Tag } from '../../../generated/prisma';
-import { getUserId, getUserRole, Context } from '../../../utils';
+import { Tag } from '../../../generated/prisma-client';
+import { Context } from '../../../types';
+import { getUserId, getUserRole } from '../../../utils';
 import GraphQLTag from '../outputs/Tag';
 
 interface ArgsType {
@@ -22,25 +23,21 @@ export default {
     },
   },
   resolve: async (
-    _: any,
+    parent: any,
     { id, name }: ArgsType,
-    { apiToken, db }: Context,
-    info: any,
+    { apiToken, prisma }: Context,
   ): Promise<Tag | null> => {
     const userId = getUserId(apiToken);
-    const userRole = await getUserRole(userId, db);
+    const userRole = await getUserRole(userId);
 
     if (userRole === 'MODERATOR') {
-      return db.mutation.updateTag(
-        {
-          where: { id },
-          data: {
-            name,
-            slug: tslug(name, { decamelize: true }),
-          },
+      return prisma.updateTag({
+        where: { id },
+        data: {
+          name,
+          slug: tslug(name, { decamelize: true }),
         },
-        info,
-      );
+      });
     }
 
     throw new AuthenticationError('You must have moderator rights');

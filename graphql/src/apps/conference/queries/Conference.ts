@@ -1,10 +1,10 @@
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import { Conference } from '../../../generated/prisma';
-import { Context } from '../../../utils';
+import { ConferencePromise } from '../../../generated/prisma-client';
+import { Context } from '../../../types';
 import GraphQLConference from '../outputs/Conference';
 
-interface ArgsType {
+interface Args {
   id: string;
 }
 
@@ -15,17 +15,7 @@ export default {
       type: new GraphQLNonNull(GraphQLID),
     },
   },
-  resolve: (
-    _: any,
-    { id }: ArgsType,
-    ctx: Context,
-    info: any,
-  ): Promise<Conference> => {
-    return ctx.db.query.conference(
-      {
-        where: { id },
-      },
-      info,
-    );
+  resolve: (parent: any, { id }: Args, ctx: Context): ConferencePromise => {
+    return ctx.prisma.conference({ id });
   },
 };

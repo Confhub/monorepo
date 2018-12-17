@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 
-import { User } from '../../../generated/prisma';
+import { User } from '../../../generated/prisma-client';
 import GraphQLUser from './User';
 
 export interface AuthPayload {

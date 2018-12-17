@@ -6,10 +6,9 @@ import {
   ConferenceUpdateInput,
   Price,
   PriceUpdateManyInput,
-  PriceUpsertWithWhereUniqueNestedInput,
-} from '../../../generated/prisma';
-
-import { getUserId, getUserRole, Context } from '../../../utils';
+} from '../../../generated/prisma-client';
+import { Context } from '../../../types';
+import { getUserId, getUserRole } from '../../../utils';
 import GraphQLEditConferenceInput from '../inputs/EditConference';
 import GraphQLConference from '../outputs/Conference';
 import {
@@ -51,16 +50,13 @@ export default {
         prices,
       },
     }: ArgsType,
-    { apiToken, db }: Context,
-    info: any,
+    { apiToken, prisma }: Context,
   ): Promise<Conference | null> => {
-    const conference = await db.query.conference({ where: { id } });
+    const conference = await prisma.conference({ id });
     const userId = getUserId(apiToken);
-    const userRole = await getUserRole(userId, db);
+    const userRole = await getUserRole(userId);
 
     if (userRole === 'MODERATOR') {
-      // console.log('PRICES', conference.prices);
-
       const query: ConferenceUpdateInput = {
         ...(name && { name }),
         ...(url && { url }),
@@ -74,9 +70,7 @@ export default {
         ...(prices && { prices: generatePrices(prices) }),
       };
 
-      console.log({ query });
-
-      return db.mutation.updateConference({ data: query, where: { id } }, info);
+      return prisma.updateConference({ data: query, where: { id } });
     }
 
     throw new AuthenticationError('You must have moderator rights');

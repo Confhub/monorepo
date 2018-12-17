@@ -1,28 +1,8 @@
 import * as jwt from 'jsonwebtoken';
 
-import { Prisma, USER_ROLE } from './generated/prisma';
+import { prisma, USER_ROLE } from './generated/prisma-client';
 
 export const APP_SECRET = process.env.APP_SECRET || '';
-
-export interface Context {
-  apiToken: string;
-  db: Prisma;
-}
-
-const getPrismaInstance = () => {
-  return new Prisma({
-    endpoint: process.env.PRISMA_ENDPOINT,
-    secret: process.env.PRISMA_SECRET,
-    debug: process.env.NODE_ENV === 'development',
-  });
-};
-
-export function createContext(token: string): Context {
-  return {
-    apiToken: token,
-    db: getPrismaInstance(),
-  };
-}
 
 export function getUserId(token: string): string {
   if (token) {
@@ -36,12 +16,10 @@ export function getUserId(token: string): string {
   throw new Error('Not authorized');
 }
 
-export async function getUserRole(userId: string, db: any): Promise<USER_ROLE> {
-  const { role } = (await db.query.user({
-    where: { id: userId },
-  })) as {
-    role: USER_ROLE;
-  };
+export async function getUserRole(userId: string): Promise<USER_ROLE> {
+  const { role } = await prisma.user({
+    id: userId,
+  });
 
   return role;
 }

@@ -1,5 +1,6 @@
 import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
-import { Tag } from '../../../generated/prisma';
+
+import { Tag } from '../../../generated/prisma-client';
 
 export default new GraphQLObjectType({
   name: 'Tag',
