@@ -18,7 +18,7 @@
     "idx": "^2.5.1",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.10",
-    "mapbox-gl": "^0.51.0",
+    "mapbox-gl": "^0.52.0",
     "moment": "^2.22.2",
     "next": "^7.0.2-canary.47",
     "node-sass": "^4.10.0",
