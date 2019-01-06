@@ -1,4 +1,4 @@
-import { Button, List as AntList, Tag } from 'antd';
+import { Button, List as AntList, Tag, Card } from 'antd';
 import * as React from 'react';
 
 import { THUMBNAILS_OPTIONS } from '../../constants';
@@ -7,51 +7,52 @@ import ListItemDescription from './ListItemDescription';
 
 const ListItem = ({ item }) => {
   return (
-    <div className="list">
-      <AntList.Item
-        key={item.id}
-        // onMouseEnter={() => onEnter(item.id)}
-        // onMouseLeave={() => onLeave(item.id)}
-      >
-        <div className="list-item-inner">
-          <AntList.Item.Meta
-            title={
-              <a href={item.url} target="_blank" rel="noopener noreferrer">
-                {item.name}
-              </a>
-            }
-            description={<ListItemDescription item={item} />}
-          />
-          <div className="block">
-            <img
-              className="thumbnail"
-              alt={item.image ? item.image.alt : 'conf logo'}
-              src={
-                item.image
-                  ? setImageParams(item.image.src, THUMBNAILS_OPTIONS)
-                  : 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
-              }
-            />
-            {item.description}
-          </div>
-          <div className="bottom-line">
-            {item.tags.map(tag => (
-              <Tag key={tag.id}>{tag.name}</Tag>
-            ))}
-          </div>
-          <div className="button-wrap">
-            {/* <Button style={{ marginRight: 8 }}>More info</Button>
-            <Button type="primary">Get tickets</Button> */}
-            <Button type="primary" href={item.url} target="_blank">
-              More info
-            </Button>
-          </div>
+    // <AntList.Item
+    // key={item.id}
+    // onMouseEnter={() => onEnter(item.id)}
+    // onMouseLeave={() => onLeave(item.id)}
+    // >
+    <div className="list-item-inner">
+      <img
+        className="thumbnail"
+        alt={item.image ? item.image.alt : 'conf logo'}
+        src={
+          item.image
+            ? setImageParams(item.image.src, THUMBNAILS_OPTIONS)
+            : 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
+        }
+      />
+      <div>
+        <div>
+          <a href={item.url} target="_blank" rel="noopener noreferrer">
+            {item.name}
+          </a>
         </div>
-      </AntList.Item>
+        <ListItemDescription item={item} />
 
-      <style jsx={true}>{`
+        <div className="block">{item.description}</div>
+        <div className="bottom-line">
+          {item.tags.map(tag => (
+            <Tag key={tag.id}>{tag.name}</Tag>
+          ))}
+        </div>
+      </div>
+      <div className="button-wrap">
+        {/* <Button style={{ marginRight: 8 }}>More info</Button>
+            <Button type="primary">Get tickets</Button> */}
+        <Button type="primary" href={item.url} target="_blank">
+          More info
+        </Button>
+      </div>
+
+      <style jsx>{`
         .list-item-inner {
-          padding: 0 0.75em;
+          position: relative;
+          background: white;
+          padding: 1em;
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          grid-gap: 1.25em;
         }
 
         .bottom-line {
@@ -61,14 +62,13 @@ const ListItem = ({ item }) => {
         .button-wrap {
           text-align: right;
           margin-top: 0.5em;
+          align-self: center;
         }
 
         .thumbnail {
           width: 100px;
           height: 100px;
           object-fit: cover;
-          float: left;
-          margin-right: 0.5em;
         }
 
         .block:after {
@@ -78,6 +78,7 @@ const ListItem = ({ item }) => {
         }
       `}</style>
     </div>
+    // </AntList.Item>
   );
 };
 

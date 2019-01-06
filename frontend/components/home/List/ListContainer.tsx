@@ -26,6 +26,10 @@ export const LIST_ITEM_FRAGMENT = gql`
       instagram
     }
     publishStatus
+    location {
+      city
+      country
+    }
   }
 `;
 

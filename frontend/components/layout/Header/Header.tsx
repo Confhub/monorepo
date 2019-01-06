@@ -1,8 +1,15 @@
 import { Icon, Layout, Menu } from 'antd';
 import Link from 'next/link';
-import * as React from 'react';
+import React from 'react';
 
-const Header = ({ isAuth, userData, signOut }) => (
+// interface Props {
+//   isAuth: boolean;
+//   userData: Object;
+//   signOut: () => void;
+// }
+
+// const Header = ({ isAuth, userData, signOut }: Props) => (
+const Header = () => (
   <Layout.Header style={{ width: '100%', background: '#ffffff' }}>
     <Link href="/">
       <div className="logo" />
@@ -10,6 +17,17 @@ const Header = ({ isAuth, userData, signOut }) => (
 
     <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px' }}>
       <Menu.Item key="newConference">
+        <a
+          href="https://goo.gl/forms/ND7hyjgEPBgZrewn2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon type="form" theme="outlined" />
+          Add new conference
+        </a>
+      </Menu.Item>
+
+      {/* <Menu.Item key="newConference">
         <Link href="/new-conference" prefetch={true}>
           <a>
             <Icon type="form" theme="outlined" />
@@ -18,7 +36,7 @@ const Header = ({ isAuth, userData, signOut }) => (
         </Link>
       </Menu.Item>
 
-      {!isAuth && (
+     {!isAuth && (
         <Menu.Item key="signin">
           <Link href="/signin" prefetch={true}>
             <a>
@@ -82,10 +100,10 @@ const Header = ({ isAuth, userData, signOut }) => (
             {userData.role}
           </div>
         </Menu.Item>
-      )}
+      )} */}
     </Menu>
 
-    <style jsx={true} global={true}>{`
+    <style jsx global>{`
       .logo {
         width: 120px;
         height: 31px;

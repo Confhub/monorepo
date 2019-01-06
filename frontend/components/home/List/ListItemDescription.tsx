@@ -17,7 +17,7 @@ const ListItemDescription = ({ item }) => {
         <Icon type="calendar" /> {parseDateRange(startDate, endDate)}
       </span>
       <Divider type="vertical" />
-      <span>{/*<Icon type="shopping-cart" /> {price.amount}€*/}</span>
+      {/* <div><Icon type="shopping-cart" /> {price.amount}€</div> */}
     </>
   );
 };

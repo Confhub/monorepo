@@ -1,13 +1,21 @@
 import { Layout } from 'antd';
 import { withRouter } from 'next/router';
-import * as React from 'react';
+import React from 'react';
 
-import Footer from './Footer/Footer';
+// import Footer from './Footer/Footer';
 import Header from './Header/Header';
 
-class LayoutComponent extends React.Component {
+interface Props {
+  router: {
+    pathname: string;
+  };
+  children: React.ReactNode;
+}
+
+class LayoutComponent extends React.Component<Props> {
   public render() {
-    const { isAuth, userData, signOut, router, children } = this.props;
+    // const { isAuth, userData, signOut, router, children } = this.props;
+    const { router, children } = this.props;
     const isHomePage = router.pathname === '/';
 
     return (
@@ -15,9 +23,9 @@ class LayoutComponent extends React.Component {
         <Layout className={`layout ${isHomePage ? 'home' : ''}`}>
           <Header
             className="header"
-            isAuth={isAuth}
-            userData={userData}
-            signOut={signOut}
+            // isAuth={isAuth}
+            // userData={userData}
+            // signOut={signOut}
           />
 
           {isHomePage ? (
