@@ -21,6 +21,7 @@ class UploadFile extends React.Component {
               getValueFromEvent: this.normFile,
             })(
               <Upload
+                accept="image/*"
                 name="logo"
                 customRequest={customRequest}
                 listType="picture-card"
@@ -28,7 +29,7 @@ class UploadFile extends React.Component {
                 <Button>
                   <Icon type="upload" /> Click to upload
                 </Button>
-              </Upload>,
+              </Upload>
             )}
           </Form.Item>
         </Col>
