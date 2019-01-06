@@ -1,4 +1,4 @@
-import { Button, List as AntList, Tag, Card } from 'antd';
+import { Button, Tag } from 'antd';
 import * as React from 'react';
 
 import { THUMBNAILS_OPTIONS } from '../../constants';
@@ -7,11 +7,6 @@ import ListItemDescription from './ListItemDescription';
 
 const ListItem = ({ item }) => {
   return (
-    // <AntList.Item
-    // key={item.id}
-    // onMouseEnter={() => onEnter(item.id)}
-    // onMouseLeave={() => onLeave(item.id)}
-    // >
     <div className="list-item-inner">
       <img
         className="thumbnail"
@@ -78,7 +73,6 @@ const ListItem = ({ item }) => {
         }
       `}</style>
     </div>
-    // </AntList.Item>
   );
 };
 

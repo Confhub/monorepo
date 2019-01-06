@@ -43,11 +43,12 @@ class HomePageContainer extends React.Component {
         query={GET_CONFERENCE_LIST}
         variables={{
           tags: tags.map(tag => tag.slug || tag),
-          ...(mapViewportActive
-            ? {
-                location: { neLatitude, neLongitude, swLatitude, swLongitude },
-              }
-            : { continent: 'Europe' }),
+          // TODO: UNCOMENT after implementing Map
+          // ...(mapViewportActive
+          //   ? {
+          //       location: { neLatitude, neLongitude, swLatitude, swLongitude },
+          //     }
+          //   : { continent: 'Europe' }),
         }}
       >
         {({ loading, error, data }) => {

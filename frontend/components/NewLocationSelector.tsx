@@ -7,14 +7,26 @@ import { getPlaceAutocomplete, getPlaceDetails } from './helpers';
 const Option = Select.Option;
 
 class LocationSelector extends React.Component {
-  public state = {
-    location: this.props.initialValue || '',
-    locationList: null,
-  };
+  constructor(props) {
+    super(props);
 
-  public getLocationListThrottled = throttle(this.getLocationList, 600, {
-    leading: false,
-  });
+    this.state = {
+      location: this.props.initialValue || '',
+      locationList: null,
+    };
+
+    this.getLocationListThrottled = throttle(this.getLocationList, 600, {
+      leading: false,
+    });
+  }
+  // public state = {
+  //   location: this.props.initialValue || '',
+  //   locationList: null,
+  // };
+
+  // public getLocationListThrottled = throttle(this.getLocationList, 600, {
+  //   leading: false,
+  // });
 
   public handleLocationChange = async location => {
     this.setState({

@@ -2,6 +2,7 @@ import { Checkbox, Col, Radio, Row } from 'antd';
 import * as React from 'react';
 import TagSelector from '../../TagSelector';
 import { HomePageContext } from '../HomePageContext';
+import RadioGroup from './RadioGroup';
 
 const categoryOptions = [
   {
@@ -97,11 +98,20 @@ const renderRadio = (item, colSpan) => (
 );
 
 class Search extends React.Component {
+  state = {
+    time: null,
+  };
+
   public setLocation = ({ center }) => {
     this.props.setLocation(center);
   };
 
+  onChange = (name, value) => {
+    this.setState({ [name]: value });
+  };
+
   public render() {
+    const { time } = this.state;
     const {
       getLocation,
       setLocation,
@@ -129,7 +139,7 @@ class Search extends React.Component {
             onChange={updateTags}
           />
         </div>
-        <h4>Price</h4>
+        {/* <h4>Price</h4>
         <div className="group-wrapper">
           <Radio.Group style={{ width: '100%' }} onChange={() => null}>
             <Row>{priceOptions.map(item => renderRadio(item, 8))}</Row>
@@ -139,32 +149,31 @@ class Search extends React.Component {
               <Checkbox onChange={() => null}>🐦 Has Early Bird price</Checkbox>
             </Col>
           </Row>
-        </div>
-        <h4>Time</h4>
-        <div className="group-wrapper">
-          <Radio.Group style={{ width: '100%' }} onChange={() => null}>
-            <Row>{timeOptions.map(item => renderRadio(item, 8))}</Row>
-          </Radio.Group>
-        </div>
+        </div> */}
+        <RadioGroup
+          items={timeOptions}
+          value={time}
+          onChange={val => this.onChange('time', val)}
+        />
         <h4>Region</h4>
-        <div>
+        {/* <div>
           <Radio.Group style={{ width: '100%' }} onChange={() => null}>
             <Row>{locationOptions.map(item => renderRadio(item, 8))}</Row>
           </Radio.Group>
         </div>
-        or
+        or */}
         <div className="group-wrapper">
           <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
             <Row>{continentOptions.map(item => renderCheckbox(item, 8))}</Row>
           </Checkbox.Group>
         </div>
-        <h4>Language</h4>
+        {/* <h4>Language</h4>
         <div className="group-wrapper">
           <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
             <Row>{languagesOptions.map(item => renderCheckbox(item, 6))}</Row>
           </Checkbox.Group>
-        </div>
-        <p>Call for papers</p>
+        </div> */}
+        {/* <p>Call for papers</p> */}
         <style jsx={true}>{`
           .root {
             padding: 1.5em 0.75em;

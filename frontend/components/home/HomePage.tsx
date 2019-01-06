@@ -25,6 +25,8 @@ const HomePage = ({ data }) => (
       .map {
         grid-area: map;
         overflow: auto;
+        grid-area: map;
+        overflow: auto;
       }
 
       .sidebar {

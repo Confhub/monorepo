@@ -1,8 +1,14 @@
 import Router from 'next/router';
 import * as React from 'react';
-import WebMercatorViewport from 'viewport-mercator-project';
+// import WebMercatorViewport from 'viewport-mercator-project';
 
 export const HomePageContext = React.createContext();
+
+export interface Tag {
+  id: string;
+  name: string;
+  slug: string;
+}
 
 export default class HomePageProvider extends React.Component {
   constructor(props) {
@@ -36,7 +42,8 @@ export default class HomePageProvider extends React.Component {
       <HomePageContext.Provider
         value={{
           state: this.state,
-          updateTags: tags => {
+          updateTags: (tags: Tag[]) => {
+            console.log(tags);
             this.setState({ tags }, () => {
               const { location } = Router.query;
               const href = {
