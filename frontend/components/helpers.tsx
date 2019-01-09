@@ -1,18 +1,18 @@
-import queryString from "query-string";
+import queryString from 'query-string';
 
 const mS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "June",
-  "July",
-  "Aug",
-  "Sept",
-  "Oct",
-  "Nov",
-  "Dec"
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'June',
+  'July',
+  'Aug',
+  'Sept',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 // return date in format May 2-4, 2018
@@ -33,16 +33,16 @@ export const searchCity = async (query, { search } = {}) => {
   const params = {
     access_token: process.env.MAPBOX_SECRET,
     autocomplete: true,
-    language: "en"
+    language: 'en',
   };
 
   if (!search) {
-    params.type = "place";
+    params.type = 'place';
   }
 
   const res = await fetch(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?` +
-      queryString.stringify(params)
+      queryString.stringify(params),
   );
 
   const { features } = await res.json();
@@ -62,25 +62,25 @@ export const getLocation = () =>
     };
 
     const options = {
-      maximumAge: 5 * 60 * 1000
+      maximumAge: 5 * 60 * 1000,
     };
 
     navigator.geolocation.getCurrentPosition(success, error, options);
   });
 
-const cloudName = "alizhdanov";
-const unsignedUploadPreset = "is2hk7eh";
+const cloudName = 'alizhdanov';
+const unsignedUploadPreset = 'is2hk7eh';
 
 export const handleImageLoading = async file => {
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
   const fd = new FormData();
-  fd.append("upload_preset", unsignedUploadPreset);
-  fd.append("file", file);
+  fd.append('upload_preset', unsignedUploadPreset);
+  fd.append('file', file);
 
   try {
     const response = await fetch(url, {
-      method: "POST",
-      body: fd
+      method: 'POST',
+      body: fd,
     });
 
     return await response.json();
@@ -92,13 +92,13 @@ export const handleImageLoading = async file => {
 export const customRequest = async ({ file, headers, onError, onSuccess }) => {
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
   const formData = new FormData();
-  formData.append("upload_preset", unsignedUploadPreset);
-  formData.append("file", file);
+  formData.append('upload_preset', unsignedUploadPreset);
+  formData.append('file', file);
   try {
     const response = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers,
-      body: formData
+      body: formData,
     });
 
     const data = await response.json();
@@ -111,11 +111,11 @@ export const customRequest = async ({ file, headers, onError, onSuccess }) => {
 
 export const setImageParams = (url, params) => {
   // if img hosted not in cloudinary, don't modify it
-  if (!url.includes("cloudinary.com")) {
+  if (!url.includes('cloudinary.com')) {
     return url;
   }
   // 7 is length of 'upload/' string
-  const sliceIndex = url.indexOf("upload/") + 7;
+  const sliceIndex = url.indexOf('upload/') + 7;
   const start = url.slice(0, sliceIndex);
   const end = url.slice(sliceIndex);
 
@@ -137,17 +137,17 @@ const sessiontoken = Math.random()
 // https://developers.google.com/places/web-service/details
 export const getPlaceDetails = async placeid => {
   const params = {
-    key: "AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI",
+    key: 'AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI',
     placeid,
-    fields: "geometry,formatted_address,address_components",
-    language: "en",
-    sessiontoken
+    fields: 'geometry,formatted_address,address_components',
+    language: 'en',
+    sessiontoken,
   };
   const url =
-    "https://maps.googleapis.com/maps/api/place/details/json?" +
+    'https://maps.googleapis.com/maps/api/place/details/json?' +
     queryString.stringify(params);
 
-  const res = await fetch(url, { mode: "cors" });
+  const res = await fetch(url, { mode: 'cors' });
 
   const { result } = await res.json();
 
@@ -159,13 +159,13 @@ export const getPlaceDetails = async placeid => {
 // https://developers.google.com/places/web-service/autocomplete
 export const getPlaceAutocomplete = async query => {
   const params = {
-    key: "AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI",
+    key: 'AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI',
     input: query,
-    language: "en",
-    sessiontoken
+    language: 'en',
+    sessiontoken,
   };
   const url =
-    "https://maps.googleapis.com/maps/api/place/autocomplete/json?" +
+    'https://maps.googleapis.com/maps/api/place/autocomplete/json?' +
     queryString.stringify(params);
 
   try {

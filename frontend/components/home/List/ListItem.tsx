@@ -1,79 +1,90 @@
-import { Button, Tag } from 'antd';
-import * as React from 'react';
+import { Button, Divider, Icon, Tag } from 'antd';
+import React from 'react';
+import styled from 'styled-components';
 
 import { THUMBNAILS_OPTIONS } from '../../constants';
-import { setImageParams } from '../../helpers';
-import ListItemDescription from './ListItemDescription';
+import { parseDateRange, setImageParams } from '../../helpers';
+import { Conference } from './ListContainer';
 
-const ListItem = ({ item }) => {
-  return (
-    <div className="list-item-inner">
-      <img
-        className="thumbnail"
-        alt={item.image ? item.image.alt : 'conf logo'}
-        src={
-          item.image
-            ? setImageParams(item.image.src, THUMBNAILS_OPTIONS)
-            : 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
-        }
-      />
-      <div>
+interface Props {
+  item: Conference;
+}
+
+const Wrapper = styled.div`
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: auto 1fr auto;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 15px 20px;
+`;
+
+const Image = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+const Content = styled.div``;
+
+const Title = styled.h3`
+  font-size: 1.3em;
+  font-weight: 700;
+`;
+
+const Description = styled.div`
+  font-weight: 500;
+`;
+
+const ListItem = ({ item }: Props) => (
+  <Wrapper>
+    <Image
+      alt={item.image ? item.image.alt : 'Conference image'}
+      src={
+        item.image
+          ? setImageParams(item.image.src, THUMBNAILS_OPTIONS)
+          : 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
+      }
+    />
+
+    <Content>
+      <Title>
+        <a href={item.url} target="_blank" rel="noopener noreferrer">
+          {item.name}
+        </a>
+
         <div>
-          <a href={item.url} target="_blank" rel="noopener noreferrer">
-            {item.name}
-          </a>
+          <span>
+            <Icon type="environment-o" /> {item.location.city},{' '}
+            {item.location.country}
+          </span>
+          <Divider type="vertical" />
+          <span>
+            <Icon type="calendar" />{' '}
+            {parseDateRange(item.startDate, item.endDate)}
+          </span>
+          <Divider type="vertical" />
+          {/* <div><Icon type="shopping-cart" /> {price.amount}€</div> */}
         </div>
-        <ListItemDescription item={item} />
 
-        <div className="block">{item.description}</div>
-        <div className="bottom-line">
+        <div>
           {item.tags.map(tag => (
             <Tag key={tag.id}>{tag.name}</Tag>
           ))}
         </div>
-      </div>
-      <div className="button-wrap">
-        {/* <Button style={{ marginRight: 8 }}>More info</Button>
-            <Button type="primary">Get tickets</Button> */}
-        <Button type="primary" href={item.url} target="_blank">
-          More info
-        </Button>
-      </div>
+      </Title>
 
-      <style jsx>{`
-        .list-item-inner {
-          position: relative;
-          background: white;
-          padding: 1em;
-          display: grid;
-          grid-template-columns: auto 1fr auto;
-          grid-gap: 1.25em;
-        }
+      <Description>{item.description}</Description>
+    </Content>
 
-        .bottom-line {
-          margin-top: 0.75em;
-        }
-
-        .button-wrap {
-          text-align: right;
-          margin-top: 0.5em;
-          align-self: center;
-        }
-
-        .thumbnail {
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-        }
-
-        .block:after {
-          content: '';
-          clear: both;
-          display: table;
-        }
-      `}</style>
-    </div>
-  );
-};
+    <Button
+      type="primary"
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      More info
+    </Button>
+  </Wrapper>
+);
 
 export default ListItem;

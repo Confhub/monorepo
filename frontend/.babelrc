@@ -11,6 +11,7 @@
     "@zeit/next-typescript/babel"
   ],
   "plugins": [
+    ["styled-components", { "ssr": true }],
     [
       "import",
       {

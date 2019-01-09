@@ -1,7 +1,25 @@
-import Document, { Head, Main, NextScript } from 'next/document';
-import * as React from 'react';
+import Document, { Head, Main, NextScript } from "next/document";
+import React from "react";
+import { ServerStyleSheet } from "styled-components";
 
 class MyDocument extends Document {
+  public static async getInitialProps(ctx) {
+    const sheet = new ServerStyleSheet();
+
+    const originalRenderPage = ctx.renderPage;
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
+      });
+
+    const initialProps = await Document.getInitialProps(ctx);
+    return {
+      ...initialProps,
+      // @ts-ignore
+      styles: [...initialProps.styles, ...sheet.getStyleElement()]
+    };
+  }
+
   public render() {
     return (
       <html lang="en">
@@ -19,7 +37,7 @@ class MyDocument extends Document {
           <NextScript />
         </body>
 
-        <style jsx={true} global={true}>{`
+        {/* <style jsx global>{`
           #nprogress {
             pointer-events: none;
           }
@@ -44,7 +62,7 @@ class MyDocument extends Document {
             opacity: 1;
             transform: rotate(3deg) translate(0px, -4px);
           }
-        `}</style>
+        `}</style> */}
       </html>
     );
   }

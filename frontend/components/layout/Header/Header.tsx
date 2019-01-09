@@ -1,6 +1,7 @@
-import { Icon, Layout, Menu } from 'antd';
-import Link from 'next/link';
-import React from 'react';
+import { Icon, Layout, Menu } from "antd";
+import Link from "next/link";
+import React from "react";
+import styled from "styled-components";
 
 // interface Props {
 //   isAuth: boolean;
@@ -8,14 +9,23 @@ import React from 'react';
 //   signOut: () => void;
 // }
 
+const Logo = styled.div`
+  width: 120px;
+  height: 31px;
+  background: #001529;
+  margin: 16px 24px 16px 0;
+  float: left;
+  cursor: pointer;
+`;
+
 // const Header = ({ isAuth, userData, signOut }: Props) => (
 const Header = () => (
-  <Layout.Header style={{ width: '100%', background: '#ffffff' }}>
+  <Layout.Header style={{ width: "100%", background: "#ffffff" }}>
     <Link href="/">
-      <div className="logo" />
+      <Logo />
     </Link>
 
-    <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px' }}>
+    <Menu theme="light" mode="horizontal" style={{ lineHeight: "64px" }}>
       <Menu.Item key="newConference">
         <a
           href="https://goo.gl/forms/ND7hyjgEPBgZrewn2"
@@ -103,16 +113,7 @@ const Header = () => (
       )} */}
     </Menu>
 
-    <style jsx global>{`
-      .logo {
-        width: 120px;
-        height: 31px;
-        background: #001529;
-        margin: 16px 24px 16px 0;
-        float: left;
-        cursor: pointer;
-      }
-
+    {/* <style jsx global>{`
       .role-badge {
         display: inline-block;
         height: 20px;
@@ -137,7 +138,7 @@ const Header = () => (
           background: #f5222d;
         }
       }
-    `}</style>
+    `}</style> */}
   </Layout.Header>
 );
 

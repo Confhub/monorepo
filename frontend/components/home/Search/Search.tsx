@@ -98,7 +98,7 @@ const renderRadio = (item, colSpan) => (
 );
 
 class Search extends React.Component {
-  state = {
+  public state = {
     time: null,
   };
 
@@ -106,7 +106,7 @@ class Search extends React.Component {
     this.props.setLocation(center);
   };
 
-  onChange = (name, value) => {
+  public onChange = (name, value) => {
     this.setState({ [name]: value });
   };
 

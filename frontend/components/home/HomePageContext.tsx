@@ -43,7 +43,6 @@ export default class HomePageProvider extends React.Component {
         value={{
           state: this.state,
           updateTags: (tags: Tag[]) => {
-            console.log(tags);
             this.setState({ tags }, () => {
               const { location } = Router.query;
               const href = {

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Col, Radio, Row } from 'antd';
+import { Radio, Row } from 'antd';
+import React, { Fragment } from 'react';
 
 const renderRadio = (item, onClick) => (
   <Radio.Button
@@ -20,14 +20,17 @@ const RadioGroup = ({ items, value, onChange }) => {
   };
 
   return (
-    <>
+    <Fragment>
       <h4>Time</h4>
-      <div className="group-wrapper">
-        <Radio.Group style={{ width: '100%' }} value={value}>
-          <Row>{items.map(item => renderRadio(item, onItemChange))}</Row>
-        </Radio.Group>
-      </div>
-    </>
+
+      <Radio.Group style={{ width: '100%' }} value={value}>
+        <Row>
+          {items.map(item => (
+            <Fragment key={item.id}>{renderRadio(item, onItemChange)}</Fragment>
+          ))}
+        </Row>
+      </Radio.Group>
+    </Fragment>
   );
 };
 

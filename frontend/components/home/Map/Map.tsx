@@ -1,12 +1,12 @@
-import debounce from "lodash/debounce";
-import * as React from "react";
-import MapGL, { Marker, NavigationControl, Popup } from "react-map-gl";
+import debounce from 'lodash/debounce';
+import * as React from 'react';
+import MapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 // import WebMercatorViewport from 'viewport-mercator-project';
 
-import MarkerIcon from "./Marker";
+import MarkerIcon from './Marker';
 // import PopupComponent from './Popup';
 
-const MAPBOX_STYLE = "mapbox://styles/mapbox/streets-v9";
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/streets-v9';
 
 const WIDTH_OFFSET = 530;
 const HEIGHT_OFFSET = 64;
@@ -50,14 +50,14 @@ class Map extends React.Component {
 
     return {
       width: innerWidth >= 576 ? innerWidth - WIDTH_OFFSET : innerWidth,
-      height: innerHeight - HEIGHT_OFFSET
+      height: innerHeight - HEIGHT_OFFSET,
     };
   }
 
   public updateViewport = (mapViewport, bounds) => {
     this.props.context.updateMapViewport({
       ...mapViewport,
-      ...bounds
+      ...bounds,
     });
   };
 
@@ -68,7 +68,7 @@ class Map extends React.Component {
       neLatitude: _ne.lat,
       neLongitude: _ne.lng,
       swLatitude: _sw.lat,
-      swLongitude: _sw.lng
+      swLongitude: _sw.lng,
     };
   };
 
@@ -76,7 +76,7 @@ class Map extends React.Component {
     this.props.context.updateMapPosition({
       latitude: mapViewport.latitude,
       longitude: mapViewport.longitude,
-      zoom: mapViewport.zoom
+      zoom: mapViewport.zoom,
     });
 
     this.props.context.state.mapViewportActive &&

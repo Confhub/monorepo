@@ -1,1 +1,4 @@
 **/__generated__/**
+.build
+build
+dist
