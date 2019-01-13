@@ -11,17 +11,17 @@ import {
   DateTime,
   Image,
   Location,
-  Price,
+  // Price,
   PUBLISH_STATUS,
-  Social,
+  // Social,
   Tag,
 } from '../../../generated/prisma';
 import GraphQLTag from '../../tags/outputs/Tag';
 import GraphQLImage from './Image';
 import GraphQLLocation from './Location';
-import GraphQLPrice from './Price';
+// import GraphQLPrice from './Price';
 import GraphQLPublishStatus from './PublishStatus';
-import GraphQLSocial from './Social';
+// import GraphQLSocial from './Social';
 
 export default new GraphQLObjectType({
   name: 'Conference',
@@ -62,17 +62,17 @@ export default new GraphQLObjectType({
       type: GraphQLLocation,
       resolve: ({ location }: Conference): Location => location,
     },
-    social: {
-      type: GraphQLSocial,
-      resolve: ({ social }: Conference): Social => social,
-    },
     publishStatus: {
       type: GraphQLPublishStatus,
       resolve: ({ publishStatus }: Conference): PUBLISH_STATUS => publishStatus,
     },
-    prices: {
-      type: new GraphQLList(GraphQLPrice),
-      resolve: ({ prices }: Conference): Price[] => prices,
-    },
+    // prices: {
+    //   type: new GraphQLList(GraphQLPrice),
+    //   resolve: ({ prices }: Conference): Price[] => prices,
+    // },
+    // social: {
+    //   type: GraphQLSocial,
+    //   resolve: ({ social }: Conference): Social => social,
+    // },
   },
 });

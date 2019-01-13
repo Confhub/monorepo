@@ -7,7 +7,7 @@ import GraphQLConference from '../outputs/Conference';
 import {
   generateImage,
   generateLocation,
-  generateSocial,
+  // generateSocial,
   generateTagsCreate,
 } from './helpers';
 
@@ -34,8 +34,8 @@ export default {
         startDate,
         endDate,
         location,
-        social,
-        prices,
+        // social,
+        // prices,
       },
     }: ArgsType,
     ctx: Context,
@@ -52,8 +52,8 @@ export default {
           startDate,
           endDate,
           location: generateLocation(location),
-          social: social ? generateSocial(social) : null,
-          prices: { create: prices },
+          // social: social ? generateSocial(social) : null,
+          // prices: { create: prices },
         },
       },
       info,

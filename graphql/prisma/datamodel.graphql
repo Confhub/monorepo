@@ -1,3 +1,29 @@
+enum USER_ROLE {
+  ATTENDEE
+  SPEAKER
+  MODERATOR
+}
+
+enum PUBLISH_STATUS {
+  DRAFT
+  PUBLISHED
+}
+
+enum REGION {
+  NORTH_AMERICA
+  LATIN_AMERICA
+  EUROPE
+  AFRICA
+  MIDDLE_EAST
+  ASIA
+  OCEANIA
+}
+
+# enum CURRENCY {
+#   USD
+#   EUR
+# }
+
 type User {
   id: ID! @unique
   email: String! @unique
@@ -5,12 +31,6 @@ type User {
   createdAt: DateTime!
   password: String!
   role: USER_ROLE! @default(value: ATTENDEE)
-}
-
-enum USER_ROLE {
-  ATTENDEE
-  SPEAKER
-  MODERATOR
 }
 
 type Conference {
@@ -23,9 +43,9 @@ type Conference {
   startDate: DateTime!
   endDate: DateTime!
   location: Location!
-  social: Social @relation(name: "ConferenceToSocial", onDelete: CASCADE)
   publishStatus: PUBLISH_STATUS @default(value: DRAFT)
-  prices: [Price!]!
+  # social: Social @relation(name: "ConferenceToSocial", onDelete: CASCADE)
+  # prices: [Price!]!
 }
 
 type Tag {
@@ -43,7 +63,7 @@ type Image {
 type Location {
   id: ID! @unique
   venueName: String
-  continent: String!
+  region: REGION!
   country: String!
   city: String!
   address: String!
@@ -56,27 +76,17 @@ type Coordinates {
   longitude: Float!
 }
 
-type Social {
-  id: ID! @unique
-  facebook: String
-  twitter: String
-  instagram: String
-}
+# type Social {
+#   id: ID! @unique
+#   facebook: String
+#   twitter: String
+#   instagram: String
+# }
 
-type Price {
-  id: ID! @unique
-  name: String
-  amount: Float!
-  currency: CURRENCY @default(value: USD)
-  expirationDate: DateTime
-}
-
-enum CURRENCY {
-  USD
-  EUR
-}
-
-enum PUBLISH_STATUS {
-  DRAFT
-  PUBLISHED
-}
+# type Price {
+#   id: ID! @unique
+#   name: String
+#   amount: Float!
+#   currency: CURRENCY @default(value: USD)
+#   expirationDate: DateTime
+# }
