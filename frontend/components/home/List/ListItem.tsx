@@ -22,6 +22,8 @@ const Wrapper = styled.div`
 const Image = styled.img`
   width: 100px;
   height: 100px;
+  object-fit: cover;
+  object-position: center;
 `;
 
 const Content = styled.div``;
@@ -31,8 +33,16 @@ const Title = styled.h3`
   font-weight: 700;
 `;
 
+const Info = styled.div`
+  margin-bottom: 0.5em;
+`;
+
 const Description = styled.div`
   font-weight: 500;
+`;
+
+const StyledButton = styled(Button)`
+  align-self: center;
 `;
 
 const ListItem = ({ item }: Props) => (
@@ -51,39 +61,39 @@ const ListItem = ({ item }: Props) => (
         <a href={item.url} target="_blank" rel="noopener noreferrer">
           {item.name}
         </a>
-
-        <div>
-          <span>
-            <Icon type="environment-o" /> {item.location.city},{' '}
-            {item.location.country}
-          </span>
-          <Divider type="vertical" />
-          <span>
-            <Icon type="calendar" />{' '}
-            {parseDateRange(item.startDate, item.endDate)}
-          </span>
-          <Divider type="vertical" />
-          {/* <div><Icon type="shopping-cart" /> {price.amount}€</div> */}
-        </div>
-
-        <div>
-          {item.tags.map(tag => (
-            <Tag key={tag.id}>{tag.name}</Tag>
-          ))}
-        </div>
       </Title>
+
+      <Info>
+        <span>
+          <Icon type="environment-o" /> {item.location.city},{' '}
+          {item.location.country}
+        </span>
+        <Divider type="vertical" />
+        <span>
+          <Icon type="calendar" />{' '}
+          {parseDateRange(item.startDate, item.endDate)}
+        </span>
+        <Divider type="vertical" />
+        {/* <div><Icon type="shopping-cart" /> {price.amount}€</div> */}
+      </Info>
+
+      <div>
+        {item.tags.map(tag => (
+          <Tag key={tag.id}>{tag.name}</Tag>
+        ))}
+      </div>
 
       <Description>{item.description}</Description>
     </Content>
 
-    <Button
+    <StyledButton
       type="primary"
       href={item.url}
       target="_blank"
       rel="noopener noreferrer"
     >
       More info
-    </Button>
+    </StyledButton>
   </Wrapper>
 );
 

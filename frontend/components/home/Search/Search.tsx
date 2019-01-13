@@ -1,9 +1,9 @@
 import { Checkbox, Col, Radio, Row } from 'antd';
 import * as React from 'react';
+import styled from 'styled-components';
 import TagSelector from '../../TagSelector';
 import { HomePageContext } from '../HomePageContext';
 import RadioGroup from './RadioGroup';
-import { stat } from 'fs';
 
 const categoryOptions = [
   {
@@ -11,28 +11,24 @@ const categoryOptions = [
     label: '💻 Tech',
     value: 'tech',
     disabled: false,
-    defaultChecked: true,
   },
   {
     id: 1,
     label: '💊 Medicine',
     value: 'medicine',
     disabled: true,
-    defaultChecked: false,
   },
   {
     id: 2,
     label: '👔 Business',
     value: 'business',
     disabled: true,
-    defaultChecked: false,
   },
   {
     id: 3,
     label: '👩‍💼 Law',
     value: 'law',
     disabled: true,
-    defaultChecked: false,
   },
 ];
 
@@ -76,27 +72,20 @@ const languagesOptions = [
 
 const renderCheckbox = (item, colSpan) => (
   <Col span={colSpan} key={item.id}>
-    <Checkbox
-      value={item.value}
-      disabled={item.disabled}
-      defaultChecked={item.defaultChecked}
-    >
+    <Checkbox value={item.value} disabled={item.disabled}>
       {item.label}
     </Checkbox>
   </Col>
 );
 
-// const renderRadio = (item, colSpan) => (
-//   <Col span={colSpan} key={item.id}>
-//     <Radio
-//       value={item.value}
-//       disabled={item.disabled}
-//       defaultChecked={item.defaultChecked}
-//     >
-//       {item.label}
-//     </Radio>
-//   </Col>
-// );
+const GroupWrapper = styled.div`
+  margin-bottom: 1.25em;
+`;
+
+const Root = styled.div`
+  padding: 1.5em 0.75em;
+  border-bottom: 1px solid #e8e8e8;
+`;
 
 class Search extends React.Component {
   public state = {
@@ -123,24 +112,29 @@ class Search extends React.Component {
     } = this.props.context;
 
     return (
-      <div className="root">
+      <Root>
         {/* <div className="group-wrapper">
           <CheckboxDiv options={categoryOptions} />
         </div> */}
-        <h4>Categories</h4>
-        <div className="group-wrapper">
-          <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
+        <GroupWrapper>
+          <h4>Categories</h4>
+          <Checkbox.Group
+            style={{ width: '100%' }}
+            onChange={() => null}
+            value={['tech']}
+          >
             <Row>{categoryOptions.map(item => renderCheckbox(item, 6))}</Row>
           </Checkbox.Group>
-        </div>
-        <h4>Topics</h4>
-        <div className="group-wrapper">
+        </GroupWrapper>
+
+        <GroupWrapper>
+          <h4>Topics</h4>
           <TagSelector
             optionKey="slug"
             value={state.tags}
             onChange={updateTags}
           />
-        </div>
+        </GroupWrapper>
         {/* <h4>Price</h4>
         <div className="group-wrapper">
           <Radio.Group style={{ width: '100%' }} onChange={() => null}>
@@ -152,19 +146,23 @@ class Search extends React.Component {
             </Col>
           </Row>
         </div> */}
-        <RadioGroup
-          items={timeOptions}
-          value={state.time}
-          onChange={updateTime}
-        />
-        <h4>Region</h4>
+        <GroupWrapper>
+          <RadioGroup
+            title="Time"
+            items={timeOptions}
+            value={state.time}
+            onChange={updateTime}
+          />
+        </GroupWrapper>
+
         {/* <div>
           <Radio.Group style={{ width: '100%' }} onChange={() => null}>
             <Row>{locationOptions.map(item => renderRadio(item, 8))}</Row>
           </Radio.Group>
         </div>
         or */}
-        <div className="group-wrapper">
+        <GroupWrapper>
+          <h4>Region</h4>
           <Checkbox.Group
             value={state.region}
             style={{ width: '100%' }}
@@ -172,7 +170,8 @@ class Search extends React.Component {
           >
             <Row>{continentOptions.map(item => renderCheckbox(item, 8))}</Row>
           </Checkbox.Group>
-        </div>
+        </GroupWrapper>
+
         {/* <h4>Language</h4>
         <div className="group-wrapper">
           <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
@@ -180,29 +179,7 @@ class Search extends React.Component {
           </Checkbox.Group>
         </div> */}
         {/* <p>Call for papers</p> */}
-        <style jsx={true}>{`
-          .root {
-            padding: 1.5em 0.75em;
-            border-bottom: 1px solid #e8e8e8;
-          }
-
-          label {
-            display: block;
-          }
-
-          label:not(:last-child) {
-            margin-bottom: 0.75em;
-          }
-
-          .group-wrapper {
-            margin-bottom: 20px;
-
-            &.first {
-              margin-top: 20px;
-            }
-          }
-        `}</style>
-      </div>
+      </Root>
     );
   }
 }
