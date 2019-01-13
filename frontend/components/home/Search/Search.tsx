@@ -38,20 +38,20 @@ const priceOptions = [
   { id: 2, label: '💵 < $1000', value: 'less-than-1000' },
 ];
 
-const timeOptions = [
+const intervalOptions = [
   { id: 0, label: '⏰ < 1 month', value: '1' },
   { id: 1, label: '⏰ < 3 months', value: '3' },
   { id: 2, label: '⏰ < 6 month', value: '6' },
   { id: 3, label: '⏰ < 1 year', value: '12' },
 ];
 
-const locationOptions = [
-  { id: 0, label: '🚴‍ Current city', value: 'europe' },
-  { id: 1, label: '🚗 < 500 Km', value: 'north-america' },
-  { id: 2, label: '✈️ < 1000 Km', value: 'latin-america' },
-];
+// const locationOptions = [
+//   { id: 0, label: '🚴‍ Current city', value: 'europe' },
+//   { id: 1, label: '🚗 < 500 Km', value: 'north-america' },
+//   { id: 2, label: '✈️ < 1000 Km', value: 'latin-america' },
+// ];
 
-const continentOptions = [
+const regionOptions = [
   { id: 0, label: '🌎 North America', value: 'north_america' },
   { id: 1, label: '💃🏻 Latin America', value: 'latin_america' },
   { id: 2, label: '🇪🇺 Europe', value: 'europe' },
@@ -88,10 +88,6 @@ const Root = styled.div`
 `;
 
 class Search extends React.Component {
-  public state = {
-    time: null,
-  };
-
   public setLocation = ({ center }) => {
     this.props.setLocation(center);
   };
@@ -102,12 +98,12 @@ class Search extends React.Component {
 
   public render() {
     const {
-      getLocation,
-      setLocation,
-      locationLoading,
+      // getLocation,
+      // setLocation,
+      // locationLoading,
       state,
       updateTags,
-      updateTime,
+      updateInterval,
       updateRegions,
     } = this.props.context;
 
@@ -149,9 +145,9 @@ class Search extends React.Component {
         <GroupWrapper>
           <RadioGroup
             title="Time"
-            items={timeOptions}
-            value={state.time}
-            onChange={updateTime}
+            items={intervalOptions}
+            value={state.interval}
+            onChange={updateInterval}
           />
         </GroupWrapper>
 
@@ -168,7 +164,7 @@ class Search extends React.Component {
             style={{ width: '100%' }}
             onChange={updateRegions}
           >
-            <Row>{continentOptions.map(item => renderCheckbox(item, 8))}</Row>
+            <Row>{regionOptions.map(region => renderCheckbox(region, 8))}</Row>
           </Checkbox.Group>
         </GroupWrapper>
 

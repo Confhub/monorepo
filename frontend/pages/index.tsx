@@ -8,40 +8,41 @@ import HomePageProvider, {
   HomePageContext,
 } from '../components/home/HomePageContext';
 import { LIST_ITEM_FRAGMENT } from '../components/home/List/ListContainer';
-import { MAP_FRAGMENT } from '../components/home/Map/MapContainer';
+// import { MAP_FRAGMENT } from '../components/home/Map/MapContainer';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 export const GET_CONFERENCE_LIST = gql`
   query conferences(
-    $tags: [String]
     # $location: LocationCoordinatesInput
     # $continent: String
-    # $time: String
+    $tags: [String]
+    $interval: Int
     $regions: [Region]
   ) {
     conferences(
       sortBy: {
+        # location: { coordinates: $location, region: $region }
         publishStatus: PUBLISHED
         tags: $tags
-        # location: { coordinates: $location, region: $region }
         regions: $regions
-        # time: $time
+        interval: $interval
       }
     ) {
       ...ListItem
-      ...Map
+      # ...Map
     }
   }
   ${LIST_ITEM_FRAGMENT}
-  ${MAP_FRAGMENT}
 `;
+
+// ${MAP_FRAGMENT}
 
 class HomePageContainer extends React.Component {
   public render() {
     const {
       tags,
-      time,
+      interval,
       regions,
       // mapViewport,
       // mapViewportActive
@@ -53,8 +54,8 @@ class HomePageContainer extends React.Component {
         query={GET_CONFERENCE_LIST}
         variables={{
           tags: tags.map(tag => tag.slug || tag),
-          time,
-          regions: regions.map(i => i.toUpperCase()),
+          interval: +interval,
+          regions: regions.map(region => region.toUpperCase()),
 
           // TODO: UNCOMENT after implementing Map
           // ...(mapViewportActive

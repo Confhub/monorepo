@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs';
 import {
   // GraphQLFloat,
   GraphQLInputObjectType,
@@ -17,6 +18,7 @@ interface ArgsType {
     publishStatus?: PUBLISH_STATUS;
     tags?: string[];
     regions?: REGION[];
+    interval?: number;
     // location?: LocationInput;
   };
   skip?: number;
@@ -83,6 +85,9 @@ const GraphQLConferenceSortByInput = new GraphQLInputObjectType({
     tags: {
       type: new GraphQLList(GraphQLString),
     },
+    interval: {
+      type: GraphQLInt,
+    },
     regions: {
       type: new GraphQLList(GraphQLRegion),
     },
@@ -125,6 +130,7 @@ export default {
         const {
           publishStatus,
           tags,
+          interval,
           regions,
           // location
         } = args.sortBy;
@@ -139,6 +145,11 @@ export default {
           where: {
             ...(publishStatus && { publishStatus }),
             ...(tags && tags.length && { tags_some: { slug_in: tags } }),
+            ...(interval && {
+              startDate_lte: dayjs()
+                .add(interval, 'month')
+                .format(),
+            }),
             ...(regions &&
               regions.length && {
                 location: { region_in: regions },
