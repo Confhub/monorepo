@@ -19,16 +19,28 @@ const GraphQLConferenceCoordinatesInput = new GraphQLInputObjectType({
   },
 });
 
+export type LocationInpiut = {
+  venueName?: string | null;
+  countryCode: string;
+  country: string;
+  city: string;
+  address: string | null;
+  coordinates: Coordinates;
+};
+
 export default new GraphQLInputObjectType({
   name: 'ConferenceLocationInput',
   fields: {
     venueName: {
       type: GraphQLString,
     },
-    region: {
-      type: new GraphQLNonNull(GraphQLRegion),
-    },
+    // region: {
+    //   type: new GraphQLNonNull(GraphQLRegion),
+    // },
     country: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    countryCode: {
       type: new GraphQLNonNull(GraphQLString),
     },
     city: {

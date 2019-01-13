@@ -1,11 +1,11 @@
-import gql from "graphql-tag";
-import idx from "idx";
-import { isEqual } from "lodash";
-import moment from "moment";
-import * as React from "react";
-import { Mutation } from "react-apollo";
+import gql from 'graphql-tag';
+import idx from 'idx';
+import { isEqual } from 'lodash';
+import moment from 'moment';
+import * as React from 'react';
+import { Mutation } from 'react-apollo';
 
-import Form from "./Form";
+import Form from './Form';
 
 const EDIT_CONFERENCE = gql`
   mutation UpdateConference(
@@ -40,8 +40,8 @@ const EDIT_CONFERENCE = gql`
 `;
 
 const isTheSameDate = (left, right) => {
-  const l = left.split("T")[0];
-  const r = right.split("T")[0];
+  const l = left.split('T')[0];
+  const r = right.split('T')[0];
 
   return l === r;
 };
@@ -59,8 +59,8 @@ class EditConference extends React.Component {
       description,
       location,
       tags,
-      image,
-      prices
+      // image,
+      // prices
     } = this.props.data;
     const vars = {};
     if (name !== data.name) {
@@ -87,20 +87,20 @@ class EditConference extends React.Component {
       // console.log(tags, data.tags);
       vars.tags = data.tags;
     }
-    if (image.src !== data.image.src) {
-      vars.image = data.image;
-    }
-    const sanitizedPrice = prices && prices.map(sanitizeData);
-    if (!isEqual(sanitizedPrice, data.prices)) {
-      // console.log(prices, data.prices);
-      vars.prices = data.prices;
-    }
+    // if (image.src !== data.image.src) {
+    //   vars.image = data.image;
+    // }
+    // const sanitizedPrice = prices && prices.map(sanitizeData);
+    // if (!isEqual(sanitizedPrice, data.prices)) {
+    //   // console.log(prices, data.prices);
+    //   vars.prices = data.prices;
+    // }
 
     mutation({
       variables: {
         id: this.props.data.id,
-        ...vars
-      }
+        ...vars,
+      },
     });
   };
 
@@ -112,9 +112,9 @@ class EditConference extends React.Component {
       endDate,
       tags,
       description,
-      image,
+      // image,
       location,
-      prices
+      // prices,
     } = this.props.data;
 
     const data = {
@@ -123,30 +123,30 @@ class EditConference extends React.Component {
       date: [moment(startDate), moment(endDate)],
       tags,
       description,
-      ...(image && {
-        image: [
-          {
-            uid: image.id,
-            name: image.alt || "thumbnail",
-            status: "done",
-            response: {
-              secure_url: image.src
-            },
-            url: image.src
-          }
-        ]
-      }),
+      // ...(image && {
+      //   image: [
+      //     {
+      //       uid: image.id,
+      //       name: image.alt || 'thumbnail',
+      //       status: 'done',
+      //       response: {
+      //         secure_url: image.src,
+      //       },
+      //       url: image.src,
+      //     },
+      //   ],
+      // }),
       location: {
         country: location.country,
         city: location.city,
         address: location.address,
         coordinates: {
           lng: location.coordinates.longitude,
-          lat: location.coordinates.latitude
-        }
+          lat: location.coordinates.latitude,
+        },
       },
-      prices: prices.map(({ currency, __typename, ...i }) => i),
-      currency: idx(prices, _ => _[0].currency)
+      // prices: prices.map(({ currency, __typename, ...i }) => i),
+      // currency: idx(prices, _ => _[0].currency),
     };
     return (
       <Mutation mutation={EDIT_CONFERENCE}>
@@ -156,7 +156,7 @@ class EditConference extends React.Component {
             onSubmit={data => this.onSubmit(updateConference, data)}
             loading={loading}
             error={error}
-            result={idx(result, _ => _.createConference.id)}
+            result={idx(result, _ => _.updateConference.id)}
           />
         )}
       </Mutation>
@@ -178,11 +178,11 @@ EditConference.fragments = {
         name
         slug
       }
-      image {
-        id
-        src
-        alt
-      }
+      # image {
+      #   id
+      #   src
+      #   alt
+      # }
       location {
         id
         country
@@ -193,14 +193,14 @@ EditConference.fragments = {
           longitude
         }
       }
-      prices {
-        name
-        amount
-        currency
-        expirationDate
-      }
+      # prices {
+      #   name
+      #   amount
+      #   currency
+      #   expirationDate
+      # }
     }
-  `
+  `,
 };
 
 export default EditConference;
