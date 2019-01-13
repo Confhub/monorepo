@@ -125,6 +125,7 @@ export default {
         const {
           publishStatus,
           tags,
+          regions,
           // location
         } = args.sortBy;
 
@@ -138,6 +139,10 @@ export default {
           where: {
             ...(publishStatus && { publishStatus }),
             ...(tags && tags.length && { tags_some: { slug_in: tags } }),
+            ...(regions &&
+              regions.length && {
+                location: { region_in: regions },
+              }),
             // ...(location &&
             //   location.coordinates && {
             //     location: {
