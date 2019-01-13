@@ -10,12 +10,13 @@ import { Conference, PUBLISH_STATUS, REGION } from '../../../generated/prisma';
 import { Context } from '../../../utils';
 import GraphQLConference from '../outputs/Conference';
 import GraphQLPublishStatus from '../outputs/PublishStatus';
+import GraphQLRegion from '../outputs/Region';
 
 interface ArgsType {
   sortBy?: {
     publishStatus?: PUBLISH_STATUS;
     tags?: string[];
-    region?: REGION;
+    regions?: REGION[];
     // location?: LocationInput;
   };
   skip?: number;
@@ -82,8 +83,8 @@ const GraphQLConferenceSortByInput = new GraphQLInputObjectType({
     tags: {
       type: new GraphQLList(GraphQLString),
     },
-    region: {
-      type: new GraphQLList(GraphQLString),
+    regions: {
+      type: new GraphQLList(GraphQLRegion),
     },
     // location: {
     //   type: GraphQLConferenceSortByLocationInput,
