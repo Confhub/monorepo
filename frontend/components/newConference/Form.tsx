@@ -1,14 +1,14 @@
-import { Alert, Button, Col, DatePicker, Form, Input, Row } from "antd";
-import { WrappedFormUtils } from "antd/lib/form/Form";
-import { ApolloError } from "apollo-client";
-import idx from "idx";
-import * as React from "react";
-import TagSelector from "../TagSelector";
-import Prices from "./form/Prices";
-import UploadFile from "./form/Upload";
-import { parsePrice } from "./utils";
+import { Alert, Button, Col, DatePicker, Form, Input, Row } from 'antd';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { ApolloError } from 'apollo-client';
+import idx from 'idx';
+import * as React from 'react';
+import TagSelector from '../TagSelector';
+// import Prices from './form/Prices';
+// import UploadFile from './form/Upload';
+// import { parsePrice } from './utils';
 
-import LocationSelector from "../NewLocationSelector";
+import LocationSelector from '../NewLocationSelector';
 
 const formatDate = date => date && date.utc().format();
 
@@ -24,8 +24,8 @@ class FormComponent extends React.Component<Props> {
   public static defaultProps = {
     data: {
       tags: [],
-      location: null
-    }
+      location: null,
+    },
   };
 
   public alerts = React.createRef();
@@ -37,7 +37,7 @@ class FormComponent extends React.Component<Props> {
     locationError: false,
     loading: false,
     error: null,
-    success: false
+    success: false,
   };
 
   public handleTagsChange = tags => {
@@ -69,17 +69,17 @@ class FormComponent extends React.Component<Props> {
           url,
           dateTime,
           description,
-          prices,
-          currency,
-          image
+          // prices,
+          // currency,
+          // image,
         } = values;
         const { tags: rawTags, location } = this.state;
         const startDate = formatDate(dateTime[0]);
         const endDate = formatDate(dateTime[1]);
         const tags = rawTags.map(t => ({
-          id: t.id.startsWith("tmp-") ? null : t.id,
+          id: t.id.startsWith('tmp-') ? null : t.id,
           name: t.name,
-          slug: t.slug || null
+          slug: t.slug || null,
         }));
 
         this.props.onSubmit({
@@ -89,28 +89,29 @@ class FormComponent extends React.Component<Props> {
           endDate,
           location: {
             country: location.country,
+            countryCode: location.countryCode,
             city: location.city,
             address: location.address,
             coordinates: {
               longitude: location.coordinates.lng,
-              latitude: location.coordinates.lat
-            }
+              latitude: location.coordinates.lat,
+            },
           },
           tags,
           description,
-          ...(!!image && {
-            image: {
-              src: image[0].response.secure_url
-            }
-          }),
+          // ...(!!image && {
+          //   image: {
+          //     src: image[0].response.secure_url,
+          //   },
+          // }),
           // @TODO: a bit ugly, move it probably inside parse price
-          prices: parsePrice(
-            prices.map(i => ({
-              ...i,
-              amount: +i.amount,
-              currency: currency.toUpperCase()
-            }))
-          )
+          // prices: parsePrice(
+          //   prices.map(i => ({
+          //     ...i,
+          //     amount: +i.amount,
+          //     currency: currency.toUpperCase(),
+          //   })),
+          // ),
         });
       }
     });
@@ -124,8 +125,8 @@ class FormComponent extends React.Component<Props> {
     if (error !== prevProps.error || result !== prevProps.result) {
       this.alerts.current &&
         this.alerts.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
+          behavior: 'smooth',
+          block: 'start',
         });
 
       if (result) {
@@ -148,11 +149,11 @@ class FormComponent extends React.Component<Props> {
 
   public handleChange = event => {
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -189,35 +190,35 @@ class FormComponent extends React.Component<Props> {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item label="Name">
-                {getFieldDecorator("name", {
+                {getFieldDecorator('name', {
                   initialValue: data.name,
                   rules: [
                     {
                       required: true,
-                      message: "Enter name"
-                    }
-                  ]
+                      message: 'Enter name',
+                    },
+                  ],
                 })(<Input placeholder="GrpahQL Europe" />)}
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item label="Url">
-                {getFieldDecorator("url", {
+                {getFieldDecorator('url', {
                   initialValue: data.url,
                   rules: [
                     {
                       required: true,
-                      message: "Enter url"
-                    }
-                  ]
+                      message: 'Enter url',
+                    },
+                  ],
                 })(<Input type="url" placeholder="GrpahQL Europe" />)}
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
                 label="Location"
-                help={locationError ? "Enter location" : null}
-                validateStatus={locationError ? "error" : null}
+                help={locationError ? 'Enter location' : null}
+                validateStatus={locationError ? 'error' : null}
               >
                 <LocationSelector
                   ref={this.location}
@@ -230,9 +231,9 @@ class FormComponent extends React.Component<Props> {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item label="DateTime">
-                {getFieldDecorator("dateTime", {
+                {getFieldDecorator('dateTime', {
                   initialValue: data.date,
-                  rules: [{ required: true, message: "Enter dateTime" }]
+                  rules: [{ required: true, message: 'Enter dateTime' }],
                 })(<DatePicker.RangePicker />)}
               </Form.Item>
             </Col>
@@ -250,30 +251,30 @@ class FormComponent extends React.Component<Props> {
             </Col>
           </Row>
 
-          <Prices form={form} data={data && data.prices} />
+          {/* <Prices form={form} data={data && data.prices} /> */}
 
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item label="Description">
-                {getFieldDecorator("description", {
+                {getFieldDecorator('description', {
                   initialValue: data.description,
                   rules: [
                     {
                       required: false,
-                      message: "Enter description"
-                    }
-                  ]
+                      message: 'Enter description',
+                    },
+                  ],
                 })(
                   <Input.TextArea
                     rows={4}
                     placeholder="Few words about conference"
-                  />
+                  />,
                 )}
               </Form.Item>
             </Col>
           </Row>
 
-          <UploadFile form={form} data={data} />
+          {/* <UploadFile form={form} data={data} /> */}
 
           <Button type="primary" htmlType="submit" loading={loading}>
             Submit
