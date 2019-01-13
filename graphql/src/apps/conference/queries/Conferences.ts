@@ -1,12 +1,12 @@
 import {
-  GraphQLFloat,
+  // GraphQLFloat,
   GraphQLInputObjectType,
   GraphQLInt,
   GraphQLList,
   GraphQLString,
 } from 'graphql';
 
-import { Conference, PUBLISH_STATUS } from '../../../generated/prisma';
+import { Conference, PUBLISH_STATUS, REGION } from '../../../generated/prisma';
 import { Context } from '../../../utils';
 import GraphQLConference from '../outputs/Conference';
 import GraphQLPublishStatus from '../outputs/PublishStatus';
@@ -15,7 +15,8 @@ interface ArgsType {
   sortBy?: {
     publishStatus?: PUBLISH_STATUS;
     tags?: string[];
-    location?: LocationInput;
+    region?: REGION;
+    // location?: LocationInput;
   };
   skip?: number;
   after?: string;
@@ -24,53 +25,53 @@ interface ArgsType {
   last?: number;
 }
 
-interface LocationInput {
-  coordinates: LocationCoordinatesInput;
-  continent: string;
-}
+// interface LocationInput {
+//   coordinates: LocationCoordinatesInput;
+//   continent: string;
+// }
 
-interface LocationCoordinatesInput {
-  neLatitude: number;
-  neLongitude: number;
-  swLatitude: number;
-  swLongitude: number;
-}
+// interface LocationCoordinatesInput {
+//   neLatitude: number;
+//   neLongitude: number;
+//   swLatitude: number;
+//   swLongitude: number;
+// }
 
-const GraphQLLocationCoordinatesInput = new GraphQLInputObjectType({
-  name: 'LocationCoordinatesInput',
-  fields: {
-    neLatitude: {
-      type: GraphQLFloat,
-      description: 'North-East Latitude (The upper-left corner)',
-    },
-    neLongitude: {
-      type: GraphQLFloat,
-      description: 'North-East Longitude (The upper-right corner)',
-    },
-    swLatitude: {
-      type: GraphQLFloat,
-      description: 'South-West Latitude (The lower-left corner)',
-    },
-    swLongitude: {
-      type: GraphQLFloat,
-      description: 'South-East Longitude (The lower-right corner)',
-    },
-  },
-});
+// const GraphQLLocationCoordinatesInput = new GraphQLInputObjectType({
+//   name: 'LocationCoordinatesInput',
+//   fields: {
+//     neLatitude: {
+//       type: GraphQLFloat,
+//       description: 'North-East Latitude (The upper-left corner)',
+//     },
+//     neLongitude: {
+//       type: GraphQLFloat,
+//       description: 'North-East Longitude (The upper-right corner)',
+//     },
+//     swLatitude: {
+//       type: GraphQLFloat,
+//       description: 'South-West Latitude (The lower-left corner)',
+//     },
+//     swLongitude: {
+//       type: GraphQLFloat,
+//       description: 'South-East Longitude (The lower-right corner)',
+//     },
+//   },
+// });
 
-const GraphQLConferenceSortByLocationInput = new GraphQLInputObjectType({
-  name: 'ConferenceSortByLocationInput',
-  fields: {
-    coordinates: {
-      type: GraphQLLocationCoordinatesInput,
-      description: 'Sort by Coordinates',
-    },
-    continent: {
-      type: GraphQLString,
-      description: 'Sort by Continents',
-    },
-  },
-});
+// const GraphQLConferenceSortByLocationInput = new GraphQLInputObjectType({
+//   name: 'ConferenceSortByLocationInput',
+//   fields: {
+//     coordinates: {
+//       type: GraphQLLocationCoordinatesInput,
+//       description: 'Sort by Coordinates',
+//     },
+//     continent: {
+//       type: GraphQLString,
+//       description: 'Sort by Continents',
+//     },
+//   },
+// });
 
 const GraphQLConferenceSortByInput = new GraphQLInputObjectType({
   name: 'ConferenceSortByInput',
@@ -81,9 +82,12 @@ const GraphQLConferenceSortByInput = new GraphQLInputObjectType({
     tags: {
       type: new GraphQLList(GraphQLString),
     },
-    location: {
-      type: GraphQLConferenceSortByLocationInput,
+    region: {
+      type: new GraphQLList(GraphQLString),
     },
+    // location: {
+    //   type: GraphQLConferenceSortByLocationInput,
+    // },
   },
 });
 
@@ -117,35 +121,39 @@ export default {
   ): Promise<Conference[]> => {
     const makeQuery = () => {
       if (args && args.sortBy) {
-        const { publishStatus, tags, location } = args.sortBy;
+        const {
+          publishStatus,
+          tags,
+          // location
+        } = args.sortBy;
 
-        if (location && location.coordinates && location.continent) {
-          throw new Error(
-            `Using both 'location.coordinates' and 'location.continent' simultaneously is not allowed!`,
-          );
-        }
+        // if (location && location.coordinates && location.continent) {
+        //   throw new Error(
+        //     `Using both 'location.coordinates' and 'location.continent' simultaneously is not allowed!`,
+        //   );
+        // }
 
         return {
           where: {
             ...(publishStatus && { publishStatus }),
             ...(tags && tags.length && { tags_some: { slug_in: tags } }),
-            ...(location &&
-              location.coordinates && {
-                location: {
-                  coordinates: {
-                    latitude_gte: location.coordinates.swLatitude,
-                    latitude_lte: location.coordinates.neLatitude,
-                    longitude_gte: location.coordinates.swLongitude,
-                    longitude_lte: location.coordinates.neLongitude,
-                  },
-                },
-              }),
-            ...(location &&
-              location.continent && {
-                location: {
-                  continent: location.continent,
-                },
-              }),
+            // ...(location &&
+            //   location.coordinates && {
+            //     location: {
+            //       coordinates: {
+            //         latitude_gte: location.coordinates.swLatitude,
+            //         latitude_lte: location.coordinates.neLatitude,
+            //         longitude_gte: location.coordinates.swLongitude,
+            //         longitude_lte: location.coordinates.neLongitude,
+            //       },
+            //     },
+            //   }),
+            // ...(location &&
+            //   location.continent && {
+            //     location: {
+            //       continent: location.continent,
+            //     },
+            //   }),
           },
         };
       }

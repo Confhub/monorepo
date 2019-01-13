@@ -5,6 +5,8 @@ import {
   GraphQLString,
 } from 'graphql';
 
+import GraphQLRegion from '../outputs/Region';
+
 const GraphQLConferenceCoordinatesInput = new GraphQLInputObjectType({
   name: 'ConferenceCoordinatesInput',
   fields: {
@@ -22,6 +24,9 @@ export default new GraphQLInputObjectType({
   fields: {
     venueName: {
       type: GraphQLString,
+    },
+    region: {
+      type: new GraphQLNonNull(GraphQLRegion),
     },
     country: {
       type: new GraphQLNonNull(GraphQLString),

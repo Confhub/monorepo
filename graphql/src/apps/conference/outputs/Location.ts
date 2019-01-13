@@ -4,7 +4,9 @@ import {
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-import { Coordinates, Location } from '../../../generated/prisma';
+
+import { Coordinates, Location, REGION } from '../../../generated/prisma';
+import GraphQLRegion from './Region';
 
 const GraphQLCoordinates = new GraphQLObjectType({
   name: 'Coordinates',
@@ -34,6 +36,10 @@ export default new GraphQLObjectType({
     venueName: {
       type: GraphQLString,
       resolve: ({ venueName }: Location): string => venueName,
+    },
+    region: {
+      type: GraphQLRegion,
+      resolve: ({ region }: Location): REGION => region,
     },
     country: {
       type: GraphQLString,
