@@ -13,11 +13,11 @@ export interface Tag {
 export default class HomePageProvider extends React.Component {
   constructor(props) {
     super(props);
-    const { tags, location, time, regions } = props.router.query;
+    const { tags, location, interval, regions } = props.router.query;
 
     this.state = {
       tags: (tags && tags.split(',')) || [],
-      time: time && null,
+      interval: interval && null,
       regions: (regions && regions.split(',')) || [],
       mapCenterCoordinates: {
         latitude: 46.366870009004,
@@ -39,7 +39,7 @@ export default class HomePageProvider extends React.Component {
     };
   }
 
-  setUrl(query: Object) {
+  public setUrl(query: Object) {
     const href = {
       pathname: '/',
       query,
@@ -69,16 +69,15 @@ export default class HomePageProvider extends React.Component {
               Router.push(href, href, { shallow: true });
             });
           },
-          updateTime: (time: string | null) => {
-            console.log(time);
-            const { time: oldTime, ...query } = Router.query;
+          updateInterval: (interval: string | null) => {
+            const { interval: oldInterval, ...query } = Router.query;
 
-            this.setState({ time });
+            this.setState({ interval });
 
             this.setUrl({
               ...query,
-              ...(time && {
-                time,
+              ...(interval && {
+                interval,
               }),
             });
           },

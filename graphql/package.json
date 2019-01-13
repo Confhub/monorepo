@@ -6,6 +6,7 @@
   "dependencies": {
     "apollo-server": "^2.3.1",
     "bcryptjs": "^2.4.3",
+    "dayjs": "^1.7.8",
     "graphql": "^14.0.2",
     "graphql-iso-date": "^3.6.1",
     "idx": "^2.5.1",
