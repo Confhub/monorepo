@@ -77,12 +77,13 @@ function prepareData() {
           longitude: (cityData && cityData.lng) || '',
         },
       },
+      description: '',
     };
   }));
 
   fs.writeFile(
     path.resolve(ROOT, './sanitizedData.json'),
-    JSON.stringify(data),
+    JSON.stringify(data, null, 2),
     saveFile,
   );
 }
