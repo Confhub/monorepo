@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 
 const renderRadio = (item, onClick) => (
   <Radio.Button
+    style={{ width: '25%', fontSize: '0.85em' }}
     value={item.value}
     disabled={item.disabled}
     defaultChecked={item.defaultChecked}
