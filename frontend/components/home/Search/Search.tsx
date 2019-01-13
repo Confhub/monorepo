@@ -52,11 +52,11 @@ const locationOptions = [
 ];
 
 const continentOptions = [
-  { id: 0, label: '🌎 North America', value: 'north-america' },
-  { id: 1, label: '💃🏻 Latin America', value: 'latin-america' },
+  { id: 0, label: '🌎 North America', value: 'north_america' },
+  { id: 1, label: '💃🏻 Latin America', value: 'latin_america' },
   { id: 2, label: '🇪🇺 Europe', value: 'europe' },
   { id: 3, label: '🌍 Africa', value: 'africa' },
-  { id: 4, label: '🕌 Middle East', value: 'middle-east' },
+  { id: 4, label: '🕌 Middle East', value: 'middle_east' },
   { id: 5, label: '⛩ Asia', value: 'asia' },
   { id: 6, label: '🏄 Oceania', value: 'oceania' },
 ];
@@ -108,7 +108,7 @@ class Search extends React.Component {
       state,
       updateTags,
       updateTime,
-      updateRegion,
+      updateRegions,
     } = this.props.context;
 
     return (
@@ -164,9 +164,9 @@ class Search extends React.Component {
         <GroupWrapper>
           <h4>Region</h4>
           <Checkbox.Group
-            value={state.region}
+            value={state.regions}
             style={{ width: '100%' }}
-            onChange={updateRegion}
+            onChange={updateRegions}
           >
             <Row>{continentOptions.map(item => renderCheckbox(item, 8))}</Row>
           </Checkbox.Group>
