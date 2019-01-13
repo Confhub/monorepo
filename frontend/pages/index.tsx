@@ -17,16 +17,16 @@ export const GET_CONFERENCE_LIST = gql`
     $tags: [String]
     # $location: LocationCoordinatesInput
     # $continent: String
-    $time: String
-    $region: String
+    # $time: String
+    $regions: [Region]
   ) {
     conferences(
       sortBy: {
         publishStatus: PUBLISHED
         tags: $tags
         # location: { coordinates: $location, region: $region }
-        region: $region
-        time: $time
+        regions: $regions
+        # time: $time
       }
     ) {
       ...ListItem
@@ -42,7 +42,7 @@ class HomePageContainer extends React.Component {
     const {
       tags,
       time,
-      region,
+      regions,
       // mapViewport,
       // mapViewportActive
     } = this.props.context.state;
@@ -54,7 +54,7 @@ class HomePageContainer extends React.Component {
         variables={{
           tags: tags.map(tag => tag.slug || tag),
           time,
-          region,
+          regions: regions.map(i => i.toUpperCase()),
 
           // TODO: UNCOMENT after implementing Map
           // ...(mapViewportActive

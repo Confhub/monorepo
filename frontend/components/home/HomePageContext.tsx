@@ -13,12 +13,12 @@ export interface Tag {
 export default class HomePageProvider extends React.Component {
   constructor(props) {
     super(props);
-    const { tags, location, time, region } = props.router.query;
+    const { tags, location, time, regions } = props.router.query;
 
     this.state = {
       tags: (tags && tags.split(',')) || [],
       time: time && null,
-      region: (region && region.split(',')) || [],
+      regions: (regions && regions.split(',')) || [],
       mapCenterCoordinates: {
         latitude: 46.366870009004,
         longitude: 6.662937741235142,
@@ -82,15 +82,15 @@ export default class HomePageProvider extends React.Component {
               }),
             });
           },
-          updateRegion: (region: string[]) => {
-            const { region: oldRegion, ...query } = Router.query;
+          updateRegions: (regions: string[]) => {
+            const { regions: oldRegions, ...query } = Router.query;
 
-            this.setState({ region });
+            this.setState({ regions });
 
             this.setUrl({
               ...query,
-              ...(region.length && {
-                region: region.join(),
+              ...(regions.length && {
+                regions: regions.join(),
               }),
             });
           },

@@ -1,7 +1,7 @@
-import gql from "graphql-tag";
-import * as React from "react";
+import gql from 'graphql-tag';
+import * as React from 'react';
 
-import List from "./List";
+import List from './List';
 
 export interface Conference {
   id: string;
@@ -24,7 +24,7 @@ export interface Conference {
     twitter: string;
     instagram: string;
   };
-  publishStatus: "DRAFT" | "PUBLISHED";
+  publishStatus: 'DRAFT' | 'PUBLISHED';
   location: {
     city: string;
     country: string;
@@ -48,11 +48,11 @@ export const LIST_ITEM_FRAGMENT = gql`
     url
     startDate
     endDate
-    social {
-      facebook
-      twitter
-      instagram
-    }
+    # social {
+    #   facebook
+    #   twitter
+    #   instagram
+    # }
     publishStatus
     location {
       city
