@@ -3,6 +3,7 @@ import * as React from 'react';
 import TagSelector from '../../TagSelector';
 import { HomePageContext } from '../HomePageContext';
 import RadioGroup from './RadioGroup';
+import { stat } from 'fs';
 
 const categoryOptions = [
   {
@@ -42,10 +43,10 @@ const priceOptions = [
 ];
 
 const timeOptions = [
-  { id: 0, label: '⏰ < 1 month', value: 'january' },
-  { id: 1, label: '⏰ < 3 months', value: 'february' },
-  { id: 2, label: '⏰ < 6 month', value: 'march' },
-  { id: 3, label: '⏰ < 1 year', value: 'april' },
+  { id: 0, label: '⏰ < 1 month', value: '1' },
+  { id: 1, label: '⏰ < 3 months', value: '3' },
+  { id: 2, label: '⏰ < 6 month', value: '6' },
+  { id: 3, label: '⏰ < 1 year', value: '12' },
 ];
 
 const locationOptions = [
@@ -85,17 +86,17 @@ const renderCheckbox = (item, colSpan) => (
   </Col>
 );
 
-const renderRadio = (item, colSpan) => (
-  <Col span={colSpan} key={item.id}>
-    <Radio
-      value={item.value}
-      disabled={item.disabled}
-      defaultChecked={item.defaultChecked}
-    >
-      {item.label}
-    </Radio>
-  </Col>
-);
+// const renderRadio = (item, colSpan) => (
+//   <Col span={colSpan} key={item.id}>
+//     <Radio
+//       value={item.value}
+//       disabled={item.disabled}
+//       defaultChecked={item.defaultChecked}
+//     >
+//       {item.label}
+//     </Radio>
+//   </Col>
+// );
 
 class Search extends React.Component {
   public state = {
@@ -111,13 +112,14 @@ class Search extends React.Component {
   };
 
   public render() {
-    const { time } = this.state;
     const {
       getLocation,
       setLocation,
       locationLoading,
       state,
       updateTags,
+      updateTime,
+      updateRegion,
     } = this.props.context;
 
     return (
@@ -152,8 +154,8 @@ class Search extends React.Component {
         </div> */}
         <RadioGroup
           items={timeOptions}
-          value={time}
-          onChange={val => this.onChange('time', val)}
+          value={state.time}
+          onChange={updateTime}
         />
         <h4>Region</h4>
         {/* <div>
@@ -163,7 +165,11 @@ class Search extends React.Component {
         </div>
         or */}
         <div className="group-wrapper">
-          <Checkbox.Group style={{ width: '100%' }} onChange={() => null}>
+          <Checkbox.Group
+            value={state.region}
+            style={{ width: '100%' }}
+            onChange={updateRegion}
+          >
             <Row>{continentOptions.map(item => renderCheckbox(item, 8))}</Row>
           </Checkbox.Group>
         </div>

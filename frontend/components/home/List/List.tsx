@@ -1,11 +1,12 @@
-import React, { Fragment } from "react";
-import styled from "styled-components";
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
 
-import ListItem from "./ListItem";
+import ListItem from './ListItem';
 
 const Wrapper = styled.div`
   display: grid;
   grid-gap: 10px;
+  padding: 0 1em;
 `;
 
 const List = ({ items = [] }) => {

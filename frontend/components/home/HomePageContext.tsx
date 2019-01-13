@@ -2,7 +2,7 @@ import Router from 'next/router';
 import * as React from 'react';
 // import WebMercatorViewport from 'viewport-mercator-project';
 
-export const HomePageContext = React.createContext();
+export const HomePageContext = React.createContext({});
 
 export interface Tag {
   id: string;
@@ -13,10 +13,12 @@ export interface Tag {
 export default class HomePageProvider extends React.Component {
   constructor(props) {
     super(props);
-    const { tags, location } = props.router.query;
+    const { tags, location, time, region } = props.router.query;
 
     this.state = {
       tags: (tags && tags.split(',')) || [],
+      time: time && null,
+      region: (region && region.split(',')) || [],
       mapCenterCoordinates: {
         latitude: 46.366870009004,
         longitude: 6.662937741235142,
@@ -35,6 +37,15 @@ export default class HomePageProvider extends React.Component {
       },
       locationLoading: false,
     };
+  }
+
+  setUrl(query: Object) {
+    const href = {
+      pathname: '/',
+      query,
+    };
+
+    Router.push(href, href);
   }
 
   public render() {
@@ -56,6 +67,31 @@ export default class HomePageProvider extends React.Component {
               };
 
               Router.push(href, href, { shallow: true });
+            });
+          },
+          updateTime: (time: string | null) => {
+            console.log(time);
+            const { time: oldTime, ...query } = Router.query;
+
+            this.setState({ time });
+
+            this.setUrl({
+              ...query,
+              ...(time && {
+                time,
+              }),
+            });
+          },
+          updateRegion: (region: string[]) => {
+            const { region: oldRegion, ...query } = Router.query;
+
+            this.setState({ region });
+
+            this.setUrl({
+              ...query,
+              ...(region.length && {
+                region: region.join(),
+              }),
             });
           },
           updateMapPosition: mapCenterCoordinates => {
