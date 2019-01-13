@@ -13,16 +13,18 @@ import { MAP_FRAGMENT } from '../components/home/Map/MapContainer';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 export const GET_CONFERENCE_LIST = gql`
-  query conferences(
-    $tags: [String]
-    $location: LocationCoordinatesInput
-    $continent: String
-  ) {
+  query conferences($tags: [String]) # $location: LocationCoordinatesInput
+  # $continent: String
+  # $time: String
+  # $region: String
+  {
     conferences(
       sortBy: {
         publishStatus: PUBLISHED
         tags: $tags
-        location: { coordinates: $location, continent: $continent }
+        # location: { coordinates: $location, region: $region }
+        # region: $region
+        # time: $time
       }
     ) {
       ...ListItem
@@ -35,14 +37,23 @@ export const GET_CONFERENCE_LIST = gql`
 
 class HomePageContainer extends React.Component {
   public render() {
-    const { tags, mapViewport, mapViewportActive } = this.props.context.state;
-    const { neLatitude, neLongitude, swLatitude, swLongitude } = mapViewport;
+    const {
+      tags,
+      time,
+      region,
+      // mapViewport,
+      // mapViewportActive
+    } = this.props.context.state;
+    // const { neLatitude, neLongitude, swLatitude, swLongitude } = mapViewport;
 
     return (
       <Query
         query={GET_CONFERENCE_LIST}
         variables={{
           tags: tags.map(tag => tag.slug || tag),
+          time,
+          region,
+
           // TODO: UNCOMENT after implementing Map
           // ...(mapViewportActive
           //   ? {

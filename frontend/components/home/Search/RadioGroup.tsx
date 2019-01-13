@@ -12,7 +12,7 @@ const renderRadio = (item, onClick) => (
   </Radio.Button>
 );
 
-const RadioGroup = ({ items, value, onChange }) => {
+const RadioGroup = ({ items, value, onChange, title }) => {
   const onItemChange = e => {
     const val = e.target.value;
 
@@ -21,7 +21,7 @@ const RadioGroup = ({ items, value, onChange }) => {
 
   return (
     <Fragment>
-      <h4>Time</h4>
+      <h4>{title}</h4>
 
       <Radio.Group style={{ width: '100%' }} value={value}>
         <Row>
