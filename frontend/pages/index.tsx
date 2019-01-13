@@ -15,16 +15,16 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 export const GET_CONFERENCE_LIST = gql`
   query conferences($tags: [String]) # $location: LocationCoordinatesInput
   # $continent: String
-  # $time: String
-  # $region: String
+  $time: String
+  $region: String
   {
     conferences(
       sortBy: {
         publishStatus: PUBLISHED
         tags: $tags
         # location: { coordinates: $location, region: $region }
-        # region: $region
-        # time: $time
+        region: $region
+        time: $time
       }
     ) {
       ...ListItem
