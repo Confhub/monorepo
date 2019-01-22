@@ -2,12 +2,12 @@ import * as React from 'react';
 
 import ListContainer from './List/ListContainer';
 // import MapContainer from './Map/MapContainer';
-import Search from './Search/Search';
+import Filters from './Search/Filters';
 
 const HomePage = ({ data }) => (
   <div className="root">
     <div className="sidebar">
-      <Search />
+      <Filters />
     </div>
     <div id="map-wrap" className="map">
       {/* <MapContainer items={data} /> */}

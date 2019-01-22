@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import * as React from 'react';
+import React from 'react';
 // import WebMercatorViewport from 'viewport-mercator-project';
 
 export const HomePageContext = React.createContext({});
