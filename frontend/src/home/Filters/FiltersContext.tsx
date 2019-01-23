@@ -1,11 +1,18 @@
-import Router from 'next/router';
+import filter from 'lodash.filter';
+import includes from 'lodash.includes';
+import Router, { SingletonRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { Tag } from '../../components/tagSelector/TagSelector';
 
+interface Props {
+  router: SingletonRouter;
+  children: React.ReactNode;
+}
+
 export const FiltersContext = React.createContext({});
 
-const FiltersProvider = ({ router, children }) => {
+const FiltersProvider = ({ router, children }: Props) => {
   const { tags, period, regions } = router.query;
   const [state, setState] = useState({
     categoryValue: ['tech'],
@@ -22,10 +29,11 @@ const FiltersProvider = ({ router, children }) => {
 
   const updateTimePeriodValue = (timePeriodValue: string | null) => {
     if (state.timePeriodValue && state.timePeriodValue === timePeriodValue) {
+      const { period: oldPeriod, ...query } = Router.query;
+
       setState({ ...state, timePeriodValue: null });
       setUrl({
-        ...Router.query,
-        period,
+        ...query,
       });
       return;
     }
@@ -39,33 +47,23 @@ const FiltersProvider = ({ router, children }) => {
     });
   };
 
-  const updateRegionValue = (regions: string[] | []) => {
-    const { regions: oldRegions, ...query } = Router.query;
+  const updateRegionValue = (regionValue: string) => {
+    // const { regions: oldRegions, ...query } = Router.query;
 
-    this.setState({ regions });
+    setState({
+      ...state,
+      regionValue: includes(state.regionValue, regionValue)
+        ? filter(state.regionValue, item => item !== regionValue)
+        : [...state.regionValue, regionValue],
+    });
 
-    this.setUrl({
-      ...query,
-      ...(regions.length && {
-        regions: regions.join(),
-      }),
+    setUrl({
+      ...Router.query,
+      // ...(regionValue.length && {
+      //   regions: regions.join(),
+      // }),
     });
   };
-
-  // const updateMapPosition = mapCenterCoordinates => {
-  //   setState({ ...state, mapCenterCoordinates });
-  // };
-
-  // const updateMapSize = mapSize => {
-  //   setState({
-  //     ...state,
-  //     mapViewport: { ...this.state.mapViewport, ...mapSize },
-  //   });
-  // };
-
-  // const updateMapViewport = mapViewport => {
-  //   setState({ ...state, mapViewport });
-  // };
 
   return (
     <FiltersContext.Provider
@@ -94,3 +92,38 @@ const setUrl = (query: object) => {
 };
 
 export default FiltersProvider;
+
+// TODO: Add map to the filters
+
+// mapCenterCoordinates: {
+//   latitude: 46.366870009004,
+//   longitude: 6.662937741235142,
+//   zoom: 4.099026990316624, // The scale of a map
+// },
+// mapViewportActive: location ? false : true,
+// mapViewport: {
+//   neLatitude: 70.25416955053973, // North-East Latitude (The upper-left corner)
+//   neLongitude: 92.56617725833974, // North-East Longitude (The upper-right corner)
+//   swLatitude: 4.726261975313662, // South-West Latitude (The lower-left corner)
+//   swLongitude: -79.24030177586899, // South-East Longitude (The lower-right corner)
+//   bearing: 0,
+//   pitch: 0,
+//   width: 500,
+//   height: 500,
+// },
+// locationLoading: false,
+
+// const updateMapPosition = mapCenterCoordinates => {
+//   setState({ ...state, mapCenterCoordinates });
+// };
+
+// const updateMapSize = mapSize => {
+//   setState({
+//     ...state,
+//     mapViewport: { ...this.state.mapViewport, ...mapSize },
+//   });
+// };
+
+// const updateMapViewport = mapViewport => {
+//   setState({ ...state, mapViewport });
+// };

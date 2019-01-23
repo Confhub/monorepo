@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Query } from 'react-apollo';
 
 import FiltersProvider, {
@@ -36,53 +36,43 @@ export const GET_CONFERENCE_LIST = gql`
   ${LIST_ITEM_FRAGMENT}
 `;
 
-// ${MAP_FRAGMENT}
+const IndexPage = () => {
+  const context = useContext(FiltersContext);
+  const {
+    state: { tagValue, timePeriodValue, regionValue },
+  } = context;
 
-class HomePageContainer extends React.Component {
-  public render() {
-    const {
-      tagValue,
-      interval,
-      regionValue,
-      // mapViewport,
-      // mapViewportActive
-    } = this.props.context.state;
-    // const { neLatitude, neLongitude, swLatitude, swLongitude } = mapViewport;
+  return (
+    <Query
+      query={GET_CONFERENCE_LIST}
+      variables={{
+        tags: tagValue.map(tag => tag.slug || tag),
+        interval: +timePeriodValue,
+        regions: regionValue.map(region => region.toUpperCase()),
 
-    return (
-      <Query
-        query={GET_CONFERENCE_LIST}
-        variables={{
-          tags: tagValue.map(tag => tag.slug || tag),
-          interval: +interval,
-          regions: regionValue.map(region => region.toUpperCase()),
-
-          // TODO: UNCOMENT after implementing Map
-          // ...(mapViewportActive
-          //   ? {
-          //       location: { neLatitude, neLongitude, swLatitude, swLongitude },
-          //     }
-          //   : { continent: 'Europe' }),
-        }}
-      >
-        {({ loading, error, data }) => {
-          return (
-            <HomePage
-              loading={loading}
-              error={error}
-              data={data && data.conferences}
-            />
-          );
-        }}
-      </Query>
-    );
-  }
-}
+        // TODO: UNCOMENT after implementing Map
+        // ...(mapViewportActive
+        //   ? {
+        //       location: { neLatitude, neLongitude, swLatitude, swLongitude },
+        //     }
+        //   : { continent: 'Europe' }),
+      }}
+    >
+      {({ loading, error, data }) => {
+        return (
+          <HomePage
+            loading={loading}
+            error={error}
+            data={data && data.conferences}
+          />
+        );
+      }}
+    </Query>
+  );
+};
 
 export default withRouter(props => (
   <FiltersProvider router={props.router}>
-    <FiltersContext.Consumer>
-      {context => <HomePageContainer {...props} context={context} />}
-    </FiltersContext.Consumer>
+    <IndexPage {...props} />
   </FiltersProvider>
 ));

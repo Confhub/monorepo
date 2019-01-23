@@ -26,8 +26,6 @@ const Filters = () => {
     },
   } = context;
 
-  console.log({ timePeriodValue });
-
   return (
     <Wrapper>
       <h4>Categories</h4>
