@@ -2,8 +2,8 @@ import { Avatar, List } from 'antd';
 import Link from 'next/link';
 import * as React from 'react';
 
-import { THUMBNAILS_OPTIONS } from '../../constants';
-import { setImageParams } from '../../helpers';
+import { THUMBNAILS_OPTIONS } from '../../components/constants';
+import { setImageParams } from '../../components/helpers';
 import DeleteConferenceButton from './DeleteConferenceButton';
 import PublishConferenceButton from './PublishConferenceButton';
 

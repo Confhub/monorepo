@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
 
-import { HomePageContext } from '../HomePageContext';
+import { FiltersContext } from '../Filters/FiltersContext';
 
 const Map = dynamic(import('./Map'), {
   ssr: false,
@@ -28,7 +28,7 @@ const MapContainer = ({ items, context }) => (
 );
 
 export default props => (
-  <HomePageContext.Consumer>
+  <FiltersContext.Consumer>
     {context => <MapContainer {...props} context={context} />}
-  </HomePageContext.Consumer>
+  </FiltersContext.Consumer>
 );

@@ -2,28 +2,22 @@ import cookie from 'cookie';
 import gql from 'graphql-tag';
 import * as React from 'react';
 import { withApollo, Mutation } from 'react-apollo';
-import redirect from '../lib/redirect';
+import redirect from '../../lib/redirect';
 
-const CREATE_USER = gql`
-  mutation Create($name: String!, $email: String!, $password: String!) {
-    createUser(name: $name, email: $email, password: $password) {
-      user {
-        id
-      }
-    }
-
+const SIGN_IN = gql`
+  mutation SignInUser($email: String!, $password: String!) {
     signInUser(email: $email, password: $password) {
       token
     }
   }
 `;
 
-const RegisterBox = ({ client }) => {
-  let name, email, password;
+const SignInBox = ({ client }) => {
+  let email, password;
 
   return (
     <Mutation
-      mutation={CREATE_USER}
+      mutation={SIGN_IN}
       onCompleted={async data => {
         // Store the token in cookie
         document.cookie = cookie.serialize('token', data.signInUser.token, {
@@ -33,7 +27,7 @@ const RegisterBox = ({ client }) => {
         // logged in
         try {
           await client.cache.reset();
-          redirect({}, '/');
+          redirect({}, '/admin');
         } catch (err) {
           console.error(err);
         }
@@ -42,32 +36,23 @@ const RegisterBox = ({ client }) => {
         console.error(error);
       }}
     >
-      {(create, { error }) => (
+      {(signInUser, { error }) => (
         <form
           onSubmit={e => {
             e.preventDefault();
             e.stopPropagation();
 
-            create({
+            signInUser({
               variables: {
-                name: name.value,
                 email: email.value,
                 password: password.value,
               },
             });
 
-            name.value = email.value = password.value = '';
+            email.value = password.value = '';
           }}
         >
-          {error && <p>Issue occured while registering :(</p>}
-          <input
-            name="name"
-            placeholder="Name"
-            ref={node => {
-              name = node;
-            }}
-          />
-          <br />
+          {error && <p>No user found with that information.</p>}
           <input
             name="email"
             placeholder="Email"
@@ -85,11 +70,11 @@ const RegisterBox = ({ client }) => {
             type="password"
           />
           <br />
-          <button>Register</button>
+          <button>Sign in</button>
         </form>
       )}
     </Mutation>
   );
 };
 
-export default withApollo(RegisterBox);
+export default withApollo(SignInBox);

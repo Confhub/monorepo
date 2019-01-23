@@ -4,7 +4,7 @@ import * as React from 'react';
 import checkLoggedIn from '../lib/checkLoggedIn';
 import redirect from '../lib/redirect';
 
-import RegisterBox from '../components/RegisterBox';
+import RegisterBox from '../src/components/RegisterBox';
 
 export default class CreateAccount extends React.Component {
   public render() {

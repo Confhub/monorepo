@@ -2,8 +2,8 @@ import { Button, Divider, Icon, Tag } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
-import { THUMBNAILS_OPTIONS } from '../../constants';
-import { parseDateRange, setImageParams } from '../../helpers';
+import { THUMBNAILS_OPTIONS } from '../../components/constants';
+import { parseDateRange, setImageParams } from '../../components/helpers';
 import { Conference } from './ListContainer';
 
 interface Props {

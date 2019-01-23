@@ -13,10 +13,11 @@ interface CheckboxGroupProps {
   onChange: (value: string) => void;
 }
 
-interface CheckboxGroupInputProps {
+interface CheckboxGroupOptionProps {
   value: string;
   label: string;
   type?: 'checkbox' | 'radio';
+  disabled?: boolean;
 }
 
 const Context = createContext({});
@@ -25,7 +26,8 @@ const CheckboxGroupInput = ({
   value,
   label,
   type,
-}: CheckboxGroupInputProps) => {
+  disabled,
+}: CheckboxGroupOptionProps) => {
   const RadioContext = useContext(Context);
   const { state, onChange } = RadioContext;
 
@@ -37,8 +39,9 @@ const CheckboxGroupInput = ({
   return (
     <CheckboxGroupItemWrapper
       data-value={value}
-      onClick={onChange}
+      onClick={disabled ? null : onChange}
       checked={isChecked}
+      disabled={disabled}
     >
       <CheckboxGroupItemLabel>{label || value}</CheckboxGroupItemLabel>
     </CheckboxGroupItemWrapper>

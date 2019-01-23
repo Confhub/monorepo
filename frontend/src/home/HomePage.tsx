@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import ListContainer from './List/ListContainer';
 // import MapContainer from './Map/MapContainer';
-import Filters from './Search/Filters';
+import Filters from './Filters/Filters';
+import ListContainer from './List/ListContainer';
 
 const HomePage = ({ data }) => (
   <div className="root">
