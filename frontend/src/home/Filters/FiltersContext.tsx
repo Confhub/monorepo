@@ -4,6 +4,7 @@ import Router, { SingletonRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { Tag } from '../../components/tagSelector/TagSelector';
+import { setUrl } from './helpers';
 
 interface Props {
   router: SingletonRouter;
@@ -65,6 +66,7 @@ const FiltersProvider = ({ router, children }: Props) => {
   };
 
   const updateRegionValue = (regionValue: string) => {
+    const { regions: oldRegions, ...query } = Router.query;
     const updatedRegionValue = includes(state.regionValue, regionValue)
       ? filter(state.regionValue, item => item !== regionValue)
       : [...state.regionValue, regionValue];
@@ -75,7 +77,7 @@ const FiltersProvider = ({ router, children }: Props) => {
     });
 
     setUrl({
-      ...Router.query,
+      ...query,
       ...(updatedRegionValue.length && {
         regions: updatedRegionValue.join(),
       }),
@@ -97,15 +99,6 @@ const FiltersProvider = ({ router, children }: Props) => {
       {children}
     </FiltersContext.Provider>
   );
-};
-
-const setUrl = (query: object) => {
-  const href = {
-    pathname: '/',
-    query,
-  };
-
-  Router.push(href, href);
 };
 
 export default FiltersProvider;
