@@ -1,6 +1,6 @@
 import { GraphQLObjectType } from 'graphql';
 
-import CreateConference from './apps/conference/mutations/CreateConference';
+// import CreateConference from './apps/conference/mutations/CreateConference';
 import DeleteConference from './apps/conference/mutations/DeleteConference';
 import PublishConference from './apps/conference/mutations/PublishConference';
 // import UpdateConference from './apps/conference/mutations/UpdateConference';
@@ -18,7 +18,7 @@ export default new GraphQLObjectType({
     createUser: CreateUser,
     signInUser: SignInUser,
     changeUserRole: ChangeUserRole,
-    createConference: CreateConference,
+    // createConference: CreateConference,
     // updateConference: UpdateConference,
     publishConference: PublishConference,
     deleteConference: DeleteConference,
