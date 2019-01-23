@@ -9,7 +9,7 @@ import {
 
 interface CheckboxGroupProps {
   type: 'checkbox' | 'radio';
-  value: string[];
+  value: string | string[];
   onChange: (value: string) => void;
 }
 

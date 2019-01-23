@@ -10,21 +10,38 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const FiltersContext = React.createContext({});
+interface Context {
+  state: {
+    categoryValue: string[];
+    tagValue: string[];
+    timePeriodValue: string;
+    regionValue: string[];
+  };
+  actions: {
+    updateCategoryValue: () => void;
+    updateTagValue: (tagValue: Tag[] | []) => void;
+    updateTimePeriodValue: (timePeriodValue: string | null) => void;
+    updateRegionValue: (regionValue: string) => void;
+  };
+}
+
+export const FiltersContext = React.createContext<Context>(null);
 
 const FiltersProvider = ({ router, children }: Props) => {
   const { tags, period, regions } = router.query;
   const [state, setState] = useState({
     categoryValue: ['tech'],
-    tagValue: (tags && tags.split(',')) || [],
-    timePeriodValue: period || null,
-    regionValue: (regions && regions.split(',')) || [],
+    tagValue: (tags && typeof tags === 'string' && tags.split(',')) || [],
+    timePeriodValue: (typeof period === 'string' && period) || null,
+    regionValue:
+      (regions && typeof regions === 'string' && regions.split(',')) || [],
   });
 
   const updateCategoryValue = () => null;
 
-  const updateTagValue = (tags: Tag[] | []) => {
-    setState({ ...state, tagValue: tags });
+  const updateTagValue = (tagValue: Tag[] | []) => {
+    // console.log({ tagValue });
+    setState({ ...state, tagValue });
   };
 
   const updateTimePeriodValue = (timePeriodValue: string | null) => {
@@ -48,20 +65,20 @@ const FiltersProvider = ({ router, children }: Props) => {
   };
 
   const updateRegionValue = (regionValue: string) => {
-    // const { regions: oldRegions, ...query } = Router.query;
+    const updatedRegionValue = includes(state.regionValue, regionValue)
+      ? filter(state.regionValue, item => item !== regionValue)
+      : [...state.regionValue, regionValue];
 
     setState({
       ...state,
-      regionValue: includes(state.regionValue, regionValue)
-        ? filter(state.regionValue, item => item !== regionValue)
-        : [...state.regionValue, regionValue],
+      regionValue: updatedRegionValue,
     });
 
     setUrl({
       ...Router.query,
-      // ...(regionValue.length && {
-      //   regions: regions.join(),
-      // }),
+      ...(updatedRegionValue.length && {
+        regions: updatedRegionValue.join(),
+      }),
     });
   };
 
