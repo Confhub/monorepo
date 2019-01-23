@@ -8,12 +8,12 @@ import {
   // PriceCreateInput,
   // Social,
   // SocialCreateOneInput,
+  REGION,
   Tag,
   TagCreateManyInput,
   TagUpdateManyInput,
-  REGION,
 } from '../../../generated/prisma';
-import { LocationInpiut } from '../inputs/Location';
+import { LocationInput } from '../inputs/Location';
 
 export const generateTagsCreate = (
   tags: Tag[],
@@ -74,7 +74,7 @@ export const generateLocation = ({
   city,
   address,
   coordinates,
-}: LocationInpiut): LocationCreateOneInput => {
+}: LocationInput): LocationCreateOneInput => {
   console.log('country cide', countryCode, detectContinent(countryCode));
 
   return {

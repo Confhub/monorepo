@@ -19,14 +19,14 @@ const GraphQLConferenceCoordinatesInput = new GraphQLInputObjectType({
   },
 });
 
-export type LocationInpiut = {
+export interface LocationInput {
   venueName?: string | null;
   countryCode: string;
   country: string;
   city: string;
   address: string | null;
   coordinates: Coordinates;
-};
+}
 
 export default new GraphQLInputObjectType({
   name: 'ConferenceLocationInput',
