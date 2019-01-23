@@ -1,7 +1,13 @@
 import { Select } from 'antd';
 import gql from 'graphql-tag';
-import * as React from 'react';
+import React from 'react';
 import { Query } from 'react-apollo';
+
+export interface Tag {
+  id: string;
+  name: string;
+  slug: string;
+}
 
 const Option = Select.Option;
 
