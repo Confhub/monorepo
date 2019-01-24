@@ -51,6 +51,21 @@ const Filters = () => {
         onChange={updateTagValue}
       />
 
+      {/* <h4>Tags</h4>
+      <CheckboxGroup
+        type="checkbox"
+        onChange={updateTimePeriodValue}
+        value={timePeriodValue}
+      >
+        {intervalOptions.map(interval => (
+          <CheckboxGroup.Option
+            key={interval.id}
+            label={interval.label}
+            value={interval.value}
+          />
+        ))}
+      </CheckboxGroup> */}
+
       <h4>Time period</h4>
       <CheckboxGroup
         type="radio"
