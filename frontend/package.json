@@ -21,7 +21,7 @@
     "lodash": "^4.17.10",
     "lodash.filter": "^4.6.0",
     "lodash.includes": "^4.3.0",
-    "mapbox-gl": "^0.51.0",
+    "mapbox-gl": "^0.53.0",
     "moment": "^2.24.0",
     "next": "^8.0.0-canary.11",
     "node-sass": "^4.11.0",
