@@ -8,7 +8,7 @@
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "antd": "^3.12.4",
-    "apollo-boost": "^0.1.27",
+    "apollo-boost": "^0.3.0",
     "apollo-link-context": "^1.0.12",
     "apollo-link-http": "^1.5.9",
     "cookie": "^0.3.1",
