@@ -5,9 +5,9 @@ import { Conference } from '../../../generated/prisma';
 import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLConference from '../outputs/Conference';
 
-interface ArgsType {
-  id: string;
-}
+// interface ArgsType {
+//   id: string;
+// }
 
 export default {
   type: GraphQLConference,
@@ -18,7 +18,7 @@ export default {
   },
   resolve: async (
     _: any,
-    { id }: ArgsType,
+    { id }: any,
     { apiToken, db }: Context,
     info: any,
   ): Promise<Conference | null> => {

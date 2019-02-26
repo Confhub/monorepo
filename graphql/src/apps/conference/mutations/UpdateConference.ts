@@ -1,13 +1,7 @@
 import { AuthenticationError } from 'apollo-server';
 import { GraphQLID, GraphQLNonNull } from 'graphql';
 
-import {
-  Conference,
-  ConferenceUpdateInput,
-  Price,
-  PriceUpdateManyInput,
-  PriceUpsertWithWhereUniqueNestedInput,
-} from '../../../generated/prisma';
+import { Conference, ConferenceUpdateInput } from '../../../generated/prisma';
 
 import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLEditConferenceInput from '../inputs/EditConference';
@@ -15,7 +9,7 @@ import GraphQLConference from '../outputs/Conference';
 import {
   generateImage,
   generateLocation,
-  generateSocial,
+  // generateSocial,
   generateTagsUpdate,
 } from './helpers';
 
@@ -47,8 +41,8 @@ export default {
         startDate,
         endDate,
         location,
-        social,
-        prices,
+        // social,
+        // prices,
       },
     }: ArgsType,
     { apiToken, db }: Context,
@@ -70,11 +64,9 @@ export default {
         ...(tags && { tags: generateTagsUpdate(tags, conference.tags) }),
         ...(image && { image: generateImage(image, name || conference.name) }),
         ...(location && { location: generateLocation(location) }),
-        ...(social && { social: generateSocial(social) }),
-        ...(prices && { prices: generatePrices(prices) }),
+        // ...(social && { social: generateSocial(social) }),
+        // ...(prices && { prices: generatePrices(prices) }),
       };
-
-      console.log({ query });
 
       return db.mutation.updateConference({ data: query, where: { id } }, info);
     }
@@ -83,26 +75,26 @@ export default {
   },
 };
 
-function generatePrices(prices: Price[]): PriceUpdateManyInput {
-  const [create, update, remove] = prices.reduce(
-    (acc, price) => {
-      let item = 0;
-      if (price.id) {
-        const { id, ...data } = price;
-        item = Object.keys(data).length ? 1 : 2;
-      }
-      acc[item].push(price);
+// function generatePrices(prices: Price[]): PriceUpdateManyInput {
+//   const [create, update, remove] = prices.reduce(
+//     (acc, price) => {
+//       let item = 0;
+//       if (price.id) {
+//         const { id, ...data } = price;
+//         item = Object.keys(data).length ? 1 : 2;
+//       }
+//       acc[item].push(price);
 
-      return acc;
-    },
-    [[], [], []],
-  );
-  return {
-    create,
-    update: update.map(({ id, ...data }) => ({
-      where: { id },
-      data,
-    })),
-    delete: remove,
-  };
-}
+//       return acc;
+//     },
+//     [[], [], []],
+//   );
+//   return {
+//     create,
+//     update: update.map(({ id, ...data }) => ({
+//       where: { id },
+//       data,
+//     })),
+//     delete: remove,
+//   };
+// }

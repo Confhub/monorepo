@@ -6,10 +6,10 @@ import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLUser from '../outputs/User';
 import GraphQLUserRole from '../outputs/UserRole';
 
-interface ArgsType {
-  id: string;
-  newRole: USER_ROLE;
-}
+// interface ArgsType {
+//   id: string;
+//   newRole: USER_ROLE;
+// }
 
 export default {
   type: GraphQLUser,
@@ -23,7 +23,7 @@ export default {
   },
   resolve: async (
     _: any,
-    { id, newRole }: ArgsType,
+    { id, newRole }: any,
     { apiToken, db }: Context,
     info: any,
   ): Promise<User | null> => {

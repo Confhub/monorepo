@@ -5,9 +5,9 @@ import { Tag } from '../../../generated/prisma';
 import { getUserId, getUserRole, Context } from '../../../utils';
 import GraphQLTag from '../outputs/Tag';
 
-interface ArgsType {
-  id: string;
-}
+// interface ArgsType {
+//   id: string;
+// }
 
 export default {
   type: GraphQLTag,
@@ -18,7 +18,7 @@ export default {
   },
   resolve: async (
     _: any,
-    { id }: ArgsType,
+    { id }: any,
     { apiToken, db }: Context,
     info: any,
   ): Promise<Tag | null> => {

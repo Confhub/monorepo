@@ -8,6 +8,8 @@ const port = (process.env.PORT && parseInt(process.env.PORT, 10)) || 4000;
 
 const server = new ApolloServer({
   schema: Schema,
+  introspection: true,
+  playground: true,
   context: async ({ req }: any) => {
     if (!req || !req.headers) {
       return;

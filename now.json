@@ -1,0 +1,38 @@
+{
+  "name": "confhub",
+  "version": 2,
+  "alias": "confhub.win",
+  "public": false,
+  "env": {
+    "MAPBOX_SECRET": "@confhub-mapbox-secret",
+    "GRAPHQL_ENDPOINT_URL": "@confhub-graphql-endpoint-url",
+    "PORT": "@confhub-graphql-port",
+    "PRISMA_ENDPOINT": "@confhub-graphql-prisma-endpoint",
+    "PRISMA_SECRET": "@confhub-graphql-prisma-secret",
+    "PRISMA_MANAGEMENT_API_SECRET": "@confhub-graphql-prisma-management-api-secret",
+    "APP_SECRET": "@confhub-graphql-app-secret"
+  },
+  "builds": [
+    {
+      "src": "graphql/src/index.ts",
+      "use": "@now/node-server@canary"
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@now/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/graphql/src/index.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1",
+      "headers": {
+        "x-request-path": "$1"
+      }
+    }
+  ]
+}

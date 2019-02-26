@@ -6,12 +6,7 @@ import {
 } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-import {
-  CURRENCY,
-  DateTime,
-  ID_Output,
-  Price,
-} from '../../../generated/prisma';
+import { DateTime, ID_Output } from '../../../generated/prisma';
 import GraphQLCurrency from './Currency';
 
 export default new GraphQLObjectType({
@@ -19,23 +14,23 @@ export default new GraphQLObjectType({
   fields: {
     id: {
       type: GraphQLID,
-      resolve: ({ id }: Price): ID_Output => id,
+      resolve: ({ id }: any): ID_Output => id,
     },
     name: {
       type: GraphQLString,
-      resolve: ({ name }: Price): string => name,
+      resolve: ({ name }: any): string => name,
     },
     amount: {
       type: GraphQLFloat,
-      resolve: ({ amount }: Price): number => amount,
+      resolve: ({ amount }: any): number => amount,
     },
     currency: {
       type: GraphQLCurrency,
-      resolve: ({ currency }: Price): CURRENCY => currency,
+      resolve: ({ currency }: any): any => currency,
     },
     expirationDate: {
       type: GraphQLDateTime,
-      resolve: ({ expirationDate }: Price): DateTime => expirationDate,
+      resolve: ({ expirationDate }: any): DateTime => expirationDate,
     },
   },
 });

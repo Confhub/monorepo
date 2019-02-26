@@ -6,10 +6,10 @@ import * as jwt from 'jsonwebtoken';
 import { APP_SECRET, Context } from '../../../utils';
 import GraphQLAuthPayload, { AuthPayload } from '../outputs/AuthPayload';
 
-interface ArgsType {
-  email: string;
-  password: string;
-}
+// interface ArgsType {
+//   email: string;
+//   password: string;
+// }
 
 export default {
   type: GraphQLAuthPayload,
@@ -23,7 +23,7 @@ export default {
   },
   resolve: async (
     _: any,
-    { email, password }: ArgsType,
+    { email, password }: any,
     ctx: Context,
   ): Promise<AuthPayload> => {
     const user = await ctx.db.query.user({ where: { email } });

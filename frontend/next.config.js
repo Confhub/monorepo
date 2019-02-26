@@ -1,31 +1,46 @@
-require("dotenv").config();
-
-const withTypescript = require("@zeit/next-typescript");
-const withCSS = require("@zeit/next-css");
-const path = require("path");
-const Dotenv = require("dotenv-webpack");
+const { PHASE_PRODUCTION_SERVER } =
+  process.env.NODE_ENV === 'development'
+    ? {}
+    : !process.env.NOW_REGION
+    ? require('next/constants')
+    : require('next-server/constants');
 
 // fix: prevents error when .css files are required by node
-if (typeof require !== "undefined") {
-  require.extensions[".css"] = () => {};
+if (typeof require !== 'undefined') {
+  require.extensions['.css'] = file => {};
 }
 
-module.exports = withTypescript(
-  withCSS({
-    webpack: config => {
-      config.plugins = config.plugins || [];
+module.exports = (phase, { defaultConfig }) => {
+  if (phase === PHASE_PRODUCTION_SERVER) {
+    // Config used to run in production.
+    return {};
+  }
 
-      config.plugins = [
-        ...config.plugins,
+  require('dotenv').config();
 
-        // Read the .env file
-        new Dotenv({
-          path: path.join(__dirname, ".env"),
-          systemvars: true
-        })
-      ];
+  const withTypescript = require('@zeit/next-typescript');
+  const withCss = require('@zeit/next-css');
+  const path = require('path');
+  const Dotenv = require('dotenv-webpack');
 
-      return config;
-    }
-  })
-);
+  return withTypescript(
+    withCss({
+      target: 'serverless',
+      webpack: config => {
+        config.plugins = config.plugins || [];
+
+        config.plugins = [
+          ...config.plugins,
+
+          // Read the .env file
+          new Dotenv({
+            path: path.join(__dirname, '.env'),
+            systemvars: true,
+          }),
+        ];
+
+        return config;
+      },
+    }),
+  );
+};

@@ -74,9 +74,7 @@ export const generateLocation = ({
   city,
   address,
   coordinates,
-}: LocationInput): LocationCreateOneInput => {
-  console.log('country cide', countryCode, detectContinent(countryCode));
-
+}: any): LocationCreateOneInput => {
   return {
     create: {
       venueName: venueName || '',

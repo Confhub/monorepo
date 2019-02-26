@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import * as React from 'react';
 import { Query } from 'react-apollo';
 
-import EditConference from '../components/newConference/EditConference';
+// import EditConference from '../components/newConference/EditConference';
 
 const GET_CONFERENCE = gql`
   query conference($id: ID!) {
@@ -10,7 +10,7 @@ const GET_CONFERENCE = gql`
       ...EditConference
     }
   }
-  ${EditConference.fragments.data}
+  # ${EditConference.fragments.data}
 `;
 
 class NewConferencePage extends React.Component {
@@ -29,7 +29,7 @@ class NewConferencePage extends React.Component {
           if (error) {
             return 'Error...';
           }
-          return <EditConference data={data.conference} />;
+          // return <EditConference data={data.conference} />;
         }}
       </Query>
     );
