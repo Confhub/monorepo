@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "main": "src/index.ts",
   "dependencies": {
-    "apollo-server": "^2.4.6",
+    "apollo-server": "^2.4.8",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.8.8",
