@@ -6,10 +6,8 @@
   "env": {
     "MAPBOX_SECRET": "@confhub-mapbox-secret",
     "GRAPHQL_ENDPOINT_URL": "@confhub-graphql-endpoint-url",
-    "PORT": "@confhub-graphql-port",
     "PRISMA_ENDPOINT": "@confhub-graphql-prisma-endpoint",
     "PRISMA_SECRET": "@confhub-graphql-prisma-secret",
-    "PRISMA_MANAGEMENT_API_SECRET": "@confhub-graphql-prisma-management-api-secret",
     "APP_SECRET": "@confhub-graphql-app-secret"
   },
   "builds": [
