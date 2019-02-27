@@ -5,7 +5,6 @@
   "public": false,
   "env": {
     "MAPBOX_SECRET": "@confhub-mapbox-secret",
-    "GRAPHQL_ENDPOINT_URL": "@confhub-graphql-endpoint-url",
     "PRISMA_ENDPOINT": "@confhub-graphql-prisma-endpoint",
     "PRISMA_SECRET": "@confhub-graphql-prisma-secret",
     "APP_SECRET": "@confhub-graphql-app-secret"

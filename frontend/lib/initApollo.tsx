@@ -1,7 +1,8 @@
-import { ApolloClient, InMemoryCache } from "apollo-boost";
-import { setContext } from "apollo-link-context";
-import { createHttpLink } from "apollo-link-http";
-import fetch from "isomorphic-unfetch";
+import { ApolloClient, InMemoryCache } from 'apollo-boost';
+import { setContext } from 'apollo-link-context';
+import { createHttpLink } from 'apollo-link-http';
+import fetch from 'isomorphic-unfetch';
+import { BASE_URL } from './withApollo';
 
 let apolloClient = null;
 
@@ -11,9 +12,14 @@ if (!process.browser) {
 }
 
 function create(initialState, { getToken }) {
+  const API_URL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:4000'
+      : `https://${BASE_URL}/api/`;
+
   const httpLink = createHttpLink({
-    uri: process.env.GRAPHQL_ENDPOINT_URL,
-    credentials: "same-origin"
+    uri: API_URL,
+    credentials: 'same-origin',
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -21,8 +27,8 @@ function create(initialState, { getToken }) {
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : ""
-      }
+        authorization: token ? `Bearer ${token}` : '',
+      },
     };
   });
 
@@ -31,7 +37,7 @@ function create(initialState, { getToken }) {
     connectToDevTools: process.browser,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache().restore(initialState || {})
+    cache: new InMemoryCache().restore(initialState || {}),
   });
 }
 
