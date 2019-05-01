@@ -25,8 +25,10 @@ export default App => {
         ctx: { req, res },
       } = ctx;
 
-      // TODO: https://github.com/zeit/now-builders/issues/55
-      BASE_URL = req.headers['x-now-deployment-url'];
+      if (process.env.NODE_ENV === 'production') {
+        // TODO: https://github.com/zeit/now-builders/issues/55
+        BASE_URL = req.headers['x-now-deployment-url'];
+      }
 
       const apollo = initApollo(
         {},

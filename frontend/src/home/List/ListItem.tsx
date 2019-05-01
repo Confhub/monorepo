@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 import { THUMBNAILS_OPTIONS } from '../../components/constants';
 import { parseDateRange, setImageParams } from '../../components/helpers';
-import { Conference } from './ListContainer';
+import { Conference } from '../../generated/graphql';
 
 interface Props {
-  item: Conference;
+  data: Conference;
 }
 
 const Wrapper = styled.div`
@@ -45,50 +45,50 @@ const StyledButton = styled(Button)`
   align-self: center;
 `;
 
-const ListItem = ({ item }: Props) => (
+const ListItem = ({ data }: Props) => (
   <Wrapper>
     <Image
-      alt={item.image ? item.image.alt : 'Conference image'}
+      alt={data.image ? data.image.alt : 'Conference image'}
       src={
-        item.image
-          ? setImageParams(item.image.src, THUMBNAILS_OPTIONS)
+        data.image
+          ? setImageParams(data.image.src, THUMBNAILS_OPTIONS)
           : 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
       }
     />
 
     <Content>
       <Title>
-        <a href={item.url} target="_blank" rel="noopener noreferrer">
-          {item.name}
+        <a href={data.url} target="_blank" rel="noopener noreferrer">
+          {data.name}
         </a>
       </Title>
 
       <Info>
         <span>
-          <Icon type="environment-o" /> {item.location.city},{' '}
-          {item.location.country}
+          <Icon type="environment-o" /> {data.location.city},{' '}
+          {data.location.country}
         </span>
         <Divider type="vertical" />
         <span>
           <Icon type="calendar" />{' '}
-          {parseDateRange(item.startDate, item.endDate)}
+          {parseDateRange(data.startDate, data.endDate)}
         </span>
         <Divider type="vertical" />
         {/* <div><Icon type="shopping-cart" /> {price.amount}€</div> */}
       </Info>
 
       <div>
-        {item.tags.map(tag => (
+        {data.tags.map(tag => (
           <Tag key={tag.id}>{tag.name}</Tag>
         ))}
       </div>
 
-      <Description>{item.description}</Description>
+      <Description>{data.description}</Description>
     </Content>
 
     <StyledButton
       type="primary"
-      href={item.url}
+      href={data.url}
       target="_blank"
       rel="noopener noreferrer"
     >

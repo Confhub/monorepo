@@ -1,17 +1,17 @@
 import { GraphQLObjectType } from 'graphql';
 
-import Conference from './apps/conference/queries/Conference';
-import Conferences from './apps/conference/queries/Conferences';
-import Tags from './apps/tags/queries/Tags';
-import User from './apps/user/queries/User';
+import Conference from './conference/queries/Conference';
+import Conferences from './conference/queries/Conferences';
+import Tags from './tags/queries/Tags';
+import Me from './user/queries/Me';
 
 export default new GraphQLObjectType({
   name: 'RootQuery',
   description: 'Root Query',
   fields: {
-    user: User,
     conference: Conference,
     conferences: Conferences,
     tags: Tags,
+    me: Me,
   },
 });

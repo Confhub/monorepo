@@ -1,27 +1,21 @@
-import { ApolloServer, ServerInfo } from 'apollo-server';
-import * as http from 'http';
+import { applyMiddleware } from 'graphql-middleware';
+import { GraphQLServer } from 'graphql-yoga';
+
+import { prisma } from './generated/prisma-client';
 
 import Schema from './Schema';
-import { createContext } from './utils';
+import permissions from './shield';
+import { getUser } from './utils';
 
-const port = (process.env.PORT && parseInt(process.env.PORT, 10)) || 4000;
-
-const server = new ApolloServer({
-  schema: Schema,
-  introspection: true,
-  playground: true,
-  context: async ({ req }: any) => {
-    if (!req || !req.headers) {
-      return;
-    }
-
-    const token = req.headers.authorization || process.env.DEV_API_TOKEN || '';
-
-    return createContext(token);
-  },
+const server = new GraphQLServer({
+  schema: applyMiddleware(Schema, permissions),
+  context: async ({ request }: { request: Request }) => ({
+    ...request,
+    prisma,
+    user: await getUser(request, prisma),
+  }),
 });
 
-server.listen({ port }).then(({ url }) => {
-  // tslint:disable-next-line:no-console
-  console.log(`🚀 GraphQL server listening at ${url}`);
+server.start(({ port }) => {
+  console.info(`🚀 GraphQL server listening at http://localhost:${port}`);
 });

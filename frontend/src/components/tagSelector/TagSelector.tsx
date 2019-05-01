@@ -1,7 +1,6 @@
 import { Select } from 'antd';
-import gql from 'graphql-tag';
 import React from 'react';
-import { Query } from 'react-apollo';
+import { TagsComponent } from '../../generated/graphql';
 
 export interface Tag {
   id: string;
@@ -65,18 +64,8 @@ class TagSelector extends React.Component {
   }
 }
 
-const GET_TAGS_LIST = gql`
-  query tags {
-    tags {
-      id
-      name
-      slug
-    }
-  }
-`;
-
 export default props => (
-  <Query query={GET_TAGS_LIST}>
+  <TagsComponent>
     {({ data, loading, error }) => {
       if (error) {
         return `Error: ${error.message}`;
@@ -88,5 +77,5 @@ export default props => (
 
       return <TagSelector {...props} data={data} />;
     }}
-  </Query>
+  </TagsComponent>
 );

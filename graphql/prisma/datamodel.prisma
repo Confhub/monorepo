@@ -1,0 +1,64 @@
+enum USER_ROLE {
+  ATTENDEE
+  SPEAKER
+  MODERATOR
+  ADMIN
+}
+
+enum PUBLISH_STATUS {
+  DRAFT
+  PUBLISHED
+}
+
+enum REGION {
+  NORTH_AMERICA
+  LATIN_AMERICA
+  EUROPE
+  AFRICA
+  MIDDLE_EAST
+  ASIA
+  OCEANIA
+}
+
+type User @db(name: "user") {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  email: String! @unique
+  name: String!
+  password: String!
+  role: USER_ROLE! @default(value: ATTENDEE)
+}
+
+type Tag @db(name: "tag") {
+  id: ID! @id
+  name: String!
+  slug: String! @unique
+}
+
+type Image @db(name: "image") {
+  id: ID! @id
+  src: String!
+  alt: String
+}
+
+type Location @db(name: "location") {
+  id: ID! @id
+  country: String!
+  city: String!
+  address: String!
+  region: REGION!
+}
+
+type Conference @db(name: "conference") {
+  id: ID! @id
+  name: String!
+  description: String
+  tags: [Tag!]! @relation(link: TABLE, name: "ConferenceToTag")
+  url: String!
+  image: Image
+    @relation(link: TABLE, name: "ConferenceToImage", onDelete: CASCADE)
+  startDate: DateTime!
+  endDate: DateTime!
+  location: Location!
+  publishStatus: PUBLISH_STATUS! @default(value: DRAFT)
+}

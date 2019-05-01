@@ -1,47 +1,23 @@
 import * as jwt from 'jsonwebtoken';
+import { Prisma, User } from './generated/prisma-client';
 
-import { Prisma, USER_ROLE } from './generated/prisma';
-
-export const APP_SECRET = process.env.APP_SECRET || '';
+import { JWT_SECRET } from './config';
 
 export interface Context {
-  apiToken: string;
-  db: Prisma;
+  prisma: Prisma;
+  user: User;
 }
 
-const getPrismaInstance = () => {
-  return new Prisma({
-    endpoint: process.env.PRISMA_ENDPOINT,
-    secret: process.env.PRISMA_SECRET,
-    debug: process.env.NODE_ENV === 'development',
-  });
-};
-
-export function createContext(token: string): Context {
-  return {
-    apiToken: token,
-    db: getPrismaInstance(),
-  };
-}
-
-export function getUserId(token: string): string {
-  if (token) {
-    const apiToken = token.replace('Bearer ', '');
-    const { userId } = jwt.verify(apiToken, APP_SECRET) as {
+export const getUser = async (req: any, prisma: Prisma) => {
+  if (req.headers && req.headers.authorization) {
+    const auth = (req.headers && req.headers.authorization) || '';
+    const token = auth.replace('Bearer ', '');
+    const { userId } = jwt.verify(token, JWT_SECRET) as {
       userId: string;
     };
-    return userId;
+
+    return prisma.user({ id: userId });
   }
 
-  throw new Error('Not authorized');
-}
-
-export async function getUserRole(userId: string, db: any): Promise<USER_ROLE> {
-  const { role } = (await db.query.user({
-    where: { id: userId },
-  })) as {
-    role: USER_ROLE;
-  };
-
-  return role;
-}
+  return null;
+};

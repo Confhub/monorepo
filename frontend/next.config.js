@@ -16,8 +16,6 @@ module.exports = (phase, { defaultConfig }) => {
     return {};
   }
 
-  require('dotenv').config();
-
   const withTypescript = require('@zeit/next-typescript');
   const withCss = require('@zeit/next-css');
   const path = require('path');
@@ -26,21 +24,6 @@ module.exports = (phase, { defaultConfig }) => {
   return withTypescript(
     withCss({
       target: 'serverless',
-      webpack: config => {
-        config.plugins = config.plugins || [];
-
-        config.plugins = [
-          ...config.plugins,
-
-          // Read the .env file
-          new Dotenv({
-            path: path.join(__dirname, '.env'),
-            systemvars: true,
-          }),
-        ];
-
-        return config;
-      },
     }),
   );
 };

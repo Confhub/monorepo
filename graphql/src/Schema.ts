@@ -3,9 +3,7 @@ import { GraphQLSchema } from 'graphql';
 import RootMutation from './RootMutation';
 import RootQuery from './RootQuery';
 
-const schemaDefinition = {
+export default new GraphQLSchema({
   query: RootQuery,
   mutation: RootMutation,
-};
-
-export default new GraphQLSchema(schemaDefinition);
+});

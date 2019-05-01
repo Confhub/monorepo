@@ -1,29 +1,28 @@
 import { GraphQLObjectType } from 'graphql';
 
-// import CreateConference from './apps/conference/mutations/CreateConference';
-import DeleteConference from './apps/conference/mutations/DeleteConference';
-import PublishConference from './apps/conference/mutations/PublishConference';
-// import UpdateConference from './apps/conference/mutations/UpdateConference';
-import CreateTag from './apps/tags/mutations/CreateTag';
-import DeleteTag from './apps/tags/mutations/DeleteTag';
-import UpdateTag from './apps/tags/mutations/UpdateTag';
-import ChangeUserRole from './apps/user/mutations/ChangeUserRole';
-import CreateUser from './apps/user/mutations/CreateUser';
-import SignInUser from './apps/user/mutations/SignInUser';
+import CreateConference from './conference/mutations/CreateConference';
+import DeleteConference from './conference/mutations/DeleteConference';
+import PublishConference from './conference/mutations/PublishConference';
+import CreateTag from './tags/mutations/CreateTag';
+import DeleteTag from './tags/mutations/DeleteTag';
+import UpdateTag from './tags/mutations/UpdateTag';
+import ChangeUserRole from './user/mutations/ChangeUserRole';
+import LogIn from './user/mutations/LogIn';
+import SignUp from './user/mutations/SignUp';
 
 export default new GraphQLObjectType({
   name: 'RootMutation',
   description: 'Root Mutation',
   fields: {
-    createUser: CreateUser,
-    signInUser: SignInUser,
+    logIn: LogIn,
+    signUp: SignUp,
     changeUserRole: ChangeUserRole,
-    // createConference: CreateConference,
-    // updateConference: UpdateConference,
+    createConference: CreateConference,
     publishConference: PublishConference,
     deleteConference: DeleteConference,
     createTag: CreateTag,
     deleteTag: DeleteTag,
     updateTag: UpdateTag,
+    // updateConference: UpdateConference,
   },
 });

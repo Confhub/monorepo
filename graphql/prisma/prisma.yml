@@ -1,19 +1,16 @@
-# The endpoint of your Prisma API.
-endpoint: ${env:PRISMA_ENDPOINT}
+# Specifies the HTTP endpoint of your Prisma API.
+# endpoint: http://localhost:4466
+endpoint: https://eu1.prisma.sh/confhub-49b018/confhub/dev/
+# endpoint: ${env:PRISMA_ENDPOINT}
 
-# The file containing the definition of your data model.
-datamodel: datamodel.graphql
+# Defines your models, each model is mapped to the database as a table.
+datamodel: datamodel.prisma
 
-# If specified, the `secret` must be used to generate a JWT which is attached
-# to the `Authorization` header of HTTP requests made against the Prisma API.
-# Info: https://www.prisma.io/docs/reference/prisma-api/concepts-utee3eiquo#authentication
-# secret: ${env:PRISMA_SECRET}
+# Specifies the language and directory for the generated Prisma client.
+generate:
+  - generator: typescript-client
+    output: ../src/generated/prisma-client/
 
-# Download the GraphQL schema of the Prisma API into
-# `src/generated/prisma.graphql` (as specfied in `.graphqlconfig.yml`).
-hooks:
-  post-deploy:
-    - echo "Deployment finished"
-    # - graphql get-schema --project app
-    - graphql get-schema --project database
-    - graphql codegen
+# Seeds initial data into the database by running a script.
+seed:
+  run: yarn ts-node ./prisma/seed.ts

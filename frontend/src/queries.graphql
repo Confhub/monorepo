@@ -1,0 +1,50 @@
+fragment ConferenceParts on Conference {
+  id
+  name
+  description
+  tags {
+    id
+    name
+    slug
+  }
+  image {
+    src
+    alt
+  }
+  url
+  startDate
+  endDate
+  publishStatus
+  location {
+    city
+    country
+  }
+}
+
+query conferences(
+  # $location: LocationCoordinatesInput
+  # $continent: String
+  $tags: [String]
+  $interval: Int
+  $regions: [Region]
+) {
+  conferences(
+    sortBy: {
+      # location: { coordinates: $location, region: $region }
+      publishStatus: PUBLISHED
+      tags: $tags
+      regions: $regions
+      interval: $interval
+    }
+  ) {
+    ...ConferenceParts
+  }
+}
+
+query tags {
+  tags {
+    id
+    name
+    slug
+  }
+}
