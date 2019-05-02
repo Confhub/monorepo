@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 // import MapContainer from './Map/MapContainer';
+import { Conference } from '../../codegen/generated/graphql';
+import List from '../../components/list';
 import Filters from './Filters/Filters';
-import List from './List/List';
 
 const Wrapper = styled.div`
   display: grid;
@@ -25,7 +26,7 @@ const Sidebar = styled.div`
   padding: 0 20px;
 `;
 
-const HomePage = ({ data }) => (
+const HomePage = ({ data }: { data: Conference[] }) => (
   <Wrapper>
     <Sidebar>
       <Filters />
@@ -33,7 +34,19 @@ const HomePage = ({ data }) => (
 
     <Content id="map-wrap">
       {/* <MapContainer items={data} /> */}
-      <List items={data} />
+      <List>
+        {data.length ? (
+          <>
+            <List.Total totalAmount={data.length} />
+
+            {data.map(item => (
+              <List.Item data={item} key={item.id} />
+            ))}
+          </>
+        ) : (
+          <List.Empty />
+        )}
+      </List>
     </Content>
   </Wrapper>
 );

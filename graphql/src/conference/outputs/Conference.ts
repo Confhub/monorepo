@@ -1,6 +1,7 @@
 import {
   GraphQLID,
   GraphQLList,
+  GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
@@ -23,7 +24,7 @@ export default new GraphQLObjectType({
   name: 'Conference',
   fields: {
     id: {
-      type: GraphQLID,
+      type: new GraphQLNonNull(GraphQLID),
       resolve: ({ id }: Conference): string => id,
     },
     name: {

@@ -1,4 +1,9 @@
-import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
 
 import { Tag } from '../../generated/prisma-client';
 
@@ -6,7 +11,7 @@ export default new GraphQLObjectType({
   name: 'Tag',
   fields: {
     id: {
-      type: GraphQLID,
+      type: new GraphQLNonNull(GraphQLID),
       resolve: ({ id }: Tag): string => id,
     },
     name: {

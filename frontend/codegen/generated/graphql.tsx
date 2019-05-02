@@ -1,4 +1,4 @@
-type Maybe<T> = T | null;
+export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -19,7 +19,7 @@ export type AuthPayload = {
 };
 
 export type Conference = {
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Maybe<Tag>>>;
@@ -69,13 +69,13 @@ export type CreateConferenceInput = {
 };
 
 export type Image = {
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   src?: Maybe<Scalars['String']>;
   alt?: Maybe<Scalars['String']>;
 };
 
 export type Location = {
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   country?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
@@ -178,7 +178,7 @@ export type RootQueryConferencesArgs = {
 };
 
 export type Tag = {
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
 };
@@ -239,6 +239,7 @@ export type TagsQuery = { __typename?: 'RootQuery' } & {
 import gql from 'graphql-tag';
 import * as React from 'react';
 import * as ReactApollo from 'react-apollo';
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export const ConferencePartsFragmentDoc = gql`
   fragment ConferenceParts on Conference {
     id
@@ -279,38 +280,42 @@ export const ConferencesDocument = gql`
   ${ConferencePartsFragmentDoc}
 `;
 
-export class ConferencesComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<ConferencesQuery, ConferencesQueryVariables>>
-> {
-  render() {
-    return (
-      <ReactApollo.Query<ConferencesQuery, ConferencesQueryVariables>
-        query={ConferencesDocument}
-        {...(this as any)['props'] as any}
-      />
-    );
-  }
-}
+export const ConferencesComponent = (
+  props: Omit<
+    Omit<
+      ReactApollo.QueryProps<ConferencesQuery, ConferencesQueryVariables>,
+      'query'
+    >,
+    'variables'
+  > & { variables?: ConferencesQueryVariables },
+) => (
+  <ReactApollo.Query<ConferencesQuery, ConferencesQueryVariables>
+    query={ConferencesDocument}
+    {...props}
+  />
+);
+
 export type ConferencesProps<TChildProps = {}> = Partial<
   ReactApollo.DataProps<ConferencesQuery, ConferencesQueryVariables>
 > &
   TChildProps;
 export function withConferences<TProps, TChildProps = {}>(
-  operationOptions:
-    | ReactApollo.OperationOption<
-        TProps,
-        ConferencesQuery,
-        ConferencesQueryVariables,
-        ConferencesProps<TChildProps>
-      >
-    | undefined,
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    ConferencesQuery,
+    ConferencesQueryVariables,
+    ConferencesProps<TChildProps>
+  >,
 ) {
   return ReactApollo.withQuery<
     TProps,
     ConferencesQuery,
     ConferencesQueryVariables,
     ConferencesProps<TChildProps>
-  >(ConferencesDocument, operationOptions);
+  >(ConferencesDocument, {
+    alias: 'withConferences',
+    ...operationOptions,
+  });
 }
 export const TagsDocument = gql`
   query tags {
@@ -322,36 +327,37 @@ export const TagsDocument = gql`
   }
 `;
 
-export class TagsComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<TagsQuery, TagsQueryVariables>>
-> {
-  render() {
-    return (
-      <ReactApollo.Query<TagsQuery, TagsQueryVariables>
-        query={TagsDocument}
-        {...(this as any)['props'] as any}
-      />
-    );
-  }
-}
+export const TagsComponent = (
+  props: Omit<
+    Omit<ReactApollo.QueryProps<TagsQuery, TagsQueryVariables>, 'query'>,
+    'variables'
+  > & { variables?: TagsQueryVariables },
+) => (
+  <ReactApollo.Query<TagsQuery, TagsQueryVariables>
+    query={TagsDocument}
+    {...props}
+  />
+);
+
 export type TagsProps<TChildProps = {}> = Partial<
   ReactApollo.DataProps<TagsQuery, TagsQueryVariables>
 > &
   TChildProps;
 export function withTags<TProps, TChildProps = {}>(
-  operationOptions:
-    | ReactApollo.OperationOption<
-        TProps,
-        TagsQuery,
-        TagsQueryVariables,
-        TagsProps<TChildProps>
-      >
-    | undefined,
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    TagsQuery,
+    TagsQueryVariables,
+    TagsProps<TChildProps>
+  >,
 ) {
   return ReactApollo.withQuery<
     TProps,
     TagsQuery,
     TagsQueryVariables,
     TagsProps<TChildProps>
-  >(TagsDocument, operationOptions);
+  >(TagsDocument, {
+    alias: 'withTags',
+    ...operationOptions,
+  });
 }

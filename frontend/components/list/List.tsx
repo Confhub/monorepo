@@ -1,52 +1,29 @@
-import { Button, Divider, Icon, Tag } from 'antd';
+import { Divider, Icon, Tag } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
-import { THUMBNAILS_OPTIONS } from '../../components/constants';
-import { parseDateRange, setImageParams } from '../../components/helpers';
-import { Conference } from '../../generated/graphql';
+import { Conference } from '../../codegen/generated/graphql';
+import { THUMBNAILS_OPTIONS } from '../constants';
+import { parseDateRange, setImageParams } from '../helpers';
+import {
+  Description,
+  Image,
+  Info,
+  ItemWrapper,
+  StyledButton,
+  Title,
+  Wrapper,
+} from './styles';
 
 interface Props {
   data: Conference;
 }
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: auto 1fr auto;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 15px 20px;
-`;
+const Total = ({ totalAmount }) => <h3>Found: {totalAmount} items</h3>;
+const Empty = () => <h3>No data available :(</h3>;
 
-const Image = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  object-position: center;
-`;
-
-const Content = styled.div``;
-
-const Title = styled.h3`
-  font-size: 1.3em;
-  font-weight: 700;
-`;
-
-const Info = styled.div`
-  margin-bottom: 0.5em;
-`;
-
-const Description = styled.div`
-  font-weight: 500;
-`;
-
-const StyledButton = styled(Button)`
-  align-self: center;
-`;
-
-const ListItem = ({ data }: Props) => (
-  <Wrapper>
+const Item = ({ data }: Props) => (
+  <ItemWrapper>
     <Image
       alt={data.image ? data.image.alt : 'Conference image'}
       src={
@@ -56,7 +33,7 @@ const ListItem = ({ data }: Props) => (
       }
     />
 
-    <Content>
+    <div>
       <Title>
         <a href={data.url} target="_blank" rel="noopener noreferrer">
           {data.name}
@@ -84,7 +61,7 @@ const ListItem = ({ data }: Props) => (
       </div>
 
       <Description>{data.description}</Description>
-    </Content>
+    </div>
 
     <StyledButton
       type="primary"
@@ -94,7 +71,13 @@ const ListItem = ({ data }: Props) => (
     >
       More info
     </StyledButton>
-  </Wrapper>
+  </ItemWrapper>
 );
 
-export default ListItem;
+const List = ({ children }) => <Wrapper>{children}</Wrapper>;
+
+List.Item = Item;
+List.Total = Total;
+List.Empty = Empty;
+
+export default List;

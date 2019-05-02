@@ -1,7 +1,7 @@
 import { withRouter } from 'next/router';
 import React, { useContext } from 'react';
 
-import { ConferencesComponent } from '../src/generated/graphql';
+import { ConferencesComponent } from 'codegen/generated/graphql';
 import FiltersProvider, {
   FiltersContext,
 } from '../src/home/Filters/FiltersContext';

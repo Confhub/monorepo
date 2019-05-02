@@ -1,9 +1,9 @@
-import filter from 'lodash.filter';
-import includes from 'lodash.includes';
+import filter from 'lodash/filter';
+import includes from 'lodash/includes';
 import Router, { SingletonRouter } from 'next/router';
 import React, { useState } from 'react';
 
-import { Tag } from '../../components/tagSelector/TagSelector';
+import { Tag } from '../../../components/tagSelector/TagSelector';
 import { setUrl } from './helpers';
 
 interface Props {

@@ -6,7 +6,7 @@ import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 
 import withApollo from '../lib/withApollo';
-import Layout from '../src/components/layout/Layout';
+import Layout from '../components/layout/Layout';
 
 Router.events.on('routeChangeStart', url => {
   if (url.includes('/?')) {

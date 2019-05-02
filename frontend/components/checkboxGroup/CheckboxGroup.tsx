@@ -1,16 +1,17 @@
-import includes from 'lodash.includes';
-import React, { createContext, useContext, Component } from 'react';
+import includes from 'lodash/includes';
+import React, { createContext, useContext } from 'react';
 
 import {
   CheckboxGroupItemLabel,
   CheckboxGroupItemWrapper,
   CheckboxGroupWrapper,
-} from './CheckboxGroupStyles';
+} from './styles';
 
 interface CheckboxGroupProps {
   type: 'checkbox' | 'radio';
   value: string | string[];
   onChange: (value: string) => void;
+  children: React.ReactNode;
 }
 
 interface CheckboxGroupOptionProps {
@@ -48,32 +49,31 @@ const CheckboxGroupInput = ({
   );
 };
 
-class CheckboxGroup extends Component<CheckboxGroupProps> {
-  public static Option = CheckboxGroupInput;
+const CheckboxGroup = ({
+  type,
+  value,
+  onChange,
+  children,
+}: CheckboxGroupProps) => (
+  <Context.Provider
+    value={{
+      state: {
+        contextValue: value,
+      },
+      onChange: (event: React.FormEvent<HTMLElement>) =>
+        onChange(event.currentTarget.getAttribute('data-value')),
+    }}
+  >
+    <CheckboxGroupWrapper>
+      {React.Children.map(children, (child: React.ReactElement<any>) =>
+        React.cloneElement(child, {
+          type,
+        }),
+      )}
+    </CheckboxGroupWrapper>
+  </Context.Provider>
+);
 
-  public render() {
-    const { type, value, onChange, children } = this.props;
-
-    return (
-      <Context.Provider
-        value={{
-          state: {
-            contextValue: value,
-          },
-          onChange: (event: React.FormEvent<HTMLElement>) =>
-            onChange(event.currentTarget.getAttribute('data-value')),
-        }}
-      >
-        <CheckboxGroupWrapper>
-          {React.Children.map(children, (child: React.ReactElement<any>) =>
-            React.cloneElement(child, {
-              type,
-            }),
-          )}
-        </CheckboxGroupWrapper>
-      </Context.Provider>
-    );
-  }
-}
+CheckboxGroup.Option = CheckboxGroupInput;
 
 export default CheckboxGroup;

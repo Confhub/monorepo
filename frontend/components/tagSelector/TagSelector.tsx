@@ -1,6 +1,6 @@
 import { Select } from 'antd';
 import React from 'react';
-import { TagsComponent } from '../../generated/graphql';
+import { TagsComponent } from '../../codegen/generated/graphql';
 
 export interface Tag {
   id: string;

@@ -5,11 +5,15 @@
   "alias": "confhub.win",
   "scope": "confhubhq",
   "regions": ["all"],
-  "builds": [
+  "env": {
+    "MAPBOX_SECRET": "@confhub-mapbox-secret",
+    "PRISMA_ENDPOINT": "@confhub-graphql-prisma-endpoint"
+  },
+  "builds": [{ "src": "graphql/src/index.ts", "use": "@now/node-server" }],
+  "routes": [
     {
-      "src": "frontend/package.json",
-      "use": "@now/next"
+      "src": "/api/(.*)",
+      "dest": "/graphql/index.ts"
     }
-  ],
-  "routes": [{ "src": "/", "dest": "/index" }]
+  ]
 }

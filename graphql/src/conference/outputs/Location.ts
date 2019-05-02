@@ -1,11 +1,16 @@
-import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
 import { Location } from '../../generated/prisma-client';
 
 export default new GraphQLObjectType({
   name: 'Location',
   fields: {
     id: {
-      type: GraphQLID,
+      type: new GraphQLNonNull(GraphQLID),
       resolve: ({ id }: Location): string => id,
     },
     country: {

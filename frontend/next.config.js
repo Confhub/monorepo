@@ -16,14 +16,17 @@ module.exports = (phase, { defaultConfig }) => {
     return {};
   }
 
-  const withTypescript = require('@zeit/next-typescript');
   const withCss = require('@zeit/next-css');
   const path = require('path');
   const Dotenv = require('dotenv-webpack');
 
-  return withTypescript(
-    withCss({
-      target: 'serverless',
-    }),
-  );
+  return withCss({
+    target: 'serverless',
+    webpack: (config, options) => {
+      // enable file imports relative to the app root
+      config.resolve.modules.push(path.resolve('./'));
+
+      return config;
+    },
+  });
 };

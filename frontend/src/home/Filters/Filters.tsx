@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import CheckboxGroup from '../../components/checkboxGroup/CheckboxGroup';
-import TagSelector from '../../components/tagSelector/TagSelector';
+import CheckboxGroup from 'components/checkboxGroup';
+import TagSelector from 'components/tagSelector';
 import {
   categoryOptions,
   intervalOptions,
