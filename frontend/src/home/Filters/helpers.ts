@@ -6,5 +6,6 @@ export const setUrl = (query: object) => {
     query,
   };
 
+  // @ts-ignore
   Router.push(href, href);
 };

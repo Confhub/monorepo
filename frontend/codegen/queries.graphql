@@ -41,6 +41,12 @@ query conferences(
   }
 }
 
+query conference($id: ID!) {
+  conference(id: $id) {
+    ...ConferenceParts
+  }
+}
+
 query tags {
   tags {
     id

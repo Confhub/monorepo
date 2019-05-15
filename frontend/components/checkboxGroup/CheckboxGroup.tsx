@@ -18,7 +18,7 @@ interface CheckboxGroupOptionProps {
   value: string;
   label: string;
   type?: 'checkbox' | 'radio';
-  disabled?: boolean;
+  disabled: boolean;
 }
 
 const Context = createContext({});
@@ -30,6 +30,7 @@ const CheckboxGroupInput = ({
   disabled,
 }: CheckboxGroupOptionProps) => {
   const RadioContext = useContext(Context);
+  // @ts-ignore
   const { state, onChange } = RadioContext;
 
   const isChecked =
@@ -61,10 +62,13 @@ const CheckboxGroup = ({
         contextValue: value,
       },
       onChange: (event: React.FormEvent<HTMLElement>) =>
+        // @ts-ignore
         onChange(event.currentTarget.getAttribute('data-value')),
     }}
   >
     <CheckboxGroupWrapper>
+      {/* 
+        // @ts-ignore */}
       {React.Children.map(children, (child: React.ReactElement<any>) =>
         React.cloneElement(child, {
           type,

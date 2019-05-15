@@ -15,7 +15,7 @@ export default new GraphQLObjectType({
       resolve: ({ id }: Image): string => id,
     },
     src: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
       resolve: ({ src }: Image): string => src,
     },
     alt: {

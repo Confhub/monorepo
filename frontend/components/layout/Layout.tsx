@@ -1,9 +1,9 @@
-import { Layout as AntLayout } from "antd";
-import { withRouter } from "next/router";
-import React from "react";
-import styled from "styled-components";
+import { Layout as AntLayout } from 'antd';
+import { withRouter } from 'next/router';
+import React from 'react';
+import styled from 'styled-components';
 
-import Header from "./Header/Header";
+import Header from './Header/Header';
 
 interface Props {
   router: {
@@ -20,16 +20,15 @@ class Layout extends React.Component<Props> {
   public render() {
     // const { isAuth, userData, signOut, router, children } = this.props;
     const { router, children } = this.props;
-    const isHomePage = router.pathname === "/";
+    const isHomePage = router.pathname === '/';
 
     return (
       <React.Fragment>
-        <AntLayout className={`layout ${isHomePage ? "home" : ""}`}>
+        <AntLayout className={`layout ${isHomePage ? 'home' : ''}`}>
           <Header
-            className="header"
-            // isAuth={isAuth}
-            // userData={userData}
-            // signOut={signOut}
+          // isAuth={isAuth}
+          // userData={userData}
+          // signOut={signOut}
           />
 
           <Content>{children}</Content>
@@ -77,4 +76,5 @@ class Layout extends React.Component<Props> {
   }
 }
 
+// @ts-ignore
 export default withRouter(Layout);

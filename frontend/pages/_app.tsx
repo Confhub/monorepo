@@ -5,8 +5,8 @@ import NProgress from 'nprogress';
 import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 
-import withApollo from '../lib/withApollo';
 import Layout from '../components/layout/Layout';
+import withApollo from '../lib/withApollo';
 
 Router.events.on('routeChangeStart', url => {
   if (url.includes('/?')) {

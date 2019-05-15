@@ -1,9 +1,4 @@
-import Document, {
-  Head,
-  Main,
-  NextDocumentContext,
-  NextScript,
-} from 'next/document';
+import Document, { Head, Main, NextScript } from 'next/document';
 import React from 'react';
 import { createGlobalStyle, ServerStyleSheet } from 'styled-components';
 
@@ -34,14 +29,16 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+// @ts-ignore
 export class MyDocument extends Document {
-  public static async getInitialProps(ctx: NextDocumentContext) {
+  public static async getInitialProps(ctx: any) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
+          // @ts-ignore
           enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
         });
 

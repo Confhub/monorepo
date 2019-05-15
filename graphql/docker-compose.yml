@@ -1,11 +1,13 @@
 version: '3'
 services:
   prisma:
-    image: prismagraphql/prisma:1.31
+    image: prismagraphql/prisma:1.33
     container_name: confhub_prisma
+    networks:
+      - confhub-network
     restart: always
     ports:
-    - "4466:4466"
+      - '4466:4466'
     environment:
       PRISMA_CONFIG: |
         port: 4466
@@ -21,9 +23,11 @@ services:
   postgres:
     image: postgres
     container_name: confhub_db
+    networks:
+      - confhub-network
     restart: always
     ports:
-    - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
@@ -31,3 +35,5 @@ services:
       - postgres:/var/lib/postgresql/data
 volumes:
   postgres:
+networks:
+  confhub-network:

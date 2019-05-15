@@ -16,8 +16,7 @@ const mS = [
 ];
 
 // return date in format May 2-4, 2018
-// export const parseDateRange = (startDate: string, endDate: string) => {
-export const parseDateRange = (startDate, endDate) => {
+export const parseDateRange = (startDate: string, endDate: string) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
@@ -29,6 +28,7 @@ export const parseDateRange = (startDate, endDate) => {
   return `${month} ${startDay}-${endDay}, ${year}`;
 };
 
+// @ts-ignore
 export const searchCity = async (query, { search } = {}) => {
   const params = {
     access_token: process.env.MAPBOX_SECRET,
@@ -37,6 +37,7 @@ export const searchCity = async (query, { search } = {}) => {
   };
 
   if (!search) {
+    // @ts-ignore
     params.type = 'place';
   }
 
@@ -52,11 +53,13 @@ export const searchCity = async (query, { search } = {}) => {
 
 export const getLocation = () =>
   new Promise((resolve, reject) => {
+    // @ts-ignore
     const success = position => {
       const { longitude, latitude } = position.coords;
       resolve([longitude, latitude]);
     };
 
+    // @ts-ignore
     const error = err => {
       reject(err);
     };
@@ -71,6 +74,7 @@ export const getLocation = () =>
 const cloudName = 'alizhdanov';
 const unsignedUploadPreset = 'is2hk7eh';
 
+// @ts-ignore
 export const handleImageLoading = async file => {
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
   const fd = new FormData();
@@ -89,6 +93,7 @@ export const handleImageLoading = async file => {
   }
 };
 
+// @ts-ignore
 export const customRequest = async ({ file, headers, onError, onSuccess }) => {
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
   const formData = new FormData();
@@ -109,6 +114,7 @@ export const customRequest = async ({ file, headers, onError, onSuccess }) => {
   }
 };
 
+// @ts-ignore
 export const setImageParams = (url, params) => {
   // if img hosted not in cloudinary, don't modify it
   if (!url.includes('cloudinary.com')) {
@@ -135,6 +141,7 @@ const sessiontoken = Math.random()
 // getting detailed data about place by it's id
 // more info
 // https://developers.google.com/places/web-service/details
+// @ts-ignore
 export const getPlaceDetails = async placeid => {
   const params = {
     key: 'AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI',
@@ -157,6 +164,7 @@ export const getPlaceDetails = async placeid => {
 // getting autocomplete data by query
 // more info
 // https://developers.google.com/places/web-service/autocomplete
+// @ts-ignore
 export const getPlaceAutocomplete = async query => {
   const params = {
     key: 'AIzaSyB-UymjkciC5d1_SQRq5p2t_X3oaJ6zCkI',

@@ -13,11 +13,15 @@ const Option = Select.Option;
 // @TODO: reuse it in two places
 
 class TagSelector extends React.Component {
+  // @ts-ignore
   public handleChange = values => {
+    // @ts-ignore
     const { data, onChange, optionKey } = this.props;
     const tags = data.tags;
     const items = values.map(
+      // @ts-ignore
       item =>
+        // @ts-ignore
         tags.find(tag => (tag[optionKey] || tag) === item) || {
           id: 'tmp-' + item,
           name: item,
@@ -30,15 +34,19 @@ class TagSelector extends React.Component {
   public componentDidMount() {
     // On first page load tags might be just list of slug,
     // we need to change it to a proper list of objects
+    // @ts-ignore
     const { tags, data, optionKey, onChange } = this.props;
     if (tags && tags.length && typeof tags[0] === 'string') {
+      // @ts-ignore
       const items = tags.map(i => data.tags.find(t => t[optionKey] === i));
       onChange(items);
     }
   }
 
   public render() {
+    // @ts-ignore
     const { value, data, edit, optionKey } = this.props;
+    // @ts-ignore
     const sanitizedValues = value ? value.map(i => i[optionKey] || i) : [];
 
     return (
@@ -54,6 +62,7 @@ class TagSelector extends React.Component {
       >
         {data &&
           data.tags &&
+          // @ts-ignore
           data.tags.map(item => (
             <Option key={item.id} value={item[optionKey]}>
               {item.name}
@@ -64,6 +73,7 @@ class TagSelector extends React.Component {
   }
 }
 
+// @ts-ignore
 export default props => (
   <TagsComponent>
     {({ data, loading, error }) => {

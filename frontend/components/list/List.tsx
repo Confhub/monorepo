@@ -1,6 +1,6 @@
 import { Divider, Icon, Tag } from 'antd';
+import Link from 'next/link';
 import React from 'react';
-import styled from 'styled-components';
 
 import { Conference } from '../../codegen/generated/graphql';
 import { THUMBNAILS_OPTIONS } from '../constants';
@@ -19,13 +19,16 @@ interface Props {
   data: Conference;
 }
 
-const Total = ({ totalAmount }) => <h3>Found: {totalAmount} items</h3>;
+const Total = ({ totalAmount }: { totalAmount: number }) => (
+  <h3>Found: {totalAmount} items</h3>
+);
+
 const Empty = () => <h3>No data available :(</h3>;
 
 const Item = ({ data }: Props) => (
   <ItemWrapper>
     <Image
-      alt={data.image ? data.image.alt : 'Conference image'}
+      alt={data.image && data.image.alt ? data.image.alt : 'Conference image'}
       src={
         data.image
           ? setImageParams(data.image.src, THUMBNAILS_OPTIONS)
@@ -35,9 +38,13 @@ const Item = ({ data }: Props) => (
 
     <div>
       <Title>
-        <a href={data.url} target="_blank" rel="noopener noreferrer">
+        <Link as={`/conference/${data.id}`} href={`/conference?id=${data.id}`}>
+          <a>{data.name}</a>
+        </Link>
+
+        {/* <a href={data.url} target="_blank" rel="noopener noreferrer">
           {data.name}
-        </a>
+        </a> */}
       </Title>
 
       <Info>
@@ -55,9 +62,7 @@ const Item = ({ data }: Props) => (
       </Info>
 
       <div>
-        {data.tags.map(tag => (
-          <Tag key={tag.id}>{tag.name}</Tag>
-        ))}
+        {data.tags && data.tags.map(tag => <Tag key={tag.id}>{tag.name}</Tag>)}
       </div>
 
       <Description>{data.description}</Description>
@@ -74,7 +79,9 @@ const Item = ({ data }: Props) => (
   </ItemWrapper>
 );
 
-const List = ({ children }) => <Wrapper>{children}</Wrapper>;
+const List = ({ children }: { children: React.ReactNode }) => (
+  <Wrapper>{children}</Wrapper>
+);
 
 List.Item = Item;
 List.Total = Total;

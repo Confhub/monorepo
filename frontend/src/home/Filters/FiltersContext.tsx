@@ -26,9 +26,11 @@ interface Context {
   };
 }
 
+// @ts-ignore
 export const FiltersContext = React.createContext<Context>(null);
 
 const FiltersProvider = ({ router, children }: Props) => {
+  // @ts-ignore
   const { tags, period, regions } = router.query;
   const [state, setState] = useState({
     categoryValue: ['tech'],
@@ -42,11 +44,13 @@ const FiltersProvider = ({ router, children }: Props) => {
 
   const updateTagValue = (tagValue: Tag[] | []) => {
     // console.log({ tagValue });
+    // @ts-ignore
     setState({ ...state, tagValue });
   };
 
   const updateTimePeriodValue = (timePeriodValue: string | null) => {
     if (state.timePeriodValue && state.timePeriodValue === timePeriodValue) {
+      // @ts-ignore
       const { period: oldPeriod, ...query } = Router.query;
 
       setState({ ...state, timePeriodValue: null });
@@ -58,6 +62,7 @@ const FiltersProvider = ({ router, children }: Props) => {
 
     setState({ ...state, timePeriodValue });
     setUrl({
+      // @ts-ignore
       ...Router.query,
       ...(timePeriodValue && {
         period: timePeriodValue,
@@ -66,6 +71,7 @@ const FiltersProvider = ({ router, children }: Props) => {
   };
 
   const updateRegionValue = (regionValue: string) => {
+    // @ts-ignore
     const { regions: oldRegions, ...query } = Router.query;
     const updatedRegionValue = includes(state.regionValue, regionValue)
       ? filter(state.regionValue, item => item !== regionValue)

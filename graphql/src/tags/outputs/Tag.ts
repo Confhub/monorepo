@@ -15,11 +15,11 @@ export default new GraphQLObjectType({
       resolve: ({ id }: Tag): string => id,
     },
     name: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
       resolve: ({ name }: Tag): string => name,
     },
     slug: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
       resolve: ({ slug }: Tag): string => slug,
     },
   },

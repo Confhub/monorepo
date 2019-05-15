@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import CheckboxGroup from 'components/checkboxGroup';
-import TagSelector from 'components/tagSelector';
+import CheckboxGroup from '../../../components/checkboxGroup';
+import TagSelector from '../../../components/tagSelector';
 import {
   categoryOptions,
   intervalOptions,
@@ -17,7 +17,9 @@ const Wrapper = styled.div`
 const Filters = () => {
   const context = useContext(FiltersContext);
   const {
+    // @ts-ignore
     state: { categoryValue, tagValue, timePeriodValue, regionValue },
+    // @ts-ignore
     actions: {
       updateCategoryValue,
       updateTagValue,
@@ -39,6 +41,7 @@ const Filters = () => {
             key={category.id}
             label={category.label}
             value={category.value}
+            // @ts-ignore
             disabled={category.disabled}
           />
         ))}
@@ -73,6 +76,7 @@ const Filters = () => {
         value={timePeriodValue}
       >
         {intervalOptions.map(interval => (
+          // @ts-ignore
           <CheckboxGroup.Option
             key={interval.id}
             label={interval.label}
@@ -88,6 +92,7 @@ const Filters = () => {
         onChange={updateRegionValue}
       >
         {regionOptions.map(region => (
+          // @ts-ignore
           <CheckboxGroup.Option
             key={region.id}
             label={region.label}

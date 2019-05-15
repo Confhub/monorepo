@@ -37,7 +37,7 @@ export default new GraphQLObjectType({
         description || null,
     },
     tags: {
-      type: new GraphQLList(GraphQLTag),
+      type: new GraphQLList(new GraphQLNonNull(GraphQLTag)),
       resolve: ({ id }: Conference, _, ctx: Context): Tag[] =>
         ctx.prisma.conference({ id }).tags(),
     },
@@ -47,24 +47,24 @@ export default new GraphQLObjectType({
         ctx.prisma.conference({ id }).image(),
     },
     url: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
       resolve: ({ url }: Conference): string => url,
     },
     startDate: {
-      type: GraphQLDateTime,
+      type: new GraphQLNonNull(GraphQLDateTime),
       resolve: ({ startDate }: Conference): DateTimeOutput => startDate,
     },
     endDate: {
-      type: GraphQLDateTime,
+      type: new GraphQLNonNull(GraphQLDateTime),
       resolve: ({ endDate }: Conference): DateTimeOutput => endDate,
     },
     location: {
-      type: GraphQLLocation,
+      type: new GraphQLNonNull(GraphQLLocation),
       resolve: ({ id }: Conference, _, ctx: Context): Location =>
         ctx.prisma.conference({ id }).location(),
     },
     publishStatus: {
-      type: GraphQLPublishStatus,
+      type: new GraphQLNonNull(GraphQLPublishStatus),
       resolve: ({ publishStatus }: Conference): PUBLISH_STATUS => publishStatus,
     },
   },

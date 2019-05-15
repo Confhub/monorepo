@@ -22,13 +22,13 @@ export type Conference = {
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Maybe<Tag>>>;
+  tags?: Maybe<Array<Tag>>;
   image?: Maybe<Image>;
-  url?: Maybe<Scalars['String']>;
-  startDate?: Maybe<Scalars['DateTime']>;
-  endDate?: Maybe<Scalars['DateTime']>;
-  location?: Maybe<Location>;
-  publishStatus?: Maybe<PublishStatus>;
+  url: Scalars['String'];
+  startDate: Scalars['DateTime'];
+  endDate: Scalars['DateTime'];
+  location: Location;
+  publishStatus: PublishStatus;
 };
 
 export type ConferenceImageInput = {
@@ -70,7 +70,7 @@ export type CreateConferenceInput = {
 
 export type Image = {
   id: Scalars['ID'];
-  src?: Maybe<Scalars['String']>;
+  src: Scalars['String'];
   alt?: Maybe<Scalars['String']>;
 };
 
@@ -179,8 +179,8 @@ export type RootQueryConferencesArgs = {
 
 export type Tag = {
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  slug: Scalars['String'];
 };
 
 export type User = {
@@ -208,12 +208,10 @@ export type ConferencePartsFragment = { __typename?: 'Conference' } & Pick<
   | 'publishStatus'
 > & {
     tags: Maybe<
-      Array<Maybe<{ __typename?: 'Tag' } & Pick<Tag, 'id' | 'name' | 'slug'>>>
+      Array<{ __typename?: 'Tag' } & Pick<Tag, 'id' | 'name' | 'slug'>>
     >;
     image: Maybe<{ __typename?: 'Image' } & Pick<Image, 'src' | 'alt'>>;
-    location: Maybe<
-      { __typename?: 'Location' } & Pick<Location, 'city' | 'country'>
-    >;
+    location: { __typename?: 'Location' } & Pick<Location, 'city' | 'country'>;
   };
 
 export type ConferencesQueryVariables = {
@@ -226,6 +224,14 @@ export type ConferencesQuery = { __typename?: 'RootQuery' } & {
   conferences: Maybe<
     Array<Maybe<{ __typename?: 'Conference' } & ConferencePartsFragment>>
   >;
+};
+
+export type ConferenceQueryVariables = {
+  id: Scalars['ID'];
+};
+
+export type ConferenceQuery = { __typename?: 'RootQuery' } & {
+  conference: Maybe<{ __typename?: 'Conference' } & ConferencePartsFragment>;
 };
 
 export type TagsQueryVariables = {};
@@ -314,6 +320,52 @@ export function withConferences<TProps, TChildProps = {}>(
     ConferencesProps<TChildProps>
   >(ConferencesDocument, {
     alias: 'withConferences',
+    ...operationOptions,
+  });
+}
+export const ConferenceDocument = gql`
+  query conference($id: ID!) {
+    conference(id: $id) {
+      ...ConferenceParts
+    }
+  }
+  ${ConferencePartsFragmentDoc}
+`;
+
+export const ConferenceComponent = (
+  props: Omit<
+    Omit<
+      ReactApollo.QueryProps<ConferenceQuery, ConferenceQueryVariables>,
+      'query'
+    >,
+    'variables'
+  > & { variables: ConferenceQueryVariables },
+) => (
+  <ReactApollo.Query<ConferenceQuery, ConferenceQueryVariables>
+    query={ConferenceDocument}
+    {...props}
+  />
+);
+
+export type ConferenceProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<ConferenceQuery, ConferenceQueryVariables>
+> &
+  TChildProps;
+export function withConference<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    ConferenceQuery,
+    ConferenceQueryVariables,
+    ConferenceProps<TChildProps>
+  >,
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    ConferenceQuery,
+    ConferenceQueryVariables,
+    ConferenceProps<TChildProps>
+  >(ConferenceDocument, {
+    alias: 'withConference',
     ...operationOptions,
   });
 }

@@ -35,7 +35,7 @@ const HomePage = ({ data }: { data: Conference[] }) => (
     <Content id="map-wrap">
       {/* <MapContainer items={data} /> */}
       <List>
-        {data.length ? (
+        {data ? (
           <>
             <List.Total totalAmount={data.length} />
 

@@ -2,24 +2,23 @@ import { ApolloClient, InMemoryCache } from 'apollo-boost';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
 import fetch from 'isomorphic-unfetch';
-import { BASE_URL } from './withApollo';
 
+// @ts-ignore
 let apolloClient = null;
+export const isBrowser = typeof window !== 'undefined';
 
 // Polyfill fetch() on the server (used by apollo-client)
-if (!process.browser) {
+if (!isBrowser) {
+  // @ts-ignore
   global.fetch = fetch;
 }
 
-function create(initialState, { getToken }) {
-  const API_URL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:4000/'
-      : `https://${BASE_URL}/api/`;
-
+// @ts-ignore
+function create(initialState, { getToken, fetchOptions }) {
   const httpLink = createHttpLink({
-    uri: API_URL,
+    uri: 'http://localhost:4000/',
     credentials: 'same-origin',
+    fetchOptions,
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -32,26 +31,28 @@ function create(initialState, { getToken }) {
     };
   });
 
-  // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
-    connectToDevTools: process.browser,
-    ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
+    connectToDevTools: isBrowser,
+    ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
     link: authLink.concat(httpLink),
     cache: new InMemoryCache().restore(initialState || {}),
   });
 }
 
+// @ts-ignore
 export default function initApollo(initialState, options) {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
-  if (!process.browser) {
+  if (!isBrowser) {
     return create(initialState, options);
   }
 
   // Reuse client on the client-side
+  // @ts-ignore
   if (!apolloClient) {
     apolloClient = create(initialState, options);
   }
 
+  // @ts-ignore
   return apolloClient;
 }

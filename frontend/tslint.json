@@ -17,7 +17,8 @@
     "max-classes-per-file": false,
     "jsx-boolean-value": ["never"],
     "no-implicit-dependencies": [true, "dev"],
-    "no-var-requires": false
+    "no-var-requires": false,
+    "no-console": [true, "log"]
   },
   "rulesDirectory": [],
   "linterOptions": {
