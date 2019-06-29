@@ -183,6 +183,6 @@ export const getPlaceAutocomplete = async query => {
 
     return predictions;
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };

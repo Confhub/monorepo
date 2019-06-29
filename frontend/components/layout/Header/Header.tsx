@@ -1,7 +1,7 @@
-import { Icon, Layout, Menu } from "antd";
-import Link from "next/link";
-import React from "react";
-import styled from "styled-components";
+import { Icon, Layout, Menu } from 'antd';
+import Link from 'next/link';
+import React from 'react';
+import styled from 'styled-components';
 
 // interface Props {
 //   isAuth: boolean;
@@ -20,12 +20,12 @@ const Logo = styled.div`
 
 // const Header = ({ isAuth, userData, signOut }: Props) => (
 const Header = () => (
-  <Layout.Header style={{ width: "100%", background: "#ffffff" }}>
+  <Layout.Header style={{ width: '100%', background: '#ffffff' }}>
     <Link href="/">
       <Logo />
     </Link>
 
-    <Menu theme="light" mode="horizontal" style={{ lineHeight: "64px" }}>
+    <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px' }}>
       <Menu.Item key="newConference">
         <a
           href="https://goo.gl/forms/ND7hyjgEPBgZrewn2"

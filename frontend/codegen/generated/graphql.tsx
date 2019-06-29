@@ -1,4 +1,9 @@
+import gql from 'graphql-tag';
+import * as React from 'react';
+import * as ReactApollo from 'react-apollo';
+import * as ReactApolloHooks from 'react-apollo-hooks';
 export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,11 +19,13 @@ export type Scalars = {
 };
 
 export type AuthPayload = {
+  __typename?: 'AuthPayload';
   token?: Maybe<Scalars['String']>;
   user?: Maybe<User>;
 };
 
 export type Conference = {
+  __typename?: 'Conference';
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -69,12 +76,14 @@ export type CreateConferenceInput = {
 };
 
 export type Image = {
+  __typename?: 'Image';
   id: Scalars['ID'];
   src: Scalars['String'];
   alt?: Maybe<Scalars['String']>;
 };
 
 export type Location = {
+  __typename?: 'Location';
   id: Scalars['ID'];
   country?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
@@ -98,6 +107,7 @@ export enum Region {
 
 /** Root Mutation */
 export type RootMutation = {
+  __typename?: 'RootMutation';
   logIn?: Maybe<AuthPayload>;
   signUp?: Maybe<AuthPayload>;
   changeUserRole?: Maybe<User>;
@@ -161,6 +171,7 @@ export type RootMutationUpdateTagArgs = {
 
 /** Root Query */
 export type RootQuery = {
+  __typename?: 'RootQuery';
   conference?: Maybe<Conference>;
   conferences?: Maybe<Array<Maybe<Conference>>>;
   tags?: Maybe<Array<Maybe<Tag>>>;
@@ -178,12 +189,14 @@ export type RootQueryConferencesArgs = {
 };
 
 export type Tag = {
+  __typename?: 'Tag';
   id: Scalars['ID'];
   name: Scalars['String'];
   slug: Scalars['String'];
 };
 
 export type User = {
+  __typename?: 'User';
   id?: Maybe<Scalars['ID']>;
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -241,11 +254,6 @@ export type TagsQuery = { __typename?: 'RootQuery' } & {
     Array<Maybe<{ __typename?: 'Tag' } & Pick<Tag, 'id' | 'name' | 'slug'>>>
   >;
 };
-
-import gql from 'graphql-tag';
-import * as React from 'react';
-import * as ReactApollo from 'react-apollo';
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export const ConferencePartsFragmentDoc = gql`
   fragment ConferenceParts on Conference {
     id
@@ -285,16 +293,12 @@ export const ConferencesDocument = gql`
   }
   ${ConferencePartsFragmentDoc}
 `;
+export type ConferencesComponentProps = Omit<
+  ReactApollo.QueryProps<ConferencesQuery, ConferencesQueryVariables>,
+  'query'
+>;
 
-export const ConferencesComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.QueryProps<ConferencesQuery, ConferencesQueryVariables>,
-      'query'
-    >,
-    'variables'
-  > & { variables?: ConferencesQueryVariables },
-) => (
+export const ConferencesComponent = (props: ConferencesComponentProps) => (
   <ReactApollo.Query<ConferencesQuery, ConferencesQueryVariables>
     query={ConferencesDocument}
     {...props}
@@ -323,6 +327,15 @@ export function withConferences<TProps, TChildProps = {}>(
     ...operationOptions,
   });
 }
+
+export function useConferencesQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<ConferencesQueryVariables>,
+) {
+  return ReactApolloHooks.useQuery<ConferencesQuery, ConferencesQueryVariables>(
+    ConferencesDocument,
+    baseOptions,
+  );
+}
 export const ConferenceDocument = gql`
   query conference($id: ID!) {
     conference(id: $id) {
@@ -331,16 +344,13 @@ export const ConferenceDocument = gql`
   }
   ${ConferencePartsFragmentDoc}
 `;
+export type ConferenceComponentProps = Omit<
+  ReactApollo.QueryProps<ConferenceQuery, ConferenceQueryVariables>,
+  'query'
+> &
+  ({ variables: ConferenceQueryVariables; skip?: false } | { skip: true });
 
-export const ConferenceComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.QueryProps<ConferenceQuery, ConferenceQueryVariables>,
-      'query'
-    >,
-    'variables'
-  > & { variables: ConferenceQueryVariables },
-) => (
+export const ConferenceComponent = (props: ConferenceComponentProps) => (
   <ReactApollo.Query<ConferenceQuery, ConferenceQueryVariables>
     query={ConferenceDocument}
     {...props}
@@ -369,6 +379,15 @@ export function withConference<TProps, TChildProps = {}>(
     ...operationOptions,
   });
 }
+
+export function useConferenceQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<ConferenceQueryVariables>,
+) {
+  return ReactApolloHooks.useQuery<ConferenceQuery, ConferenceQueryVariables>(
+    ConferenceDocument,
+    baseOptions,
+  );
+}
 export const TagsDocument = gql`
   query tags {
     tags {
@@ -378,13 +397,12 @@ export const TagsDocument = gql`
     }
   }
 `;
+export type TagsComponentProps = Omit<
+  ReactApollo.QueryProps<TagsQuery, TagsQueryVariables>,
+  'query'
+>;
 
-export const TagsComponent = (
-  props: Omit<
-    Omit<ReactApollo.QueryProps<TagsQuery, TagsQueryVariables>, 'query'>,
-    'variables'
-  > & { variables?: TagsQueryVariables },
-) => (
+export const TagsComponent = (props: TagsComponentProps) => (
   <ReactApollo.Query<TagsQuery, TagsQueryVariables>
     query={TagsDocument}
     {...props}
@@ -412,4 +430,13 @@ export function withTags<TProps, TChildProps = {}>(
     alias: 'withTags',
     ...operationOptions,
   });
+}
+
+export function useTagsQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<TagsQueryVariables>,
+) {
+  return ReactApolloHooks.useQuery<TagsQuery, TagsQueryVariables>(
+    TagsDocument,
+    baseOptions,
+  );
 }

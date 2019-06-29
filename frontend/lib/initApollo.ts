@@ -1,56 +1,39 @@
-import { ApolloClient, InMemoryCache } from 'apollo-boost';
-import { setContext } from 'apollo-link-context';
-import { createHttpLink } from 'apollo-link-http';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import fetch from 'isomorphic-unfetch';
 
 // @ts-ignore
 let apolloClient = null;
-export const isBrowser = typeof window !== 'undefined';
-
-// Polyfill fetch() on the server (used by apollo-client)
-if (!isBrowser) {
-  // @ts-ignore
-  global.fetch = fetch;
-}
 
 // @ts-ignore
-function create(initialState, { getToken, fetchOptions }) {
-  const httpLink = createHttpLink({
-    uri: 'http://localhost:4000/',
-    credentials: 'same-origin',
-    fetchOptions,
-  });
-
-  const authLink = setContext((_, { headers }) => {
-    const token = getToken();
-    return {
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    };
-  });
-
+function create(initialState) {
+  // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
+  const isBrowser = typeof window !== 'undefined';
   return new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: authLink.concat(httpLink),
+    // @ts-ignore
+    link: new HttpLink({
+      uri: 'http://localhost:4000/',
+      credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
+      // Use fetch() polyfill on the server
+      fetch: !isBrowser && fetch,
+    }),
     cache: new InMemoryCache().restore(initialState || {}),
   });
 }
 
 // @ts-ignore
-export default function initApollo(initialState, options) {
+export default function initApollo(initialState) {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
-  if (!isBrowser) {
-    return create(initialState, options);
+  if (typeof window === 'undefined') {
+    return create(initialState);
   }
 
   // Reuse client on the client-side
   // @ts-ignore
   if (!apolloClient) {
-    apolloClient = create(initialState, options);
+    apolloClient = create(initialState);
   }
 
   // @ts-ignore

@@ -2,7 +2,7 @@
   "version": 2,
   "name": "confhub",
   "alias": ["confhub.win", "www.confhub.win"],
-  "scope": "confhubhq",
+  "scope": "confhub-co",
   "regions": ["all"],
   "builds": [
     {

@@ -4,38 +4,38 @@ import {
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-import { Location } from '../../generated/prisma-client';
+import { ConferenceLocation } from '../../generated/prisma-client';
 
 export default new GraphQLObjectType({
   name: 'Location',
   fields: {
     id: {
       type: new GraphQLNonNull(GraphQLID),
-      resolve: ({ id }: Location): string => id,
+      resolve: ({ id }: ConferenceLocation): string => id,
     },
     country: {
       type: GraphQLString,
-      resolve: ({ country }: Location): string => country,
+      resolve: ({ country }: ConferenceLocation): string => country,
     },
     city: {
       type: GraphQLString,
-      resolve: ({ city }: Location): string => city,
+      resolve: ({ city }: ConferenceLocation): string => city,
     },
     address: {
       type: GraphQLString,
-      resolve: ({ address }: Location): string => address,
+      resolve: ({ address }: ConferenceLocation): string => address,
     },
     // venueName: {
     //   type: GraphQLString,
-    //   resolve: ({ venueName }: Location): string => venueName,
+    //   resolve: ({ venueName }: ConferenceLocation): string => venueName,
     // },
     // region: {
     //   type: GraphQLRegion,
-    //   resolve: ({ region }: Location): REGION => region,
+    //   resolve: ({ region }: ConferenceLocation): REGION => region,
     // },
     // coordinates: {
     //   type: GraphQLCoordinates,
-    //   resolve: ({ coordinates }: Location): Coordinates => coordinates,
+    //   resolve: ({ coordinates }: ConferenceLocation): Coordinates => coordinates,
     // },
   },
 });

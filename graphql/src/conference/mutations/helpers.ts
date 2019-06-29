@@ -1,7 +1,7 @@
 import {
+  ConferenceLocationCreateOneInput,
   Image,
   ImageCreateOneInput,
-  LocationCreateOneInput,
   Tag,
   TagCreateManyInput,
   TagUpdateManyInput,
@@ -66,7 +66,7 @@ export const generateLocation = ({
   city,
   address,
 }: // coordinates,
-any): LocationCreateOneInput => {
+any): ConferenceLocationCreateOneInput => {
   return {
     create: {
       // venueName: venueName || '',

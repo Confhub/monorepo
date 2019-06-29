@@ -41,7 +41,7 @@ type Image @db(name: "image") {
   alt: String
 }
 
-type Location @db(name: "location") {
+type ConferenceLocation @db(name: "conference_location") {
   id: ID! @id
   country: String!
   city: String!
@@ -49,16 +49,47 @@ type Location @db(name: "location") {
   region: REGION!
 }
 
+// type SpeakerSocial {
+//   id: ID! @id
+//   twitter: String
+//   github: String
+//   blog: String
+//   linkedin: String
+// }
+
+// type SpeakerTalk {
+//   id: ID! @id
+//   title: String!
+//   description: String
+//   language: String!
+//   conference: Conference!
+//   videoUrl: String
+//   slidesUrl: String
+// }
+
+// type Speaker @db(name: "speaker") {
+//   id: ID! @id
+//   fullName: String!
+//   tags: [String]
+//   website: String
+//   social: SpeakerSocial @relation(link: INLINE, onDelete: CASCADE)
+//   talks: [SpeakerTalk!]! @relation(link: TABLE, name: "ConferenceToSpeakerTalk")
+//   talkLanguages: [String]
+// }
+
 type Conference @db(name: "conference") {
   id: ID! @id
   name: String!
   description: String
+  // speakers: [Speaker!]! @relation(link: TABLE, name: "ConferenceToSpeaker")
   tags: [Tag!]! @relation(link: TABLE, name: "ConferenceToTag")
   url: String!
   image: Image
     @relation(link: TABLE, name: "ConferenceToImage", onDelete: CASCADE)
   startDate: DateTime!
   endDate: DateTime!
-  location: Location!
+  location: ConferenceLocation!
   publishStatus: PUBLISH_STATUS! @default(value: DRAFT)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

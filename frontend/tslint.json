@@ -1,8 +1,14 @@
 {
   "defaultSeverity": "error",
-  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-prettier",
+    "tslint-plugin-prettier"
+  ],
   "jsRules": {},
   "rules": {
+    "prettier": [true, ".prettierrc"],
     "interface-name": [true, "never-prefix"],
     "ordered-imports": [
       true,
@@ -22,6 +28,6 @@
   },
   "rulesDirectory": [],
   "linterOptions": {
-    "exclude": ["next.config.js"]
+    "exclude": ["next.config.js", "codegen/**/*"]
   }
 }

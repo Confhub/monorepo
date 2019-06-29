@@ -1,7 +1,7 @@
 # Specifies the HTTP endpoint of your Prisma API.
 # endpoint: http://localhost:4466
-endpoint: https://eu1.prisma.sh/confhub-49b018/confhub/dev/
-# endpoint: ${env:PRISMA_ENDPOINT}
+# endpoint: https://eu1.prisma.sh/confhub-49b018/confhub/dev/
+endpoint: ${env:PRISMA_ENDPOINT}
 
 # Defines your models, each model is mapped to the database as a table.
 datamodel: datamodel.prisma
