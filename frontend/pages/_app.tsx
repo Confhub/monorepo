@@ -1,8 +1,9 @@
+// import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 
 import Layout from '../components/layout/Layout';
@@ -28,9 +29,11 @@ class MyApp extends App {
           <title>ConfHub</title>
         </Head>
         <ApolloProvider client={apolloClient}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <ApolloHooksProvider client={apolloClient}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ApolloHooksProvider>
         </ApolloProvider>
       </Container>
     );

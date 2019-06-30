@@ -49,9 +49,9 @@ const Filters = () => {
 
       <h4>Tags</h4>
       <TagSelector
-        optionKey="slug"
-        value={tagValue}
-        onChange={updateTagValue}
+      // optionKey="slug"
+      // value={tagValue}
+      // onChange={updateTagValue}
       />
 
       {/* <h4>Tags</h4>

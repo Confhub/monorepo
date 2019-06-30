@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import * as React from 'react';
 import * as ReactApollo from 'react-apollo';
-import * as ReactApolloHooks from 'react-apollo-hooks';
+import * as ReactApolloHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -173,7 +173,7 @@ export type RootMutationUpdateTagArgs = {
 export type RootQuery = {
   __typename?: 'RootQuery';
   conference?: Maybe<Conference>;
-  conferences?: Maybe<Array<Maybe<Conference>>>;
+  conferences: Array<Conference>;
   tags?: Maybe<Array<Maybe<Tag>>>;
   me?: Maybe<User>;
 };
@@ -234,9 +234,7 @@ export type ConferencesQueryVariables = {
 };
 
 export type ConferencesQuery = { __typename?: 'RootQuery' } & {
-  conferences: Maybe<
-    Array<Maybe<{ __typename?: 'Conference' } & ConferencePartsFragment>>
-  >;
+  conferences: Array<{ __typename?: 'Conference' } & ConferencePartsFragment>;
 };
 
 export type ConferenceQueryVariables = {
@@ -329,7 +327,10 @@ export function withConferences<TProps, TChildProps = {}>(
 }
 
 export function useConferencesQuery(
-  baseOptions?: ReactApolloHooks.QueryHookOptions<ConferencesQueryVariables>,
+  baseOptions?: ReactApolloHooks.QueryHookOptions<
+    ConferencesQuery,
+    ConferencesQueryVariables
+  >,
 ) {
   return ReactApolloHooks.useQuery<ConferencesQuery, ConferencesQueryVariables>(
     ConferencesDocument,
@@ -381,7 +382,10 @@ export function withConference<TProps, TChildProps = {}>(
 }
 
 export function useConferenceQuery(
-  baseOptions?: ReactApolloHooks.QueryHookOptions<ConferenceQueryVariables>,
+  baseOptions?: ReactApolloHooks.QueryHookOptions<
+    ConferenceQuery,
+    ConferenceQueryVariables
+  >,
 ) {
   return ReactApolloHooks.useQuery<ConferenceQuery, ConferenceQueryVariables>(
     ConferenceDocument,
@@ -433,7 +437,10 @@ export function withTags<TProps, TChildProps = {}>(
 }
 
 export function useTagsQuery(
-  baseOptions?: ReactApolloHooks.QueryHookOptions<TagsQueryVariables>,
+  baseOptions?: ReactApolloHooks.QueryHookOptions<
+    TagsQuery,
+    TagsQueryVariables
+  >,
 ) {
   return ReactApolloHooks.useQuery<TagsQuery, TagsQueryVariables>(
     TagsDocument,

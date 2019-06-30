@@ -3,6 +3,7 @@ import {
   GraphQLInputObjectType,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull,
   GraphQLString,
 } from 'graphql';
 
@@ -40,7 +41,9 @@ const GraphQLConferenceSortByInput = new GraphQLInputObjectType({
 });
 
 export default {
-  type: new GraphQLList(GraphQLConference),
+  type: new GraphQLNonNull(
+    new GraphQLList(new GraphQLNonNull(GraphQLConference)),
+  ),
   args: {
     sortBy: {
       type: GraphQLConferenceSortByInput,

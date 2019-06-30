@@ -1,6 +1,7 @@
+import { getDataFromTree } from '@apollo/react-hooks';
 import Head from 'next/head';
 import React from 'react';
-import { getDataFromTree } from 'react-apollo';
+
 import initApollo from './initApollo';
 
 // @ts-ignore

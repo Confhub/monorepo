@@ -1,13 +1,12 @@
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
-import Router, { SingletonRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
-import { Tag } from '../../../components/tagSelector/TagSelector';
+import { Tag } from '../../../codegen/generated/graphql';
 import { setUrl } from './helpers';
 
 interface Props {
-  router: SingletonRouter;
   children: React.ReactNode;
 }
 
@@ -29,9 +28,11 @@ interface Context {
 // @ts-ignore
 export const FiltersContext = React.createContext<Context>(null);
 
-const FiltersProvider = ({ router, children }: Props) => {
-  // @ts-ignore
-  const { tags, period, regions } = router.query;
+const FiltersProvider = ({ children }: Props) => {
+  const {
+    query: { tags, period, regions },
+  } = useRouter();
+
   const [state, setState] = useState({
     categoryValue: ['tech'],
     tagValue: (tags && typeof tags === 'string' && tags.split(',')) || [],
